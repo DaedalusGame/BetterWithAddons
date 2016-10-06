@@ -1,0 +1,6 @@
+{
+    "parent": "betterwithaddons:item/greatbow",
+    "textures": {
+        "layer0": "betterwithaddons:items/greatbow_pulling_1"
+    }
+}

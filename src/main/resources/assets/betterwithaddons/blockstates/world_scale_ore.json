@@ -1,0 +1,33 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"model": "cube_all",
+    "textures": {
+        "all": "betterwithaddons:blocks/worldscale_ore_0"
+    },
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"cracked": {
+		"0": {
+			"textures": { "all": "betterwithaddons:blocks/worldscale_ore_0" }
+		},
+		"1": { 
+			"textures": { "all": "betterwithaddons:blocks/worldscale_ore_1" }
+		},
+		"2": { 
+			"textures": { "all": "betterwithaddons:blocks/worldscale_ore_2" }
+		},
+		"3": { 
+			"textures": { "all": "betterwithaddons:blocks/worldscale_ore_3" }
+		},
+		"4": { 
+			"textures": { "all": "betterwithaddons:blocks/worldscale_ore_4" }
+		},
+		"5": { 
+			"textures": { "all": "betterwithaddons:blocks/worldscale_ore_5" }
+		}
+	}
+  }
+}

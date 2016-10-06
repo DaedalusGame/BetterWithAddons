@@ -1,0 +1,21 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"variant": {
+		"none":{},
+		"soaking": {
+			"model": "cube_all",
+			"textures": {
+				"all": "betterwithaddons:blocks/soaker"
+			}
+		},
+		"drying": {
+			"model": "betterwithaddons:drying_unit"
+		}
+	}
+  }
+}

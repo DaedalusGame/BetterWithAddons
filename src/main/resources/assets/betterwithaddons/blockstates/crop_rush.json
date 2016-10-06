@@ -1,0 +1,27 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"model": "crop",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+	"age": {
+		"0": { 
+			"textures": { "crop": "betterwithaddons:blocks/rush_stage_0" }
+		},
+		"1": { 
+			"textures": { "crop": "betterwithaddons:blocks/rush_stage_1" }
+		},
+		"2": { 
+			"textures": { "crop": "betterwithaddons:blocks/rush_stage_2" }
+		},
+		"3": {},
+		"4": {},
+		"5": {},
+		"6": {},
+		"7": {}
+	}
+  }
+}

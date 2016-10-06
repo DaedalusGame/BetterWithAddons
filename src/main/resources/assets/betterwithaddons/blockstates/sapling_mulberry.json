@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"textures": {
+		"cross": "betterwithaddons:blocks/sapling_mulberry"
+    },
+	"model": "cross",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"stage": {
+		"0": {},
+		"1": {}
+	}
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "parent": "block/grass",
+    "textures": {
+        "particle": "minecraft:blocks/clay",
+        "bottom": "minecraft:blocks/clay",
+        "top": "minecraft:blocks/grass_top",
+        "side": "betterwithaddons:blocks/grass_clay_side",
+        "overlay": "minecraft:blocks/grass_side_overlay"
+    }
+}

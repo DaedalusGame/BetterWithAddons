@@ -1,0 +1,25 @@
+{
+    "variants": {
+        "east=false,north=false,south=false,west=false": { "model": "betterwithaddons:pcb_brick_dot" },
+		
+		"east=false,north=true,south=false,west=false": { "model": "betterwithaddons:pcb_brick_1side" },
+		"east=true,north=false,south=false,west=false": { "model": "betterwithaddons:pcb_brick_1side", "y": 90  },
+		"east=false,north=false,south=true,west=false": { "model": "betterwithaddons:pcb_brick_1side", "y": 180  },
+		"east=false,north=false,south=false,west=true": { "model": "betterwithaddons:pcb_brick_1side", "y": 270  },
+		
+		"east=false,north=true,south=true,west=false": { "model": "betterwithaddons:pcb_brick_line" },
+		"east=true,north=false,south=false,west=true": { "model": "betterwithaddons:pcb_brick_line", "y": 90 },
+		
+		"east=true,north=true,south=false,west=false": { "model": "betterwithaddons:pcb_brick_curve" },
+		"east=true,north=false,south=true,west=false": { "model": "betterwithaddons:pcb_brick_curve", "y": 90 },
+		"east=false,north=false,south=true,west=true": { "model": "betterwithaddons:pcb_brick_curve", "y": 180 },
+		"east=false,north=true,south=false,west=true": { "model": "betterwithaddons:pcb_brick_curve", "y": 270 },
+		
+		"east=true,north=true,south=true,west=false": { "model": "betterwithaddons:pcb_brick_tri" },
+		"east=true,north=false,south=true,west=true": { "model": "betterwithaddons:pcb_brick_tri", "y": 90 },
+		"east=false,north=true,south=true,west=true": { "model": "betterwithaddons:pcb_brick_tri", "y": 180 },
+		"east=true,north=true,south=false,west=true": { "model": "betterwithaddons:pcb_brick_tri", "y": 270 },
+		
+		"east=true,north=true,south=true,west=true": { "model": "betterwithaddons:pcb_brick_cross" }
+    }
+}

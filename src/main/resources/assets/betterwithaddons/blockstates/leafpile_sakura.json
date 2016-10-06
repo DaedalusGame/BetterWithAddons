@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"model": "carpet",
+	"transform": "forge:default-block",
+	"textures": {
+        "particle": "betterwithaddons:blocks/leaves_sakura",
+        "wool": "betterwithaddons:blocks/leaves_sakura"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}]
+  }
+}

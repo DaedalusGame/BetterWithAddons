@@ -1,0 +1,16 @@
+[
+{
+  "modid": "betterwithaddons",
+  "name": "Better with Addons",
+  "description": "Ports of various Better than Wolves addons.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["BordListian"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

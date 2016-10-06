@@ -1,0 +1,64 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "betterwithaddons:items/greatbow_standby"
+    },
+    "display": {
+        "thirdperson_righthand": {
+            "rotation": [ -80, 260, -40 ],
+            "translation": [ -1, -2, 2.5 ],
+            "scale": [ 1.8, 1.8, 1.8 ]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [ -80, -280, 40 ],
+            "translation": [ -1, -2, 2.5 ],
+            "scale": [ 1.8, 1.8, 1.8 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, -90, 25 ],
+            "translation": [ 1.13, 3.2, 1.13],
+            "scale": [ 1.36, 1.36, 1.36 ]
+        },
+        "firstperson_lefthand": {
+            "rotation": [ 0, 90, -25 ],
+            "translation": [ 1.13, 3.2, 1.13],
+            "scale": [ 1.36, 1.36, 1.36 ]
+        }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "minecraft:pulling": 1
+            },
+            "model": "betterwithaddons:item/greatbow_pulling_0"
+        },
+        {
+            "predicate": {
+                "minecraft:pulling": 1,
+                "minecraft:pull": 0.2
+            },
+            "model": "betterwithaddons:item/greatbow_pulling_1"
+        },
+        {
+            "predicate": {
+                "minecraft:pulling": 1,
+                "minecraft:pull": 0.45
+            },
+            "model": "betterwithaddons:item/greatbow_pulling_2"
+        },
+        {
+            "predicate": {
+                "minecraft:pulling": 1,
+                "minecraft:pull": 0.7
+            },
+            "model": "betterwithaddons:item/greatbow_pulling_3"
+        },
+        {
+            "predicate": {
+                "minecraft:pulling": 1,
+                "minecraft:pull": 0.9
+            },
+            "model": "betterwithaddons:item/greatbow_pulling_4"
+        }
+    ]
+}

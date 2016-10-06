@@ -1,0 +1,150 @@
+tile.banner_detector.name=Banner Detector
+tile.world_scale_ore.name=World Scale Ore
+tile.world_scale_ore.broken.name=Rough World Scale
+tile.world_scale.name=World Scale
+tile.world_scale_active.name=Engraved World Scale
+tile.elytra_magma.name=Magma Verus Block
+tile.extra_grass.name=Grass
+tile.lattice.name=Iron Lattice
+
+tile.pcb_wire.name=Redstone Wire
+tile.pcb_block.name=PCB
+
+tile.log_mulberry.name=Mulberry Wood
+tile.log_sakura.name=Sakura Wood
+tile.planks_mulberry.name=Mulberry Wood Planks
+tile.planks_sakura.name=Sakura Wood Planks
+tile.leaves_mulberry.name=Mulberry Leaves
+tile.leaves_sakura.name=Sakura Leaves
+tile.sapling_sakura.name=Sakura Sapling
+tile.sapling_sakura.name=Sakura Sapling
+tile.leafpile_sakura.name=Sakura Leafpile
+tile.slat.name=Bamboo Slat Block
+tile.netted_screen.name=Netted Screen
+tile.iron_sand.name=Iron Sand
+tile.kera.name=Kera
+tile.tatara.name=Tatara
+tile.cherrybox.soaking.name=Cherrywood Soaking Unit
+tile.cherrybox.drying.name=Cherrywood Drying Unit
+tile.crop_rice.name=Rice Seeds
+tile.crop_rush.name=Common Rush Seeds
+
+tile.bricks_stained.white.name=White Stained Bricks
+tile.bricks_stained.orange.name=Orange Stained Bricks
+tile.bricks_stained.magenta.name=Magenta Stained Bricks
+tile.bricks_stained.lightBlue.name=Light Blue Stained Bricks
+tile.bricks_stained.yellow.name=Yellow Stained Bricks
+tile.bricks_stained.lime.name=Lime Stained Bricks
+tile.bricks_stained.pink.name=Pink Stained Bricks
+tile.bricks_stained.gray.name=Gray Stained Bricks
+tile.bricks_stained.silver.name=Light Gray Stained Bricks
+tile.bricks_stained.cyan.name=Cyan Stained Bricks
+tile.bricks_stained.purple.name=Purple Stained Bricks
+tile.bricks_stained.blue.name=Blue Stained Bricks
+tile.bricks_stained.brown.name=Brown Stained Bricks
+tile.bricks_stained.green.name=Green Stained Bricks
+tile.bricks_stained.red.name=Red Stained Bricks
+tile.bricks_stained.black.name=Black Stained Bricks
+
+item.material.arrowhead.name=Greatarrow Head
+item.material.midori.name=Midori
+item.material.midori_popped.name=Popped Midori
+item.material.thornrose.name=Thorn Rose
+item.material.stone_brick.name=Stone Brick
+item.material.bone_ingot.name=Bone Ingot
+item.material.ender_cream.name=Magma Cream Verus
+item.greatbow.name=Greatbow
+item.greatarrow.name=Greatarrow
+item.monument.name=Monument
+item.warwall.name=Warwall
+
+item.brick_stained.white.name=White Stained Brick
+item.brick_stained.orange.name=Orange Stained Brick
+item.brick_stained.magenta.name=Magenta Stained Brick
+item.brick_stained.lightBlue.name=Light Blue Stained Brick
+item.brick_stained.yellow.name=Yellow Stained Brick
+item.brick_stained.lime.name=Lime Stained Brick
+item.brick_stained.pink.name=Pink Stained Brick
+item.brick_stained.gray.name=Gray Stained Brick
+item.brick_stained.silver.name=Light Gray Stained Brick
+item.brick_stained.cyan.name=Cyan Stained Brick
+item.brick_stained.purple.name=Purple Stained Brick
+item.brick_stained.blue.name=Blue Stained Brick
+item.brick_stained.brown.name=Brown Stained Brick
+item.brick_stained.green.name=Green Stained Brick
+item.brick_stained.red.name=Red Stained Brick
+item.brick_stained.black.name=Black Stained Brick
+
+item.food_mushroom_baked.name=Baked Mushroom
+item.food_amanita_baked.name=Baked Mushroom
+item.food_beetroot_cooked.name=Cooked Beetroot
+item.food_beetroot_baked.name=Baked Beetroot
+item.food_carrot_cooked.name=Cooked Carrot
+item.food_carrot_baked.name=Baked Carrot
+item.food_potato_cooked.name=Cooked Potato
+item.food_egg_cooked.name=Cooked Egg
+item.food_chocolate.name=Chocolate
+item.food_meatballs.name=Meatballs
+item.food_ground_meat.name=Ground Meat
+item.food_pie_mushroom.name=Mushroom Pie
+item.food_pie_amanita.name=Mushroom Pie
+item.food_pie_melon.name=Melon Pie
+item.food_pie_meat.name=Meat Pie
+item.food_sashimi.name=Sashimi
+
+item.shinai.name=Shinai
+item.katana.name=Katana
+item.wakizashi.name=Wakizashi
+item.tanto.name=Tanto
+item.yumi.name=Yumi
+item.ya.name=Ya
+item.japanmat.rice.name=Rice
+item.japanmat.soaked_rice.name=Soaked Rice
+item.japanmat.rice_stalk.name=Rice Stalk
+item.japanmat.rice_hay.name=Rice Hay
+item.japanmat.rice_ash.name=Rice Ash
+item.japanmat.rush.name=Common Rush
+item.japanmat.soaked_bamboo.name=Soaked Bamboo
+item.japanmat.bamboo_slats.name=Bamboo Slats
+item.japanmat.soaked_mulberry.name=Soaked Mulberry Bark
+item.japanmat.mulberry_paste.name=Mulberry Pulp
+item.japanmat.mulberry_sheet.name=Mulberry Sheet
+item.japanmat.washi.name=Washi
+item.japanmat.iron_scales.name=Iron Scales
+item.japanmat.lamellar.name=Lamellar
+item.japanmat.paper_lamellar.name=Paper Lamellar
+item.japanmat.tsuka.name=Tsuka
+item.japanmat.half_katana_blade.name=Half Katana Blade
+item.japanmat.ya_head.name=Ya Head
+item.japanmat.yumi_top.name=Yumi Top Parts
+item.japanmat.yumi_bottom.name=Yumi Bottom Parts
+item.japanmat.tamahagane.name=Tamahagane
+item.japanmat.tamahagane_heated.name=Heated Tamahagane
+item.japanmat.tamahagane_folded.name=Folded Tamahagane
+item.japanmat.tamahagane_wrapped.name=Wrapped Tamahagane
+item.japanmat.tamahagane_reheated.name=Reheated Tamahagane
+item.japanmat.tamahagane_finished.name=Finished Tamahagane
+item.japanmat.hocho_tetsu.name=Hocho-Tetsu
+item.japanmat.hocho_tetsu_heated.name=Heated Hocho-Tetsu
+item.japanmat.hocho_tetsu_fold_1.name=Once-folded Hocho-Tetsu
+item.japanmat.hocho_tetsu_fold_2.name=Twice-folded Hocho-Tetsu
+item.japanmat.hocho_tetsu_finished.name=Finished Hocho-Tetsu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+{
+    "parent": "betterwithaddons:item/yumi",
+    "textures": {
+        "layer0": "betterwithaddons:items/yumi_pulling_1"
+    }
+}

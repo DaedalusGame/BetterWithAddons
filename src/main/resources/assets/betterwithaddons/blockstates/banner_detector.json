@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "betterwithaddons:banner_detector_vertical", "x": 180 },
+        "facing=up":    { "model": "betterwithaddons:banner_detector_vertical" },
+        "facing=north": { "model": "betterwithaddons:banner_detector" },
+        "facing=south": { "model": "betterwithaddons:banner_detector", "y": 180 },
+        "facing=west":  { "model": "betterwithaddons:banner_detector", "y": 270 },
+        "facing=east":  { "model": "betterwithaddons:banner_detector", "y": 90 }
+    }
+}

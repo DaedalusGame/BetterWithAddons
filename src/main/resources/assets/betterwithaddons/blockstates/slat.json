@@ -1,0 +1,28 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"textures": {
+		"all": "betterwithaddons:blocks/sift_sand"
+    },
+	"model": "cube_all",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"sandfill": {
+		"0": {
+			"textures": {
+				"all": "betterwithaddons:blocks/sift"
+			}
+		},
+		"1": {},
+		"2": {},
+		"3": {},
+		"4": {},
+		"5": {},
+		"6": {},
+		"7": {},
+		"8": {}
+	}
+  }
+}

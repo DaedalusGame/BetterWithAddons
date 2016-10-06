@@ -1,0 +1,55 @@
+{
+    "variants": {
+        "snowy=false,variant=clay": [
+            { "model": "betterwithaddons:clay_grass_block" },
+            { "model": "betterwithaddons:clay_grass_block", "y": 90 },
+            { "model": "betterwithaddons:clay_grass_block", "y": 180 },
+            { "model": "betterwithaddons:clay_grass_block", "y": 270 }
+        	],
+        "snowy=true,variant=clay": [
+            { "model": "betterwithaddons:clay_grass_block_snowy" },
+            { "model": "betterwithaddons:clay_grass_block_snowy", "y": 90 },
+            { "model": "betterwithaddons:clay_grass_block_snowy", "y": 180 },
+            { "model": "betterwithaddons:clay_grass_block_snowy", "y": 270 }
+        	],
+        	
+        "snowy=false,variant=sand": [
+            { "model": "betterwithaddons:sand_grass_block" },
+            { "model": "betterwithaddons:sand_grass_block", "y": 90 },
+            { "model": "betterwithaddons:sand_grass_block", "y": 180 },
+            { "model": "betterwithaddons:sand_grass_block", "y": 270 }
+        	],
+        "snowy=true,variant=sand": [
+            { "model": "betterwithaddons:sand_grass_block_snowy" },
+            { "model": "betterwithaddons:sand_grass_block_snowy", "y": 90 },
+            { "model": "betterwithaddons:sand_grass_block_snowy", "y": 180 },
+            { "model": "betterwithaddons:sand_grass_block_snowy", "y": 270 }
+        	],
+			
+        "snowy=false,variant=redsand": [
+            { "model": "betterwithaddons:redsand_grass_block" },
+            { "model": "betterwithaddons:redsand_grass_block", "y": 90 },
+            { "model": "betterwithaddons:redsand_grass_block", "y": 180 },
+            { "model": "betterwithaddons:redsand_grass_block", "y": 270 }
+        	],
+        "snowy=true,variant=redsand": [
+            { "model": "betterwithaddons:redsand_grass_block_snowy" },
+            { "model": "betterwithaddons:redsand_grass_block_snowy", "y": 90 },
+            { "model": "betterwithaddons:redsand_grass_block_snowy", "y": 180 },
+            { "model": "betterwithaddons:redsand_grass_block_snowy", "y": 270 }
+        	],
+			
+        "snowy=false,variant=farm": [
+            { "model": "betterwithaddons:farm_grass_block" },
+            { "model": "betterwithaddons:farm_grass_block", "y": 90 },
+            { "model": "betterwithaddons:farm_grass_block", "y": 180 },
+            { "model": "betterwithaddons:farm_grass_block", "y": 270 }
+        	],
+        "snowy=true,variant=farm": [
+            { "model": "betterwithaddons:farm_grass_block_snowy" },
+            { "model": "betterwithaddons:farm_grass_block_snowy", "y": 90 },
+            { "model": "betterwithaddons:farm_grass_block_snowy", "y": 180 },
+            { "model": "betterwithaddons:farm_grass_block_snowy", "y": 270 }
+        	]
+    }
+}

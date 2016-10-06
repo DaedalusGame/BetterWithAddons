@@ -1,0 +1,9 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "betterwithaddons:blocks/banner_detector_side",
+        "front": "betterwithaddons:blocks/banner_detector_front",
+        "side": "betterwithaddons:blocks/banner_detector_side",
+		"south": "betterwithaddons:blocks/banner_detector_back"
+    }
+}

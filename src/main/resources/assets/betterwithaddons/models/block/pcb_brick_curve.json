@@ -1,0 +1,9 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "particle": "betterwithaddons:blocks/pcb_side",
+        "bottom": "betterwithaddons:blocks/pcb_top",
+        "top": "betterwithaddons:blocks/pcb_top_2",
+        "side": "betterwithaddons:blocks/pcb_side"
+    }
+}

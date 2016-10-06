@@ -1,0 +1,81 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "betterwithaddons:blocks/lattice",
+      "0": "betterwithaddons:blocks/lattice",
+	  "1": "betterwithaddons:blocks/lattice_inner"
+    },
+	"model": "betterwithaddons:empty",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "down": {
+		"true": { 
+			"submodel": {
+				"walld": {
+					"model": "betterwithaddons:cage_part", 
+					"x": 90 
+				}
+			}
+		},
+		"false": { }
+    },
+    "east": {
+		"true": { 
+			"submodel": {
+				"walle": {
+					"model": "betterwithaddons:cage_part", 
+					"y": 90 
+				}
+			}
+		},
+		"false": { }
+    },
+    "north": {
+		"true": { 
+			"submodel": {
+				"walln": {
+					"model": "betterwithaddons:cage_part"
+				} 
+			}
+		},
+		"false": { }
+    },
+    "south": {
+		"true": { 
+			"submodel": {
+				"walls": {
+					"model": "betterwithaddons:cage_part", 
+					"y": 180 
+				}
+			}
+		},
+		"false": { }
+    },
+    "up": {
+		"true": {
+			"submodel": {
+				"wallu": {
+					"model": "betterwithaddons:cage_part", 
+					"x": 270 
+				}
+			}
+		},
+		"false": { }
+    },
+    "west": {
+		"true": { 
+			"submodel": {
+				"wallw": {
+					"model": "betterwithaddons:cage_part", 
+					"y": 270 
+				}
+			}
+		},
+		"false": { }
+    }
+  }
+}

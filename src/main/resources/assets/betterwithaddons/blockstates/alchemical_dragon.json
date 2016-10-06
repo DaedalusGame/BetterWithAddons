@@ -1,0 +1,23 @@
+{
+    "forge_marker": 1,
+	"defaults": {
+		"model": "betterwithaddons:empty",
+		"transform": "forge:default-block"
+	},
+	"variants": {
+		"normal": [{}],
+		"inventory": [{}],
+		"facing": {
+			"up":{},
+			"down":{},
+			"north":{},
+			"south":{},
+			"east":{},
+			"west":{}
+		},
+		"nodrop": {
+			"true":{},
+			"false":{}
+		}
+	}
+}

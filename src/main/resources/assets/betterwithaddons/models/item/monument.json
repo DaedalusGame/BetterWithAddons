@@ -1,0 +1,66 @@
+{
+    "textures": {
+        "0": "betterwithaddons:items/monument_wall",
+        "1": "betterwithaddons:items/monument_wall_back"
+    },
+	"display": {
+        "thirdperson_righthand": {
+            "rotation": [ 0, 90, 0 ],
+            "translation": [ 10.51, 6, -4 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [ 0, 90, 0 ],
+            "translation": [ 10.51, 6, 12 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 180, 5 ],
+            "translation": [ -10, 2, -10 ],
+            "scale": [ 1.25, 1.25, 1.25 ]
+        },
+        "firstperson_lefthand": {
+            "rotation": [ 0, 180, 5 ],
+            "translation": [ 10, 0, -10 ],
+            "scale": [ 1.25, 1.25, 1.25 ]
+        },
+        "gui": {
+            "rotation": [ 15, -25, -5 ],
+            "translation": [ 2, 3, 0 ],
+            "scale": [ 0.65, 0.65, 0.65 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ -12.8, 13.5, -12.5],
+            "scale":[ 1.6, 1.6, 1.6]
+        },
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 4, 6, 4],
+            "scale":[ 0.5, 0.5, 0.5]
+        }
+    },
+    "elements": [
+        {
+            "name": "Cube",
+            "from": [ -8.0, -11.0, -1.0 ], 
+            "to": [ 8.0, 11.0, 0.5 ], 
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 12.0, 16.0 ] },
+                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 0.5, 16.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 16.0 ] },
+                "west": { "texture": "#1", "uv": [ 12.0, 0.0, 11.5, 16.0 ] },
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 12.0, 0.5 ], "rotation": 180 },
+                "down": { "texture": "#1", "uv": [ 0.0, 15.500000000000002, 12.0, 15.999999999999998 ], "rotation": 180 }
+            }
+        }
+    ],
+    "overrides": [
+        {
+            "predicate": {
+                "minecraft:blocking": 1
+            },
+            "model": "betterwithaddons:item/monument_blocking"
+        }
+    ]
+}
