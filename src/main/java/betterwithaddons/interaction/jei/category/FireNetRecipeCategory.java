@@ -5,9 +5,6 @@ import mezz.jei.api.IGuiHelper;
 import mezz.jei.util.Translator;
 import net.minecraft.util.ResourceLocation;
 
-/**
- * Created by Christian on 26.09.2016.
- */
 public class FireNetRecipeCategory extends NetRecipeCategory {
     public FireNetRecipeCategory(IGuiHelper helper) {
         super(helper);

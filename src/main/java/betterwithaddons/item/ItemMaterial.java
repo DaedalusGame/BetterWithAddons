@@ -3,7 +3,6 @@ package betterwithaddons.item;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,19 +10,31 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.OptionalInt;
-import java.util.stream.IntStream;
 
-/**
- * Created by Christian on 19.09.2016.
- */
 public class ItemMaterial extends Item implements IHasVariants{
     String[] subItemNames;
+    ItemStack container;
 
     public ItemMaterial(String[] subnames) {
         subItemNames = subnames;
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
+    }
+
+    public ItemMaterial setContainer(ItemStack stack)
+    {
+        container = stack;
+        return this;
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack itemStack) {
+        return container;
+    }
+
+    @Override
+    public boolean hasContainerItem(ItemStack stack) {
+        return container != null;
     }
 
     public ItemStack getMaterial(String material) {

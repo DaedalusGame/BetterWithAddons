@@ -1,18 +1,10 @@
 package betterwithaddons.item;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.common.util.EnumHelper;
 
-/**
- * Created by Christian on 26.09.2016.
- */
 public class ItemWakizashi extends ItemSword {
     public ItemWakizashi()
     {

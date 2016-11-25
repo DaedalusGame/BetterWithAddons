@@ -3,7 +3,6 @@ package betterwithaddons.block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
@@ -17,9 +16,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-/**
- * Created by Christian on 02.08.2016.
- */
 public class BlockElytraMagma extends BlockBase {
     public BlockElytraMagma() {
         super("elytra_magma", Material.ROCK);
@@ -53,7 +49,7 @@ public class BlockElytraMagma extends BlockBase {
     }
 
     @Override
-    public boolean func_189872_a(IBlockState iBlockState, Entity entity) {
+    public boolean canEntitySpawn(IBlockState iBlockState, Entity entity) {
         return entity.isImmuneToFire();
     }
 

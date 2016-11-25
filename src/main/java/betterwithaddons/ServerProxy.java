@@ -1,8 +1,5 @@
 package betterwithaddons;
 
-/**
- * Created by Christian on 04.08.2016.
- */
 public class ServerProxy implements IProxy {
     @Override
     public void preInit() {

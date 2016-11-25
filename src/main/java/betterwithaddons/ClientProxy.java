@@ -1,6 +1,6 @@
 package betterwithaddons;
 
-import betterwithaddons.block.IColorableBlock;
+import betterwithaddons.block.IColorable;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.client.fx.FXLeafParticle;
 import betterwithaddons.client.handler.ParticleHandler;
@@ -14,15 +14,10 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.tileentity.TileEntityAlchDragon;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.world.ColorizerGrass;
-import net.minecraftforge.client.model.ModelLoader;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
 
 public class ClientProxy implements IProxy
 {
@@ -33,8 +28,11 @@ public class ClientProxy implements IProxy
 
     @Override
     public void init() {
-        registerColoredBlock(ModBlocks.grass);
-        registerColoredBlock(ModBlocks.pcbwire);
+        registerColorable(ModBlocks.grass);
+        registerColorable(ModBlocks.pcbwire);
+        registerColorable(ModItems.samuraiBoots);
+        registerColorable(ModItems.samuraiChestplate);
+        registerColorable(ModItems.samuraiLeggings);
         MinecraftForge.EVENT_BUS.register(ParticleHandler.class);
     }
 
@@ -62,14 +60,19 @@ public class ClientProxy implements IProxy
 
     }
 
-    private void registerColoredBlock(Block block)
+    private void registerColorable(IColorable colorable)
     {
-        if(block instanceof IColorableBlock) {
-            IColorableBlock colorblock = (IColorableBlock)block;
-            if (colorblock.getBlockColor() != null)
-                Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(colorblock.getBlockColor(), block);
-            if (colorblock.getItemColor() != null)
-                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(colorblock.getItemColor(), block);
+        if(colorable instanceof Item && colorable.getItemColor() != null)
+        {
+            Minecraft.getMinecraft().getItemColors().registerItemColorHandler(colorable.getItemColor(), (Item)colorable );
+        }
+        else
+        {
+            Block block = (Block) colorable;
+            if (colorable.getBlockColor() != null && block != null)
+                Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(colorable.getBlockColor(), block);
+            if (colorable.getItemColor() != null)
+                Minecraft.getMinecraft().getItemColors().registerItemColorHandler(colorable.getItemColor(), block);
         }
     }
 

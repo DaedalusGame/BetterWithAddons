@@ -4,7 +4,7 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.client.gui.GuiDryingBox;
 import betterwithaddons.client.gui.GuiSoakingBox;
 import betterwithaddons.client.gui.GuiTatara;
-import betterwithaddons.crafting.*;
+import betterwithaddons.crafting.manager.*;
 import betterwithaddons.interaction.jei.category.*;
 import betterwithaddons.interaction.jei.handler.CherryBoxRecipeHandler;
 import betterwithaddons.interaction.jei.handler.NetRecipeHandler;
@@ -16,10 +16,6 @@ import mezz.jei.api.IModRegistry;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
-
-/**
- * Created by Christian on 25.09.2016.
- */
 
 @mezz.jei.api.JEIPlugin
 public class BWAJEIPlugin extends BlankModPlugin {

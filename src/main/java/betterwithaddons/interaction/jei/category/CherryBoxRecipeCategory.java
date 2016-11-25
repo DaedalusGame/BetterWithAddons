@@ -1,21 +1,15 @@
 package betterwithaddons.interaction.jei.category;
 
 import betterwithaddons.interaction.jei.wrapper.CherryBoxRecipeWrapper;
-import betterwithaddons.interaction.jei.wrapper.TataraRecipeWrapper;
-import betterwithaddons.item.ModItems;
-import betterwithaddons.lib.Reference;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
-import mezz.jei.util.Translator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-/**
- * Created by Christian on 25.09.2016.
- */
 public abstract class CherryBoxRecipeCategory extends BlankRecipeCategory<CherryBoxRecipeWrapper> {
     @Nonnull
     private final IDrawable background;
@@ -53,12 +47,12 @@ public abstract class CherryBoxRecipeCategory extends BlankRecipeCategory<Cherry
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout layout, @Nonnull CherryBoxRecipeWrapper wrapper) {
-        IGuiItemStackGroup guiItemStacks = layout.getItemStacks();
+    public void setRecipe(IRecipeLayout recipeLayout, CherryBoxRecipeWrapper recipeWrapper, IIngredients ingredients) {
+        IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         guiItemStacks.init(0, true, 0, 19);
         guiItemStacks.init(1, false, 60, 18);
 
-        guiItemStacks.setFromRecipe(0, wrapper.getInputs());
-        guiItemStacks.setFromRecipe(1, wrapper.getOutputs());
+        guiItemStacks.set(0, recipeWrapper.getInputs());
+        guiItemStacks.set(1, recipeWrapper.getOutputs());
     }
 }

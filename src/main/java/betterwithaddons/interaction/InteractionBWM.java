@@ -4,26 +4,41 @@ import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.item.ModItems;
 import betterwithmods.api.BWMRecipeHelper;
-import betterwithmods.craft.SawInteraction;
-import net.minecraft.block.Block;
+import betterwithmods.blocks.BlockBUD;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import java.util.List;
+
 public class InteractionBWM implements IInteraction {
     final String modid = "betterwithmods";
+    public static boolean ENABLED = true;
+    public static boolean MILL_CLAY = true;
 
     @Override
     public boolean isActive() {
-        return Loader.isModLoaded(modid);
+        return ENABLED && Loader.isModLoaded(modid);
+    }
+
+    @Override
+    public void setEnabled(boolean active) {
+        ENABLED = active;
+    }
+
+    @Override
+    public List<IInteraction> getDependencies() {
+        return null;
+    }
+
+    @Override
+    public List<IInteraction> getIncompatibilities() {
+        return null;
     }
 
     @Override
@@ -35,6 +50,8 @@ public class InteractionBWM implements IInteraction {
     public void init() {
         if(!isActive())
             return;
+
+        BlockBUD.addBlacklistBlock(ModBlocks.pcbwire);
 
         ItemStack arrowhead = ModItems.material.getMaterial("arrowhead");
         ItemStack haft = InteractionHelper.findItem(modid,"material",1,38);
@@ -65,14 +82,18 @@ public class InteractionBWM implements IInteraction {
 
         BWMRecipeHelper.addMillRecipe(new ItemStack(ModBlocks.worldScale,1),null,new Object[] { new ItemStack(ModBlocks.worldScaleOre,1,1) });
 
-        EnumDyeColor[] dyes = EnumDyeColor.values();
-        int len = dyes.length;
+        if(MILL_CLAY) {
+            BWMRecipeHelper.addMillRecipe(new ItemStack(Items.BRICK, 4),null,new Object[] { new ItemStack(Blocks.HARDENED_CLAY, 1) });
 
-        for(int i = 0; i < len; ++i) {
-            EnumDyeColor dye = dyes[i];
-            ItemStack brick = new ItemStack(ModItems.stainedBrick, 1, dye.getMetadata());
-            BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.stainedBrick, 4, dye.getMetadata()),null,new Object[] { new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata()) });
-            GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.coloredBrick, 1, dye.getMetadata()),"bb","bb",'b',brick);
+            EnumDyeColor[] dyes = EnumDyeColor.values();
+            int len = dyes.length;
+
+            for (int i = 0; i < len; ++i) {
+                EnumDyeColor dye = dyes[i];
+                ItemStack brick = new ItemStack(ModItems.stainedBrick, 1, dye.getMetadata());
+                BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.stainedBrick, 4, dye.getMetadata()), null, new Object[]{new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata())});
+                GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.coloredBrick, 1, dye.getMetadata()), "bb", "bb", 'b', brick);
+            }
         }
 
         BetterWithAddons.instance.removeSmeltingRecipe(new ItemStack(Items.CHORUS_FRUIT_POPPED));

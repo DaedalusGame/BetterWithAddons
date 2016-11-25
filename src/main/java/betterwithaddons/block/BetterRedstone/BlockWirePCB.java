@@ -1,8 +1,7 @@
 package betterwithaddons.block.BetterRedstone;
 
-import betterwithaddons.BetterWithAddons;
-import betterwithaddons.block.BlockColors;
-import betterwithaddons.block.IColorableBlock;
+import betterwithaddons.block.ColorHandlers;
+import betterwithaddons.block.IColorable;
 import betterwithaddons.lib.Reference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -31,12 +30,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
 
-/**
- * Created by Christian on 06.08.2016.
- */
-public class BlockWirePCB extends Block implements IColorableBlock {
+public class BlockWirePCB extends Block implements IColorable {
     public static final PropertyEnum<EnumAttachPosition> NORTH = PropertyEnum.create("north", EnumAttachPosition.class);
     public static final PropertyEnum<EnumAttachPosition> EAST = PropertyEnum.create("east", EnumAttachPosition.class);
     public static final PropertyEnum<EnumAttachPosition> SOUTH = PropertyEnum.create("south", EnumAttachPosition.class);
@@ -59,7 +58,7 @@ public class BlockWirePCB extends Block implements IColorableBlock {
 
     @Override
     public IBlockColor getBlockColor() {
-        return BlockColors.REDSTONE_COLORING;
+        return ColorHandlers.REDSTONE_COLORING;
     }
 
     @Override

@@ -1,12 +1,24 @@
 package betterwithaddons.interaction;
 
-/**
- * Created by Christian on 25.09.2016.
- */
+import java.util.List;
+
 public class InteractionJEI implements IInteraction {
     @Override
     public boolean isActive() {
         return false;
+    }
+
+    @Override
+    public void setEnabled(boolean active) {}
+
+    @Override
+    public List<IInteraction> getDependencies() {
+        return null;
+    }
+
+    @Override
+    public List<IInteraction> getIncompatibilities() {
+        return null;
     }
 
     @Override

@@ -6,9 +6,6 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 
 import javax.annotation.Nonnull;
 
-/**
- * Created by Christian on 26.09.2016.
- */
 public class TataraRecipeHandler implements IRecipeHandler<TataraRecipeWrapper> {
     @Nonnull
     @Override

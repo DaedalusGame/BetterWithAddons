@@ -1,15 +1,11 @@
 package betterwithaddons.tileentity;
 
-import betterwithaddons.crafting.CraftingManagerCherryBox;
-import betterwithaddons.crafting.CraftingManagerDryingBox;
-import betterwithaddons.crafting.CraftingManagerSoakingBox;
+import betterwithaddons.crafting.manager.CraftingManagerCherryBox;
+import betterwithaddons.crafting.manager.CraftingManagerSoakingBox;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 
-/**
- * Created by Christian on 28.09.2016.
- */
 public class TileEntitySoakingBox extends TileEntityCherryBox {
     @Override
     public CraftingManagerCherryBox getManager() {

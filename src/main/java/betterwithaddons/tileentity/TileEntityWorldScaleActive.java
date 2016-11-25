@@ -11,7 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class TileEntityWorldScaleActive extends TileEntityBase implements ITickable
 {

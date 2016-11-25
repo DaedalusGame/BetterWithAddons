@@ -4,7 +4,6 @@ import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockModLeaves;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.block.ModWoods;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -12,9 +11,6 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-/**
- * Created by Christian on 04.10.2016.
- */
 public class BlockCherryLeaves extends BlockModLeaves {
 
     public BlockCherryLeaves(ModWoods variant) {

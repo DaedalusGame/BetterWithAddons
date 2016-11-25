@@ -3,9 +3,6 @@ package betterwithaddons.handler;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 
-/**
- * Created by Christian on 10.08.2016.
- */
 public class MobTerritory {
     int id;
     ItemStack banner;

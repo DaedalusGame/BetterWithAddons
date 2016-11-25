@@ -1,7 +1,6 @@
 package betterwithaddons.world;
 
 import com.google.common.collect.Lists;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
@@ -14,9 +13,6 @@ import net.minecraftforge.common.IPlantable;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Christian on 04.10.2016.
- */
 public class WorldGenBigTrees extends WorldGenAbstractTree
 {
     private Random rand;

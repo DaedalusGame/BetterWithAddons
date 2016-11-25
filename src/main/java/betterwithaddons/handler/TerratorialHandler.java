@@ -15,9 +15,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Random;
 
-/**
- * Created by Christian on 08.08.2016.
- */
 public class TerratorialHandler {
     @SubscribeEvent
     public void spawnLiving(LivingSpawnEvent.CheckSpawn spawnEvent)

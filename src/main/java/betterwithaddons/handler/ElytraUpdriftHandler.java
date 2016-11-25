@@ -3,16 +3,11 @@ package betterwithaddons.handler;
 import betterwithaddons.block.BlockElytraMagma;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-/**
- * Created by Christian on 10.08.2016.
- */
 public class ElytraUpdriftHandler {
     @SubscribeEvent
     public void playerTick(TickEvent.PlayerTickEvent tickEvent)

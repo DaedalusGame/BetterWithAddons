@@ -26,9 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Christian on 29.09.2016.
- */
 public class BlockCropRice extends BlockCrops implements IPlantable, IHasVariants {
     public BlockCropRice()
     {
@@ -111,7 +108,7 @@ public class BlockCropRice extends BlockCrops implements IPlantable, IHasVariant
     @Override
     protected Item getCrop()
     {
-        return ModItems.japanMaterial;
+        return ModItems.materialJapan;
     }
 
     @Override
@@ -146,7 +143,7 @@ public class BlockCropRice extends BlockCrops implements IPlantable, IHasVariant
             {
                 if (rand.nextInt(2 * getMaxAge()) <= age)
                 {
-                    ret.add(ModItems.japanMaterial.getMaterial("rice_stalk",1));
+                    ret.add(ModItems.materialJapan.getMaterial("rice_stalk",1));
                 }
             }
         }

@@ -1,10 +1,5 @@
 package betterwithaddons.item;
 
-/**
- * Created by Christian on 31.07.2016.
- */
-
-import betterwithaddons.entity.EntityGreatarrow;
 import betterwithaddons.entity.EntityYa;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,17 +1,14 @@
 package betterwithaddons.client;
 
-/**
- * Created by Christian on 31.07.2016.
- */
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import betterwithaddons.lib.GuiIds;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class GuiHandler implements IGuiHandler
 {

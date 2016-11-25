@@ -15,9 +15,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Christian on 17.09.2016.
- */
 public class BlockColoredBrick extends BlockColored implements IHasVariants {
     public BlockColoredBrick()
     {

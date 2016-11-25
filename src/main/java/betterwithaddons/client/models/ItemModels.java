@@ -1,8 +1,8 @@
 package betterwithaddons.client.models;
 
-import betterwithaddons.util.IHasVariants;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;

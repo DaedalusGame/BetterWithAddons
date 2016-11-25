@@ -16,9 +16,6 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.Iterator;
 
-/**
- * Created by Christian on 19.09.2016.
- */
 public class ContainerCherryBox extends Container {
     private BlockPos pos;
     private final TileEntityCherryBox tileCherryBox;

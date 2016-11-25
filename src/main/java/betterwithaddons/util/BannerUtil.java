@@ -12,9 +12,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**
- * Created by Christian on 03.08.2016.
- */
 public class BannerUtil {
     public static ItemStack getBannerItemFromBlock(World world, BlockPos pos)
     {

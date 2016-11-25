@@ -26,9 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Christian on 29.09.2016.
- */
 public class BlockCropRush extends BlockCrops implements IPlantable, IHasVariants {
     public BlockCropRush()
     {
@@ -126,7 +123,7 @@ public class BlockCropRush extends BlockCrops implements IPlantable, IHasVariant
     @Override
     protected Item getCrop()
     {
-        return ModItems.japanMaterial;
+        return ModItems.materialJapan;
     }
 
     @Override

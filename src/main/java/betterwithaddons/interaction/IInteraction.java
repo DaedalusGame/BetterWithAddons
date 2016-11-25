@@ -1,10 +1,15 @@
 package betterwithaddons.interaction;
 
-/**
- * Created by Christian on 03.08.2016.
- */
+import java.util.List;
+
 public interface IInteraction {
     boolean isActive();
+
+    void setEnabled(boolean active);
+
+    List<IInteraction> getDependencies();
+
+    List<IInteraction> getIncompatibilities();
 
     void preInit();
 

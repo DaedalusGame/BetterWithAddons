@@ -1,6 +1,6 @@
 package betterwithaddons.tileentity;
 
-import betterwithaddons.crafting.CraftingManagerCherryBox;
+import betterwithaddons.crafting.manager.CraftingManagerCherryBox;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -10,9 +10,6 @@ import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 
-/**
- * Created by Christian on 20.09.2016.
- */
 public class TileEntityCherryBox extends TileEntityBase implements ITickable {
     public int workTime;
     public int totalWorkTime;

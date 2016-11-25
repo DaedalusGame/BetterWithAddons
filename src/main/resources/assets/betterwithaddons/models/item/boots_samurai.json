@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "betterwithaddons:items/boots_samurai",
+		"layer1": "betterwithaddons:items/boots_samurai_overlay"
+    }
+}

@@ -1,11 +1,11 @@
 package betterwithaddons.tileentity;
 
-import betterwithaddons.crafting.CraftingManagerTatara;
+import betterwithaddons.crafting.manager.CraftingManagerTatara;
 import betterwithaddons.item.ModItems;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -14,11 +14,6 @@ import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 
-import static betterwithaddons.block.EriottoMod.BlockNettedScreen.SifterType.NONE;
-
-/**
- * Created by Christian on 20.09.2016.
- */
 public class TileEntityTatara extends TileEntityBase implements ITickable {
     public int furnaceBurnTime;
     public int currentItemBurnTime;
@@ -116,7 +111,7 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
     }
 
     public static int getItemBurnTime(ItemStack stack) {
-        if(stack != null && stack.isItemEqual(ModItems.japanMaterial.getMaterial("rice_ash"))) {
+        if(stack != null && stack.isItemEqual(ModItems.materialJapan.getMaterial("rice_ash"))) {
             return 1600;
         }
 

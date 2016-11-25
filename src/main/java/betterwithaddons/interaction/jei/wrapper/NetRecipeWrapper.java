@@ -3,6 +3,7 @@ package betterwithaddons.interaction.jei.wrapper;
 import betterwithaddons.block.EriottoMod.BlockNettedScreen.SifterType;
 import betterwithaddons.crafting.NetRecipe;
 import com.google.common.collect.Lists;
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -12,9 +13,6 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Christian on 26.09.2016.
- */
 public class NetRecipeWrapper extends BlankRecipeWrapper {
     public NetRecipe recipe;
     public SifterType type;
@@ -24,40 +22,41 @@ public class NetRecipeWrapper extends BlankRecipeWrapper {
         this.type = recipe.getType();
     }
 
-    @Nonnull
     @Override
-    public List<Object> getInputs()
+    public void getIngredients(IIngredients ingredients) {
+        ingredients.setInputLists(ItemStack.class,getInputs());
+        ingredients.setOutputs(ItemStack.class,getOutputs());
+    }
+
+    public List<List<ItemStack>> getInputs()
     {
-        List<Object> inputs = getInputWithoutSand();
+        List<List<ItemStack>> inputs = getInputWithoutSand();
 
         int sandrequired = recipe.getSandRequired();
         if(sandrequired > 0)
-            inputs.add(new ItemStack(Blocks.SAND,sandrequired));
+            inputs.add(Lists.newArrayList(new ItemStack(Blocks.SAND,sandrequired)));
 
         return inputs;
     }
 
-    @Nonnull
-    public List<Object> getInputWithoutSand()
+    public List<List<ItemStack>> getInputWithoutSand()
     {
-        List<Object> inputs = new ArrayList<Object>();
+        List<List<ItemStack>> inputs = new ArrayList<>();
         Object obj = recipe.getInput();
 
         if(obj instanceof ItemStack)
         {
             ItemStack stack = (ItemStack)obj;
             if(stack != null && stack.getItem() != null)
-                inputs.add(stack.copy());
+                inputs.add(Lists.newArrayList(stack.copy()));
         }
         else if(obj instanceof List) {
-            inputs.add(((List<?>) obj));
+            inputs.add((List<ItemStack>)obj);
         }
 
         return inputs;
     }
 
-    @Nonnull
-    @Override
     public List<ItemStack> getOutputs()
     {
         List<ItemStack> outputs = new ArrayList<ItemStack>();

@@ -24,9 +24,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Christian on 18.09.2016.
- */
 public class BlockSlat extends Block implements IHasVariants {
     public static final PropertyInteger SANDFILL = PropertyInteger.create("sandfill",0,8);
 

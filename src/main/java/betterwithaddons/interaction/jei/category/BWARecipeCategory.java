@@ -6,9 +6,6 @@ import net.minecraft.util.text.translation.I18n;
 
 import javax.annotation.Nonnull;
 
-/**
- * Created by Christian on 25.09.2016.
- */
 @SuppressWarnings("rawtypes")
 public abstract class BWARecipeCategory extends BlankRecipeCategory
 {

@@ -3,7 +3,10 @@ package betterwithaddons.item;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemFood;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
@@ -19,16 +22,18 @@ public class ModItems
 
     public static Item.ToolMaterial bambooToolMaterial = EnumHelper.addToolMaterial("bamboo", 0, 51, 0.5f, -4.0f, 1);
     {
-        bambooToolMaterial.setRepairItem(japanMaterial.getMaterial("bamboo_slats"));
+        bambooToolMaterial.setRepairItem(materialJapan.getMaterial("bamboo_slats"));
     }
     public static Item.ToolMaterial tamahaganeToolMaterial = EnumHelper.addToolMaterial("tamahagane", 3, 1210, 8.0f, 2.5f, 9);
     {
-        tamahaganeToolMaterial.setRepairItem(japanMaterial.getMaterial("tamahagane_finished"));
+        tamahaganeToolMaterial.setRepairItem(materialJapan.getMaterial("tamahagane_finished"));
     }
     public static Item.ToolMaterial japansteelToolMaterial = EnumHelper.addToolMaterial("japansteel", 3, 1710, 8.0f, 4.0f, 10);
     {
-        japansteelToolMaterial.setRepairItem(japanMaterial.getMaterial("tamahagane_finished"));
+        japansteelToolMaterial.setRepairItem(materialJapan.getMaterial("tamahagane_finished"));
     }
+    public static ItemArmor.ArmorMaterial samuraiArmorMaterial = EnumHelper.addArmorMaterial("SAMURAI", "samurai", 16,
+            new int[] { 2, 6, 5, 2 }, 18, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0);
 
     public static ItemGreatbow greatbow;
     public static ItemGreatarrow greatarrow;
@@ -51,13 +56,22 @@ public class ModItems
     public static ItemFood sashimi;
     public static ItemStainedBrick stainedBrick;
     public static ItemMaterial material;
-    public static ItemMaterial japanMaterial;
+    public static ItemMaterial materialJapan;
+    public static ItemMaterial materialBolt;
+    public static ItemMaterial materialCongealed;
+    public static ItemMaterial materialCrate;
+    public static ItemMaterial materialBag;
+    public static ItemMaterial materialBundle;
     public static ItemKatana katana;
     public static ItemWakizashi wakizashi;
     public static ItemTanto tanto;
     public static ItemShinai shinai;
     public static ItemYumi yumi;
     public static ItemYa ya;
+    public static ItemSamuraiArmor samuraiHelm;
+    public static ItemSamuraiArmor samuraiChestplate;
+    public static ItemSamuraiArmor samuraiLeggings;
+    public static ItemSamuraiArmor samuraiBoots;
 
     public static void load(FMLPreInitializationEvent event)
     {
@@ -106,13 +120,35 @@ public class ModItems
         yumi = (ItemYumi) registerItem("yumi",new ItemYumi());
         ya = (ItemYa) registerItem("ya",new ItemYa());
 
-        japanMaterial = (ItemMaterial)registerItem("japanmat",new ItemMaterial(
+        materialJapan = (ItemMaterial)registerItem("japanmat",new ItemMaterial(
                 new String[]{"rice","soaked_rice","rice_stalk","rice_hay","rice_ash","rush",
                         "soaked_bamboo","bamboo_slats","soaked_mulberry","mulberry_paste","mulberry_sheet","washi",
                         "iron_scales","lamellar","paper_lamellar","tsuka","half_katana_blade","ya_head","yumi_top","yumi_bottom",
                         "tamahagane","tamahagane_heated", "tamahagane_folded","tamahagane_reheated","tamahagane_finished","tamahagane_wrapped",
-                        "hocho_tetsu","hocho_tetsu_heated","hocho_tetsu_fold_1","hocho_tetsu_fold_2","hocho_tetsu_finished"}
+                        "hocho_tetsu","hocho_tetsu_heated","hocho_tetsu_fold_1","hocho_tetsu_fold_2","hocho_tetsu_finished",
+                        "helmet_undecorated","chest_undecorated","legs_undecorated","boots_undecorated"}
         ));
+
+        samuraiHelm = (ItemSamuraiArmor)registerItem("helmet_samurai",new ItemSamuraiArmor(EntityEquipmentSlot.HEAD));
+        samuraiChestplate = (ItemSamuraiArmor)registerItem("chest_samurai",new ItemSamuraiArmor(EntityEquipmentSlot.CHEST));
+        samuraiLeggings = (ItemSamuraiArmor)registerItem("legs_samurai",new ItemSamuraiArmor(EntityEquipmentSlot.LEGS));
+        samuraiBoots = (ItemSamuraiArmor)registerItem("boots_samurai",new ItemSamuraiArmor(EntityEquipmentSlot.FEET));
+
+        materialBag = (ItemMaterial)registerItem("bag",new ItemMaterial(
+                new String[]{"seed","seed_hemp","seed_melon","seed_pumpkin","seed_beets","cocoa","redstone","glowstone","sugar","gunpowder","flour","sulfur","nitre","sawdust","sawdust_soul","potash","hellfire"}
+        ));
+        materialCrate = (ItemMaterial)registerItem("crate",new ItemMaterial(
+                new String[]{"pork","pork_raw","chicken","chicken_raw","steak","steak_raw","mutton","mutton_raw","rabbit","rabbit_raw","egg","slime","enderpearl"}
+        ));
+        materialCongealed = (ItemMaterial)registerItem("congealed",new ItemMaterial(
+                new String[]{"bone","flesh","eye","amanita","mushroom","wart"}
+        ));
+        materialBolt = (ItemMaterial)registerItem("bolt",new ItemMaterial(
+                new String[]{"fabric","vine","paper","leather","scoured_leather","tanned_leather","string"}
+        ));
+        materialBundle = (ItemMaterial)registerItem("bundle",new ItemMaterial(
+                new String[]{"feather","arrows","blazerods","oak","birch","spruce","jungle","acacia","darkoak"}
+        ).setContainer(betterwithmods.items.ItemMaterial.getMaterial("hemp_fibers")));
     }
 
     private static Item registerItem(String name,Item item)

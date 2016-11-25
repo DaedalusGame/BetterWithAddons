@@ -2,7 +2,9 @@ package betterwithaddons.container;
 
 import betterwithaddons.tileentity.TileEntityTatara;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -14,9 +16,6 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.Iterator;
 
-/**
- * Created by Christian on 19.09.2016.
- */
 public class ContainerTatara extends Container {
     private BlockPos pos;
     private final TileEntityTatara tileTatara;

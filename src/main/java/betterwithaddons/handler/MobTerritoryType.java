@@ -6,9 +6,6 @@ import net.minecraft.entity.passive.EntityAnimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Christian on 11.08.2016.
- */
 public class MobTerritoryType {
     public static HashMap<String,MobTerritoryType> typeList = new HashMap<String, MobTerritoryType>();
 

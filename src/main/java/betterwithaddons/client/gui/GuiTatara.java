@@ -11,9 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**
- * Created by Christian on 19.09.2016.
- */
 public class GuiTatara extends GuiContainer {
     private static final ResourceLocation furnaceGuiTextures = new ResourceLocation(Reference.MOD_ID,"textures/gui/tatara.png");
     private TileEntityTatara tileTatara;

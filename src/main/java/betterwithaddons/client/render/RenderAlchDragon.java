@@ -2,19 +2,15 @@ package betterwithaddons.client.render;
 
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityAlchDragon;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelDragonHead;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class RenderAlchDragon extends TileEntitySpecialRenderer<TileEntityAlchDragon> {

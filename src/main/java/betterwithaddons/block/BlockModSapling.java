@@ -3,7 +3,9 @@ package betterwithaddons.block;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.world.WorldGenBigTrees;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.IGrowable;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -19,7 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.WorldGenTrees;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -27,9 +30,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Christian on 02.10.2016.
- */
 public class BlockModSapling extends BlockBush implements IGrowable, IPlantable {
     protected IBlockState leaves = Blocks.AIR.getDefaultState();
     protected IBlockState log = Blocks.AIR.getDefaultState();

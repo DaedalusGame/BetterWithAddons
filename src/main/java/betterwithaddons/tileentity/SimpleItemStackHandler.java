@@ -4,9 +4,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.ItemStackHandler;
 
-/**
- * Created by Christian on 20.09.2016.
- */
 public class SimpleItemStackHandler extends ItemStackHandler {
 
     private final boolean allowWrite;

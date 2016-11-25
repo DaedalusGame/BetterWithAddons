@@ -6,15 +6,30 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-/**
- * Created by Christian on 13.08.2016.
- */
+import java.util.List;
+
 public class InteractionQuark implements IInteraction {
     final String modid = "Quark";
+    public static boolean ENABLED = true;
 
     @Override
     public boolean isActive() {
-        return Loader.isModLoaded(modid);
+        return ENABLED && Loader.isModLoaded(modid);
+    }
+
+    @Override
+    public void setEnabled(boolean active) {
+        ENABLED = active;
+    }
+
+    @Override
+    public List<IInteraction> getDependencies() {
+        return null;
+    }
+
+    @Override
+    public List<IInteraction> getIncompatibilities() {
+        return null;
     }
 
     @Override

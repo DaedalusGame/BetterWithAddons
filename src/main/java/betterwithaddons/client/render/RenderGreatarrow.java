@@ -1,8 +1,6 @@
 package betterwithaddons.client.render;
 
-import betterwithaddons.entity.EntityGreatarrow;
 import betterwithaddons.lib.Reference;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;

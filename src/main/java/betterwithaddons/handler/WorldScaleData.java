@@ -1,18 +1,13 @@
 package betterwithaddons.handler;
 
 import betterwithaddons.block.BlockWorldScaleActive;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,19 +102,9 @@ public class WorldScaleData extends WorldSavedData
         if(currenttick <= lastCleanup + 100)
             return;
 
-        ArrayList<ChunkPos> releasedChunks = new ArrayList<ChunkPos>();
+        boolean dirty = WorldScales.entrySet().removeIf(x -> worldObj.isBlockLoaded(x.getValue()) && !(worldObj.getBlockState(x.getValue()).getBlock() instanceof BlockWorldScaleActive));
 
-        for(Map.Entry<ChunkPos, BlockPos> entry : WorldScales.entrySet()) {
-            BlockPos pos = entry.getValue();
-            IBlockState blockstate = worldObj.getBlockState(pos);
-            if(worldObj.isBlockLoaded(pos) && !(blockstate.getBlock() instanceof BlockWorldScaleActive))
-                releasedChunks.add(entry.getKey());
-        }
-
-        for(ChunkPos chunk : releasedChunks)
-            WorldScales.remove(chunk);
-
-        if(releasedChunks.size() > 0)
+        if(dirty)
             this.markDirty();
 
         lastCleanup = currenttick;

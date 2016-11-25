@@ -13,9 +13,6 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Christian on 02.08.2016.
- */
 public class BlockWorldScaleActive extends BlockContainerBase implements IHasVariants {
     public BlockWorldScaleActive() {
         super("world_scale_active", Material.ROCK);

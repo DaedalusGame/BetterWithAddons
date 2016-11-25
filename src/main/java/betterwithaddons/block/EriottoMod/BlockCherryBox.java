@@ -5,7 +5,6 @@ import betterwithaddons.block.BlockContainerBase;
 import betterwithaddons.lib.GuiIds;
 import betterwithaddons.tileentity.TileEntityDryingBox;
 import betterwithaddons.tileentity.TileEntitySoakingBox;
-import betterwithaddons.tileentity.TileEntityTatara;
 import betterwithaddons.util.IHasVariants;
 import betterwithmods.util.InvUtils;
 import net.minecraft.block.material.Material;
@@ -33,9 +32,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Christian on 19.09.2016.
- */
 public class BlockCherryBox extends BlockContainerBase implements IHasVariants {
     public static final PropertyEnum VARIANT = PropertyEnum.create("variant", CherryBoxType.class);
 

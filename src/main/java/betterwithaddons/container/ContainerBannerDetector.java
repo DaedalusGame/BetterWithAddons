@@ -1,9 +1,8 @@
 package betterwithaddons.container;
 
+import betterwithaddons.container.slots.SlotFiltered;
 import betterwithaddons.tileentity.TileEntityBannerDetector;
 import com.google.common.base.Predicate;
-
-import betterwithaddons.container.slots.SlotFiltered;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;

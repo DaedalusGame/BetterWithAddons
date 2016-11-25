@@ -2,7 +2,6 @@ package betterwithaddons.tileentity;
 
 import betterwithaddons.lib.Reference;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModTileEntities

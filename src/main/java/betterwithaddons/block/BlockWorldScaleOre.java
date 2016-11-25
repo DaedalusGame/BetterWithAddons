@@ -1,13 +1,10 @@
 package betterwithaddons.block;
 
-import betterwithaddons.BetterWithAddons;
-import betterwithaddons.lib.Reference;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -27,9 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Christian on 02.08.2016.
- */
 public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
     public static final PropertyInteger CRACKED = PropertyInteger.create("cracked",0,5);
 
@@ -120,6 +114,14 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
         rlist.add(new ModelResourceLocation(this.getRegistryName(), "cracked=5"));
 
         return rlist;
+    }
+
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+        if(isBroken(state))
+            return super.removedByPlayer(state,world,pos,player,willHarvest);
+
+        return false;
     }
 
     @Override

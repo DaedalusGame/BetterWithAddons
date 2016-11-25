@@ -13,9 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-/**
- * Created by Christian on 12.09.2016.
- */
 public class BlockModPlanks extends Block
 {
     ModWoods woodVariant;

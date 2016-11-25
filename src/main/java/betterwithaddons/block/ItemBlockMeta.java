@@ -2,16 +2,9 @@ package betterwithaddons.block;
 
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-import java.util.List;
-
-/**
- * Created by Christian on 29.09.2016.
- */
 public class ItemBlockMeta extends ItemBlock
 {
     IHasVariants variantBlock;

@@ -1,29 +1,17 @@
 package betterwithaddons.item;
 
-import betterwithaddons.entity.EntityGreatarrow;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.PotionTypes;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionHealth;
-import net.minecraft.potion.PotionHelper;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
 
-/**
- * Created by Christian on 26.09.2016.
- */
 public class ItemTanto extends ItemSword {
     public ItemTanto()
     {

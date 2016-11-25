@@ -5,9 +5,6 @@ import mezz.jei.api.IGuiHelper;
 import mezz.jei.util.Translator;
 import net.minecraft.util.ResourceLocation;
 
-/**
- * Created by Christian on 26.09.2016.
- */
 public class SoakingBoxRecipeCategory extends CherryBoxRecipeCategory {
     public SoakingBoxRecipeCategory(IGuiHelper helper) {
         super(helper);

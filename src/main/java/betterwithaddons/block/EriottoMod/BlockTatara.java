@@ -21,9 +21,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Christian on 19.09.2016.
- */
 public class BlockTatara extends BlockContainerBase implements IHasVariants {
     public BlockTatara()
     {

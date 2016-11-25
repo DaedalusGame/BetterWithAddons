@@ -1,3 +1,12 @@
+itemGroup.bwa.name=Better With Addons
+
+inv.soakingbox.name=Soaking Unit
+inv.dryingbox.name=Drying Unit
+inv.tatara.name=Tatara
+inv.firenet.name=Netted Screen
+inv.waternet.name=Netted Screen
+inv.sandnet.name=Netted Screen
+
 tile.banner_detector.name=Banner Detector
 tile.world_scale_ore.name=World Scale Ore
 tile.world_scale_ore.broken.name=Rough World Scale
@@ -16,7 +25,7 @@ tile.planks_mulberry.name=Mulberry Wood Planks
 tile.planks_sakura.name=Sakura Wood Planks
 tile.leaves_mulberry.name=Mulberry Leaves
 tile.leaves_sakura.name=Sakura Leaves
-tile.sapling_sakura.name=Sakura Sapling
+tile.sapling_mulberry.name=Mulberry Sapling
 tile.sapling_sakura.name=Sakura Sapling
 tile.leafpile_sakura.name=Sakura Leafpile
 tile.slat.name=Bamboo Slat Block
@@ -129,6 +138,15 @@ item.japanmat.hocho_tetsu_heated.name=Heated Hocho-Tetsu
 item.japanmat.hocho_tetsu_fold_1.name=Once-folded Hocho-Tetsu
 item.japanmat.hocho_tetsu_fold_2.name=Twice-folded Hocho-Tetsu
 item.japanmat.hocho_tetsu_finished.name=Finished Hocho-Tetsu
+item.japanmat.helmet_undecorated.name=Undecorated Samurai Helmet
+item.japanmat.chest_undecorated.name=Undecorated Samurai Chestplate
+item.japanmat.legs_undecorated.name=Undecorated Samurai Leggings
+item.japanmat.boots_undecorated.name=Undecorated Samurai Boots
+
+item.helmet_samurai.name=Samurai Helmet [WIP]
+item.chest_samurai.name=Samurai Chestplate [WIP]
+item.legs_samurai.name=Samurai Leggings [WIP]
+item.boots_samurai.name=Samurai Boots [WIP]
 
 
 

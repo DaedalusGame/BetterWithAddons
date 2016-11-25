@@ -1,10 +1,7 @@
 package betterwithaddons.client.gui;
 
 import betterwithaddons.container.ContainerCherryBox;
-import betterwithaddons.container.ContainerTatara;
-import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityCherryBox;
-import betterwithaddons.tileentity.TileEntityTatara;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -13,9 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-/**
- * Created by Christian on 19.09.2016.
- */
 public abstract class GuiCherryBox extends GuiContainer {
     private final ResourceLocation boxGuiLocation;
     private TileEntityCherryBox tileBox;

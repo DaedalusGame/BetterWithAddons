@@ -12,12 +12,12 @@ import java.util.List;
 
 public class NetRecipe
 {
-    protected ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
-    protected Object input = null;
-    protected Object jeiInput = null;
-    protected int sandrequired = 0;
+    public ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
+    public Object input = null;
+    public Object jeiInput = null;
+    public int sandrequired = 0;
 
-    protected SifterType type = SifterType.NONE;
+    public SifterType type = SifterType.NONE;
 
     public NetRecipe(SifterType type, Object input, int sand, ItemStack... outputs)
     {

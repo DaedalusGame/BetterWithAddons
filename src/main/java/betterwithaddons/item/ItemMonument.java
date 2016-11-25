@@ -1,9 +1,5 @@
 package betterwithaddons.item;
 
-/**
- * Created by Christian on 31.07.2016.
- */
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;

@@ -1,7 +1,6 @@
 package betterwithaddons.container.slots;
 
 import com.google.common.base.Predicate;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

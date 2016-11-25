@@ -12,9 +12,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Christian on 18.09.2016.
- */
 public class ItemStainedBrick extends Item implements IHasVariants {
     public ItemStainedBrick() {
         this.setHasSubtypes(true);

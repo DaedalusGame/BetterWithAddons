@@ -1,30 +1,24 @@
 package betterwithaddons.tileentity;
 
-import java.util.List;
-
+import betterwithaddons.block.BlockBannerDetector;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.util.BannerUtil;
 import betterwithaddons.util.InventoryUtil;
 import com.google.common.base.Predicate;
-
-import betterwithaddons.block.BlockBannerDetector;
 import net.minecraft.block.BlockBanner;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+
+import java.util.List;
 
 public class TileEntityBannerDetector extends TileEntityBase implements ITickable
 {

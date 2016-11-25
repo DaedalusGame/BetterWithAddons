@@ -1,14 +1,10 @@
 package betterwithaddons.tileentity;
 
-import betterwithaddons.crafting.CraftingManagerCherryBox;
-import betterwithaddons.crafting.CraftingManagerDryingBox;
+import betterwithaddons.crafting.manager.CraftingManagerCherryBox;
+import betterwithaddons.crafting.manager.CraftingManagerDryingBox;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.EnumSkyBlock;
 
-/**
- * Created by Christian on 28.09.2016.
- */
 public class TileEntityDryingBox extends TileEntityCherryBox {
     @Override
     public boolean isWorking()

@@ -35,18 +35,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Christian on 05.08.2016.
- */
-public class BlockExtraGrass extends BlockGrass implements IColorableBlock, IHasVariants {
+public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVariants {
     @Override
     public IBlockColor getBlockColor() {
-        return BlockColors.GRASS_COLORING;
+        return ColorHandlers.GRASS_COLORING;
     }
 
     @Override
     public IItemColor getItemColor() {
-        return BlockColors.BLOCK_ITEM_COLORING;
+        return ColorHandlers.BLOCK_ITEM_COLORING;
     }
 
     // add properties (note we also inherit the SNOWY property from BlockGrass)
