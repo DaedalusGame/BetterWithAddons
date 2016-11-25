@@ -62,7 +62,6 @@ public class InteractionBWM implements IInteraction {
         String oreIronIngot = "ingotIron";
         GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.material.getMaterial("arrowhead")," o ","ooo","o o",'o',"nuggetSoulforgedSteel"));
         GameRegistry.addShapedRecipe(new ItemStack(ModItems.greatarrow,1),"a","b","c",'a',arrowhead,'b',haft,'c',feather);
-        //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.greatbow,1),"bac","ed ","bac",'a',oreIronIngot,'b',haft,'c',string,'d',bow,'e',glue));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.greatbow,1)," bc","b c"," bc",'b',haft,'c',string));
         BWMRecipeHelper.addStokedCauldronRecipe(new ItemStack(ModBlocks.pcbblock),null,new Object[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Blocks.STONEBRICK), "dustPotash" });
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedBeetroot),null,new Object[] { new ItemStack(Items.BEETROOT) });
@@ -73,7 +72,6 @@ public class InteractionBWM implements IInteraction {
         BWMRecipeHelper.addCauldronRecipe(ModItems.material.getMaterial("midori_popped"),null,new Object[] { ModItems.material.getMaterial("midori") });
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(Items.CHORUS_FRUIT_POPPED),null,new Object[] { new ItemStack(Items.CHORUS_FRUIT,1) });
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.meatballs),null,new Object[] { new ItemStack(ModItems.groundMeat,3) });
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.chocolate),new ItemStack(Items.BUCKET),new Object[] { new ItemStack(Items.DYE,1,3),new ItemStack(Items.SUGAR),new ItemStack(Items.MILK_BUCKET) });
         BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,3),null,new Object[] { new ItemStack(Items.BEEF) });
         BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,2),null,new Object[] { new ItemStack(Items.MUTTON) });
         BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,1),null,new Object[] { new ItemStack(Items.CHICKEN) });

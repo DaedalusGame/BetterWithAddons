@@ -49,7 +49,6 @@ public class ModItems
     public static ItemFood pieMeat;
     public static ItemFood pieMushroom;
     public static ItemFood pieAmanita;
-    public static ItemFood chocolate;
     public static ItemFood meatballs;
     public static ItemFood cookedEgg;
     public static ItemFood groundMeat;
@@ -99,7 +98,6 @@ public class ModItems
         bakedCarrot = (ItemFood)registerItem("food_carrot_baked",new ItemFood(4, 5.0F, false));
         cookedPotato = (ItemFood)registerItem("food_potato_cooked",new ItemFood(4, 5.0F, false));
         cookedEgg = (ItemFood)registerItem("food_egg_cooked",new ItemFood(4, 4.0F, false));
-        chocolate = (ItemFood)registerItem("food_chocolate",new ItemFood(5, 2.4F, false));
         meatballs = (ItemFood)registerItem("food_meatballs",new ItemFood(6, 9.6F, true));
 
         groundMeat = (ItemFood)registerItem("food_ground_meat",new ItemFood(2, 0.8F, true));

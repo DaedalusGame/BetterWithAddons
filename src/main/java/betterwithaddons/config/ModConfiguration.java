@@ -25,6 +25,7 @@ public class ModConfiguration {
         configuration.get("interaction.BetterWithMods", "MillClay", true).setComment("Hardened clay can be milled into bricks, saving fuel and allowing dyed bricks.");
 
         InteractionEriottoMod.ENABLED = configuration.get("addons.EriottoMod", "Enabled", true).getBoolean();
+        InteractionEriottoMod.GRASS_DROPS_SEEDS = configuration.get("addons.EriottoMod", "GrassDropsSeeds", true).getBoolean();
         InteractionCondensedOutputs.ENABLED = configuration.get("addons.CondensedOutputs", "Enabled", true).getBoolean();
         InteractionCondensedOutputs.LOSE_BINDER = configuration.get("addons.CondensedOutputs", "LoseBinder", false).getBoolean();
 

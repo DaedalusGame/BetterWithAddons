@@ -36,6 +36,7 @@ public class ModBlocks
     public static BlockTatara tatara;
     public static BlockCherryBox cherrybox;
     public static BlockWorldScaleOre worldScaleOre;
+    public static BlockBamboo bamboo;
     public static BlockModLeaves sakuraLeaves;
     public static BlockModSapling sakuraSapling;
     public static BlockModLeaves mulberryLeaves;
@@ -72,6 +73,7 @@ public class ModBlocks
         sakuraLeafPile = (BlockCherryLeafPile) addBlock(new BlockCherryLeafPile());
         rush = (BlockCropRush) addBlock(new BlockCropRush());
         rice = (BlockCropRice) addBlock(new BlockCropRice());
+        bamboo = (BlockBamboo) addBlock(new BlockBamboo());
         bambooSlats = (BlockSlat) addBlock(new BlockSlat());
         nettedScreen = (BlockNettedScreen) addBlock(new BlockNettedScreen());
         ironSand = (BlockIronSand) addBlock(new BlockIronSand());

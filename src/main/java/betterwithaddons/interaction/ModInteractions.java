@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class ModInteractions {
     public static ArrayList<IInteraction> LIST = new ArrayList<>();
 
+    public static InteractionBWA bwa;
     public static InteractionBWM bwm;
     public static InteractionQuark quark;
     public static InteractionJEI jei;
@@ -16,6 +17,7 @@ public class ModInteractions {
     public static InteractionCondensedOutputs condensedOutputs;
 
     public static void preInit(FMLPreInitializationEvent event) {
+        bwa = (InteractionBWA) addInteraction(new InteractionBWA());
         bwm = (InteractionBWM) addInteraction(new InteractionBWM());
         quark = (InteractionQuark) addInteraction(new InteractionQuark());
         jei = (InteractionJEI) addInteraction(new InteractionJEI());

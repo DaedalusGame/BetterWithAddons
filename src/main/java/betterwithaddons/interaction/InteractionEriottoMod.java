@@ -4,9 +4,14 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.ArmorDecorateRecipe;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.item.ModItems;
+import betterwithmods.BWMItems;
+import betterwithmods.items.ItemMaterial;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -14,6 +19,7 @@ import java.util.List;
 
 public class InteractionEriottoMod implements IInteraction {
     public static boolean ENABLED = true;
+    public static boolean GRASS_DROPS_SEEDS = true;
 
     @Override
     public boolean isActive() {
@@ -57,6 +63,14 @@ public class InteractionEriottoMod implements IInteraction {
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberryPlanks),new ItemStack(ModBlocks.mulberryLog));
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("mulberry_sheet"),"aa","aa",'a',ModItems.materialJapan.getMaterial("mulberry_paste"));
 
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling),new ItemStack(Blocks.SAPLING,1,BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.DYE,1,EnumDyeColor.PINK.getDyeDamage()));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling),new ItemStack(Blocks.SAPLING,1,BlockPlanks.EnumType.BIRCH.getMetadata()),new ItemStack(Items.DYE,1,EnumDyeColor.YELLOW.getDyeDamage()));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo),new ItemStack(Items.REEDS,1),new ItemStack(Items.DYE,1,EnumDyeColor.WHITE.getDyeDamage()));
+        if(GRASS_DROPS_SEEDS) {
+            MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rice), 2);
+            MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rush), 2);
+        }
+
         addFoldingRecipe(ModItems.materialJapan.getMaterial("hocho_tetsu_fold_1"),ModItems.materialJapan.getMaterial("hocho_tetsu_heated"));
         addFoldingRecipe(ModItems.materialJapan.getMaterial("hocho_tetsu_fold_2"),ModItems.materialJapan.getMaterial("hocho_tetsu_fold_1"));
         addFoldingRecipe(ModItems.materialJapan.getMaterial("hocho_tetsu_finished"),ModItems.materialJapan.getMaterial("hocho_tetsu_fold_2"));
@@ -99,6 +113,7 @@ public class InteractionEriottoMod implements IInteraction {
 
         GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("rice_stalk"),ModItems.materialJapan.getMaterial("rice_ash"),0.1f);
 
+        CraftingManagerSoakingBox.instance().addWorkingRecipe(new ItemStack(ModBlocks.bamboo),ModItems.materialJapan.getMaterial("soaked_bamboo"));
         CraftingManagerSoakingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("rice"),ModItems.materialJapan.getMaterial("soaked_rice"));
         CraftingManagerSoakingBox.instance().addWorkingRecipe(new ItemStack(ModBlocks.mulberryLog),ModItems.materialJapan.getMaterial("soaked_mulberry"));
 
