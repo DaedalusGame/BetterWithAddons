@@ -11,6 +11,7 @@ import java.util.List;
 public class InteractionQuark implements IInteraction {
     final String modid = "Quark";
     public static boolean ENABLED = true;
+    public static boolean MIDORI_BLOCKS_NEED_CHUNKS = true;
 
     @Override
     public boolean isActive() {
@@ -44,8 +45,10 @@ public class InteractionQuark implements IInteraction {
 
         ItemStack midori = InteractionHelper.findBlock(modid,"midori_block",4,0);
 
-        BetterWithAddons.removeCraftingRecipe(midori);
-        GameRegistry.addShapedRecipe(midori,"mm","mm",'m',ModItems.material.getMaterial("midori_popped"));
+        if(MIDORI_BLOCKS_NEED_CHUNKS) {
+            BetterWithAddons.removeCraftingRecipe(midori);
+            GameRegistry.addShapedRecipe(midori, "mm", "mm", 'm', ModItems.material.getMaterial("midori_popped"));
+        }
     }
 
     @Override

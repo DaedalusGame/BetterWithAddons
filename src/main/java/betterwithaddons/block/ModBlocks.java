@@ -42,6 +42,8 @@ public class ModBlocks
     public static BlockModLeaves mulberryLeaves;
     public static BlockModSapling mulberrySapling;
     public static BlockCherryLeafPile sakuraLeafPile;
+    public static BlockThornRose thornrose;
+    public static BlockThorns thorns;
 
 
     public static void load(FMLPreInitializationEvent event) {
@@ -54,6 +56,8 @@ public class ModBlocks
         pcbwire = (BlockWirePCB) addBlock(new BlockWirePCB());
         pcbblock = (BlockPCB) addBlock(new BlockPCB());
         lattice = (BlockLattice) addBlock(new BlockLattice());
+        thornrose = (BlockThornRose) addBlock(new BlockThornRose());
+        thorns = (BlockThorns) addBlock(new BlockThorns());
         //alchDragon = (BlockAlchDragon) addBlock(new BlockAlchDragon());
 
         mulberryLeaves = (BlockModLeaves) addBlock(new BlockModLeaves(ModWoods.MULBERRY));

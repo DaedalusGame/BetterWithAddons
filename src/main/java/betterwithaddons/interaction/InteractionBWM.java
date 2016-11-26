@@ -3,11 +3,18 @@ package betterwithaddons.interaction;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.item.ModItems;
+import betterwithmods.BWMBlocks;
 import betterwithmods.api.BWMRecipeHelper;
 import betterwithmods.blocks.BlockBUD;
+import betterwithmods.blocks.BlockRope;
+import betterwithmods.blocks.BlockUrn;
+import betterwithmods.craft.bulk.CraftingManagerCauldron;
+import betterwithmods.items.ItemMaterial;
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -20,6 +27,8 @@ public class InteractionBWM implements IInteraction {
     final String modid = "betterwithmods";
     public static boolean ENABLED = true;
     public static boolean MILL_CLAY = true;
+    public static boolean CHORUS_IN_CAULDRON = true;
+
 
     @Override
     public boolean isActive() {
@@ -54,11 +63,9 @@ public class InteractionBWM implements IInteraction {
         BlockBUD.addBlacklistBlock(ModBlocks.pcbwire);
 
         ItemStack arrowhead = ModItems.material.getMaterial("arrowhead");
-        ItemStack haft = InteractionHelper.findItem(modid,"material",1,38);
-        ItemStack glue = InteractionHelper.findItem(modid,"material",1,12);
-        ItemStack string = InteractionHelper.findItem(modid,"rope",1,0);
+        ItemStack haft = ItemMaterial.getMaterial("haft");
+        ItemStack string = new ItemStack(BWMBlocks.ROPE);
         ItemStack feather = new ItemStack(Items.FEATHER);
-        ItemStack bow = new ItemStack(Items.BOW);
         String oreIronIngot = "ingotIron";
         GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.material.getMaterial("arrowhead")," o ","ooo","o o",'o',"nuggetSoulforgedSteel"));
         GameRegistry.addShapedRecipe(new ItemStack(ModItems.greatarrow,1),"a","b","c",'a',arrowhead,'b',haft,'c',feather);
@@ -68,9 +75,9 @@ public class InteractionBWM implements IInteraction {
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedCarrot),null,new Object[] { new ItemStack(Items.CARROT) });
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedPotato),null,new Object[] { new ItemStack(Items.POTATO) });
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedEgg),null,new Object[] { new ItemStack(Items.EGG) });
+
         BWMRecipeHelper.addCauldronRecipe(ModItems.material.getMaterial("bone_ingot"),null,new Object[] { new ItemStack(Items.BONE,2),new ItemStack(Items.DYE,8,15) });
         BWMRecipeHelper.addCauldronRecipe(ModItems.material.getMaterial("midori_popped"),null,new Object[] { ModItems.material.getMaterial("midori") });
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(Items.CHORUS_FRUIT_POPPED),null,new Object[] { new ItemStack(Items.CHORUS_FRUIT,1) });
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.meatballs),null,new Object[] { new ItemStack(ModItems.groundMeat,3) });
         BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,3),null,new Object[] { new ItemStack(Items.BEEF) });
         BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,2),null,new Object[] { new ItemStack(Items.MUTTON) });
@@ -79,6 +86,15 @@ public class InteractionBWM implements IInteraction {
         BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,1),null,new Object[] { new ItemStack(Items.RABBIT) });
 
         BWMRecipeHelper.addMillRecipe(new ItemStack(ModBlocks.worldScale,1),null,new Object[] { new ItemStack(ModBlocks.worldScaleOre,1,1) });
+
+        //Thorn Vines
+        ItemStack rosebush = new ItemStack(Blocks.DOUBLE_PLANT, 4, BlockDoublePlant.EnumPlantType.ROSE.getMeta());
+        ItemStack thornrose = ModItems.material.getMaterial("thornrose",2);
+        ItemStack soulurn = new ItemStack(BWMBlocks.URN,1,BlockUrn.EnumUrnType.FULL.getMeta());
+        ItemStack cactus = new ItemStack(Blocks.CACTUS,1);
+        ItemStack dung = ItemMaterial.getMaterial("dung",1);
+        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModBlocks.thornrose),null,new Object[] {cactus,rosebush,dung,soulurn});
+        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModBlocks.thornrose),null,new Object[] {cactus,thornrose,dung,soulurn});
 
         if(MILL_CLAY) {
             BWMRecipeHelper.addMillRecipe(new ItemStack(Items.BRICK, 4),null,new Object[] { new ItemStack(Blocks.HARDENED_CLAY, 1) });
@@ -94,13 +110,20 @@ public class InteractionBWM implements IInteraction {
             }
         }
 
-        BetterWithAddons.instance.removeSmeltingRecipe(new ItemStack(Items.CHORUS_FRUIT_POPPED));
+        if(CHORUS_IN_CAULDRON)
+            BetterWithAddons.instance.removeSmeltingRecipe(new ItemStack(Items.CHORUS_FRUIT_POPPED));
+        else
+            GameRegistry.addSmelting(ModItems.material.getMaterial("midori"),ModItems.material.getMaterial("midori_popped"),0.1f);
 
         fixRecipes();
     }
 
     @Override
     public void postInit() {
+        //Fixes baked stuff showing up in the cauldron
+        removeCauldronRecipe(new ItemStack(Items.BAKED_POTATO));
+        removeCauldronRecipe(new ItemStack(ModItems.bakedCarrot));
+        removeCauldronRecipe(new ItemStack(ModItems.bakedBeetroot));
     }
 
     public void fixRecipes()
@@ -120,5 +143,10 @@ public class InteractionBWM implements IInteraction {
         small = small.copy();
         small.stackSize = 9;
         GameRegistry.addRecipe(new ShapelessOreRecipe(small, oreBig));
+    }
+
+    private static void removeCauldronRecipe(ItemStack output)
+    {
+        CraftingManagerCauldron.getInstance().getRecipes().removeIf(r -> r.getOutput().isItemEqual(output));
     }
 }

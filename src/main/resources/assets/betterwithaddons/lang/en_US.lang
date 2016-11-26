@@ -13,8 +13,10 @@ tile.world_scale_ore.broken.name=Rough World Scale
 tile.world_scale.name=World Scale
 tile.world_scale_active.name=Engraved World Scale
 tile.elytra_magma.name=Magma Verus Block
-tile.extra_grass.name=Grass
+tile.extra_grass.name=Grass [WIP]
 tile.lattice.name=Iron Lattice
+tile.thorns.name=Thorny Vine
+tile.thorn_rose.name=Thorny Vine Seed
 
 tile.pcb_wire.name=Redstone Wire
 tile.pcb_block.name=PCB

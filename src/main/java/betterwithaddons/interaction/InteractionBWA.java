@@ -6,6 +6,10 @@ import betterwithaddons.item.ModItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTableManager;
+import net.minecraftforge.common.DungeonHooks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -13,6 +17,8 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import java.util.List;
 
 public class InteractionBWA implements IInteraction {
+    public static boolean STONEBRICKS_NEED_SMELTING = false;
+
     @Override
     public boolean isActive() {
         return true;
@@ -74,9 +80,12 @@ public class InteractionBWA implements IInteraction {
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.elytraMagma,1),"aa","aa",'a',ModItems.material.getMaterial("ender_cream"));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.bannerDetector,1),"aaa","o r","aaa",'a',new ItemStack(Blocks.COBBLESTONE),'o',new ItemStack(Items.ENDER_EYE),'r',new ItemStack(Items.REDSTONE));
 
-        BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK,4));
-        GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONEBRICK,1),"aa","aa",'a',ModItems.material.getMaterial("stone_brick"));
-        GameRegistry.addSmelting(Blocks.STONE,ModItems.material.getMaterial("stone_brick",4),0.1f);
+
+        if(STONEBRICKS_NEED_SMELTING) {
+            BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 4));
+            GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONEBRICK, 1), "aa", "aa", 'a', ModItems.material.getMaterial("stone_brick"));
+            GameRegistry.addSmelting(Blocks.STONE, ModItems.material.getMaterial("stone_brick", 4), 0.1f);
+        }
     }
 
     @Override

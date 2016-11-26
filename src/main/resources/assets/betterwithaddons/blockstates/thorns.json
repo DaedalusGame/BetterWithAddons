@@ -1,0 +1,87 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"transform": "forge:default-block",
+	"textures": { 
+		"texture": "betterwithaddons:blocks/thorn_vine",
+        "inside": "betterwithaddons:blocks/thorn_vine",
+        "particle": "betterwithaddons:blocks/thorn_vine"
+	}
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+	"north":{
+		"true":{
+			"submodel": {
+				"north": { "model": "chorus_plant_side" }
+			}
+		},
+		"false":{
+			"submodel": {
+				"north": { "model": "chorus_plant_noside" }
+			}
+		}
+	},
+	"east":{
+		"true":{
+			"submodel": {
+				"east": { "model": "chorus_plant_side", "y": 90, "uvlock": true }
+			}
+		},
+		"false":{
+			"submodel": {
+				"east": { "model": "chorus_plant_noside", "y": 90, "uvlock": true }
+			}
+		}
+	},
+	"south":{
+		"true":{
+			"submodel": {
+				"south": { "model": "chorus_plant_side", "y": 180, "uvlock": true }
+			}
+		},
+		"false":{
+			"submodel": {
+				"south": { "model": "chorus_plant_noside", "y": 180, "uvlock": true }
+			}
+		}
+	},
+	"west":{
+		"true":{
+			"submodel": {
+				"west": { "model": "chorus_plant_side", "y": 270, "uvlock": true }
+			}
+		},
+		"false":{
+			"submodel": {
+				"west": { "model": "chorus_plant_noside", "y": 270, "uvlock": true }
+			}
+		}
+	},
+	"up":{
+		"true":{
+			"submodel": {
+				"up": { "model": "chorus_plant_side", "x": 270, "uvlock": true }
+			}
+		},
+		"false":{
+			"submodel": {
+				"up": { "model": "chorus_plant_noside", "x": 270, "uvlock": true }
+			}
+		}
+	},
+	"down":{
+		"true":{
+			"submodel": {
+				"down": { "model": "chorus_plant_side", "x": 90, "uvlock": true }
+			}
+		},
+		"false":{
+			"submodel": {
+				"down": { "model": "chorus_plant_noside", "x": 90, "uvlock": true }
+			}
+		}
+	}
+  }
+}
