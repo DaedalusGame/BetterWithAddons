@@ -146,7 +146,7 @@ public class ModItems
         ));
         materialBundle = (ItemMaterial)registerItem("bundle",new ItemMaterial(
                 new String[]{"feather","arrows","blazerods","oak","birch","spruce","jungle","acacia","darkoak"}
-        ).setContainer(betterwithmods.items.ItemMaterial.getMaterial("hemp_fibers")));
+        ));
     }
 
     private static Item registerItem(String name,Item item)
