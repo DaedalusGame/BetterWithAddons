@@ -11,6 +11,7 @@ import betterwithmods.blocks.BlockUrn;
 import betterwithmods.craft.bulk.CraftingManagerCauldron;
 import betterwithmods.items.ItemMaterial;
 import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -95,6 +96,13 @@ public class InteractionBWM implements IInteraction {
         ItemStack dung = ItemMaterial.getMaterial("dung",1);
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModBlocks.thornrose),null,new Object[] {cactus,rosebush,dung,soulurn});
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModBlocks.thornrose),null,new Object[] {cactus,thornrose,dung,soulurn});
+
+        //Alicio Sapling
+        ItemStack wheat = new ItemStack(Items.WHEAT,16);
+        ItemStack flesh = new ItemStack(Items.ROTTEN_FLESH,4);
+        ItemStack red = new ItemStack(Items.DYE,8,EnumDyeColor.RED.getDyeDamage());
+        ItemStack tree = new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.BIRCH.getMetadata());
+        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModBlocks.luretreeSapling),null,new Object[] {tree,wheat,red,flesh});
 
         if(MILL_CLAY) {
             BWMRecipeHelper.addMillRecipe(new ItemStack(Items.BRICK, 4),null,new Object[] { new ItemStack(Blocks.HARDENED_CLAY, 1) });
