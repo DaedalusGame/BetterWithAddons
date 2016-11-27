@@ -31,7 +31,6 @@ public class InteractionBWM implements IInteraction {
     public static boolean CHORUS_IN_CAULDRON = true;
     public static boolean BUTCHER_BLOCKS = true;
 
-
     @Override
     public boolean isActive() {
         return ENABLED && Loader.isModLoaded(modid);

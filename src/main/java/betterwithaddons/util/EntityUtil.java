@@ -24,7 +24,7 @@ public class EntityUtil {
             {
                 if(!world.isAirBlock(pos.down(i)))
                 {
-                    return pos;
+                    return pos.down(i);
                 }
             }
 

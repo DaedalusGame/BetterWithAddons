@@ -7,7 +7,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,15 +28,15 @@ public class ButcherHandler {
         if(attacker == null || target == null)
             return;
         World world = attacker.getEntityWorld();
-        BlockPos pos = EntityUtil.getEntityFloor(attacker,2);
+        BlockPos pos = EntityUtil.getEntityFloor(target,2);
 
         if(!world.isRemote)
         {
             IBlockState state = world.getBlockState(pos);
-            if(isChopBlock(state))
+            if(isChopBlock(state) && isSuitableWeapon(attacker.getHeldItemMainhand()))
             {
-                attacker.addPotionEffect(new PotionEffect(MobEffects.STRENGTH,10));
-                attacker.addPotionEffect(new PotionEffect(MobEffects.HUNGER,10));
+                attacker.addPotionEffect(new PotionEffect(MobEffects.STRENGTH,200));
+                attacker.addPotionEffect(new PotionEffect(MobEffects.HUNGER,200));
                 splatter(world,pos,1);
             }
         }
@@ -41,7 +44,10 @@ public class ButcherHandler {
 
     private boolean isSuitableWeapon(ItemStack stack)
     {
-        return true;
+        if(stack == null) return false;
+
+        Item item = stack.getItem();
+        return item.getToolClasses(stack).contains("axe") || item instanceof ItemSword || item instanceof ItemAxe;
     }
 
     private boolean isChopBlock(IBlockState state)
