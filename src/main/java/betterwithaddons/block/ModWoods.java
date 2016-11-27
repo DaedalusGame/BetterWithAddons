@@ -4,7 +4,7 @@ import net.minecraft.util.IStringSerializable;
 
 public enum ModWoods implements IStringSerializable
 {
-    MULBERRY,SAKURA;
+    MULBERRY,SAKURA,LURETREE;
 
     @Override
     public String getName() {

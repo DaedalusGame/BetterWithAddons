@@ -41,6 +41,8 @@ public class BlockThorns extends BlockBase {
 
     protected BlockThorns() {
         super("thorns", Material.WOOD);
+        this.setHardness(4.0F);
+        this.setHarvestLevel("axe", 0);
     }
 
     protected BlockStateContainer createBlockState()

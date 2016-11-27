@@ -18,6 +18,10 @@ import java.util.List;
 
 public class InteractionBWA implements IInteraction {
     public static boolean STONEBRICKS_NEED_SMELTING = false;
+    public static int RADIUS = 6;
+    public static int MAXCHARGE = 600;
+    public static int MAXFOOD = 5000;
+    public static int FOODGLOWSTONE = 450;
 
     @Override
     public boolean isActive() {

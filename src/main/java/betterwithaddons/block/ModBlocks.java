@@ -44,6 +44,10 @@ public class ModBlocks
     public static BlockCherryLeafPile sakuraLeafPile;
     public static BlockThornRose thornrose;
     public static BlockThorns thorns;
+    public static BlockModLeaves luretreeLeaves;
+    public static BlockLureTreeSapling luretreeSapling;
+    public static BlockModLog luretreeLog;
+    public static BlockLureTree luretreeFace;
 
 
     public static void load(FMLPreInitializationEvent event) {
@@ -59,6 +63,13 @@ public class ModBlocks
         thornrose = (BlockThornRose) addBlock(new BlockThornRose());
         thorns = (BlockThorns) addBlock(new BlockThorns());
         //alchDragon = (BlockAlchDragon) addBlock(new BlockAlchDragon());
+
+        luretreeLeaves = (BlockModLeaves) addBlock(new BlockModLeaves(ModWoods.LURETREE));
+        luretreeSapling = (BlockLureTreeSapling) addBlock(new BlockLureTreeSapling());
+        luretreeLog = (BlockModLog) addBlock(new BlockModLog(ModWoods.LURETREE));
+        luretreeFace = (BlockLureTree) addBlock(new BlockLureTree());
+        luretreeSapling.setLeaves(luretreeLeaves.getDefaultState()).setLog(luretreeLog.getDefaultState()).setBig(true);;
+        luretreeLeaves.setSapling(new ItemStack(luretreeSapling));
 
         mulberryLeaves = (BlockModLeaves) addBlock(new BlockModLeaves(ModWoods.MULBERRY));
         mulberrySapling = (BlockModSapling) addBlock(new BlockModSapling(ModWoods.MULBERRY));

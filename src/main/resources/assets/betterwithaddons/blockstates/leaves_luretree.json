@@ -1,0 +1,22 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"textures": {
+		"all": "betterwithaddons:blocks/leaves_luretree"
+    },
+	"model": "cube_all",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+	"decayable": {
+		"true":{},
+		"false":{}
+	},
+	"check_decay": {
+		"true":{},
+		"false":{}
+	}
+  }
+}

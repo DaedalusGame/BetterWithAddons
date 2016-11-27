@@ -3,21 +3,21 @@ package betterwithaddons.config;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-public class ConfigOption {
+public class ConfigOptionBool {
     String name;
     String section;
     String description;
     boolean defaultValue;
     Property property;
 
-    public ConfigOption(String section, String name, boolean defaultValue, String description) {
+    public ConfigOptionBool(String section, String name, boolean defaultValue, String description) {
         this.name = name;
         this.section = section;
         this.description = description;
         this.defaultValue = defaultValue;
     }
 
-    public ConfigOption(String section, String name, boolean defaultValue) {
+    public ConfigOptionBool(String section, String name, boolean defaultValue) {
         this(section,name, defaultValue, null);
     }
 

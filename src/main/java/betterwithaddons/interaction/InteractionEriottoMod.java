@@ -63,9 +63,18 @@ public class InteractionEriottoMod implements IInteraction {
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberryPlanks),new ItemStack(ModBlocks.mulberryLog));
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("mulberry_sheet"),"aa","aa",'a',ModItems.materialJapan.getMaterial("mulberry_paste"));
 
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling),new ItemStack(Blocks.SAPLING,1,BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.DYE,1,EnumDyeColor.PINK.getDyeDamage()));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling),new ItemStack(Blocks.SAPLING,1,BlockPlanks.EnumType.BIRCH.getMetadata()),new ItemStack(Items.DYE,1,EnumDyeColor.YELLOW.getDyeDamage()));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo),new ItemStack(Items.REEDS,1),new ItemStack(Items.DYE,1,EnumDyeColor.WHITE.getDyeDamage()));
+        if(ModInteractions.bwm.isActive()) {
+            ItemStack dung = ItemMaterial.getMaterial("dung",1);
+            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()),dung);
+            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()),dung);
+            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()),dung);
+        }
+        else {
+            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()));
+            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()));
+            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()));
+        }
+
         if(GRASS_DROPS_SEEDS) {
             MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rice), 2);
             MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rush), 2);
