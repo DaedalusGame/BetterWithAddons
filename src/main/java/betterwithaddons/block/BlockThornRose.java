@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
@@ -57,14 +58,16 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
         {
             int age = state.getValue(AGE).intValue();
             int grownflowers = 0;
+            EnumFacing stemfacing = getStem(worldIn,pos,rand);
 
             if(age < MAX_AGE) {
                 for (int i = 0; i < 5; i++) {
-                    BlockPos checkpos = pos.offset(EnumFacing.random(rand));
+                    EnumFacing growdir = EnumFacing.random(rand);
+                    BlockPos checkpos = pos.offset(growdir);
 
                     if (ModBlocks.thorns.canSurvive(worldIn, pos) && canPlaceBlockAt(worldIn, checkpos) && isGoodPlaceToGrow(worldIn, checkpos)) {
-                        worldIn.setBlockState(pos, ModBlocks.thorns.getDefaultState(), 2);
-                        growFlower(worldIn, checkpos, age, rand);
+                        worldIn.setBlockState(pos, ModBlocks.thorns.setStem(ModBlocks.thorns.getDefaultState(),stemfacing), 2);
+                        growFlower(worldIn, checkpos, age, growdir.getOpposite(), rand);
                         grownflowers++;
                     }
 
@@ -73,14 +76,14 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
                 }
 
                 if (grownflowers == 0) {
-                    BlockPos checkpos = pos.offset(EnumFacing.random(rand));
+                    EnumFacing growdir = EnumFacing.random(rand);
+                    BlockPos checkpos = pos.offset(growdir);
                     if (ModBlocks.thorns.canSurvive(worldIn, pos) && canPlaceBlockAt(worldIn, checkpos)) {
-                        worldIn.setBlockState(pos, ModBlocks.thorns.getDefaultState(), 2);
-                        growFlower(worldIn, checkpos, age, rand);
+                        worldIn.setBlockState(pos, ModBlocks.thorns.setStem(ModBlocks.thorns.getDefaultState(),stemfacing), 2);
+                        growFlower(worldIn, checkpos, age, growdir.getOpposite(), rand);
                         grownflowers++;
                     }
                 }
-
 
                 if (grownflowers == 0) {
                     if (age >= MAX_AGE - 1)
@@ -92,11 +95,28 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
             else if(hasAdjacentFlower(worldIn,pos))
             {
                 if (ModBlocks.thorns.canSurvive(worldIn, pos))
-                    worldIn.setBlockState(pos, ModBlocks.thorns.getDefaultState(), 2);
+                    worldIn.setBlockState(pos, ModBlocks.thorns.setStem(ModBlocks.thorns.getDefaultState(),stemfacing), 2);
                 else
                     worldIn.destroyBlock(pos, true);
             }
         }
+    }
+
+    private EnumFacing getStem(World world,BlockPos pos,Random rand)
+    {
+        ArrayList<EnumFacing> facings = new ArrayList<>();
+
+        for (EnumFacing enumfacing : EnumFacing.VALUES) {
+            BlockPos checkpos = pos.offset(enumfacing);
+            IBlockState blockstate = world.getBlockState(checkpos);
+
+            if(blockstate.getBlock() == ModBlocks.thorns || isProperSoil(world,checkpos,enumfacing))
+            {
+                facings.add(enumfacing);
+            }
+        }
+
+        return facings.isEmpty() ? EnumFacing.DOWN : facings.get(rand.nextInt(facings.size()));
     }
 
     private boolean hasAdjacentFlower(World world, BlockPos pos)
@@ -155,13 +175,13 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
         return block == this || block == ModBlocks.thorns;
     }
 
-    private void growFlower(World world, BlockPos pos, int age, Random rand)
+    private void growFlower(World world, BlockPos pos, int age, EnumFacing stem, Random rand)
     {
         if(age >= MAX_AGE-1) {
             if(rand.nextInt(5) == 0)
                 placeDeadFlower(world, pos);
             else if (ModBlocks.thorns.canPlaceBlockAt(world,pos))
-                world.setBlockState(pos, ModBlocks.thorns.getDefaultState(), 2);
+                world.setBlockState(pos, ModBlocks.thorns.setStem(ModBlocks.thorns.getDefaultState(),stem), 2);
         }
         else if(rand.nextInt(5) == 0)
             placeGrownFlower(world,pos,age);
@@ -181,7 +201,7 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
 
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
-        if(state.getValue(AGE) < MAX_AGE && entityIn instanceof EntityLiving)
+        if(state.getValue(AGE) < MAX_AGE && entityIn instanceof EntityLivingBase)
             entityIn.attackEntityFrom(DamageSource.cactus, 5.0F);
     }
 
@@ -241,7 +261,7 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
         return (adjacentSoil > 0 || adjacentVines > 0) && adjacentVines <= 3;
     }
 
-    public boolean isProperSoil(World world, BlockPos pos, EnumFacing facing)
+    public boolean isProperSoil(IBlockAccess world, BlockPos pos, EnumFacing facing)
     {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();

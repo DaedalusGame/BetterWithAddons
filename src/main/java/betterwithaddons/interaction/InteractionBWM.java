@@ -2,11 +2,11 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.handler.ButcherHandler;
 import betterwithaddons.item.ModItems;
 import betterwithmods.BWMBlocks;
 import betterwithmods.api.BWMRecipeHelper;
 import betterwithmods.blocks.BlockBUD;
-import betterwithmods.blocks.BlockRope;
 import betterwithmods.blocks.BlockUrn;
 import betterwithmods.craft.bulk.CraftingManagerCauldron;
 import betterwithmods.items.ItemMaterial;
@@ -15,8 +15,8 @@ import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -29,6 +29,7 @@ public class InteractionBWM implements IInteraction {
     public static boolean ENABLED = true;
     public static boolean MILL_CLAY = true;
     public static boolean CHORUS_IN_CAULDRON = true;
+    public static boolean BUTCHER_BLOCKS = true;
 
 
     @Override
@@ -53,7 +54,8 @@ public class InteractionBWM implements IInteraction {
 
     @Override
     public void preInit() {
-
+        if(BUTCHER_BLOCKS)
+            MinecraftForge.EVENT_BUS.register(new ButcherHandler());
     }
 
     @Override

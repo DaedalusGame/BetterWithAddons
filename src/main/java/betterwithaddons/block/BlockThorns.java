@@ -1,16 +1,19 @@
 package betterwithaddons.block;
 
 import betterwithaddons.item.ModItems;
+import betterwithaddons.util.UnlistedFacing;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +26,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -38,6 +44,7 @@ public class BlockThorns extends BlockBase {
     public static final PropertyBool WEST = PropertyBool.create("west");
     public static final PropertyBool UP = PropertyBool.create("up");
     public static final PropertyBool DOWN = PropertyBool.create("down");
+    public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
     protected BlockThorns() {
         super("thorns", Material.WOOD);
@@ -45,19 +52,10 @@ public class BlockThorns extends BlockBase {
         this.setHarvestLevel("axe", 0);
     }
 
+    @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {NORTH, EAST, SOUTH, WEST, UP, DOWN});
-    }
-
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
-    {
-        return state.withProperty(DOWN, canConnectTo(worldIn,pos.down(),EnumFacing.DOWN))
-                .withProperty(UP, canConnectTo(worldIn,pos.up(),EnumFacing.UP))
-                .withProperty(NORTH, canConnectTo(worldIn,pos.north(),EnumFacing.NORTH))
-                .withProperty(EAST, canConnectTo(worldIn,pos.east(),EnumFacing.EAST))
-                .withProperty(SOUTH, canConnectTo(worldIn,pos.south(),EnumFacing.SOUTH))
-                .withProperty(WEST, canConnectTo(worldIn,pos.west(),EnumFacing.WEST));
+        return new BlockStateContainer(this, new IProperty[] {NORTH, EAST, SOUTH, WEST, UP, DOWN, FACING});
     }
 
     @Override
@@ -65,20 +63,79 @@ public class BlockThorns extends BlockBase {
         return;
     }
 
+    @Override
     public int getMetaFromState(IBlockState state)
     {
-        return 0;
+        EnumFacing facing = state.getValue(FACING);
+        return facing.getIndex() & 7;
     }
 
-    public boolean canConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
-        Block block = world.getBlockState(pos).getBlock();
-        return isVine(block) || isProperSoil(world,pos,facing);
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState().withProperty(FACING,EnumFacing.getFront(meta & 7));
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    {
+        boolean hasStem = hasStem(worldIn,pos,state);
+
+        return state.withProperty(DOWN, canConnectTo(worldIn,pos,EnumFacing.DOWN,hasStem))
+                .withProperty(UP, canConnectTo(worldIn,pos,EnumFacing.UP,hasStem))
+                .withProperty(NORTH, canConnectTo(worldIn,pos,EnumFacing.NORTH,hasStem))
+                .withProperty(EAST, canConnectTo(worldIn,pos,EnumFacing.EAST,hasStem))
+                .withProperty(SOUTH, canConnectTo(worldIn,pos,EnumFacing.SOUTH,hasStem))
+                .withProperty(WEST, canConnectTo(worldIn,pos,EnumFacing.WEST,hasStem));
+    }
+
+    public EnumFacing getStem(IBlockState state)
+    {
+        if(state.getBlock() != this) return EnumFacing.DOWN;
+        EnumFacing facing = state.getValue(FACING);
+        return facing != null ? facing : EnumFacing.DOWN;
+    }
+
+    public IBlockState setStem(IBlockState state, EnumFacing facing)
+    {
+        return state.withProperty(FACING,facing);
+    }
+
+    private boolean hasStem(IBlockAccess world, BlockPos pos, IBlockState state)
+    {
+        EnumFacing stemDir = getStem(state);
+        BlockPos stemPos = pos.offset(stemDir);
+        IBlockState stemState = world.getBlockState(stemPos);
+        return isProperSoil(world,stemPos,stemDir.getOpposite()) || isVine(stemState.getBlock());
+    }
+
+    public boolean canConnectTo(IBlockAccess world, BlockPos pos, EnumFacing connectDir, boolean hasStem) {
+        IBlockState state = world.getBlockState(pos);
+        EnumFacing stemDir = getStem(state);
+        BlockPos otherpos = pos.offset(connectDir);
+        IBlockState otherState = world.getBlockState(otherpos);
+        Block otherblock = otherState.getBlock();
+
+        if(otherblock == this) {
+            if (!hasStem) {
+                return true;
+            } else if(stemDir == connectDir) {
+                return true;
+            } else {
+                if(hasStem(world,otherpos,otherState))
+                    return getStem(otherState) == connectDir.getOpposite();
+                else
+                    return true;
+            }
+        }
+        else if(isVine(otherblock) || isProperSoil(world,otherpos,connectDir.getOpposite()))
+            return true;
+
+        return false;
     }
 
     public boolean isProperSoil(IBlockAccess world, BlockPos pos, EnumFacing facing)
     {
-        Block block = world.getBlockState(pos).getBlock();
-        return block == Blocks.SAND || block.canSustainPlant(world.getBlockState(pos),world,pos,facing.getOpposite(),ModBlocks.thornrose);
+        return ModBlocks.thornrose.isProperSoil(world,pos,facing);
     }
 
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
@@ -88,11 +145,11 @@ public class BlockThorns extends BlockBase {
 
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
-        if(entityIn instanceof EntityLiving)
+        if(entityIn instanceof EntityLivingBase)
             entityIn.attackEntityFrom(DamageSource.cactus, 5.0F);
     }
 
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
+    /*public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)
     {
         if (!this.canSurvive(worldIn, pos))
         {
@@ -106,7 +163,7 @@ public class BlockThorns extends BlockBase {
         {
             worldIn.destroyBlock(pos, true);
         }
-    }
+    }*/
 
     public boolean canSurvive(World world, BlockPos pos)
     {
@@ -216,6 +273,9 @@ public class BlockThorns extends BlockBase {
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
-        return !canConnectTo(blockAccess,pos.offset(side),side);
+        return !canConnectTo(blockAccess,pos.offset(side),side,hasStem(blockAccess,pos,blockState));
     }
+
+
+
 }

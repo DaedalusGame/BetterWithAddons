@@ -123,7 +123,7 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
     }
 
     public boolean feed(ItemStack stack) {
-        if(stack.getItem() == Items.GLOWSTONE_DUST && currentFood < InteractionBWA.MAXFOOD)
+        if(stack.getItem() == Items.GLOWSTONE_DUST && currentFood < InteractionBWA.MAXFOOD - InteractionBWA.FOODGLOWSTONE)
         {
             currentFood = Math.min(InteractionBWA.MAXFOOD,currentFood+ InteractionBWA.FOODGLOWSTONE);
             return true;

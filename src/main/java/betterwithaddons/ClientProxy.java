@@ -1,5 +1,6 @@
 package betterwithaddons;
 
+import betterwithaddons.block.BlockThorns;
 import betterwithaddons.block.IColorable;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.client.fx.FXLeafParticle;
@@ -14,7 +15,9 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.tileentity.TileEntityAlchDragon;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -52,6 +55,8 @@ public class ClientProxy implements IProxy
     {
         ItemModels.register();
         //BlockModels.register();
+
+        ModelLoader.setCustomStateMapper(ModBlocks.thorns,new StateMap.Builder().ignore(BlockThorns.FACING).build());
 
         RenderingRegistry.registerEntityRenderingHandler(EntityGreatarrow.class, RenderGreatarrow.GREATARROW_RENDER);
         RenderingRegistry.registerEntityRenderingHandler(EntityYa.class, RenderYa.YA_RENDER);
