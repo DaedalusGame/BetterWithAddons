@@ -3,10 +3,8 @@ package betterwithaddons.interaction.jei.wrapper;
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TataraRecipeWrapper extends BlankRecipeWrapper {

@@ -4,7 +4,6 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.ArmorDecorateRecipe;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.item.ModItems;
-import betterwithmods.BWMItems;
 import betterwithmods.items.ItemMaterial;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;

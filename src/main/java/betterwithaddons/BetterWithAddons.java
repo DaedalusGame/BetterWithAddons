@@ -6,7 +6,6 @@ import betterwithaddons.config.ModConfiguration;
 import betterwithaddons.entity.ModEntities;
 import betterwithaddons.handler.AssortedHandler;
 import betterwithaddons.handler.ElytraUpdriftHandler;
-import betterwithaddons.handler.ButcherHandler;
 import betterwithaddons.handler.HarvestHandler;
 import betterwithaddons.interaction.ModInteractions;
 import betterwithaddons.item.ModItems;

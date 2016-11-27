@@ -6,7 +6,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CherryBoxRecipeWrapper extends BlankRecipeWrapper {
