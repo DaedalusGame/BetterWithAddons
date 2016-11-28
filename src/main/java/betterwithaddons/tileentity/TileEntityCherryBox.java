@@ -115,6 +115,11 @@ public class TileEntityCherryBox extends TileEntityBase implements ITickable {
         return isValidStructure();
     }
 
+    public int getWorkSpeed()
+    {
+        return 1;
+    }
+
     private int getInventoryStackLimit()
     {
         return 64;
@@ -131,7 +136,7 @@ public class TileEntityCherryBox extends TileEntityBase implements ITickable {
             ItemStack inputstack = inventory.getStackInSlot(0);
             if(this.isWorking() || inputstack != null) {
                 if(this.isWorking() && this.canWork()) {
-                    ++this.workTime;
+                    this.workTime += getWorkSpeed();
                     this.totalWorkTime = this.getWorkTime(inputstack);
                     if(this.workTime >= this.totalWorkTime) {
                         this.workTime = 0;

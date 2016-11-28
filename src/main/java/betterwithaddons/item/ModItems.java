@@ -21,6 +21,7 @@ public class ModItems
     public static ArrayList<Item> LIST = new ArrayList<Item>();
 
     public static Item.ToolMaterial bambooToolMaterial = EnumHelper.addToolMaterial("bamboo", 0, 51, 0.5f, -4.0f, 1);
+
     {
         bambooToolMaterial.setRepairItem(materialJapan.getMaterial("bamboo_slats"));
     }
@@ -61,6 +62,7 @@ public class ModItems
     public static ItemMaterial materialCrate;
     public static ItemMaterial materialBag;
     public static ItemMaterial materialBundle;
+    public static ItemMaterial materialDeco;
     public static ItemKatana katana;
     public static ItemWakizashi wakizashi;
     public static ItemTanto tanto;
@@ -146,6 +148,10 @@ public class ModItems
         ));
         materialBundle = (ItemMaterial)registerItem("bundle",new ItemMaterial(
                 new String[]{"feather","arrows","blazerods","oak","birch","spruce","jungle","acacia","darkoak"}
+        ));
+
+        materialDeco = (ItemMaterial)registerItem("decomat",new ItemMaterial(
+                new String[]{"hemp_oil","wood_bleach","wood_stain"}
         ));
     }
 

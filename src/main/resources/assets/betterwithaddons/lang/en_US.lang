@@ -145,6 +145,10 @@ item.crate.egg.name=Crated Eggs
 item.crate.slime.name=Crated Slimeballs
 item.crate.enderpearl.name=Crated Enderpearls
 
+item.decomat.hemp_oil.name=Hemp Oil
+item.decomat.wood_bleach.name=Wood Bleach
+item.decomat.wood_stain.name=Wood Stain
+
 item.food_mushroom_baked.name=Baked Mushroom
 item.food_amanita_baked.name=Baked Mushroom
 item.food_beetroot_cooked.name=Cooked Beetroot

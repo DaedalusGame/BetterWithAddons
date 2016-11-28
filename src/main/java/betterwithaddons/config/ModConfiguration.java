@@ -26,6 +26,10 @@ public class ModConfiguration {
     ConfigOptionBool EriottoMod_Enabled = new ConfigOptionBool("addons.EriottoMod", "Enabled", InteractionEriottoMod.ENABLED);
     ConfigOptionBool EriottoMod_GrassDropsSeeds = new ConfigOptionBool("addons.EriottoMod", "GrassDropsSeeds", InteractionEriottoMod.GRASS_DROPS_SEEDS, "Rice and Rush seeds can be gotten from breaking grass.");
 
+    ConfigOptionBool DecoAddon_Enabled = new ConfigOptionBool("addons.DecoAddon", "Enabled", InteractionDecoAddon.ENABLED);
+    ConfigOptionBool DecoAddon_WoodColoring = new ConfigOptionBool("addons.DecoAddon", "WoodColoring", InteractionDecoAddon.WOOD_COLORING, "Vanilla planks can be bleached or stained.");
+
+
     public void preInit(FMLPreInitializationEvent event)
     {
         configuration = new Configuration(event.getSuggestedConfigurationFile());
@@ -49,6 +53,8 @@ public class ModConfiguration {
         InteractionBWA.FOODGLOWSTONE = BWA_LureTreeFoodGlowstone.init(configuration);
         InteractionEriottoMod.ENABLED = EriottoMod_Enabled.init(configuration);
         InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);
+        InteractionDecoAddon.ENABLED = DecoAddon_Enabled.init(configuration);
+        InteractionDecoAddon.WOOD_COLORING = DecoAddon_WoodColoring.init(configuration);
         InteractionCondensedOutputs.ENABLED = CondensedOutputs_Enabled.init(configuration);
         InteractionCondensedOutputs.LOSE_BINDER = CondensedOutputs_LoseBinder.init(configuration);
 

@@ -15,6 +15,7 @@ public class ModInteractions {
     public static InteractionJEI jei;
     public static InteractionEriottoMod eriottoMod;
     public static InteractionCondensedOutputs condensedOutputs;
+    public static InteractionDecoAddon decoAddon;
 
     public static void preInit(FMLPreInitializationEvent event) {
         bwa = (InteractionBWA) addInteraction(new InteractionBWA());
@@ -23,6 +24,7 @@ public class ModInteractions {
         jei = (InteractionJEI) addInteraction(new InteractionJEI());
         eriottoMod = (InteractionEriottoMod) addInteraction(new InteractionEriottoMod());
         condensedOutputs = (InteractionCondensedOutputs) addInteraction(new InteractionCondensedOutputs());
+        decoAddon = (InteractionDecoAddon) addInteraction(new InteractionDecoAddon());
 
         validate();
 
