@@ -166,6 +166,16 @@ item.food_pie_melon.name=Melon Pie
 item.food_pie_meat.name=Meat Pie
 item.food_sashimi.name=Sashimi
 
+item.food_clownfish_cooked.name=Cooked Clownfish
+item.food_pufferfish_baked.name=Cooked Pufferfish
+item.food_pufferfish_prepared.name=Fugu
+item.food_pufferfish_cooked.name=Cooked Fugu
+item.food_fugu_sac.name=Fugu Sac
+
+item.food_cooked_rice.name=Cooked Rice
+item.food_bowl_rice.name=Bowl of Rice
+item.food_sashimi.name=Sashimi
+
 item.shinai.name=Shinai
 item.katana.name=Katana
 item.wakizashi.name=Wakizashi

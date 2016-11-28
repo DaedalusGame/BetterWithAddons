@@ -4,11 +4,13 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.ArmorDecorateRecipe;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.item.ModItems;
+import betterwithmods.api.BWMRecipeHelper;
 import betterwithmods.items.ItemMaterial;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -49,7 +51,8 @@ public class InteractionEriottoMod implements IInteraction {
     public void init() {
         CraftingManagerSandNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModBlocks.ironSand,1)},new ItemStack(Blocks.IRON_BLOCK,1),8);
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(Blocks.IRON_BLOCK,1),new ItemStack(Blocks.SAND,8)},new ItemStack(ModBlocks.ironSand,1),0);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{null,new ItemStack(ModItems.sashimi,3)},new ItemStack(Items.FISH,1),0);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{null,new ItemStack(ModItems.sashimi,3)},new ItemStack(Items.FISH, 1) ,0);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModItems.fuguSac,1),new ItemStack(ModItems.preparedPuffer,3)},new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()),0);
         CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.materialJapan.getMaterial("iron_scales",27)},new ItemStack(ModBlocks.ironSand,1),0);
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{null,ModItems.materialJapan.getMaterial("washi",9)},ModItems.materialJapan.getMaterial("mulberry_sheet"),0);
 
@@ -67,17 +70,23 @@ public class InteractionEriottoMod implements IInteraction {
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()),dung);
+            BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.rice),new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
+            BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.preparedCookedPuffer),new Object[]{new ItemStack(ModItems.preparedPuffer)});
         }
         else {
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()));
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()));
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()));
+            GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("soaked_rice"),new ItemStack(ModItems.rice),0.35f);
+            GameRegistry.addSmelting(new ItemStack(ModItems.preparedCookedPuffer),new ItemStack(ModItems.preparedPuffer),0.35f);
         }
 
         if(GRASS_DROPS_SEEDS) {
             MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rice), 2);
             MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rush), 2);
         }
+
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.riceBowl),"r","r","b",'r',ModItems.rice,'b',new ItemStack(Items.BOWL));
 
         addFoldingRecipe(ModItems.materialJapan.getMaterial("hocho_tetsu_fold_1"),ModItems.materialJapan.getMaterial("hocho_tetsu_heated"));
         addFoldingRecipe(ModItems.materialJapan.getMaterial("hocho_tetsu_fold_2"),ModItems.materialJapan.getMaterial("hocho_tetsu_fold_1"));

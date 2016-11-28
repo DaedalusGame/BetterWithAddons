@@ -15,6 +15,7 @@ import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
@@ -77,6 +78,8 @@ public class InteractionBWM implements IInteraction {
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedCarrot),null,new Object[] { new ItemStack(Items.CARROT) });
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedPotato),null,new Object[] { new ItemStack(Items.POTATO) });
         BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedEgg),null,new Object[] { new ItemStack(Items.EGG) });
+        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedClownfish),null,new Object[] { new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()) });
+        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedPuffer),null,new Object[] { new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()) });
 
         BWMRecipeHelper.addCauldronRecipe(ModItems.material.getMaterial("bone_ingot"),null,new Object[] { new ItemStack(Items.BONE,2),new ItemStack(Items.DYE,8,15) });
         BWMRecipeHelper.addCauldronRecipe(ModItems.material.getMaterial("midori_popped"),null,new Object[] { ModItems.material.getMaterial("midori") });

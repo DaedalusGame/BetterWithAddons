@@ -13,10 +13,12 @@ import java.util.List;
 
 public class ItemMaterial extends Item implements IHasVariants{
     String[] subItemNames;
+    boolean[] subItemDisabled;
     ItemStack container;
 
     public ItemMaterial(String[] subnames) {
         subItemNames = subnames;
+        subItemDisabled = new boolean[subItemNames.length];
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
     }
@@ -78,7 +80,8 @@ public class ItemMaterial extends Item implements IHasVariants{
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> subitems) {
         for(int i = 0; i < subItemNames.length; ++i) {
-            subitems.add(new ItemStack(item, 1, i));
+            if(!subItemDisabled[i])
+                subitems.add(new ItemStack(item, 1, i));
         }
     }
 }
