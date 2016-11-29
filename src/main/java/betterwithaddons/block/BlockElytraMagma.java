@@ -5,6 +5,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumParticleTypes;
@@ -19,6 +20,7 @@ import java.util.Random;
 public class BlockElytraMagma extends BlockBase {
     public BlockElytraMagma() {
         super("elytra_magma", Material.ROCK);
+        this.setHardness(0.5F);
         this.setLightLevel(0.2f);
         this.setTickRandomly(true);
     }

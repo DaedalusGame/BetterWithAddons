@@ -144,7 +144,7 @@ public class AssortedHandler
 		}
 
 		float hardness = blockstate.getBlockHardness(world,breakEvent.getPos()) * hardnessmod;
-		float newspeed = breakEvent.getOriginalSpeed() * (1.0f / hardnessmod);
+		float newspeed = breakEvent.getNewSpeed() * (1.0f / hardnessmod);
 
 		if(worldscale != null && (banner = BannerUtil.getBannerItemFromBlock(world,worldscale.up())) != null)
 		{
