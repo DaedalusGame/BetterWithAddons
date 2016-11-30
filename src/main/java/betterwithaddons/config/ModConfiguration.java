@@ -32,6 +32,9 @@ public class ModConfiguration {
     ConfigOptionBool BTWTweak_Enabled = new ConfigOptionBool("addons.BTWTweak", "Enabled", InteractionBTWTweak.ENABLED);
     ConfigOptionBool BTWTweak_SoftWoods = new ConfigOptionBool("addons.BTWTweak", "SoftWoods", InteractionBTWTweak.SOFT_WOODS, "Spruce, Jungle and Dark Oak logs are much easier to break.");
     ConfigOptionBool BTWTweak_HardStumps = new ConfigOptionBool("addons.BTWTweak", "HardStumps", InteractionBTWTweak.HARD_STUMPS, "Makes treefarms great ag- I mean, makes logs with dirt underneath them much harder to break to encourage leaving awesome stumps.");
+    ConfigOptionBool BTWTweak_SawRecycling = new ConfigOptionBool("addons.BTWTweak", "SawRecycling", InteractionBTWTweak.SAW_RECYCLING, "Many wooden blocks can be recycled by putting them infront of a saw, at a bit of a loss.");
+    ConfigOptionBool BTWTweak_KilnDoubling = new ConfigOptionBool("addons.BTWTweak", "KilnDoubling", InteractionBTWTweak.KILN_DOUBLING, "Kilns double the amount of metal you get from one ore. Whether it be nuggets or ingots.");
+
 
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -63,6 +66,8 @@ public class ModConfiguration {
         InteractionBTWTweak.ENABLED = BTWTweak_Enabled.init(configuration);
         InteractionBTWTweak.SOFT_WOODS = BTWTweak_SoftWoods.init(configuration);
         InteractionBTWTweak.HARD_STUMPS = BTWTweak_HardStumps.init(configuration);
+        InteractionBTWTweak.SAW_RECYCLING = BTWTweak_SawRecycling.init(configuration);
+        InteractionBTWTweak.KILN_DOUBLING = BTWTweak_KilnDoubling.init(configuration);
 
         if (configuration.hasChanged())
         {

@@ -63,7 +63,7 @@ public class StumpingHandler {
             }
         }
 
-        float hardnessMultiplier = (hardness * multiplier) / state.getBlockHardness(world,breakpos);
+        float hardnessMultiplier = state.getBlockHardness(world,breakpos) != 0 ? (hardness * multiplier) / state.getBlockHardness(world,breakpos) : 1f;
 
         breakEvent.setNewSpeed(speed / hardnessMultiplier);
     }
