@@ -70,16 +70,17 @@ public class InteractionEriottoMod implements IInteraction {
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()),dung);
-            BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.rice),new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
             BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.preparedCookedPuffer),new Object[]{new ItemStack(ModItems.preparedPuffer)});
+            BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.rice),new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
         }
         else {
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()));
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()));
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()));
-            GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("soaked_rice"),new ItemStack(ModItems.rice),0.35f);
-            GameRegistry.addSmelting(new ItemStack(ModItems.preparedCookedPuffer),new ItemStack(ModItems.preparedPuffer),0.35f);
         }
+
+        GameRegistry.addSmelting(new ItemStack(ModItems.preparedCookedPuffer),new ItemStack(ModItems.preparedPuffer),0.35f);
+        GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("soaked_rice"),new ItemStack(ModItems.rice),0.35f);
 
         if(GRASS_DROPS_SEEDS) {
             MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rice), 2);
@@ -127,6 +128,8 @@ public class InteractionEriottoMod implements IInteraction {
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.tatara),"idi","g g","ini",'i',new ItemStack(Items.IRON_INGOT),'g',new ItemStack(Items.GOLD_INGOT),'d',new ItemStack(Items.DIAMOND),'n',new ItemStack(Blocks.NETHERRACK));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.cherrybox,1,0),"pxp","x x","pxp",'p',new ItemStack(ModBlocks.sakuraPlanks),'x',new ItemStack(Blocks.IRON_BARS));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.cherrybox,1,1),"pxp","p p","ppp",'p',new ItemStack(ModBlocks.sakuraPlanks),'x',new ItemStack(Blocks.GLASS_PANE));
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.shoji,4),"bwb","wbw","bwb",'b',ModItems.materialJapan.getMaterial("bamboo_slats"),'w',ModItems.materialJapan.getMaterial("washi"));
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.fusuma,4),"bwb","wpw","bwb",'b',ModItems.materialJapan.getMaterial("bamboo_slats"),'w',ModItems.materialJapan.getMaterial("washi"),'p',new ItemStack(ModBlocks.sakuraPlanks));
 
         GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("rice_stalk"),ModItems.materialJapan.getMaterial("rice_ash"),0.1f);
 

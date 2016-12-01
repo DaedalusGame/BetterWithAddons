@@ -4,6 +4,7 @@ import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BetterRedstone.BlockWirePCB;
 import betterwithaddons.block.EriottoMod.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -48,7 +49,13 @@ public class ModBlocks
     public static BlockLureTreeSapling luretreeSapling;
     public static BlockModLog luretreeLog;
     public static BlockLureTree luretreeFace;
-
+    public static BlockModPane paperWall;
+    public static BlockModPane wroughtBars;
+    public static BlockModPane shoji;
+    public static BlockModPane fusuma;
+    public static BlockChandelier chandelier;
+    public static BlockLantern paperLantern;
+    public static BlockLantern wroughtLantern;
 
     public static void load(FMLPreInitializationEvent event) {
         bannerDetector = (BlockBannerDetector) addBlock(new BlockBannerDetector());
@@ -95,6 +102,16 @@ public class ModBlocks
         kera = (BlockKera) addBlock(new BlockKera());
         tatara = (BlockTatara) addBlock(new BlockTatara());
         cherrybox = (BlockCherryBox) addBlock(new BlockCherryBox());
+        shoji = (BlockModPane) addBlock(new BlockModPane("shoji", Material.WOOD).setHardness(1.0f));
+        fusuma = (BlockModPane) addBlock(new BlockModPane("fusuma", Material.WOOD).setHardness(1.0f));
+        shoji.addCompatiblePane(fusuma);
+        fusuma.addCompatiblePane(shoji);
+
+        chandelier = (BlockChandelier) addBlock(new BlockChandelier().setLightLevel(0.9375F));
+        paperWall = (BlockModPane) addBlock(new BlockModPane("paper_wall", Material.WOOD).setHardness(1.0f));
+        wroughtBars = (BlockModPane) addBlock(new BlockModPane("wrought_bars", Material.IRON).setHardness(5.0f));
+        paperLantern = (BlockLantern) addBlock(new BlockLantern("wood_lamp", Material.WOOD).setHardness(1.0f));
+        wroughtLantern = (BlockLantern) addBlock(new BlockLantern("wrought_lamp", Material.IRON).setHardness(5.0f));
 
         coloredBrick = (BlockColoredBrick) addBlock(new BlockColoredBrick());
     }

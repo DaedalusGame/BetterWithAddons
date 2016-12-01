@@ -119,11 +119,13 @@ public class BlockBannerDetector extends BlockContainerBase
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (!worldIn.isRemote && side == state.getValue(BlockBannerDetector.FACING).getOpposite())
+        if (side == state.getValue(BlockBannerDetector.FACING).getOpposite())
         {
-            playerIn.openGui(BetterWithAddons.instance, GuiIds.BANNER_DETECTOR, worldIn, pos.getX(), pos.getY(), pos.getZ());
+            if(!worldIn.isRemote)
+                playerIn.openGui(BetterWithAddons.instance, GuiIds.BANNER_DETECTOR, worldIn, pos.getX(), pos.getY(), pos.getZ());
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override

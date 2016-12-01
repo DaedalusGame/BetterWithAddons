@@ -1,5 +1,6 @@
 package betterwithaddons.interaction;
 
+import betterwithaddons.block.ModBlocks;
 import betterwithaddons.item.ModItems;
 import betterwithmods.BWMBlocks;
 import betterwithmods.api.BWMRecipeHelper;
@@ -8,6 +9,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +49,17 @@ public class InteractionDecoAddon implements IInteraction {
         BWMRecipeHelper.addMillRecipe(ModItems.materialDeco.getMaterial("hemp_oil"),new Object[]{new ItemStack(BWMBlocks.HEMP,1),new ItemStack(Items.GLASS_BOTTLE,1)});
         BWMRecipeHelper.addCauldronRecipe(ModItems.materialDeco.getMaterial("wood_bleach",4),new Object[]{ModItems.materialDeco.getMaterial("hemp_oil",4),new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())});
         BWMRecipeHelper.addCauldronRecipe(ModItems.materialDeco.getMaterial("wood_stain",4),new Object[]{ModItems.materialDeco.getMaterial("hemp_oil",4),new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage())});
+
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.paperWall),"pwp","ppp","pwp",'p',new ItemStack(Items.PAPER),'w',new ItemStack(BWMBlocks.WOOD_MOULDING,1, OreDictionary.WILDCARD_VALUE));
+
+        ItemStack chandelierLight = new ItemStack(Blocks.TORCH); //TODO: candles
+        ItemStack ironLanternLight = ModItems.materialDeco.getMaterial("hemp_oil");
+        ItemStack woodLanternLight = ModItems.materialDeco.getMaterial("hemp_oil"); //TODO: fireflies, candles
+
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.paperLantern),"pwp","wtw","pwp",'p',new ItemStack(Items.PAPER),'w',new ItemStack(BWMBlocks.WOOD_MOULDING,1, OreDictionary.WILDCARD_VALUE),'t',woodLanternLight);
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.wroughtLantern)," w ","wtw"," w ",'w',new ItemStack(ModBlocks.wroughtBars),'t',ironLanternLight);
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.wroughtBars,6),"bbb","bbb",'b',new ItemStack(Blocks.IRON_BARS)); //TODO: both anvil recipes
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chandelier)," b ","tbt","tbt",'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight); //TODO: anvil recipe
 
         if(WOOD_COLORING) {
             ItemStack birch = new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.BIRCH.getMetadata());
