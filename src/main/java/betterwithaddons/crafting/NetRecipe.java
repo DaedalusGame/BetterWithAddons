@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ import java.util.List;
 public class NetRecipe
 {
     public ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
-    public Object input = null;
-    public Object jeiInput = null;
+    public Object input = ItemStack.EMPTY;
+    public Object jeiInput = ItemStack.EMPTY;
     public int sandrequired = 0;
 
     public SifterType type = SifterType.NONE;
@@ -25,8 +26,8 @@ public class NetRecipe
         this.type = type;
 
         for (ItemStack out: outputs) {
-            if(out == null)
-                this.outputs.add(null);
+            if(out.isEmpty())
+                this.outputs.add(ItemStack.EMPTY);
             else
                 this.outputs.add(out.copy());
         }
@@ -94,7 +95,7 @@ public class NetRecipe
 
     public boolean matches(NetRecipe recipe)
     {
-        if(this.getInput() != null && recipe.getInput() != null)
+        if(!isInputEmpty(this.getInput()) && !isInputEmpty(recipe.getInput()))
         {
             boolean match = this.stacksMatch(this.getInput(), recipe.getInput());
             return match;
@@ -108,12 +109,12 @@ public class NetRecipe
 
     public boolean matchesInput(ItemStack item)
     {
-        if(input == null)
+        if(isInputEmpty(input))
             return false;
         if(input instanceof ItemStack)
         {
             ItemStack stack = (ItemStack)input;
-            if(item.isItemEqual(stack) && item.stackSize >= stack.stackSize)
+            if(item.isItemEqual(stack) && item.getCount() >= stack.getCount())
                 return true;
         }
         else if(input instanceof OreStack)
@@ -123,6 +124,10 @@ public class NetRecipe
                 return true;
         }
         return false;
+    }
+
+    private boolean isInputEmpty(Object stack) {
+        return stack == null || stack instanceof ItemStack && ((ItemStack)stack).isEmpty();
     }
 
     public boolean matches(List<EntityItem> inv)
@@ -139,9 +144,11 @@ public class NetRecipe
         if(first instanceof ItemStack && second instanceof ItemStack) {
             ItemStack firstitem = (ItemStack) first;
             ItemStack seconditem = (ItemStack) second;
-            return firstitem.getItem() == seconditem.getItem() && firstitem.getItemDamage() == seconditem.getItemDamage() && firstitem.stackSize == seconditem.stackSize;
+            if(firstitem.isEmpty() || seconditem.isEmpty())
+                return false;
+            return firstitem.getItem() == seconditem.getItem() && firstitem.getItemDamage() == seconditem.getItemDamage() && firstitem.getCount() == seconditem.getCount();
         }
-        if(first instanceof OreStack && second instanceof ItemStack)
+        if(first instanceof OreStack && second instanceof OreStack)
         {
             OreStack firstitem = (OreStack) first;
             OreStack seconditem = (OreStack) second;

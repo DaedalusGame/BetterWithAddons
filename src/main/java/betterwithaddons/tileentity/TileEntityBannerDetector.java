@@ -35,7 +35,7 @@ public class TileEntityBannerDetector extends TileEntityBase implements ITickabl
     @Override
     public void update()
     {
-        if (!this.worldObj.isRemote)
+        if (!this.world.isRemote)
         {
             boolean newPowered = checkSupposedPoweredState();
 
@@ -43,7 +43,7 @@ public class TileEntityBannerDetector extends TileEntityBase implements ITickabl
             {
                 powered = newPowered;
                 this.syncTE();
-                this.worldObj.notifyNeighborsOfStateChange(pos, ModBlocks.bannerDetector);
+                this.world.notifyNeighborsOfStateChange(pos, ModBlocks.bannerDetector, true);
             }
         }
     }
@@ -52,19 +52,19 @@ public class TileEntityBannerDetector extends TileEntityBase implements ITickabl
     {
         final ItemStack filter = bannerInventory.getStackInSlot(0);
 
-        IBlockState blockState = worldObj.getBlockState(pos);
+        IBlockState blockState = world.getBlockState(pos);
         EnumFacing facing = blockState.getValue(BlockBannerDetector.FACING);
 
         boolean detected = false;
         BlockPos lastPos = null;
 
-        if(filter != null && filter.getItem() instanceof ItemBanner) {
+        if(!filter.isEmpty() && filter.getItem() instanceof ItemBanner) {
             for (int i = 1; i <= maxdist; i++) {
                 BlockPos nextPos = new BlockPos(pos.offset(facing, i));
                 lastPos = nextPos;
 
-                if (worldObj.isBlockLoaded(nextPos)) {
-                    IBlockState nextState = worldObj.getBlockState(nextPos);
+                if (world.isBlockLoaded(nextPos)) {
+                    IBlockState nextState = world.getBlockState(nextPos);
                     if (nextState.isOpaqueCube()) break;
                     detected = checkBanner(nextPos,filter,BlockBanner.class);
                     if(!detected) detected = checkBanner(nextPos.up(), filter, BlockBanner.BlockBannerHanging.class);
@@ -75,7 +75,7 @@ public class TileEntityBannerDetector extends TileEntityBase implements ITickabl
             }
 
             if (!detected && maxdist > 0) {
-                List<Entity> entityList = worldObj.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(this.pos, lastPos.add(1,1,1)), new Predicate<Entity>() {
+                List<Entity> entityList = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(this.pos, lastPos.add(1,1,1)), new Predicate<Entity>() {
                     @Override
                     public boolean apply(Entity input) {
                         return BannerUtil.isSameBanner(filter, input);
@@ -90,10 +90,10 @@ public class TileEntityBannerDetector extends TileEntityBase implements ITickabl
 
     private boolean checkBanner(BlockPos pos, ItemStack filter, Class type)
     {
-        IBlockState state = worldObj.getBlockState(pos);
+        IBlockState state = world.getBlockState(pos);
         if (type.isInstance(state.getBlock())) {
             BlockBanner bannerblock = (BlockBanner) state.getBlock();
-            ItemStack banner = bannerblock.getItem(worldObj, pos, state);
+            ItemStack banner = bannerblock.getItem(world, pos, state);
             return BannerUtil.isSameBanner(filter,banner);
         }
 

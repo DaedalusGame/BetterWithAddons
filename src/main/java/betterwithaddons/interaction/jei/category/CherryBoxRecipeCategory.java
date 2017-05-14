@@ -33,10 +33,6 @@ public abstract class CherryBoxRecipeCategory extends BlankRecipeCategory<Cherry
     @Override
     public void drawExtras(Minecraft minecraft) {
         flame.draw(minecraft, 29, 2);
-    }
-
-    @Override
-    public void drawAnimations(Minecraft minecraft) {
         arrow.draw(minecraft, 24, 19);
     }
 

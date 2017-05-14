@@ -1,9 +1,9 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.item.ModItems;
-import betterwithmods.BWMBlocks;
+import betterwithmods.common.BWMBlocks;
 import betterwithmods.api.BWMRecipeHelper;
-import betterwithmods.items.ItemMaterial;
+import betterwithmods.common.items.ItemMaterial;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -45,11 +45,11 @@ public class InteractionCondensedOutputs implements IInteraction {
 
     @Override
     public void preInit() {
-        bagStack = betterwithmods.items.ItemMaterial.getMaterial("hemp_cloth",1);
+        bagStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH,1);
         crateStack = new ItemStack(Blocks.PLANKS,1);
         congealedStack = new ItemStack(Items.SLIME_BALL,1);
         boltStack = new ItemStack(BWMBlocks.WOOD_MOULDING,1);
-        bundleStack = betterwithmods.items.ItemMaterial.getMaterial("hemp_fibers",1);
+        bundleStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_FIBERS,1);
 
         if(!LOSE_BINDER) {
             ModItems.materialBag.setContainer(bagStack);
@@ -71,13 +71,13 @@ public class InteractionCondensedOutputs implements IInteraction {
         addBaggingRecipe(ModItems.materialBag.getMaterial("glowstone"),new ItemStack(Items.GLOWSTONE_DUST));
         addBaggingRecipe(ModItems.materialBag.getMaterial("sugar"),new ItemStack(Items.SUGAR));
         addBaggingRecipe(ModItems.materialBag.getMaterial("gunpowder"),new ItemStack(Items.GUNPOWDER));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("flour"),ItemMaterial.getMaterial("flour"));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("sulfur"),ItemMaterial.getMaterial("brimstone"));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("nitre"),ItemMaterial.getMaterial("niter"));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("sawdust"),ItemMaterial.getMaterial("sawdust"));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("sawdust_soul"),ItemMaterial.getMaterial("soul_dust"));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("potash"),ItemMaterial.getMaterial("potash"));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("hellfire"),ItemMaterial.getMaterial("hellfire_dust"));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("flour"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.FLOUR));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("sulfur"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BRIMSTONE));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("nitre"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NITER));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("sawdust"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("sawdust_soul"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOUL_DUST));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("potash"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("hellfire"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HELLFIRE_DUST));
 
         addCratingRecipe(ModItems.materialCrate.getMaterial("pork"),new ItemStack(Items.COOKED_PORKCHOP));
         addCratingRecipe(ModItems.materialCrate.getMaterial("pork_raw"),new ItemStack(Items.PORKCHOP));
@@ -100,12 +100,12 @@ public class InteractionCondensedOutputs implements IInteraction {
         addCongealingRecipe(ModItems.materialCongealed.getMaterial("eye"),new ItemStack(Items.SPIDER_EYE));
         addCongealingRecipe(ModItems.materialCongealed.getMaterial("wart"),new ItemStack(Items.NETHER_WART));
 
-        addRollupRecipe(ModItems.materialBolt.getMaterial("fabric"),betterwithmods.items.ItemMaterial.getMaterial("hemp_cloth"));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("fabric"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH));
         addRollupRecipe(ModItems.materialBolt.getMaterial("vine"),new ItemStack(Blocks.VINE));
         addRollupRecipe(ModItems.materialBolt.getMaterial("paper"),new ItemStack(Items.PAPER));
         addRollupRecipe(ModItems.materialBolt.getMaterial("leather"),new ItemStack(Items.LEATHER));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("scoured_leather"),betterwithmods.items.ItemMaterial.getMaterial("scoured_leather"));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("tanned_leather"),betterwithmods.items.ItemMaterial.getMaterial("tanned_leather"));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("scoured_leather"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("tanned_leather"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER));
         addRollupRecipe(ModItems.materialBolt.getMaterial("string"),new ItemStack(Items.STRING));
 
         addBundlingRecipe(ModItems.materialBundle.getMaterial("feather"),new ItemStack(Items.FEATHER));
@@ -139,7 +139,7 @@ public class InteractionCondensedOutputs implements IInteraction {
         addCondensingRecipe(output, material, congealedStack);
 
         ItemStack material8 = material.copy();
-        material8.stackSize = 8;
+        material8.setCount(8);
         BWMRecipeHelper.addCauldronRecipe(output,new Object[]{material8,congealedStack.copy()});
     }
 
@@ -156,7 +156,7 @@ public class InteractionCondensedOutputs implements IInteraction {
     private void addCondensingRecipe(ItemStack output, ItemStack material, ItemStack frame)
     {
         ItemStack outmaterial = material.copy();
-        outmaterial.stackSize = 8;
+        outmaterial.setCount(8);
         GameRegistry.addShapedRecipe(output,"aaa","aba","aaa",'a',material,'b',frame);
         GameRegistry.addShapelessRecipe(outmaterial,output);
     }

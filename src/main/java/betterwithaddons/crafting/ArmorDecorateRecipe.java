@@ -9,6 +9,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -101,7 +102,7 @@ public class ArmorDecorateRecipe implements IRecipe
         {
             ItemStack itemstack = inv.getStackInSlot(k);
 
-            if (itemstack != null) {
+            if (!itemstack.isEmpty()) {
                 if (matchItem(itemstack, "nuggetGold")) {
                     goldCount++;
                 } else if (matchItem(itemstack, ModItems.materialJapan.getMaterial("washi"))) {
@@ -140,7 +141,7 @@ public class ArmorDecorateRecipe implements IRecipe
             return outstack;
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     /**
@@ -154,17 +155,17 @@ public class ArmorDecorateRecipe implements IRecipe
     @Nullable
     public ItemStack getRecipeOutput()
     {
-        return null;
+        return ItemStack.EMPTY;
     }
 
-    public ItemStack[] getRemainingItems(InventoryCrafting inv)
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
     {
-        ItemStack[] aitemstack = new ItemStack[inv.getSizeInventory()];
+        NonNullList<ItemStack> aitemstack = NonNullList.withSize(inv.getSizeInventory(),ItemStack.EMPTY);
 
-        for (int i = 0; i < aitemstack.length; ++i)
+        for (int i = 0; i < aitemstack.size(); ++i)
         {
             ItemStack itemstack = inv.getStackInSlot(i);
-            aitemstack[i] = net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack);
+            aitemstack.set(i,net.minecraftforge.common.ForgeHooks.getContainerItem(itemstack));
         }
 
         return aitemstack;

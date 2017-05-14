@@ -1,6 +1,5 @@
 package betterwithaddons.block;
 
-import betterwithmods.util.DirUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.material.Material;
@@ -17,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +38,7 @@ public class BlockModPane extends BlockBase {
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, NORTH, EAST, SOUTH, WEST);
-    }
-
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity) {
+    public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity, boolean p_185477_7_) {
         state = state.getActualState(world, pos);
         float minY = 0.001F;
         float maxY = 0.999F;
@@ -51,19 +46,19 @@ public class BlockModPane extends BlockBase {
         float maxX = 0.5625F;
         float minZ = 0.4375F;
         float maxZ = 0.5625F;
-        if(((Boolean)state.getValue(DirUtils.NORTH)).booleanValue()) {
+        if(((Boolean)state.getValue(NORTH)).booleanValue()) {
             minZ = 0.0F;
         }
 
-        if(((Boolean)state.getValue(DirUtils.SOUTH)).booleanValue()) {
+        if(((Boolean)state.getValue(SOUTH)).booleanValue()) {
             maxZ = 1.0F;
         }
 
-        if(((Boolean)state.getValue(DirUtils.WEST)).booleanValue()) {
+        if(((Boolean)state.getValue(WEST)).booleanValue()) {
             minX = 0.0F;
         }
 
-        if(((Boolean)state.getValue(DirUtils.EAST)).booleanValue()) {
+        if(((Boolean)state.getValue(EAST)).booleanValue()) {
             maxX = 1.0F;
         }
 
@@ -82,6 +77,7 @@ public class BlockModPane extends BlockBase {
 
     }
 
+
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
         state = state.getActualState(world, pos);
@@ -91,19 +87,19 @@ public class BlockModPane extends BlockBase {
         float maxX = 0.5625F;
         float minZ = 0.4375F;
         float maxZ = 0.5625F;
-        if(((Boolean)state.getValue(DirUtils.NORTH)).booleanValue()) {
+        if(((Boolean)state.getValue(NORTH)).booleanValue()) {
             minZ = 0.0F;
         }
 
-        if(((Boolean)state.getValue(DirUtils.SOUTH)).booleanValue()) {
+        if(((Boolean)state.getValue(SOUTH)).booleanValue()) {
             maxZ = 1.0F;
         }
 
-        if(((Boolean)state.getValue(DirUtils.WEST)).booleanValue()) {
+        if(((Boolean)state.getValue(WEST)).booleanValue()) {
             minX = 0.0F;
         }
 
-        if(((Boolean)state.getValue(DirUtils.EAST)).booleanValue()) {
+        if(((Boolean)state.getValue(EAST)).booleanValue()) {
             maxX = 1.0F;
         }
 
@@ -146,7 +142,12 @@ public class BlockModPane extends BlockBase {
         boolean east = this.canConnectTo(world, pos.east(), EnumFacing.EAST);
         boolean south = this.canConnectTo(world, pos.south(), EnumFacing.SOUTH);
         boolean west = this.canConnectTo(world, pos.west(), EnumFacing.WEST);
-        return state.withProperty(DirUtils.NORTH, Boolean.valueOf(north)).withProperty(DirUtils.EAST, Boolean.valueOf(east)).withProperty(DirUtils.SOUTH, Boolean.valueOf(south)).withProperty(DirUtils.WEST, Boolean.valueOf(west));
+        return state.withProperty(NORTH, Boolean.valueOf(north)).withProperty(EAST, Boolean.valueOf(east)).withProperty(SOUTH, Boolean.valueOf(south)).withProperty(WEST, Boolean.valueOf(west));
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, NORTH, EAST, SOUTH, WEST);
     }
 
     @Override

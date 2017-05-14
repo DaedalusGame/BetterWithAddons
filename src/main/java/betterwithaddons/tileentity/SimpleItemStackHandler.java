@@ -26,7 +26,7 @@ public class SimpleItemStackHandler extends ItemStackHandler {
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (allowWrite) {
             return super.extractItem(slot, amount, simulate);
-        } else return null;
+        } else return ItemStack.EMPTY;
     }
 
     @Override

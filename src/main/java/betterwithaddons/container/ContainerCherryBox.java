@@ -87,8 +87,8 @@ public class ContainerCherryBox extends Container {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
-        ItemStack stack = null;
-        Slot slot = (Slot)this.inventorySlots.get(index);
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
 
         if(slot != null && slot.getHasStack())
         {
@@ -98,12 +98,12 @@ public class ContainerCherryBox extends Container {
             if(index < 3)
             {
                 if(!mergeItemStack(stack1, 3, this.inventorySlots.size(), true))
-                    return null;
+                    return ItemStack.EMPTY;
             }
             else if(!mergeItemStack(stack1, 0, 3, false))
-                return null;
-            if(stack1.stackSize == 0)
-                slot.putStack(null);
+                return ItemStack.EMPTY;
+            if(stack1.getCount() == 0)
+                slot.putStack(ItemStack.EMPTY);
             else
                 slot.onSlotChanged();
         }

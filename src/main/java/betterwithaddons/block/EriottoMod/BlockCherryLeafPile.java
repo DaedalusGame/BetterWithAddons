@@ -36,7 +36,7 @@ public class BlockCherryLeafPile extends BlockBase {
 
     @Override
     @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
         return NULL_AABB;
     }
@@ -82,7 +82,7 @@ public class BlockCherryLeafPile extends BlockBase {
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos posfrom) {
         if(!world.isRemote) {
             if(!this.canPlaceBlockAt(world, pos)) {
                 world.setBlockToAir(pos);

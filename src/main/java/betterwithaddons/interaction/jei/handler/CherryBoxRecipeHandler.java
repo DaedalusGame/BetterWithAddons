@@ -13,13 +13,7 @@ public class CherryBoxRecipeHandler implements IRecipeHandler<CherryBoxRecipeWra
     public Class<CherryBoxRecipeWrapper> getRecipeClass() {
         return CherryBoxRecipeWrapper.class;
     }
-
-    @Nonnull
-    @Override
-    public String getRecipeCategoryUid() {
-        return null;
-    }
-
+    
     @Nonnull
     @Override
     public String getRecipeCategoryUid(@Nonnull CherryBoxRecipeWrapper recipe) {

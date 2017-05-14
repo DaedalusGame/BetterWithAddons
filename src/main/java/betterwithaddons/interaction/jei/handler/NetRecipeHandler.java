@@ -16,12 +16,6 @@ public class NetRecipeHandler implements IRecipeHandler<NetRecipeWrapper> {
 
     @Nonnull
     @Override
-    public String getRecipeCategoryUid() {
-        return null;
-    }
-
-    @Nonnull
-    @Override
     public String getRecipeCategoryUid(@Nonnull NetRecipeWrapper recipe) {
         return getSifterTypeUid(recipe.type);
     }

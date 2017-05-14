@@ -21,7 +21,7 @@ public class CraftingManagerTatara {
     }
 
     public void addSmeltingRecipe(ItemStack input, ItemStack output) {
-        if(this.getSmeltingResult(input) != null) {
+        if(!this.getSmeltingResult(input).isEmpty()) {
             FMLLog.info("Ignored tatara recipe with conflicting input: " + input + " = " + output, new Object[0]);
         } else {
             this.smeltingList.put(input, output);
@@ -35,7 +35,7 @@ public class CraftingManagerTatara {
         Map.Entry entry;
         do {
             if(!var2.hasNext()) {
-                return null;
+                return ItemStack.EMPTY;
             }
 
             entry = (Map.Entry)var2.next();

@@ -62,11 +62,13 @@ public class BlockPCB extends BlockBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack item, EnumFacing facing, float x, float y, float z) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float x, float y, float z) {
         x -= 0.5f;
         z -= 0.5f;
 
-        if(facing != EnumFacing.UP || item != null)
+        ItemStack item = player.getHeldItem(hand);
+
+        if(facing != EnumFacing.UP || !item.isEmpty())
             return false;
 
         boolean isEast = x > 0 && Math.abs(z) < Math.abs(x);
@@ -82,7 +84,7 @@ public class BlockPCB extends BlockBase {
         if(isWest) newstate = newstate.withProperty(WEST,!state.getValue(WEST));
 
         world.setBlockState(pos,newstate);
-        world.notifyNeighborsOfStateChange(pos.up(), this);
+        world.notifyNeighborsOfStateChange(pos.up(), this, false);
 
         return true;
     }

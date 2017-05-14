@@ -23,9 +23,9 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 minecraft {
-    version = "1.10.2-12.18.2.2121"
+    version = "1.11.2-13.20.0.2296"
     runDir = "run"
-    mappings = "snapshot_20161105"
+    mappings = "snapshot_20161220"
 }
 
 repositories {
@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_1.10.2:+"
+	deobfCompile "mezz.jei:jei_1.11.2:+"
 	compile files('libs/')
 }
 

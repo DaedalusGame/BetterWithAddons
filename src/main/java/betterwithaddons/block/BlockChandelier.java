@@ -68,8 +68,8 @@ public class BlockChandelier extends BlockBase {
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
-        super.neighborChanged(state, worldIn, pos, blockIn);
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos frompos) {
+        super.neighborChanged(state, worldIn, pos, blockIn,frompos);
         checkAndDrop(worldIn,pos);
     }
 
@@ -80,7 +80,7 @@ public class BlockChandelier extends BlockBase {
             EntityFallingBlock entityfallingblock = new EntityFallingBlock(worldIn, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, worldIn.getBlockState(pos));
             entityfallingblock.shouldDropItem = true;
             entityfallingblock.setHurtEntities(true);
-            worldIn.spawnEntityInWorld(entityfallingblock);
+            worldIn.spawnEntity(entityfallingblock);
         }
     }
 

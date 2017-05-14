@@ -36,7 +36,7 @@ public class ItemMaterial extends Item implements IHasVariants{
 
     @Override
     public boolean hasContainerItem(ItemStack stack) {
-        return container != null;
+        return !container.isEmpty();
     }
 
     public ItemStack getMaterial(String material) {

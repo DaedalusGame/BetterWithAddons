@@ -34,7 +34,7 @@ public class TileEntityNettedScreen extends TileEntityBase implements ITickable
     @Override
     public void update()
     {
-        if (!this.worldObj.isRemote)
+        if (!this.world.isRemote)
         {
             captureDroppedItems();
         }
@@ -42,9 +42,9 @@ public class TileEntityNettedScreen extends TileEntityBase implements ITickable
 
     public BlockNettedScreen.SifterType getSifterType()
     {
-        IBlockState state = worldObj.getBlockState(pos);
+        IBlockState state = world.getBlockState(pos);
         if(state.getBlock() instanceof BlockNettedScreen)
-            return ((BlockNettedScreen)state.getBlock()).getSifterType(worldObj,pos);
+            return ((BlockNettedScreen)state.getBlock()).getSifterType(world,pos);
         return BlockNettedScreen.SifterType.NONE;
     }
 
@@ -69,39 +69,38 @@ public class TileEntityNettedScreen extends TileEntityBase implements ITickable
 
     private void handleSandCase(EntityItem item) {
         ItemStack sandstack = item.getEntityItem().copy();
-        sandstack.stackSize -= this.increaseSandCount(sandstack.stackSize);
+        sandstack.shrink(this.increaseSandCount(sandstack.getCount()));
         item.setEntityItemStack(sandstack);
-        if(sandstack.stackSize < 0)
+        if(sandstack.getCount() < 0)
             item.setDead();
     }
 
     private boolean canHoldSand()
     {
-        IBlockState state = worldObj.getBlockState(pos.down());
+        IBlockState state = world.getBlockState(pos.down());
         return state.getBlock() instanceof BlockSlat;
     }
 
     private int getSandCount()
     {
-        IBlockState state = worldObj.getBlockState(pos.down());
+        IBlockState state = world.getBlockState(pos.down());
         return state.getBlock() instanceof BlockSlat ? state.getValue(BlockSlat.SANDFILL) : 0;
     }
 
     private int increaseSandCount(int n)
     {
-        IBlockState state = worldObj.getBlockState(pos.down());
+        IBlockState state = world.getBlockState(pos.down());
         Block slatblock = state.getBlock();
         if(slatblock instanceof BlockSlat) {
             int currsand = getSandCount();
             int added = Math.min(n, 8 - currsand);
-            worldObj.setBlockState(pos.down(),slatblock.getDefaultState().withProperty(BlockSlat.SANDFILL,currsand+added));
+            world.setBlockState(pos.down(),slatblock.getDefaultState().withProperty(BlockSlat.SANDFILL,currsand+added));
             return added;
         }
         return 0;
     }
 
     private boolean captureDroppedItems() {
-        World world = worldObj;
         List<EntityItem> items = this.getCaptureItems(world, pos);
         if (items.size() > 0) {
             for (EntityItem item : items) {
@@ -116,16 +115,16 @@ public class TileEntityNettedScreen extends TileEntityBase implements ITickable
                     List<ItemStack> ret = recipe.getOutput();
                     if (ret != null && ret.size() > 0) {
                         ItemUtil.consumeItem(items,recipe.getInput());
-                        world.playSound((EntityPlayer) null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                        world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 
                         for (int i = 0; i < ret.size(); i++) {
                             ItemStack item = ret.get(i);
-                            if(item == null)
+                            if(item.isEmpty())
                                 continue;
                             EntityItem result = new EntityItem(world, pos.getX() + 0.5f, pos.getY() + (i % 2 == 0 ? 1.2f : -0.5f), pos.getZ() + 0.5f, item.copy());
                             result.setDefaultPickupDelay();
                             if (!world.isRemote) {
-                                world.spawnEntityInWorld(result);
+                                world.spawnEntity(result);
                             }
                         }
 

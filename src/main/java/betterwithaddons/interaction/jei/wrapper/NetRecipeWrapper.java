@@ -23,34 +23,34 @@ public class NetRecipeWrapper extends BlankRecipeWrapper {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        ingredients.setInputLists(ItemStack.class,getInputs());
+        ingredients.setInputs(ItemStack.class,getInputs());
         ingredients.setOutputs(ItemStack.class,getOutputs());
     }
 
-    public List<List<ItemStack>> getInputs()
+    public List<ItemStack> getInputs()
     {
-        List<List<ItemStack>> inputs = getInputWithoutSand();
+        List<ItemStack> inputs = getInputWithoutSand();
 
         int sandrequired = recipe.getSandRequired();
         if(sandrequired > 0)
-            inputs.add(Lists.newArrayList(new ItemStack(Blocks.SAND,sandrequired)));
+            inputs.add(new ItemStack(Blocks.SAND,sandrequired));
 
         return inputs;
     }
 
-    public List<List<ItemStack>> getInputWithoutSand()
+    public List<ItemStack> getInputWithoutSand()
     {
-        List<List<ItemStack>> inputs = new ArrayList<>();
+        List<ItemStack> inputs = new ArrayList<>();
         Object obj = recipe.getInput();
 
         if(obj instanceof ItemStack)
         {
             ItemStack stack = (ItemStack)obj;
-            if(stack != null && stack.getItem() != null)
-                inputs.add(Lists.newArrayList(stack.copy()));
+            if(!stack.isEmpty() && stack.getItem() != null)
+                inputs.add(stack.copy());
         }
         else if(obj instanceof List) {
-            inputs.add((List<ItemStack>)obj);
+            inputs.addAll((List<ItemStack>)obj);
         }
 
         return inputs;
@@ -60,7 +60,7 @@ public class NetRecipeWrapper extends BlankRecipeWrapper {
     {
         List<ItemStack> outputs = new ArrayList<ItemStack>();
         for (ItemStack stack : recipe.getOutput()) {
-            if(stack != null) {
+            if(!stack.isEmpty()) {
                 outputs.add(stack.copy());
             }
         }
@@ -84,7 +84,7 @@ public class NetRecipeWrapper extends BlankRecipeWrapper {
         List<ItemStack> outputs = new ArrayList<ItemStack>();
         int i = 0;
         for (ItemStack stack : recipe.getOutput()) {
-            if(i++ % 2 == 0 && stack != null)
+            if(i++ % 2 == 0 && !stack.isEmpty())
                 outputs.add(stack.copy());
         }
         return outputs;

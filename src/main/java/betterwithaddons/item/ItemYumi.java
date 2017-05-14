@@ -35,7 +35,7 @@ public class ItemYumi extends ItemBow {
                     return 0.0F;
                 } else {
                     ItemStack itemstack = entityIn.getActiveItemStack();
-                    return itemstack != null && itemstack.getItem() instanceof ItemYumi ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 60.0F : 0.0F;
+                    return !itemstack.isEmpty() && itemstack.getItem() instanceof ItemYumi ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 60.0F : 0.0F;
                 }
             }
         });
@@ -43,7 +43,7 @@ public class ItemYumi extends ItemBow {
 
     @Override
     protected boolean isArrow(@Nullable ItemStack stack) {
-        return stack != null && stack.getItem() instanceof ItemYa;
+        return !stack.isEmpty() && stack.getItem() instanceof ItemYa;
     }
 
     private ItemStack findAmmo(EntityPlayer player)
@@ -68,7 +68,7 @@ public class ItemYumi extends ItemBow {
                 }
             }
 
-            return null;
+            return ItemStack.EMPTY;
         }
     }
 
@@ -135,16 +135,16 @@ public class ItemYumi extends ItemBow {
                             entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
                         }
 
-                        worldIn.spawnEntityInWorld(entityarrow);
+                        worldIn.spawnEntity(entityarrow);
                     }
 
                     worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
                     if (!flag1)
                     {
-                        --itemstack.stackSize;
+                        itemstack.shrink(1);
 
-                        if (itemstack.stackSize == 0)
+                        if (itemstack.getCount() == 0)
                         {
                             entityplayer.inventory.deleteStack(itemstack);
                         }

@@ -67,18 +67,18 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
         for (int z = -1; z <= 1; z++)
             for (int x = -1; x <= 1; x++)
             {
-                IBlockState upperstate = worldObj.getBlockState(pos.add(x,+1,z));
+                IBlockState upperstate = world.getBlockState(pos.add(x,+1,z));
                 if(!isTopping(upperstate))
                     return false;
-                if((z != x || x != 0) && !isBedding(worldObj.getBlockState(pos.add(x,-1,z))))
+                if((z != x || x != 0) && !isBedding(world.getBlockState(pos.add(x,-1,z))))
                     return false;
-                if(x == z && x != 0 && !isStoneBrick(worldObj.getBlockState(pos.add(x,0,z))))
+                if(x == z && x != 0 && !isStoneBrick(world.getBlockState(pos.add(x,0,z))))
                     return false;
             }
 
-        boolean hasSiding = isSiding(worldObj.getBlockState(pos.north())) && isSiding(worldObj.getBlockState(pos.south()));
-        hasSiding ^= isSiding(worldObj.getBlockState(pos.east())) && isSiding(worldObj.getBlockState(pos.west()));
-        return isHeatSource(worldObj.getBlockState(pos.down())) && hasSiding;
+        boolean hasSiding = isSiding(world.getBlockState(pos.north())) && isSiding(world.getBlockState(pos.south()));
+        hasSiding ^= isSiding(world.getBlockState(pos.east())) && isSiding(world.getBlockState(pos.west()));
+        return isHeatSource(world.getBlockState(pos.down())) && hasSiding;
     }
 
     public boolean isSiding(IBlockState state)
@@ -111,7 +111,7 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
     }
 
     public static int getItemBurnTime(ItemStack stack) {
-        if(stack != null && stack.isItemEqual(ModItems.materialJapan.getMaterial("rice_ash"))) {
+        if(!stack.isEmpty() && stack.isItemEqual(ModItems.materialJapan.getMaterial("rice_ash"))) {
             return 1600;
         }
 
@@ -130,25 +130,25 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
         return currentItemBurnTime != 0 ? furnaceBurnTime * height / currentItemBurnTime : 0;
     }
 
-    public int getCookTime(@Nullable ItemStack stack) {
+    public int getCookTime(ItemStack stack) {
         return 1000;
     }
 
     private boolean canSmelt() {
         ItemStack inputstack = inventory.getStackInSlot(0);
         ItemStack outputstack = inventory.getStackInSlot(2);
-        if(inputstack == null) {
+        if(inputstack.isEmpty()) {
             return false;
         } else {
             ItemStack itemstack = CraftingManagerTatara.instance().getSmeltingResult(inputstack);
-            if(itemstack == null) {
+            if(itemstack.isEmpty()) {
                 return false;
-            } else if(outputstack == null) {
+            } else if(outputstack.isEmpty()) {
                 return true;
             } else if(!outputstack.isItemEqual(itemstack)) {
                 return false;
             } else {
-                int result = outputstack.stackSize + itemstack.stackSize;
+                int result = outputstack.getCount() + itemstack.getCount();
                 return result <= this.getInventoryStackLimit() && result <= outputstack.getMaxStackSize();
             }
         }
@@ -160,15 +160,15 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
 
         if(this.canSmelt()) {
             ItemStack itemstack = CraftingManagerTatara.instance().getSmeltingResult(inputstack);
-            if(outputstack == null) {
+            if(outputstack.isEmpty()) {
                 inventory.setStackInSlot(2,itemstack.copy());
             } else if(outputstack.getItem() == itemstack.getItem()) {
-                outputstack.stackSize += itemstack.stackSize;
+                outputstack.grow(itemstack.getCount());
             }
 
-            --inputstack.stackSize;
-            if(inputstack.stackSize <= 0) {
-                inventory.setStackInSlot(0,null);
+            inputstack.shrink(1);
+            if(inputstack.getCount() <= 0) {
+                inventory.setStackInSlot(0,ItemStack.EMPTY);
             }
         }
 
@@ -187,21 +187,21 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
             --this.furnaceBurnTime;
         }
 
-        if(!this.worldObj.isRemote) {
+        if(!this.world.isRemote) {
             if(!isValidStructure())
                 return;
 
             ItemStack inputstack = inventory.getStackInSlot(0);
             ItemStack fuelstack = inventory.getStackInSlot(1);
-            if(this.isBurning() || fuelstack != null && inputstack != null) {
+            if(this.isBurning() || !fuelstack.isEmpty() && !inputstack.isEmpty()) {
                 if(!this.isBurning() && this.canSmelt()) {
                     this.furnaceBurnTime = getItemBurnTime(fuelstack);
                     this.currentItemBurnTime = this.furnaceBurnTime;
                     if(this.isBurning()) {
                         flag1 = true;
-                        if(fuelstack != null) {
-                            --fuelstack.stackSize;
-                            if(fuelstack.stackSize == 0) {
+                        if(!fuelstack.isEmpty()) {
+                            fuelstack.shrink(1);
+                            if(fuelstack.getCount() == 0) {
                                 inventory.setStackInSlot(1,fuelstack.getItem().getContainerItem(fuelstack));
                             }
                         }
@@ -221,7 +221,7 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
                     this.cookTime = 0;
                 }
             } else if(!this.isBurning() && this.cookTime > 0) {
-                this.cookTime = MathHelper.clamp_int(this.cookTime - 2, 0, this.totalCookTime);
+                this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.totalCookTime);
             }
 
             if(burning != this.isBurning()) {

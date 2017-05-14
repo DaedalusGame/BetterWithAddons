@@ -29,8 +29,8 @@ public class ItemMonument extends Item {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack itemStack, EntityPlayer entityPlayer, World world, BlockPos blockPos, EnumHand enumHand, EnumFacing enumFacing, float f, float f2, float f3) {
-        return super.onItemUse(itemStack, entityPlayer, world, blockPos, enumHand, enumFacing, f, f2, f3);
+    public EnumActionResult onItemUse(EntityPlayer entityPlayer, World world, BlockPos blockPos, EnumHand enumHand, EnumFacing enumFacing, float f, float f2, float f3) {
+        return super.onItemUse(entityPlayer, world, blockPos, enumHand, enumFacing, f, f2, f3);
     }
 
     @Override
@@ -44,8 +44,9 @@ public class ItemMonument extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer, EnumHand enumHand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, EnumHand enumHand) {
         entityPlayer.setActiveHand(enumHand);
+        ItemStack itemStack = entityPlayer.getHeldItem(enumHand);
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
     }
 }

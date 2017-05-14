@@ -51,8 +51,8 @@ public class AssortedHandler
 	@SubscribeEvent
 	public void onEntityDrop(LivingDropsEvent event) {
 		EntityLivingBase living = event.getEntityLiving();
-		if(living == null || living.worldObj == null) return;
-		Random rand = living.worldObj.rand;
+		if(living == null || living.world == null) return;
+		Random rand = living.world.rand;
 
 		if (living instanceof EntityShulker){
 			if (rand.nextFloat() < 1.0f) {
@@ -146,7 +146,7 @@ public class AssortedHandler
 		float hardness = blockstate.getBlockHardness(world,breakEvent.getPos()) * hardnessmod;
 		float newspeed = breakEvent.getNewSpeed() * (1.0f / hardnessmod);
 
-		if(worldscale != null && (banner = BannerUtil.getBannerItemFromBlock(world,worldscale.up())) != null)
+		if(worldscale != null && !(banner = BannerUtil.getBannerItemFromBlock(world,worldscale.up())).isEmpty())
 		{
 			if(!BannerUtil.isSameBanner(banner,entity))
 			{
@@ -205,15 +205,15 @@ public class AssortedHandler
 	@SubscribeEvent
 	public void livingAttacked(LivingAttackEvent event)
 	{
-		if (!event.getEntityLiving().worldObj.isRemote)
+		if (!event.getEntityLiving().world.isRemote)
 		{
 			if (!event.isCanceled() && event.getAmount() > 0)
 			{
 				EntityLivingBase living = event.getEntityLiving();
 
-				if (living.isPotionActive(ModPotions.cannonball) && (event.getSource().isExplosion() || event.getSource() == DamageSource.fall))
+				if (living.isPotionActive(ModPotions.cannonball) && (event.getSource().isExplosion() || event.getSource() == DamageSource.FALL))
 				{
-					if(event.getSource() == DamageSource.fall) //No you don't get to have superbuffs that make you immune to creepers and falldamage.
+					if(event.getSource() == DamageSource.FALL) //No you don't get to have superbuffs that make you immune to creepers and falldamage.
 						living.removePotionEffect(ModPotions.cannonball);
 					event.setCanceled(true);
 				}
@@ -225,7 +225,6 @@ public class AssortedHandler
 
 	@SubscribeEvent
 	public void onBlockInteract(PlayerInteractEvent event) {
-
 		World world = event.getWorld();
 		BlockPos pos = event.getPos();
 		IBlockState blockstate = world.getBlockState(pos);
@@ -237,7 +236,7 @@ public class AssortedHandler
 			ItemStack stack = player.getHeldItemMainhand();
 			BlockBanner bannerblock = (BlockBanner)blockstate.getBlock();
 
-			if(stack == null && player.isSneaking() && player.getItemStackFromSlot(EntityEquipmentSlot.HEAD) == null) {
+			if(stack.isEmpty() && player.isSneaking() && player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).isEmpty()) {
 				ItemStack bannerstack = bannerblock.getItem(world,pos,blockstate);
 				player.swingArm(hand);
 

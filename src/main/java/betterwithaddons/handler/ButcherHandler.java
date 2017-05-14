@@ -1,8 +1,8 @@
 package betterwithaddons.handler;
 
 import betterwithaddons.util.EntityUtil;
-import betterwithmods.BWMBlocks;
-import betterwithmods.blocks.BlockAesthetic;
+import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.blocks.BlockAesthetic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -44,7 +44,7 @@ public class ButcherHandler {
 
     private boolean isSuitableWeapon(ItemStack stack)
     {
-        if(stack == null) return false;
+        if(stack.isEmpty()) return false;
 
         Item item = stack.getItem();
         return item.getToolClasses(stack).contains("axe") || item instanceof ItemSword || item instanceof ItemAxe;

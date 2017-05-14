@@ -29,7 +29,7 @@ public class OreStack
     public boolean matches(ItemStack stack)
     {
         for (ItemStack ore: getOres()) {
-            if(stack.isItemEqual(ore) && stack.stackSize >= stackSize)
+            if(stack.isItemEqual(ore) && stack.getCount() >= stackSize)
                 return true;
         }
 

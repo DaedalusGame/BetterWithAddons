@@ -117,7 +117,7 @@ public class BlockWirePCB extends Block implements IColorable {
 
     @Override
     @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
         return NULL_AABB;
     }
 
@@ -141,7 +141,7 @@ public class BlockWirePCB extends Block implements IColorable {
         ArrayList<BlockPos> list = Lists.newArrayList(this.blocksNeedingUpdate);
         this.blocksNeedingUpdate.clear();
         for (BlockPos blockpos : list) {
-            world.notifyNeighborsOfStateChange(blockpos, this);
+            world.notifyNeighborsOfStateChange(blockpos, this, true);
         }
 
         return state;
@@ -210,19 +210,19 @@ public class BlockWirePCB extends Block implements IColorable {
 
     private void notifyWireNeighborsOfStateChange(World world, BlockPos pos) {
         if(isRedstoneWire(world.getBlockState(pos))) {
-            world.notifyNeighborsOfStateChange(pos, this);
+            world.notifyNeighborsOfStateChange(pos, this, true);
             for (EnumFacing enumfacing:EnumFacing.values()) {
-                world.notifyNeighborsOfStateChange(pos.offset(enumfacing), this);
+                world.notifyNeighborsOfStateChange(pos.offset(enumfacing), this, true);
             }
         }
 
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack item, EnumFacing facing, float x, float y, float z) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float x, float y, float z) {
         BlockPos bottompos = pos.down();
         IBlockState bottomstate = world.getBlockState(bottompos);
-        return bottomstate.getBlock().onBlockActivated(world,bottompos,bottomstate,player,hand,item,facing,x,y,z);
+        return bottomstate.getBlock().onBlockActivated(world,bottompos,bottomstate,player,hand,facing,x,y,z);
     }
 
     @Override
@@ -234,7 +234,7 @@ public class BlockWirePCB extends Block implements IColorable {
             EnumFacing enumfacing2;
             while(var4.hasNext()) {
                 enumfacing2 = (EnumFacing)var4.next();
-                world.notifyNeighborsOfStateChange(pos.offset(enumfacing2), this);
+                world.notifyNeighborsOfStateChange(pos.offset(enumfacing2), this, true);
             }
 
             var4 = EnumFacing.Plane.HORIZONTAL.iterator();
@@ -264,7 +264,7 @@ public class BlockWirePCB extends Block implements IColorable {
         super.breakBlock(world, pos, state);
         if(!world.isRemote) {
             for (EnumFacing enumfacing : EnumFacing.values()) {
-                world.notifyNeighborsOfStateChange(pos.offset(enumfacing), this);
+                world.notifyNeighborsOfStateChange(pos.offset(enumfacing), this, true);
             }
 
             this.updateSurroundingRedstone(world, pos, state);
@@ -297,7 +297,7 @@ public class BlockWirePCB extends Block implements IColorable {
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block) {
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if(!world.isRemote) {
             if(this.canPlaceBlockAt(world, pos)) {
                 this.updateSurroundingRedstone(world, pos, state);
@@ -381,9 +381,9 @@ public class BlockWirePCB extends Block implements IColorable {
             f3 = 0.0F;
         }
 
-        int i = MathHelper.clamp_int((int)(f1 * 255.0F), 0, 255);
-        int j = MathHelper.clamp_int((int)(f2 * 255.0F), 0, 255);
-        int k = MathHelper.clamp_int((int)(f3 * 255.0F), 0, 255);
+        int i = MathHelper.clamp((int)(f1 * 255.0F), 0, 255);
+        int j = MathHelper.clamp((int)(f2 * 255.0F), 0, 255);
+        int k = MathHelper.clamp((int)(f3 * 255.0F), 0, 255);
         return -16777216 | i << 16 | j << 8 | k;
     }
 

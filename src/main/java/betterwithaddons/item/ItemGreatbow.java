@@ -35,7 +35,7 @@ public class ItemGreatbow extends ItemBow {
                     return 0.0F;
                 } else {
                     ItemStack itemstack = entityIn.getActiveItemStack();
-                    return itemstack != null && itemstack.getItem() instanceof ItemGreatbow ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 60.0F : 0.0F;
+                    return !itemstack.isEmpty() && itemstack.getItem() instanceof ItemGreatbow ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 60.0F : 0.0F;
                 }
             }
         });
@@ -54,12 +54,12 @@ public class ItemGreatbow extends ItemBow {
             return itemstack;
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
     protected boolean isArrow(@Nullable ItemStack stack) {
-        return stack != null && stack.getItem() instanceof ItemGreatarrow;
+        return !stack.isEmpty() && stack.getItem() instanceof ItemGreatarrow;
     }
 
     @Override
@@ -101,12 +101,12 @@ public class ItemGreatbow extends ItemBow {
                         if (flag1) {
                             entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
                         }
-                        worldIn.spawnEntityInWorld(entityarrow);
+                        worldIn.spawnEntity(entityarrow);
                     }
                     worldIn.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_SKELETON_DEATH, SoundCategory.NEUTRAL, 1.0f, 1.0f / (itemRand.nextFloat() * 0.4f + 2.2f) - f * 0.2f);
                     if (!flag1) {
-                        --itemstack.stackSize;
-                        if (itemstack.stackSize == 0) {
+                        itemstack.shrink(1);
+                        if (itemstack.getCount() == 0) {
                             entityplayer.inventory.deleteStack(itemstack);
                         }
                     }

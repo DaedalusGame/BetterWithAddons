@@ -1,19 +1,21 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.handler.StumpingHandler;
-import betterwithmods.BWMBlocks;
-import betterwithmods.config.BWConfig;
-import betterwithmods.craft.BlockMetaRecipe;
-import betterwithmods.craft.KilnInteraction;
-import betterwithmods.craft.SawInteraction;
-import betterwithmods.items.ItemMaterial;
+import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.BWOreDictionary;
+import betterwithmods.common.registry.BlockMetaRecipe;
+import betterwithmods.common.registry.KilnInteraction;
+import betterwithmods.common.registry.SawInteraction;
+import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.module.ModuleLoader;
+import betterwithmods.module.tweaks.KilnSmelting;
 import betterwithmods.util.InvUtils;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.Arrays;
@@ -70,13 +72,13 @@ public class InteractionBTWTweak implements IInteraction {
             SawInteraction.INSTANCE.addRecipe(Blocks.NOTEBLOCK,0,new ItemStack(BWMBlocks.WOOD_SIDING, 6, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.REDSTONE,1));
             SawInteraction.INSTANCE.addRecipe(Blocks.TRAPDOOR,0,new ItemStack(BWMBlocks.WOOD_SIDING, 2, BlockPlanks.EnumType.OAK.getMetadata()));
             SawInteraction.INSTANCE.addRecipe(BWMBlocks.AXLE,0,new ItemStack(BWMBlocks.WOOD_CORNER, 2, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(BWMBlocks.ROPE,1));
-            SawInteraction.INSTANCE.addRecipe(BWMBlocks.BELLOWS,0,new ItemStack(BWMBlocks.WOOD_SIDING, 2, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial("leather_belt"), ItemMaterial.getMaterial("gear"), ItemMaterial.getMaterial("tanned_leather_cut",3));
-            SawInteraction.INSTANCE.addRecipe(BWMBlocks.GEARBOX,0,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial("gear",3), ItemMaterial.getMaterial("redstone_latch"));
-            SawInteraction.INSTANCE.addRecipe(BWMBlocks.SINGLE_MACHINES,4,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial("gear",1), new ItemStack(Blocks.WOODEN_PRESSURE_PLATE,1));
+            SawInteraction.INSTANCE.addRecipe(BWMBlocks.BELLOWS,0,new ItemStack(BWMBlocks.WOOD_SIDING, 2, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER_CUT,3));
+            SawInteraction.INSTANCE.addRecipe(BWMBlocks.GEARBOX,0,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH));
+            SawInteraction.INSTANCE.addRecipe(BWMBlocks.SINGLE_MACHINES,4,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,1), new ItemStack(Blocks.WOODEN_PRESSURE_PLATE,1));
             SawInteraction.INSTANCE.addRecipe(BWMBlocks.PLATFORM,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(BWMBlocks.PANE,2,2));
-            SawInteraction.INSTANCE.addRecipe(BWMBlocks.SINGLE_MACHINES,1,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.IRON_INGOT), ItemMaterial.getMaterial("gear"), ItemMaterial.getMaterial("redstone_latch"));
-            SawInteraction.INSTANCE.addRecipe(BWMBlocks.SAW,0,new ItemStack(BWMBlocks.WOOD_SIDING, 1, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial("leather_belt"), ItemMaterial.getMaterial("gear"), new ItemStack(Items.IRON_INGOT, 2));
-            SawInteraction.INSTANCE.addRecipe(BWMBlocks.PUMP,0,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial("screw"), new ItemStack(BWMBlocks.GRATE, 1, BlockPlanks.EnumType.OAK.getMetadata()));
+            SawInteraction.INSTANCE.addRecipe(BWMBlocks.SINGLE_MACHINES,1,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.IRON_INGOT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH));
+            SawInteraction.INSTANCE.addRecipe(BWMBlocks.SAW,0,new ItemStack(BWMBlocks.WOOD_SIDING, 1, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), new ItemStack(Items.IRON_INGOT, 2));
+            SawInteraction.INSTANCE.addRecipe(BWMBlocks.PUMP,0,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCREW), new ItemStack(BWMBlocks.GRATE, 1, BlockPlanks.EnumType.OAK.getMetadata()));
 
             BlockPlanks.EnumType[] woodtypes = BlockPlanks.EnumType.values();
             int len = woodtypes.length;
@@ -106,9 +108,10 @@ public class InteractionBTWTweak implements IInteraction {
 
     @Override
     public void postInit() {
-        if(KILN_DOUBLING && BWConfig.canKilnSmeltOres)
+
+        if(KILN_DOUBLING && ModuleLoader.isFeatureEnabled(KilnSmelting.class))
         {
-            InvUtils.oreNames.forEach(ore -> {
+            for (ItemStack ore : BWOreDictionary.oreNames) {
                 if(ore.getItem() instanceof ItemBlock)
                 {
                     BlockMetaRecipe recipe = KilnInteraction.INSTANCE.getRecipe(ore);
@@ -116,11 +119,11 @@ public class InteractionBTWTweak implements IInteraction {
                     if(outputs.size() > 0)
                     {
                         ItemStack output = outputs.get(0).copy();
-                        output.stackSize = 2;
+                        output.setCount(MathHelper.clamp(output.getCount() * 2,0,output.getMaxStackSize()));
                         outputs.set(0,output);
                     }
                 }
-            });
+            }
         }
     }
 }

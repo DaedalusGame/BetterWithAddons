@@ -39,14 +39,14 @@ public class EntityGreatarrow extends EntityArrow {
     public void onUpdate() {
         super.onUpdate();
 
-        if(worldObj.isRemote)
+        if(world.isRemote)
             spawnPotionParticles(4);
     }
 
     public void spawnPotionParticles(int particleCount) {
         if(particleCount > 0)
             for(int i = 0; i < particleCount; i++)
-                worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX + (rand.nextDouble() - 0.5D) * width, posY + rand.nextDouble() * height, posZ + (rand.nextDouble() - 0.5D) * width, 0.0D, 0.0D, 0.0D, new int[0]);
+                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX + (rand.nextDouble() - 0.5D) * width, posY + rand.nextDouble() * height, posZ + (rand.nextDouble() - 0.5D) * width, 0.0D, 0.0D, 0.0D, new int[0]);
     }
 
     @Override
@@ -56,18 +56,18 @@ public class EntityGreatarrow extends EntityArrow {
         if(raytraceResultIn.entityHit == null)
         {
             BlockPos blockpos = raytraceResultIn.getBlockPos();
-            IBlockState blockstate = worldObj.getBlockState(blockpos);
+            IBlockState blockstate = world.getBlockState(blockpos);
             Block block = blockstate.getBlock();
-            float hardness = block.getExplosionResistance(worldObj,blockpos,this,null);
+            float hardness = block.getExplosionResistance(world,blockpos,this,null);
 
-            if(!worldObj.isRemote && breakBlockWithParticles(blockpos,blockBreakPower))
+            if(!world.isRemote && breakBlockWithParticles(blockpos,blockBreakPower))
             {
                 blockBreakPower -= hardness;
                 isnormalhit = false;
 
                 for(int i = 0; i < 2; i++) {
                     BlockPos sideblock = blockpos.offset(EnumFacing.random(rand), 1);
-                    float sidehardness = worldObj.getBlockState(sideblock).getBlock().getExplosionResistance(worldObj,blockpos,this,null);
+                    float sidehardness = world.getBlockState(sideblock).getBlock().getExplosionResistance(world,blockpos,this,null);
                     if (breakBlockWithParticles(sideblock, blockBreakPower))
                         blockBreakPower -= sidehardness * 0.7f;
                 }
@@ -104,15 +104,16 @@ public class EntityGreatarrow extends EntityArrow {
 
     protected boolean breakBlockWithParticles(BlockPos blockpos, float power)
     {
-        IBlockState blockstate = worldObj.getBlockState(blockpos);
+        IBlockState blockstate = world.getBlockState(blockpos);
         Block block = blockstate.getBlock();
-        float hardness = block.getExplosionResistance(worldObj,blockpos,this,null);
+        float hardness = block.getExplosionResistance(world,blockpos,this,null);
 
         if(hardness <= power)
         {
-            if(!worldObj.isRemote && !blockstate.getBlock().isAir(blockstate, worldObj, blockpos))
-                worldObj.playEvent(2001, blockpos, Block.getStateId(blockstate));
-                worldObj.destroyBlock(blockpos,true);
+            if(!world.isRemote && !blockstate.getBlock().isAir(blockstate, world, blockpos)) {
+                world.playEvent(2001, blockpos, Block.getStateId(blockstate));
+                world.destroyBlock(blockpos, true);
+            }
             return true;
         }
 

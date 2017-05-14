@@ -20,7 +20,7 @@ public class BannerUtil {
             BlockBanner bannerblock = (BlockBanner) blockstate.getBlock();
             return bannerblock.getItem(world, pos, blockstate);
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     public static boolean isSameBanner(ItemStack bannerA, ItemStack bannerB)
@@ -56,7 +56,7 @@ public class BannerUtil {
     {
         if(bannerHolder instanceof EntityLivingBase) {
             ItemStack helmet = ((EntityLivingBase) bannerHolder).getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-            if(helmet != null && helmet.getItem() instanceof ItemBanner)
+            if(!helmet.isEmpty() && helmet.getItem() instanceof ItemBanner)
             {
                 return isSameBanner(banner,helmet);
             }

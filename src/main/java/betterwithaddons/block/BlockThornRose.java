@@ -199,7 +199,7 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
         if(state.getValue(AGE) < MAX_AGE && entityIn instanceof EntityLivingBase)
-            entityIn.attackEntityFrom(DamageSource.cactus, 5.0F);
+            entityIn.attackEntityFrom(DamageSource.CACTUS, 5.0F);
     }
 
     @Override

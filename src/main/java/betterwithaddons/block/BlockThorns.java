@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -49,7 +50,7 @@ public class BlockThorns extends BlockBase {
     }
 
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
         return;
     }
 
@@ -136,7 +137,7 @@ public class BlockThorns extends BlockBase {
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
         if(entityIn instanceof EntityLivingBase)
-            entityIn.attackEntityFrom(DamageSource.cactus, 5.0F);
+            entityIn.attackEntityFrom(DamageSource.CACTUS, 5.0F);
     }
 
     /*public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn)

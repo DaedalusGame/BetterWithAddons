@@ -5,7 +5,7 @@ import betterwithaddons.crafting.ArmorDecorateRecipe;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.item.ModItems;
 import betterwithmods.api.BWMRecipeHelper;
-import betterwithmods.items.ItemMaterial;
+import betterwithmods.common.items.ItemMaterial;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -51,10 +51,10 @@ public class InteractionEriottoMod implements IInteraction {
     public void init() {
         CraftingManagerSandNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModBlocks.ironSand,1)},new ItemStack(Blocks.IRON_BLOCK,1),8);
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(Blocks.IRON_BLOCK,1),new ItemStack(Blocks.SAND,8)},new ItemStack(ModBlocks.ironSand,1),0);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{null,new ItemStack(ModItems.sashimi,3)},new ItemStack(Items.FISH, 1) ,0);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY,new ItemStack(ModItems.sashimi,3)},new ItemStack(Items.FISH, 1) ,0);
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModItems.fuguSac,1),new ItemStack(ModItems.preparedPuffer,3)},new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()),0);
         CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.materialJapan.getMaterial("iron_scales",27)},new ItemStack(ModBlocks.ironSand,1),0);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{null,ModItems.materialJapan.getMaterial("washi",9)},ModItems.materialJapan.getMaterial("mulberry_sheet"),0);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY,ModItems.materialJapan.getMaterial("washi",9)},ModItems.materialJapan.getMaterial("mulberry_sheet"),0);
 
         OreDictionary.registerOre("logWood",ModBlocks.sakuraLog);
         OreDictionary.registerOre("logWood",ModBlocks.mulberryLog);
@@ -66,7 +66,7 @@ public class InteractionEriottoMod implements IInteraction {
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("mulberry_sheet"),"aa","aa",'a',ModItems.materialJapan.getMaterial("mulberry_paste"));
 
         if(ModInteractions.bwm.isActive()) {
-            ItemStack dung = ItemMaterial.getMaterial("dung",1);
+            ItemStack dung = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG,1);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()),dung);

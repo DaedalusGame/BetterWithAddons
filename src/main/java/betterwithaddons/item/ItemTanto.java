@@ -32,8 +32,10 @@ public class ItemTanto extends ItemSword {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
+        ItemStack itemStackIn = playerIn.getHeldItem(hand);
+
         if (playerIn.capabilities.isCreativeMode)
         {
             return new ActionResult(EnumActionResult.FAIL, itemStackIn);

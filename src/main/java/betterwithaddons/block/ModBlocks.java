@@ -3,6 +3,7 @@ package betterwithaddons.block;
 import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BetterRedstone.BlockWirePCB;
 import betterwithaddons.block.EriottoMod.*;
+import betterwithaddons.util.FusumaPicture;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
@@ -10,8 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.util.ArrayList;
 
-public class ModBlocks
-{
+public class ModBlocks {
     public static ArrayList<Block> LIST = new ArrayList<Block>();
 
     public static BlockBannerDetector bannerDetector;
@@ -52,7 +52,8 @@ public class ModBlocks
     public static BlockModPane paperWall;
     public static BlockModPane wroughtBars;
     public static BlockModPane shoji;
-    public static BlockModPane fusuma;
+    public static BlockFusumaPainted fusuma;
+    public static BlockFusumaPainted fusuma2;
     public static BlockChandelier chandelier;
     public static BlockLantern paperLantern;
     public static BlockLantern wroughtLantern;
@@ -63,7 +64,7 @@ public class ModBlocks
         worldScaleOre = (BlockWorldScaleOre) addBlock(new BlockWorldScaleOre());
         worldScaleActive = (BlockWorldScaleActive) addBlock(new BlockWorldScaleActive());
         elytraMagma = (BlockElytraMagma) addBlock(new BlockElytraMagma());
-        grass = (BlockExtraGrass) addBlock( new BlockExtraGrass());
+        grass = (BlockExtraGrass) addBlock(new BlockExtraGrass());
         pcbwire = (BlockWirePCB) addBlock(new BlockWirePCB());
         pcbblock = (BlockPCB) addBlock(new BlockPCB());
         lattice = (BlockLattice) addBlock(new BlockLattice());
@@ -75,7 +76,8 @@ public class ModBlocks
         luretreeSapling = (BlockLureTreeSapling) addBlock(new BlockLureTreeSapling());
         luretreeLog = (BlockModLog) addBlock(new BlockModLog(ModWoods.LURETREE));
         luretreeFace = (BlockLureTree) addBlock(new BlockLureTree());
-        luretreeSapling.setLeaves(luretreeLeaves.getDefaultState()).setLog(luretreeLog.getDefaultState()).setBig(true);;
+        luretreeSapling.setLeaves(luretreeLeaves.getDefaultState()).setLog(luretreeLog.getDefaultState()).setBig(true);
+        ;
         luretreeLeaves.setSapling(new ItemStack(luretreeSapling));
 
         mulberryLeaves = (BlockModLeaves) addBlock(new BlockModLeaves(ModWoods.MULBERRY));
@@ -103,9 +105,28 @@ public class ModBlocks
         tatara = (BlockTatara) addBlock(new BlockTatara());
         cherrybox = (BlockCherryBox) addBlock(new BlockCherryBox());
         shoji = (BlockModPane) addBlock(new BlockModPane("shoji", Material.WOOD).setHardness(1.0f));
-        fusuma = (BlockModPane) addBlock(new BlockModPane("fusuma", Material.WOOD).setHardness(1.0f));
-        shoji.addCompatiblePane(fusuma);
-        fusuma.addCompatiblePane(shoji);
+        fusuma = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma", 0).setHardness(1.0f));
+        fusuma2 = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma2", 1).setHardness(1.0f));
+
+        FusumaPicture.addPicture(new FusumaPicture(0).withSubblock(fusuma, 0));
+        FusumaPicture.addPicture(new FusumaPicture(1).withSubblock(fusuma, 2).withSubblock(fusuma, 1));
+        FusumaPicture.addPicture(new FusumaPicture(2).withSubblock(fusuma, 4).withSubblock(fusuma, 3));
+        FusumaPicture.addPicture(new FusumaPicture(3).withSubblock(fusuma, 5));
+        FusumaPicture.addPicture(new FusumaPicture(4).withSubblock(fusuma, 6));
+        FusumaPicture.addPicture(new FusumaPicture(5).withSubblock(fusuma, 7));
+        FusumaPicture.addPicture(new FusumaPicture(6).withSubblock(fusuma, 10).withSubblock(fusuma, 8));
+        FusumaPicture.addPicture(new FusumaPicture(7).withSubblock(fusuma, 11).withSubblock(fusuma, 9));
+        FusumaPicture.addPicture(new FusumaPicture(8).withSubblock(fusuma, 12));
+        FusumaPicture.addPicture(new FusumaPicture(9).withSubblock(fusuma, 13));
+        FusumaPicture.addPicture(new FusumaPicture(10).withSubblock(fusuma, 14));
+        FusumaPicture.addPicture(new FusumaPicture(11).withSubblock(fusuma2, 1).withSubblock(fusuma, 15));
+        FusumaPicture.addPicture(new FusumaPicture(12).withSubblock(fusuma2, 2).withSubblock(fusuma2, 0));
+        FusumaPicture.addPicture(new FusumaPicture(13).withSubblock(fusuma2, 5).withSubblock(fusuma2, 3));
+        FusumaPicture.addPicture(new FusumaPicture(14).withSubblock(fusuma2, 6).withSubblock(fusuma2, 4));
+
+        connectPanes(shoji, fusuma);
+        connectPanes(shoji, fusuma2);
+        connectPanes(fusuma, fusuma2);
 
         chandelier = (BlockChandelier) addBlock(new BlockChandelier().setLightLevel(0.9375F));
         paperWall = (BlockModPane) addBlock(new BlockModPane("paper_wall", Material.WOOD).setHardness(1.0f));
@@ -116,8 +137,12 @@ public class ModBlocks
         coloredBrick = (BlockColoredBrick) addBlock(new BlockColoredBrick());
     }
 
-    private static Block addBlock(Block block)
-    {
+    private static void connectPanes(BlockModPane pane1, BlockModPane pane2) {
+        pane1.addCompatiblePane(pane2);
+        pane2.addCompatiblePane(pane1);
+    }
+
+    private static Block addBlock(Block block) {
         LIST.add(block);
 
         return block;

@@ -24,7 +24,7 @@ public abstract class NetRecipeCategory extends BlankRecipeCategory<NetRecipeWra
     }
 
     @Override
-    public void drawAnimations(Minecraft minecraft) {
+    public void drawExtras(Minecraft minecraft) {
         arrow.draw(minecraft, 43, 11);
     }
 
@@ -44,9 +44,9 @@ public abstract class NetRecipeCategory extends BlankRecipeCategory<NetRecipeWra
         guiItemStacks.init(2, false, 83, 11);
         guiItemStacks.init(3, false, 83, 51);
 
-        guiItemStacks.setFromRecipe(0, recipeWrapper.getInputWithoutSand());
-        guiItemStacks.setFromRecipe(1, recipeWrapper.getSandInput());
-        guiItemStacks.setFromRecipe(2, recipeWrapper.getUpperOutputs());
-        guiItemStacks.setFromRecipe(3, recipeWrapper.getLowerOutputs());
+        guiItemStacks.set(0, recipeWrapper.getInputWithoutSand());
+        guiItemStacks.set(1, recipeWrapper.getSandInput());
+        guiItemStacks.set(2, recipeWrapper.getUpperOutputs());
+        guiItemStacks.set(3, recipeWrapper.getLowerOutputs());
     }
 }

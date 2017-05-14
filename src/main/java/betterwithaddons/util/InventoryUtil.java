@@ -29,7 +29,7 @@ public class InventoryUtil
         for (int slot = 0; slot < inventory.getSizeInventory(); slot++)
         {
             ItemStack itemInSlot = inventory.getStackInSlot(slot);
-            if (itemInSlot != null && itemInSlot.getItem() == i)
+            if (!itemInSlot.isEmpty() && itemInSlot.getItem() == i)
             {
                 return slot;
             }
@@ -44,7 +44,7 @@ public class InventoryUtil
             ItemStack is = inventory.getStackInSlot(i);
             NBTTagCompound stackNBT = new NBTTagCompound();
 
-            if (is != null)
+            if (!is.isEmpty())
             {
                 is.writeToNBT(stackNBT);
             }
@@ -67,11 +67,11 @@ public class InventoryUtil
             {
                 if (stackNBT.hasKey("empty"))
                 {
-                    inventory.setInventorySlotContents(i, null);
+                    inventory.setInventorySlotContents(i, ItemStack.EMPTY);
                 }
                 else
                 {
-                    inventory.setInventorySlotContents(i, ItemStack.loadItemStackFromNBT(stackNBT));
+                    inventory.setInventorySlotContents(i, new ItemStack(stackNBT));
                 }
             }
         }
@@ -82,19 +82,19 @@ public class InventoryUtil
         for (int i = 0; i < player.inventory.getSizeInventory(); i++)
         {
             ItemStack is = player.inventory.getStackInSlot(i);
-            if (is != null && is.getItem() == item)
+            if (!is.isEmpty() && is.getItem() == item)
             {
                 return is;
             }
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 
     public static boolean isInventoryEmpty(IInventory inventory)
     {
         for (int i = 0; i < inventory.getSizeInventory(); i++)
         {
-            if (inventory.getStackInSlot(i) != null)
+            if (!inventory.getStackInSlot(i).isEmpty())
             {
                 return false;
             }

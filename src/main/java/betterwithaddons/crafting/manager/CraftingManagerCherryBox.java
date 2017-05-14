@@ -21,7 +21,7 @@ public abstract class CraftingManagerCherryBox {
     }
 
     public void addWorkingRecipe(ItemStack input, ItemStack output) {
-        if(this.getWorkResult(input) != null) {
+        if(!this.getWorkResult(input).isEmpty()) {
             FMLLog.info("Ignored cherrybox recipe with conflicting input: " + input + " = " + output, new Object[0]);
         } else {
             this.workingList.put(input, output);
@@ -35,7 +35,7 @@ public abstract class CraftingManagerCherryBox {
         Map.Entry entry;
         do {
             if(!var2.hasNext()) {
-                return null;
+                return ItemStack.EMPTY;
             }
 
             entry = (Map.Entry)var2.next();

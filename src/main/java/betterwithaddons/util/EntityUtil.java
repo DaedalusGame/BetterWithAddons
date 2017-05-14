@@ -8,16 +8,16 @@ import net.minecraft.world.World;
 public class EntityUtil {
     public static BlockPos getEntityPos(Entity ent)
     {
-        int x = MathHelper.floor_double(ent.posX);
-        int y = MathHelper.floor_double(ent.posY);
-        int z = MathHelper.floor_double(ent.posZ);
+        int x = MathHelper.floor(ent.posX);
+        int y = MathHelper.floor(ent.posY);
+        int z = MathHelper.floor(ent.posZ);
 
         return new BlockPos(x,y,z);
     }
 
     public static BlockPos getEntityFloor(Entity ent,int limit)
     {
-        World world = ent.worldObj;
+        World world = ent.world;
         BlockPos pos = getEntityPos(ent);
         if(world != null)
             for (int i = 0; i <= limit; i++)

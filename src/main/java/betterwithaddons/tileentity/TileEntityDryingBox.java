@@ -10,7 +10,7 @@ public class TileEntityDryingBox extends TileEntityCherryBox {
     @Override
     public boolean isWorking()
     {
-        return isValidStructure() && isValidBiome() && worldObj.canSeeSky(pos) && worldObj.isDaytime();
+        return isValidStructure() && isValidBiome() && world.canSeeSky(pos) && world.isDaytime();
     }
 
     @Override
@@ -20,8 +20,8 @@ public class TileEntityDryingBox extends TileEntityCherryBox {
 
     public boolean isValidBiome()
     {
-        if(worldObj == null) return false;
-        Biome biome = worldObj.getBiome(pos);
+        if(world == null) return false;
+        Biome biome = world.getBiome(pos);
         if(biome != null && biome.getTempCategory() == Biome.TempCategory.COLD)
             return false;
         return true;
@@ -29,8 +29,8 @@ public class TileEntityDryingBox extends TileEntityCherryBox {
 
     public int getWorkSpeed()
     {
-        if(worldObj == null) return 0;
-        Biome biome = worldObj.getBiome(pos);
+        if(world == null) return 0;
+        Biome biome = world.getBiome(pos);
         if(biome == null) return 1;
         return biome.canRain() ? 1 : 2;
     }
@@ -44,14 +44,14 @@ public class TileEntityDryingBox extends TileEntityCherryBox {
         for (int z = -1; z <= 1; z++)
             for (int x = -1; x <= 1; x++)
             {
-                IBlockState upperstate = worldObj.getBlockState(pos.add(x,+1,z));
+                IBlockState upperstate = world.getBlockState(pos.add(x,+1,z));
                 if(isDeadBush(upperstate))
                     hasDeadBush = true;
-                if((z != x || x != 0) && !isSand(worldObj.getBlockState(pos.add(x,0,z))))
+                if((z != x || x != 0) && !isSand(world.getBlockState(pos.add(x,0,z))))
                     return false;
             }
 
-        return hasDeadBush && isSandstone(worldObj.getBlockState(pos.down()));
+        return hasDeadBush && isSandstone(world.getBlockState(pos.down()));
     }
 
     public boolean isSand(IBlockState state)

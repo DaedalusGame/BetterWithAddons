@@ -69,7 +69,7 @@ public class BlockAlchDragon extends BlockContainerBase {
     }
 
     @Override
-    public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float p_onBlockPlaced_4_, float p_onBlockPlaced_5_, float p_onBlockPlaced_6_, int p_onBlockPlaced_7_, EntityLivingBase entity) {
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float p_onBlockPlaced_4_, float p_onBlockPlaced_5_, float p_onBlockPlaced_6_, int p_onBlockPlaced_7_, EntityLivingBase entity) {
         return this.getDefaultState().withProperty(FACING, facing).withProperty(NODROP, Boolean.valueOf(false));
     }
 
@@ -77,7 +77,7 @@ public class BlockAlchDragon extends BlockContainerBase {
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
         if (world != null && pos != null) {
             if (player != null) {
-                int inc = MathHelper.floor_double(player.rotationYaw * 16.0F / 360.0F + 0.5D) & 15;
+                int inc = MathHelper.floor(player.rotationYaw * 16.0F / 360.0F + 0.5D) & 15;
                 TileEntity te = world.getTileEntity(pos);
                 if (te instanceof TileEntityAlchDragon) {
                     ((TileEntityAlchDragon)te).setSkullRotation(inc);

@@ -46,7 +46,7 @@ public class ClientProxy implements IProxy
 
     @Override
     public void makeLeafFX(double x, double y, double z, float r, float g, float b, float size, float motionx, float motiony, float motionz, float maxAgeMul) {
-        FXLeafParticle wisp = new FXLeafParticle(Minecraft.getMinecraft().theWorld, x, y, z, size, r, g, b, true, maxAgeMul);
+        FXLeafParticle wisp = new FXLeafParticle(Minecraft.getMinecraft().world, x, y, z, size, r, g, b, true, maxAgeMul);
         wisp.setSpeed(motionx, motiony, motionz);
         Minecraft.getMinecraft().effectRenderer.addEffect(wisp);
     }

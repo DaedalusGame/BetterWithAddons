@@ -60,7 +60,7 @@ public class BlockCropRice extends BlockCrops implements IPlantable, IHasVariant
 
         if(!isMaxAge(state))
         {
-            if(rand.nextInt(MathHelper.floor_double(growthChance)) == 0)
+            if(rand.nextInt(MathHelper.floor(growthChance)) == 0)
                 world.setBlockState(pos, state.withProperty(AGE, meta + 1));
         }
     }

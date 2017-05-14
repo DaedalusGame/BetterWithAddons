@@ -39,7 +39,7 @@ public class BlockElytraMagma extends BlockBase {
     @Override
     public void onEntityWalk(World world, BlockPos blockPos, Entity entity) {
         if (!entity.isImmuneToFire() && entity instanceof EntityLivingBase) {
-            entity.attackEntityFrom(DamageSource.magic, 1.0f);
+            entity.attackEntityFrom(DamageSource.MAGIC, 1.0f);
         }
         super.onEntityWalk(world, blockPos, entity);
     }

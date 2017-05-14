@@ -22,6 +22,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -101,7 +102,7 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
     }
 
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tabs, List<ItemStack> stacks) {
+    public void getSubBlocks(Item item, CreativeTabs tabs, NonNullList<ItemStack> stacks) {
         stacks.add(new ItemStack(item,1,0));
         stacks.add(new ItemStack(item,1,1));
         stacks.add(new ItemStack(item,1,2));
@@ -164,7 +165,7 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
     }
 
     @Override
-    public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         return this.getStateFromMeta(meta);
     }

@@ -47,7 +47,7 @@ public class BlockCropRush extends BlockCrops implements IPlantable, IHasVariant
     @Override
     protected int getBonemealAgeIncrease(World worldIn)
     {
-        return MathHelper.getRandomIntegerInRange(worldIn.rand, 1, 2);
+        return MathHelper.getInt(worldIn.rand, 1, 2);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class BlockCropRush extends BlockCrops implements IPlantable, IHasVariant
         {
             if(world.getLightFromNeighbors(up) > 12)
             {
-                if(rand.nextInt(MathHelper.floor_double(growthChance)) == 0)
+                if(rand.nextInt(MathHelper.floor(growthChance)) == 0)
                     world.setBlockState(pos, state.withProperty(AGE, meta + 1));
             }
         }

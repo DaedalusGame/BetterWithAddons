@@ -19,11 +19,11 @@ public class TileEntitySoakingBox extends TileEntityCherryBox {
         for (int z = -1; z <= 1; z++)
             for (int x = -1; x <= 1; x++)
             {
-                if((z != x || x != 0) && !isWater(worldObj.getBlockState(pos.add(x,0,z))))
+                if((z != x || x != 0) && !isWater(world.getBlockState(pos.add(x,0,z))))
                     return false;
             }
 
-        return isIce(worldObj.getBlockState(pos.up())) && isWater(worldObj.getBlockState(pos.down()));
+        return isIce(world.getBlockState(pos.up())) && isWater(world.getBlockState(pos.down()));
     }
 
     public boolean isWater(IBlockState state)

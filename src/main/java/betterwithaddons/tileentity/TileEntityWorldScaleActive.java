@@ -49,16 +49,16 @@ public class TileEntityWorldScaleActive extends TileEntityBase implements ITicka
                     if(z == x && x == 0)
                         continue;
                     BlockPos newpos = pos.add(x,0,z);
-                    if(!worldObj.isBlockLoaded(newpos))
+                    if(!world.isBlockLoaded(newpos))
                         continue;
-                    IBlockState blockstate = worldObj.getBlockState(newpos);
+                    IBlockState blockstate = world.getBlockState(newpos);
                     ChunkPos newchunk = new ChunkPos(chunkpos.chunkXPos+x,chunkpos.chunkZPos+z);
                     Block block = blockstate.getBlock();
                     if(block instanceof BlockWorldScale)
                     {
                         boolean claimed = claimChunk(newchunk);
-                        if(!worldObj.isRemote)
-                            ((BlockWorldScale)block).setCracked(worldObj,newpos,blockstate,!claimed);
+                        if(!world.isRemote)
+                            ((BlockWorldScale)block).setCracked(world,newpos,blockstate,!claimed);
                     }
                     else
                     {
@@ -81,7 +81,7 @@ public class TileEntityWorldScaleActive extends TileEntityBase implements ITicka
         if(claimedChunks.contains(chunkpos))
             return true;
 
-        WorldScaleData scaledata = WorldScaleData.getInstance(worldObj);
+        WorldScaleData scaledata = WorldScaleData.getInstance(world);
         if(!scaledata.isClaimed(chunkpos))
         {
             claimedChunks.add(chunkpos);
@@ -93,7 +93,7 @@ public class TileEntityWorldScaleActive extends TileEntityBase implements ITicka
 
     public void unclaimChunk(ChunkPos chunkpos)
     {
-        WorldScaleData scaledata = WorldScaleData.getInstance(worldObj);
+        WorldScaleData scaledata = WorldScaleData.getInstance(world);
         if(claimedChunks.contains(chunkpos))
         {
             claimedChunks.remove(chunkpos);
@@ -105,14 +105,14 @@ public class TileEntityWorldScaleActive extends TileEntityBase implements ITicka
     {
         BlockPos pos = this.getPos();
         for (ChunkPos chunk: claimedChunks) {
-            WorldScaleData.getInstance(worldObj).claimChunk(chunk,pos);
+            WorldScaleData.getInstance(world).claimChunk(chunk,pos);
         }
     }
 
     public void unclaimAllChunks()
     {
         for (ChunkPos chunk: claimedChunks) {
-            WorldScaleData.getInstance(worldObj).unclaimChunk(chunk);
+            WorldScaleData.getInstance(world).unclaimChunk(chunk);
         }
     }
 

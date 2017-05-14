@@ -11,7 +11,7 @@ public class ItemUtil
 {
 	public static boolean areItemStackContentEqual(ItemStack is1, ItemStack is2)
 	{
-		if (is1 == null || is2 == null)
+		if (is1.isEmpty() || is2.isEmpty())
 		{
 			return false;
 		}
@@ -31,7 +31,7 @@ public class ItemUtil
 
 	public static boolean areOreDictionaried(ItemStack is1, ItemStack is2)
 	{
-		if (is1 == null || is2 == null)
+		if (is1.isEmpty() || is2.isEmpty())
 		{
 			return false;
 		}
@@ -64,7 +64,7 @@ public class ItemUtil
 
 	public static boolean consumeItem(List<EntityItem> inv, ItemStack stack)
 	{
-		int remainder = stack.stackSize;
+		int remainder = stack.getCount();
 
 		for (EntityItem ent: inv) {
 			ItemStack item = ent.getEntityItem();
@@ -96,9 +96,9 @@ public class ItemUtil
 	{
 		ItemStack entstack = item.getEntityItem().copy();
 
-		int removed = Math.min(n,entstack.stackSize);
-		entstack.stackSize -= removed;
-		if(entstack.stackSize <= 0)
+		int removed = Math.min(n,entstack.getCount());
+		entstack.shrink(removed);
+		if(entstack.getCount() <= 0)
 			item.setDead();
 		else
 			item.setEntityItemStack(entstack);

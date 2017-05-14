@@ -106,7 +106,7 @@ public class BetterWithAddons
 		Map<ItemStack, ItemStack> smeltingList = FurnaceRecipes.instance().getSmeltingList();
 		for(Iterator<Map.Entry<ItemStack, ItemStack>> furnaceIterator = smeltingList.entrySet().iterator(); furnaceIterator.hasNext(); ) {
 			Map.Entry<ItemStack, ItemStack> recipe = furnaceIterator.next();
-			if(withoutput == null || !ItemStack.areItemStacksEqual(withoutput, recipe.getValue())) continue;
+			if(withoutput.isEmpty() || !ItemStack.areItemStacksEqual(withoutput, recipe.getValue())) continue;
 			furnaceIterator.remove();
 		}
 	}
@@ -116,8 +116,8 @@ public class BetterWithAddons
 		List<IRecipe> craftingList = CraftingManager.getInstance().getRecipeList();
 		for(Iterator<IRecipe> craftingIterator = craftingList.iterator(); craftingIterator.hasNext(); ) {
 			IRecipe recipe = craftingIterator.next();
-			if(withoutput == null || !ItemStack.areItemStacksEqual(withoutput, recipe.getRecipeOutput())) continue;
-			craftingIterator.remove();
+			if(withoutput.isEmpty() || !ItemStack.areItemStacksEqual(withoutput, recipe.getRecipeOutput())) continue;
+				craftingIterator.remove();
 		}
 	}
 

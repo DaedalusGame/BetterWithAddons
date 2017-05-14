@@ -51,14 +51,16 @@ public class BlockLantern extends BlockBase {
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
-        super.neighborChanged(state, worldIn, pos, blockIn);
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos frompos) {
+        super.neighborChanged(state, worldIn, pos, blockIn,frompos);
         checkAndDrop(worldIn,state,pos);
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         boolean isLit = state.getValue(LIT);
+
+        ItemStack heldItem = playerIn.getHeldItem(hand);
 
         if(!isLit && heldItem != null && heldItem.getItem() == Items.FLINT_AND_STEEL)
         {

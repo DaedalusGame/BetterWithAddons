@@ -42,8 +42,8 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
             }
             else
             {
-                if(!worldObj.isRemote) {
-                    if(attractAnimals(worldObj.rand.nextInt(2) + 1))
+                if(!world.isRemote) {
+                    if(attractAnimals(world.rand.nextInt(2) + 1))
                         chargeTicks = 0;
                 }
                 else
@@ -56,8 +56,8 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
 
     public boolean attractAnimals(int amt)
     {
-        Random random = worldObj.rand;
-        Biome biome = worldObj.getBiome(pos);
+        Random random = world.rand;
+        Biome biome = world.getBiome(pos);
         int spawned = 0;
         if(biome != null)
         {
@@ -76,13 +76,13 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
                         for (int y = pos.getY(); y > pos.getY() - 4; y--)
                         {
                             BlockPos pos = new BlockPos(x,y,z);
-                            if(worldObj.isAirBlock(pos) && WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntityLiving.SpawnPlacementType.ON_GROUND,worldObj,pos))
+                            if(world.isAirBlock(pos) && WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntityLiving.SpawnPlacementType.ON_GROUND,world,pos))
                             {
                                 EntityLiving entityliving;
 
                                 try
                                 {
-                                    entityliving = entry.entityClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {worldObj});
+                                    entityliving = entry.entityClass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {world});
                                 }
                                 catch (Exception exception)
                                 {
@@ -91,7 +91,7 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
                                 }
 
                                 entityliving.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
-                                worldObj.spawnEntityInWorld(entityliving);
+                                world.spawnEntity(entityliving);
 
                                 if (entityliving != null)
                                 {
@@ -101,7 +101,7 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
 
                                 break;
                             }
-                            else if(worldObj.isSideSolid(pos, EnumFacing.UP)) {
+                            else if(world.isSideSolid(pos, EnumFacing.UP)) {
                                 break;
                             }
                         }
@@ -114,8 +114,8 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
 
     public boolean isDead()
     {
-        if(worldObj == null) return true;
-        IBlockState state = worldObj.getBlockState(pos);
+        if(world == null) return true;
+        IBlockState state = world.getBlockState(pos);
         if(state.getBlock() instanceof BlockLureTree && !state.getValue(BlockLureTree.ACTIVE))
             return true;
 
@@ -137,18 +137,18 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
             return false;
 
         ItemStack insertstack = heldItem.copy();
-        insertstack.stackSize = 1;
+        insertstack.setCount(1);
         boolean flag = feed(insertstack);
-        IBlockState state = worldObj.getBlockState(pos);
+        IBlockState state = world.getBlockState(pos);
 
         if (flag && state.getValue(BlockLureTree.FACING) == facing) {
             if (!playerIn.isCreative()) {
-                heldItem.stackSize -= 1;
-                playerIn.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, heldItem.stackSize == 0 ? null : heldItem);
+                heldItem.shrink(1);;
+                playerIn.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, heldItem.getCount() == 0 ? null : heldItem);
             }
-            this.worldObj.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
+            this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
                     SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F,
-                    ((worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.7F + 1.0F) * 0.5F);
+                    ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 0.5F);
             return true;
         }
 

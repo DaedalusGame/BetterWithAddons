@@ -34,7 +34,7 @@ public class TileEntityAlchDragon extends TileEntity implements ITickable {
     }
 
     public void update() {
-        if(this.worldObj.isBlockPowered(this.pos)) {
+        if(this.world.isBlockPowered(this.pos)) {
             this.dragonAnimated = true;
             ++this.dragonAnimatedTicks;
         } else {
@@ -66,14 +66,14 @@ public class TileEntityAlchDragon extends TileEntity implements ITickable {
     }
 
     public void func_189668_a(Mirror p_189668_1_) {
-        if(this.worldObj != null && this.worldObj.getBlockState(this.getPos()).getValue(BlockSkull.FACING) == EnumFacing.UP) {
+        if(this.world != null && this.world.getBlockState(this.getPos()).getValue(BlockSkull.FACING) == EnumFacing.UP) {
             this.skullRotation = p_189668_1_.mirrorRotation(this.skullRotation, 16);
         }
 
     }
 
     public void func_189667_a(Rotation p_189667_1_) {
-        if(this.worldObj != null && this.worldObj.getBlockState(this.getPos()).getValue(BlockSkull.FACING) == EnumFacing.UP) {
+        if(this.world != null && this.world.getBlockState(this.getPos()).getValue(BlockSkull.FACING) == EnumFacing.UP) {
             this.skullRotation = p_189667_1_.rotate(this.skullRotation, 16);
         }
 

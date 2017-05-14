@@ -2,7 +2,7 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.item.ModItems;
-import betterwithmods.BWMBlocks;
+import betterwithmods.common.BWMBlocks;
 import betterwithmods.api.BWMRecipeHelper;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;

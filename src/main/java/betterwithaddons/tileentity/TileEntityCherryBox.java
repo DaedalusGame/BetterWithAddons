@@ -73,18 +73,18 @@ public class TileEntityCherryBox extends TileEntityBase implements ITickable {
     private boolean canWork() {
         ItemStack inputstack = inventory.getStackInSlot(0);
         ItemStack outputstack = inventory.getStackInSlot(1);
-        if(inputstack == null) {
+        if(inputstack.isEmpty()) {
             return false;
         } else {
             ItemStack itemstack = getManager().getWorkResult(inputstack);
-            if(itemstack == null) {
+            if(itemstack.isEmpty()) {
                 return false;
-            } else if(outputstack == null) {
+            } else if(outputstack.isEmpty()) {
                 return true;
             } else if(!outputstack.isItemEqual(itemstack)) {
                 return false;
             } else {
-                int result = outputstack.stackSize + itemstack.stackSize;
+                int result = outputstack.getCount() + itemstack.getCount();
                 return result <= this.getInventoryStackLimit() && result <= outputstack.getMaxStackSize();
             }
         }
@@ -96,15 +96,15 @@ public class TileEntityCherryBox extends TileEntityBase implements ITickable {
 
         if(this.canWork()) {
             ItemStack itemstack = getManager().getWorkResult(inputstack);
-            if(outputstack == null) {
+            if(outputstack.isEmpty()) {
                 inventory.setStackInSlot(1,itemstack.copy());
             } else if(outputstack.getItem() == itemstack.getItem()) {
-                outputstack.stackSize += itemstack.stackSize;
+                outputstack.grow(itemstack.getCount());
             }
 
-            --inputstack.stackSize;
-            if(inputstack.stackSize <= 0) {
-                inventory.setStackInSlot(0,null);
+            inputstack.shrink(1);
+            if(inputstack.getCount() <= 0) {
+                inventory.setStackInSlot(0,ItemStack.EMPTY);
             }
         }
 
@@ -129,12 +129,12 @@ public class TileEntityCherryBox extends TileEntityBase implements ITickable {
     public void update() {
         boolean flag1 = false;
 
-        if(!this.worldObj.isRemote) {
+        if(!this.world.isRemote) {
             if(!isValidStructure())
                 return;
 
             ItemStack inputstack = inventory.getStackInSlot(0);
-            if(this.isWorking() || inputstack != null) {
+            if(this.isWorking() || !inputstack.isEmpty()) {
                 if(this.isWorking() && this.canWork()) {
                     this.workTime += getWorkSpeed();
                     this.totalWorkTime = this.getWorkTime(inputstack);
@@ -148,7 +148,7 @@ public class TileEntityCherryBox extends TileEntityBase implements ITickable {
                     this.workTime = 0;
                 }
             } else if(!this.isWorking() && this.workTime > 0) {
-                this.workTime = MathHelper.clamp_int(this.workTime - 2, 0, this.totalWorkTime);
+                this.workTime = MathHelper.clamp(this.workTime - 2, 0, this.totalWorkTime);
             }
         }
 

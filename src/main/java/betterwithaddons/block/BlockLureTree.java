@@ -39,14 +39,16 @@ public class BlockLureTree extends BlockContainerBase {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity te = worldIn.getTileEntity(pos);
 
-        if (te != null && playerIn != null && !playerIn.isSneaking() && heldItem != null) {
+        ItemStack heldItem = playerIn.getHeldItem(hand);
+
+        if (te != null && playerIn != null && !playerIn.isSneaking() && !heldItem.isEmpty()) {
             return ((TileEntityLureTree) te).onActivated(playerIn, hand, heldItem, side);
         }
 
-        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, side, hitX, hitY, hitZ);
     }
 
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)

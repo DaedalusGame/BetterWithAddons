@@ -142,7 +142,7 @@ public class FXLeafParticle extends Particle {
         prevPosY = posY;
         prevPosZ = posZ;
 
-        if (particleAge++ >= particleMaxAge || this.isCollided)
+        if (particleAge++ >= particleMaxAge || this.onGround)
             setExpired();
 
         motionY = Math.max(motionY - 0.04D * particleGravity,-0.1);

@@ -24,7 +24,7 @@ public class ItemShinai extends ItemSword {
             xRatio = (Math.random() - Math.random()) * 0.01D;
         }
 
-        if(!entity.worldObj.isRemote && entity instanceof EntityLivingBase)
+        if(!entity.world.isRemote && entity instanceof EntityLivingBase)
         {
             EntityLivingBase target = (EntityLivingBase) entity;
             target.knockBack(attacker,0.4F * attacker.getCooledAttackStrength(0),xRatio,zRatio);

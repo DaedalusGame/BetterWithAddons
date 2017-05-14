@@ -15,14 +15,8 @@ public class TataraRecipeHandler implements IRecipeHandler<TataraRecipeWrapper> 
 
     @Nonnull
     @Override
-    public String getRecipeCategoryUid() {
-        return "bwa.tatara";
-    }
-
-    @Nonnull
-    @Override
     public String getRecipeCategoryUid(@Nonnull TataraRecipeWrapper recipe) {
-        return getRecipeCategoryUid();
+        return "bwa.tatara";
     }
 
     @Nonnull

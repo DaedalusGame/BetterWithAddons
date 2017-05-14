@@ -42,7 +42,7 @@ public class TerratorialData extends WorldSavedData
             NBTTagCompound territorycompound = territorylist.getCompoundTagAt(i);
             int territoryid = territorycompound.getInteger("id");
             String typeid = territorycompound.getString("type");
-            ItemStack bannerstack = ItemStack.loadItemStackFromNBT(territorycompound.getCompoundTag("banner"));
+            ItemStack bannerstack = new ItemStack(territorycompound.getCompoundTag("banner"));
 
             if(MobTerritoryType.typeList.containsKey(typeid)) {
                 MobTerritory territory = new MobTerritory(territoryid,MobTerritoryType.typeList.get(typeid));

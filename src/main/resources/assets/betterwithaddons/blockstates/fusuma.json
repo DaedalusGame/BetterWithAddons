@@ -3,7 +3,7 @@
   "defaults": {
 	"transform": "forge:default-block",
 	"textures": { 
-		"edge": "betterwithaddons:blocks/shoji_side",
+		"edge": "betterwithaddons:blocks/fusuma_side",
         "pane": "betterwithaddons:blocks/fusuma",
         "particle": "betterwithaddons:blocks/fusuma"
 	},
@@ -12,6 +12,24 @@
   "variants": {
     "normal": [{}],
 	"inventory": [{}],
+	"paint":{
+		"0":{ "textures": { "pane": "betterwithaddons:blocks/fusuma" } },
+		"1":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_1" } },
+		"2":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_2" } },
+		"3":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_3" } },
+		"4":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_4" } },
+		"5":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_5" } },
+		"6":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_6" } },
+		"7":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_7" } },
+		"8":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_8" } },
+		"9":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_9" } },
+		"10":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_10" } },
+		"11":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_11" } },
+		"12":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_12" } },
+		"13":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_13" } },
+		"14":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_14" } },
+		"15":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_15" } }
+	},
 	"north":{
 		"true":{
 			"submodel": {

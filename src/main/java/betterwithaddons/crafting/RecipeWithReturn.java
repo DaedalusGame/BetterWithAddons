@@ -2,8 +2,10 @@ package betterwithaddons.crafting;
 
 import com.google.common.collect.Lists;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -36,7 +38,7 @@ public class RecipeWithReturn implements IRecipe {
         {
             ItemStack itemstack = inv.getStackInSlot(i);
 
-            if (itemstack != null)
+            if (!itemstack.isEmpty())
             {
                 boolean flag = false;
 
@@ -88,20 +90,21 @@ public class RecipeWithReturn implements IRecipe {
         return outputItem;
     }
 
-    public ItemStack[] getRemainingItems(InventoryCrafting inv)
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
     {
-        ItemStack[] aitemstack = new ItemStack[inv.getSizeInventory()];
+        NonNullList<ItemStack> aitemstack = NonNullList.withSize(inv.getSizeInventory(),ItemStack.EMPTY);
 
 
         for (int i = 0; i < remainItems.length; ++i)
         {
-            if(remainItems[i] != null)
-            for (int e = 1; e < inv.getSizeInventory(); ++e)
+            if(!remainItems[i].isEmpty())
+            for (int e = 1; e < aitemstack.size(); ++e)
             {
                 ItemStack itemstack = inv.getStackInSlot(e);
-                if (itemstack == null && onlyFilledSlots)
+                if (itemstack.isEmpty() && onlyFilledSlots)
                     continue;
-                aitemstack[e] = remainItems[i].copy();
+                aitemstack.set(i,remainItems[i].copy());
             }
         }
 
