@@ -92,7 +92,8 @@ public class BlockLantern extends BlockBase {
         return attach.isSideSolid(worldIn,pos, attachDir.getOpposite());
     }
 
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    @Override
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         EnumFacing attachDir = facing.getOpposite();
         if (canBlockStay(worldIn, pos, attachDir))

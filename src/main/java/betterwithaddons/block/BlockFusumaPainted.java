@@ -68,7 +68,7 @@ public class BlockFusumaPainted extends BlockModPane {
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = playerIn.getHeldItem(hand);
 
-        if(heldItem == null)
+        if(heldItem.isEmpty())
         {
             paint(worldIn,pos);
             return true;

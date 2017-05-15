@@ -96,7 +96,7 @@ public class BlockThorns extends BlockBase {
         EnumFacing stemDir = getStem(state);
         BlockPos stemPos = pos.offset(stemDir);
         IBlockState stemState = world.getBlockState(stemPos);
-        return isProperSoil(world,stemPos,stemDir.getOpposite()) || isVine(stemState.getBlock());
+        return isProperSoil(world,stemPos,stemDir) || isVine(stemState.getBlock());
     }
 
     public boolean canConnectTo(IBlockAccess world, BlockPos pos, EnumFacing connectDir, boolean hasStem) {
@@ -118,7 +118,7 @@ public class BlockThorns extends BlockBase {
                     return true;
             }
         }
-        else if(isVine(otherblock) || isProperSoil(world,otherpos,connectDir.getOpposite()))
+        else if(isVine(otherblock) || isProperSoil(world,otherpos,connectDir))
             return true;
 
         return false;
