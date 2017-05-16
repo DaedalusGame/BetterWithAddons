@@ -92,6 +92,10 @@ public class InteractionBWM implements IInteraction {
 
         BWMRecipeHelper.addMillRecipe(new ItemStack(ModBlocks.worldScale,1),ItemStack.EMPTY,new Object[] { new ItemStack(ModBlocks.worldScaleOre,1,1) });
 
+        //Bark
+        ModBlocks.mulberryLog.barkStack = ModItems.materialJapan.getMaterial("bark_mulberry");
+        ModBlocks.sakuraLog.barkStack = ModItems.materialJapan.getMaterial("bark_sakura");
+
         //Thorn Vines
         ItemStack rosebush = new ItemStack(Blocks.DOUBLE_PLANT, 4, BlockDoublePlant.EnumPlantType.ROSE.getMeta());
         ItemStack thornrose = ModItems.material.getMaterial("thornrose",2);

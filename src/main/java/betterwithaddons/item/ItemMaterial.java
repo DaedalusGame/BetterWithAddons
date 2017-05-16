@@ -15,7 +15,7 @@ import java.util.List;
 public class ItemMaterial extends Item implements IHasVariants{
     String[] subItemNames;
     boolean[] subItemDisabled;
-    ItemStack container;
+    ItemStack container = ItemStack.EMPTY;
 
     public ItemMaterial(String[] subnames) {
         subItemNames = subnames;

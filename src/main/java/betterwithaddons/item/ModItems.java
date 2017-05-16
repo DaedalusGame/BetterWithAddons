@@ -143,7 +143,7 @@ public class ModItems
                         "iron_scales","lamellar","paper_lamellar","tsuka","half_katana_blade","ya_head","yumi_top","yumi_bottom",
                         "tamahagane","tamahagane_heated", "tamahagane_folded","tamahagane_reheated","tamahagane_finished","tamahagane_wrapped",
                         "hocho_tetsu","hocho_tetsu_heated","hocho_tetsu_fold_1","hocho_tetsu_fold_2","hocho_tetsu_finished",
-                        "helmet_undecorated","chest_undecorated","legs_undecorated","boots_undecorated"}
+                        "helmet_undecorated","chest_undecorated","legs_undecorated","boots_undecorated","bark_sakura","bark_mulberry"}
         ));
 
         samuraiHelm = (ItemSamuraiArmor)registerItem("helmet_samurai",new ItemSamuraiArmor(EntityEquipmentSlot.HEAD));
@@ -168,7 +168,7 @@ public class ModItems
         ));
 
         materialDeco = (ItemMaterial)registerItem("decomat",new ItemMaterial(
-                new String[]{"hemp_oil","wood_bleach","wood_stain"}
+                new String[]{"hemp_oil","wood_bleach","wood_stain","glass_chunk"}
         ));
     }
 

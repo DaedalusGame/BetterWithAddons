@@ -77,7 +77,6 @@ public class ModBlocks {
         luretreeLog = (BlockModLog) addBlock(new BlockModLog(ModWoods.LURETREE));
         luretreeFace = (BlockLureTree) addBlock(new BlockLureTree());
         luretreeSapling.setLeaves(luretreeLeaves.getDefaultState()).setLog(luretreeLog.getDefaultState()).setBig(true);
-        ;
         luretreeLeaves.setSapling(new ItemStack(luretreeSapling));
 
         mulberryLeaves = (BlockModLeaves) addBlock(new BlockModLeaves(ModWoods.MULBERRY));

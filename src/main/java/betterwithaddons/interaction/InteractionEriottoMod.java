@@ -153,7 +153,7 @@ public class InteractionEriottoMod implements IInteraction {
         //ItemStack dye = new ItemStack(Items.DYE,1,14);
         //ItemStack washi = ModItems.materialJapan.getMaterial("washi");
         //GameRegistry.addShapelessRecipe(out,gold,gold,gold,dye,in,dye,washi,washi,washi);
-        GameRegistry.addRecipe(new ArmorDecorateRecipe(out,in));
+        GameRegistry.addRecipe(new ArmorDecorateRecipe(out,"ggg","dad","www",'g',"nuggetGold",'d',"dye",'a',in,'w',ModItems.materialJapan.getMaterial("washi")));
     }
 
     private void addFoldingRecipe(ItemStack out, ItemStack in)

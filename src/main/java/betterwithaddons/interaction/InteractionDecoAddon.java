@@ -1,23 +1,38 @@
 package betterwithaddons.interaction;
 
+import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.item.ItemMaterial;
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.api.BWMRecipeHelper;
+import betterwithmods.common.BWMItems;
+import betterwithmods.common.registry.bulk.CraftingManagerCrucible;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class InteractionDecoAddon implements IInteraction {
     public static boolean ENABLED = true;
     public static boolean WOOD_COLORING = true;
+
+    public static boolean GLASS_PANE_REBALANCE = true;
+    public static boolean GLASS_FURNACE = false;
+    public static boolean CHEAPER_BOTTLES = true;
+    public static boolean RECYCLE_BOTTLES = true;
 
     @Override
     public boolean isActive() {
@@ -61,6 +76,42 @@ public class InteractionDecoAddon implements IInteraction {
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.wroughtBars,6),"bbb","bbb",'b',new ItemStack(Blocks.IRON_BARS)); //TODO: both anvil recipes
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chandelier)," b ","tbt","tbt",'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight); //TODO: anvil recipe
 
+
+        int glasspanein = GLASS_PANE_REBALANCE ? 2 : 8;
+        int glassout = GLASS_PANE_REBALANCE ? 1 : 3;
+
+        if(GLASS_PANE_REBALANCE) {
+            modifyPaneRecipe();
+            CraftingManagerCrucible.getInstance().removeRecipe(new ItemStack(Blocks.GLASS,3),new ItemStack(Blocks.GLASS_PANE,8));
+        }
+
+        BWMRecipeHelper.addStokedCrucibleRecipe(ModItems.materialDeco.getMaterial("glass_chunk"),new ItemStack[]{new ItemStack(BWMItems.SAND_PILE,1)});
+        BWMRecipeHelper.addStokedCrucibleRecipe(new ItemStack(Blocks.GLASS,1),new ItemStack[]{ModItems.materialDeco.getMaterial("glass_chunk",4)});
+        if(GLASS_FURNACE)
+        {
+            GameRegistry.addSmelting(new ItemStack(BWMItems.SAND_PILE,1),ModItems.materialDeco.getMaterial("glass_chunk"),0.02f);
+            GameRegistry.addSmelting(ModItems.materialDeco.getMaterial("glass_chunk",4),new ItemStack(Blocks.GLASS,1),0.05f);
+        }
+        GameRegistry.addShapelessRecipe(ModItems.materialDeco.getMaterial("glass_chunk",4),new ItemStack(Blocks.GLASS,1));
+        if(CHEAPER_BOTTLES) {
+            BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.GLASS_BOTTLE,3));
+            GameRegistry.addShapedRecipe(new ItemStack(Items.GLASS_BOTTLE,3)," # ","# #","###",'#',ModItems.materialDeco.getMaterial("glass_chunk",1));
+        }
+
+        if(RECYCLE_BOTTLES)
+            BWMRecipeHelper.addStokedCrucibleRecipe(ModItems.materialDeco.getMaterial("glass_chunk",CHEAPER_BOTTLES ? 2 : 4),new ItemStack[]{new ItemStack(Items.GLASS_BOTTLE,1)});
+
+        BWMRecipeHelper.addStokedCrucibleRecipe(new ItemStack(Blocks.GLASS,glassout),new ItemStack[]{new ItemStack(Blocks.GLASS_PANE,glasspanein)});
+        EnumDyeColor[] dyes = EnumDyeColor.values();
+        int len = dyes.length;
+
+        for (int i = 0; i < len; ++i) {
+            EnumDyeColor dye = dyes[i];
+            ItemStack glass = new ItemStack(Blocks.STAINED_GLASS, glassout, dye.getMetadata());
+            ItemStack glasspane = new ItemStack(Blocks.STAINED_GLASS_PANE, glasspanein, dye.getMetadata());
+            BWMRecipeHelper.addStokedCrucibleRecipe(glass,new ItemStack[]{glasspane});
+        }
+
         if(WOOD_COLORING) {
             ItemStack birch = new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.BIRCH.getMetadata());
             ItemStack oak = new ItemStack(Blocks.PLANKS, 1, BlockPlanks.EnumType.OAK.getMetadata());
@@ -79,7 +130,19 @@ public class InteractionDecoAddon implements IInteraction {
 
     @Override
     public void postInit() {
+    }
 
+    public void modifyPaneRecipe()
+    {
+        List<IRecipe> craftingList = CraftingManager.getInstance().getRecipeList();
+        for(Iterator<IRecipe> craftingIterator = craftingList.iterator(); craftingIterator.hasNext(); ) {
+            IRecipe recipe = craftingIterator.next();
+            ItemStack output = recipe.getRecipeOutput();
+            Block block = Block.getBlockFromItem(output.getItem());
+            if(block == Blocks.GLASS_PANE || block == Blocks.STAINED_GLASS_PANE) {
+                output.setCount((output.getCount() * 3) / 4);
+            }
+        }
     }
 
     public void addStainingRecipe(ItemStack lighter, ItemStack darker)

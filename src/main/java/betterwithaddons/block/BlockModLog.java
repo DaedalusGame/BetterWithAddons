@@ -2,22 +2,27 @@ package betterwithaddons.block;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
+import betterwithmods.api.block.IDebarkable;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockModLog extends BlockLog
+@Optional.Interface(iface = "betterwithmods.api.block.IDebarkable", modid = "betterwithmods", striprefs = true)
+public class BlockModLog extends BlockLog implements IDebarkable
 {
     // Each instance has a reference to its own variant property
     public ModWoods woodVariant;
+    public ItemStack barkStack;
 
     @Override
     protected BlockStateContainer createBlockState()
@@ -72,5 +77,7 @@ public class BlockModLog extends BlockLog
         return Blocks.LOG.getFireSpreadSpeed(world, pos, face);
     }
 
-
+    public ItemStack getBark(IBlockState iBlockState) {
+        return barkStack.copy();
+    }
 }
