@@ -28,8 +28,8 @@ public class BlockColoredBrick extends BlockColored implements IHasVariants {
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "bricks_stained"));
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
 
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemCloth(this).setRegistryName(this.getRegistryName()).setHasSubtypes(true));
+        //GameRegistry.register(this);
+        //GameRegistry.register(new ItemCloth(this).setRegistryName(this.getRegistryName()).setHasSubtypes(true));
     }
 
     @Override

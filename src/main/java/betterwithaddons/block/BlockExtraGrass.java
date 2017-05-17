@@ -79,9 +79,6 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
         this.setUnlocalizedName("extra_grass");
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "extra_grass"));
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
-
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()).setHasSubtypes(true));
     }
 
     @Override

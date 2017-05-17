@@ -41,9 +41,6 @@ public class BlockModLog extends BlockLog implements IDebarkable
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "log_"+woodVariant.getName()));
         this.setUnlocalizedName("log_"+woodVariant.getName());
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
-
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     // map from state to meta and vice verca - use high 2 bits for LOG_AXIS, low 2 bits for VARIANT

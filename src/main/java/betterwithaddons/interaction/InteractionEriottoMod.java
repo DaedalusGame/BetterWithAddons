@@ -6,6 +6,7 @@ import betterwithaddons.crafting.manager.*;
 import betterwithaddons.item.ModItems;
 import betterwithmods.api.BWMRecipeHelper;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.SawInteraction;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -66,11 +67,16 @@ public class InteractionEriottoMod implements IInteraction {
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("mulberry_sheet"),"aa","aa",'a',ModItems.materialJapan.getMaterial("mulberry_paste"));
 
         if(ModInteractions.bwm.isActive()) {
+            SawInteraction.INSTANCE.removeRecipes(new ItemStack(ModBlocks.mulberryLog));
+            SawInteraction.INSTANCE.removeRecipes(new ItemStack(ModBlocks.sakuraLog));
+            SawInteraction.INSTANCE.addRecipe(ModBlocks.mulberryLog,OreDictionary.WILDCARD_VALUE,new ItemStack(ModBlocks.mulberryPlanks,2),ModItems.materialJapan.getMaterial("bark_mulberry"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));
+            SawInteraction.INSTANCE.addRecipe(ModBlocks.mulberryLog,OreDictionary.WILDCARD_VALUE,new ItemStack(ModBlocks.sakuraPlanks,6),ModItems.materialJapan.getMaterial("bark_sakura"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));
+
             ItemStack dung = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG,1);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()),dung);
-            BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.preparedPuffer),new Object[]{new ItemStack(ModItems.preparedCookedPuffer)});
+            //BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.preparedCookedPuffer),new Object[]{new ItemStack(ModItems.preparedPuffer)}); automatically added
             BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.rice),new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
         }
         else {

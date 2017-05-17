@@ -17,11 +17,6 @@ public abstract class BlockContainerBase extends BlockBase
         super(name, materialIn);
     }
 
-    protected BlockContainerBase(String name, Material materialIn, Class<? extends ItemBlock> itemBlock)
-    {
-        super(name, materialIn, itemBlock);
-    }
-
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {

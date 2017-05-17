@@ -28,7 +28,14 @@
 		"12":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_12" } },
 		"13":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_13" } },
 		"14":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_14" } },
-		"15":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_15" } }
+		"15":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_15" } },
+		"16":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_16" } },
+		"17":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_17" } },
+		"18":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_18" } },
+		"19":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_19" } },
+		"20":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_20" } },
+		"21":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_21" } },
+		"22":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_22" } }
 	},
 	"north":{
 		"true":{

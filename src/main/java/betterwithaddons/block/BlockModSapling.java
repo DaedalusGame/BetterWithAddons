@@ -53,9 +53,6 @@ public class BlockModSapling extends BlockBush implements IGrowable, IPlantable 
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "sapling_"+woodVariant.getName()));
         this.setUnlocalizedName("sapling_"+woodVariant.getName());
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
-
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     public BlockModSapling setLeaves(IBlockState leaves) {

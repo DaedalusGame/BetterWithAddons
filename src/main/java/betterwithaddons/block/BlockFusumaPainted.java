@@ -1,7 +1,5 @@
 package betterwithaddons.block;
 
-import betterwithaddons.util.FusumaPart;
-import betterwithaddons.util.FusumaPicture;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -13,24 +11,42 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BlockFusumaPainted extends BlockModPane {
-    public static PropertyInteger PAINT = PropertyInteger.create("paint",0,15);
+    public static PropertyInteger PAINT = PropertyInteger.create("paint",0,22);
 
-    int offset = 0;
+    int[] meta2paint = new int[] {0,2,4,5,6,7,10,11,12,13,14,17,18,21,22};
+    int[] paint2meta = new int[23];
+    int[] upperpaint = new int[23];
+    //int offset = 0;
 
-    protected BlockFusumaPainted(String name, int offset) {
+    protected BlockFusumaPainted(String name) {
         super(name, Material.WOOD);
-        this.offset = offset;
+
+        paint2meta = new int[23];
+        for(int i = 0;i < meta2paint.length;i++)
+        {
+            paint2meta[meta2paint[i]] = i;
+        }
+
+        upperpaint[2] = 1;
+        upperpaint[4] = 3;
+        upperpaint[10] = 8;
+        upperpaint[11] = 9;
+        upperpaint[17] = 15;
+        upperpaint[18] = 16;
+        upperpaint[21] = 19;
+        upperpaint[22] = 20;
     }
 
-    public int getOffset() {
-        return offset;
-    }
+    //public int getOffset() {
+        //return offset;
+    //}
 
     @Override
     protected BlockStateContainer createBlockState() {
@@ -39,12 +55,13 @@ public class BlockFusumaPainted extends BlockModPane {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(PAINT,meta);
+
+        return getDefaultState().withProperty(PAINT,meta2paint[meta]);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(PAINT);
+        return paint2meta[state.getValue(PAINT)];
     }
 
     @Override
@@ -58,10 +75,54 @@ public class BlockFusumaPainted extends BlockModPane {
         checkAndBlank(worldIn,state,pos);
     }
 
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+        IBlockState actstate = super.getActualState(state, world, pos);
+
+        int paint = actstate.getValue(PAINT);
+        if(paint == 0)
+        {
+            IBlockState bottom = world.getBlockState(pos.down());
+            if(bottom.getBlock() == this)
+            {
+                int bottompaint = bottom.getValue(PAINT);
+                actstate = actstate.withProperty(PAINT,upperpaint[bottompaint]);
+            }
+        }
+
+        return actstate;
+    }
+
+    public void paint(IBlockState state, World world, BlockPos pos)
+    {
+        IBlockState bottom = world.getBlockState(pos.down());
+        if(bottom.getBlock() == this)
+        {
+            int bottompaint = bottom.getValue(PAINT);
+            if(upperpaint[bottompaint] != 0) {
+                paint(bottom, world, pos.down());
+                return;
+            }
+        }
+
+        int paint = state.getValue(PAINT);
+        int nextpaint = meta2paint[(paint2meta[paint]+1) % meta2paint.length];
+        if(upperpaint[nextpaint] != 0 && world.getBlockState(pos.up()).getBlock() == this)
+            world.setBlockState(pos.up(),this.getDefaultState(), 2);
+        world.setBlockState(pos,state.withProperty(PAINT,nextpaint), 2);
+    }
+
+    public void checkAndBlank(World world, IBlockState state, BlockPos pos)
+    {
+        int paint = state.getValue(PAINT);
+        if(upperpaint[paint] != 0 && world.getBlockState(pos.up()).getBlock() != this)
+            world.setBlockState(pos,this.getDefaultState(), 2);
+    }
+
     @Nullable
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(FusumaPicture.EMPTY_FUSUMA.getBlock());
+        return Item.getItemFromBlock(this);
     }
 
     @Override
@@ -70,115 +131,10 @@ public class BlockFusumaPainted extends BlockModPane {
 
         if(heldItem.isEmpty())
         {
-            paint(worldIn,pos);
+            paint(state,worldIn,pos);
             return true;
         }
 
         return super.onBlockActivated(worldIn, pos, state, playerIn, hand, side, hitX, hitY, hitZ);
-    }
-
-    private void checkAndBlank(World worldIn, IBlockState state, BlockPos pos) {
-        if(!isValidPart(worldIn,pos))
-        {
-            FusumaPart part = FusumaPicture.EMPTY_FUSUMA;
-            worldIn.setBlockState(pos,part.getBlock().getDefaultState().withProperty(PAINT,part.getMeta()));
-        }
-    }
-
-    public void paint(World world, BlockPos pos)
-    {
-        IBlockState state = world.getBlockState(pos);
-        if(state.getBlock() instanceof BlockFusumaPainted) {
-            FusumaPart oldpicture = FusumaPicture.getFusumaBlock(this, state.getValue(PAINT));
-
-            if (oldpicture == null)
-                return;
-
-            if(oldpicture.getY() > 0) {
-                paint(world, pos.down(oldpicture.getY()));
-                return;
-            }
-
-            int currid = oldpicture.getPicture().getPictureID();
-            int len = FusumaPicture.getTotalPictures();
-            int nextid = (currid + 1) % len;
-            int oldheight = oldpicture.getPicture().getHeight();
-
-            FusumaPicture picture;
-
-            for(picture = FusumaPicture.getPicture(nextid); !canPaint(world,pos,picture); picture = FusumaPicture.getPicture(nextid = (nextid + 1) % len));
-            int height = picture.getHeight();
-
-            for(int i = 0; i < Math.max(height,oldheight); i++)
-            {
-                FusumaPart part = picture.getSubblock(i);
-                BlockPos paintpos = pos.up(i);
-
-                if(part != null)
-                {
-                    world.setBlockState(paintpos,part.getBlock().getDefaultState().withProperty(PAINT,part.getMeta()),2);
-                }
-            }
-        }
-    }
-
-    public boolean canPaint(World world, BlockPos pos, FusumaPicture picture)
-    {
-        boolean hasCanvas = true;
-        int height = picture.getHeight();
-
-        for(int i = 0; i < height; i++)
-        {
-            IBlockState state = world.getBlockState(pos.up(i));
-            if(!(state.getBlock() instanceof BlockFusumaPainted)) {
-                hasCanvas = false;
-            }
-        }
-
-        if(hasCanvas)
-        {
-            IBlockState state = world.getBlockState(pos.up(height-1));
-            FusumaPart oldpart = FusumaPicture.getFusumaBlock((BlockFusumaPainted) state.getBlock(), state.getValue(PAINT));
-            if(oldpart.getY() == oldpart.getPicture().getHeight() - 1)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean isValidPart(World world, BlockPos pos)
-    {
-        IBlockState state = world.getBlockState(pos);
-        if(state.getBlock() instanceof BlockFusumaPainted) {
-            FusumaPart oldpart = FusumaPicture.getFusumaBlock(this, state.getValue(PAINT));
-            FusumaPicture oldpicture = oldpart.getPicture();
-            int y = oldpart.getY();
-
-            if(y < oldpicture.getHeight()-1 && isValidPart(world,pos.up(),oldpicture,y+1))
-            {
-                return false;
-            }
-            if(y > 0 && isValidPart(world,pos.down(),oldpicture,y-1))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean isValidPart(World world, BlockPos pos, FusumaPicture picture, int y)
-    {
-        IBlockState state = world.getBlockState(pos);
-        if(state.getBlock() instanceof BlockFusumaPainted) {
-            FusumaPart part = FusumaPicture.getFusumaBlock(this, state.getValue(PAINT));
-            return part.getPicture() == picture && part.getY() == y;
-        }
-
-        return false;
     }
 }

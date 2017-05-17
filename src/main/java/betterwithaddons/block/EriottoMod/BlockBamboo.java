@@ -32,9 +32,6 @@ public class BlockBamboo extends BlockReed implements IHasVariants {
         this.setUnlocalizedName("bamboo");
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "bamboo"));
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
-
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)

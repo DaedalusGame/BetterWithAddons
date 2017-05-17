@@ -45,9 +45,6 @@ public class BlockModLeaves extends BlockLeaves {
         this.setUnlocalizedName("leaves_"+woodVariant.getName());
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
         this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
-
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     public void setSapling(ItemStack sapling) {

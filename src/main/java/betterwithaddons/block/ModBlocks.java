@@ -3,11 +3,13 @@ package betterwithaddons.block;
 import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BetterRedstone.BlockWirePCB;
 import betterwithaddons.block.EriottoMod.*;
-import betterwithaddons.util.FusumaPicture;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.ArrayList;
 
@@ -53,7 +55,7 @@ public class ModBlocks {
     public static BlockModPane wroughtBars;
     public static BlockModPane shoji;
     public static BlockFusumaPainted fusuma;
-    public static BlockFusumaPainted fusuma2;
+    //public static BlockFusumaPainted fusuma2;
     public static BlockChandelier chandelier;
     public static BlockLantern paperLantern;
     public static BlockLantern wroughtLantern;
@@ -104,10 +106,10 @@ public class ModBlocks {
         tatara = (BlockTatara) addBlock(new BlockTatara());
         cherrybox = (BlockCherryBox) addBlock(new BlockCherryBox());
         shoji = (BlockModPane) addBlock(new BlockModPane("shoji", Material.WOOD).setHardness(1.0f));
-        fusuma = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma", 0).setHardness(1.0f));
-        fusuma2 = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma2", 1).setHardness(1.0f));
+        fusuma = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma").setHardness(1.0f));
+        //fusuma2 = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma2", 1).setHardness(1.0f));
 
-        FusumaPicture.addPicture(new FusumaPicture(0).withSubblock(fusuma, 0));
+        /*FusumaPicture.addPicture(new FusumaPicture(0).withSubblock(fusuma, 0));
         FusumaPicture.addPicture(new FusumaPicture(1).withSubblock(fusuma, 2).withSubblock(fusuma, 1));
         FusumaPicture.addPicture(new FusumaPicture(2).withSubblock(fusuma, 4).withSubblock(fusuma, 3));
         FusumaPicture.addPicture(new FusumaPicture(3).withSubblock(fusuma, 5));
@@ -121,11 +123,11 @@ public class ModBlocks {
         FusumaPicture.addPicture(new FusumaPicture(11).withSubblock(fusuma2, 1).withSubblock(fusuma, 15));
         FusumaPicture.addPicture(new FusumaPicture(12).withSubblock(fusuma2, 2).withSubblock(fusuma2, 0));
         FusumaPicture.addPicture(new FusumaPicture(13).withSubblock(fusuma2, 5).withSubblock(fusuma2, 3));
-        FusumaPicture.addPicture(new FusumaPicture(14).withSubblock(fusuma2, 6).withSubblock(fusuma2, 4));
+        FusumaPicture.addPicture(new FusumaPicture(14).withSubblock(fusuma2, 6).withSubblock(fusuma2, 4));*/
 
         connectPanes(shoji, fusuma);
-        connectPanes(shoji, fusuma2);
-        connectPanes(fusuma, fusuma2);
+        //connectPanes(shoji, fusuma2);
+        //connectPanes(fusuma, fusuma2);
 
         chandelier = (BlockChandelier) addBlock(new BlockChandelier().setLightLevel(0.9375F));
         paperWall = (BlockModPane) addBlock(new BlockModPane("paper_wall", Material.WOOD).setHardness(1.0f));
@@ -133,7 +135,28 @@ public class ModBlocks {
         paperLantern = (BlockLantern) addBlock(new BlockLantern("wood_lamp", Material.WOOD).setHardness(1.0f));
         wroughtLantern = (BlockLantern) addBlock(new BlockLantern("wrought_lamp", Material.IRON).setHardness(5.0f));
 
-        coloredBrick = (BlockColoredBrick) addBlock(new BlockColoredBrick());
+        coloredBrick = (BlockColoredBrick) addBlock(new BlockColoredBrick(),ItemCloth.class,true);
+    }
+
+    protected static Block register(Block block)
+    {
+        GameRegistry.register(block);
+        GameRegistry.register(new ItemBlockMeta(block).setRegistryName(block.getRegistryName()));
+
+        return block;
+    }
+
+    protected static Block register(Block block, Class<? extends ItemBlock> itemBlock, boolean hasSubtypes)
+    {
+        GameRegistry.register(block);
+        try {
+            GameRegistry.register(itemBlock.getConstructor(Block.class).newInstance(block).setRegistryName(block.getRegistryName()).setHasSubtypes(hasSubtypes));
+        } catch (Exception e) {
+            System.out.println("Error Registering ItemBlock for " + block.getRegistryName());
+            e.printStackTrace();
+        }
+
+        return block;
     }
 
     private static void connectPanes(BlockModPane pane1, BlockModPane pane2) {
@@ -143,6 +166,14 @@ public class ModBlocks {
 
     private static Block addBlock(Block block) {
         LIST.add(block);
+        register(block);
+
+        return block;
+    }
+
+    private static Block addBlock(Block block, Class<? extends ItemBlock> itemBlock, boolean hasSubtypes) {
+        LIST.add(block);
+        register(block,itemBlock,hasSubtypes);
 
         return block;
     }

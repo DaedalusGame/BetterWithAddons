@@ -37,9 +37,6 @@ public class BlockSlat extends Block implements IHasVariants {
         this.setUnlocalizedName("slat");
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "slat"));
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
-
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     @Override

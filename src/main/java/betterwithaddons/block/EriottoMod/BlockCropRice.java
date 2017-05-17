@@ -34,9 +34,6 @@ public class BlockCropRice extends BlockCrops implements IPlantable, IHasVariant
         this.setUnlocalizedName("crop_rice");
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "crop_rice"));
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
-
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     @Override

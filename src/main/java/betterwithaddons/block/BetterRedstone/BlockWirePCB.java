@@ -51,9 +51,6 @@ public class BlockWirePCB extends Block implements IColorable {
         this.setUnlocalizedName("pcb_wire");
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "pcb_wire"));
         //this.setCreativeTab(BetterWithAddons.instance.creativeTab);
-
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     @Override

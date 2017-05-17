@@ -30,9 +30,6 @@ public class BlockModPlanks extends Block
         this.setUnlocalizedName("planks_"+woodVariant.getName());
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "planks_"+woodVariant.getName()));
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
-
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
 
     @Override
