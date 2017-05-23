@@ -2,8 +2,8 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
-import betterwithmods.api.BWMRecipeHelper;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -140,7 +140,7 @@ public class InteractionCondensedOutputs implements IInteraction {
 
         ItemStack material8 = material.copy();
         material8.setCount(8);
-        BWMRecipeHelper.addCauldronRecipe(output,new Object[]{material8,congealedStack.copy()});
+        CauldronManager.getInstance().addRecipe(output,new Object[]{material8,congealedStack.copy()});
     }
 
     private void addRollupRecipe(ItemStack output, ItemStack material)

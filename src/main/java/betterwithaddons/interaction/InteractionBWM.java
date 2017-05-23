@@ -5,11 +5,12 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.handler.ButcherHandler;
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
-import betterwithmods.api.BWMRecipeHelper;
 import betterwithmods.common.blocks.BlockBUD;
 import betterwithmods.common.blocks.BlockUrn;
-import betterwithmods.common.registry.bulk.CraftingManagerCauldron;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.bulk.manager.CauldronManager;
+import betterwithmods.common.registry.bulk.manager.MillManager;
+import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
@@ -73,24 +74,24 @@ public class InteractionBWM implements IInteraction {
         GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.material.getMaterial("arrowhead")," o ","ooo","o o",'o',"nuggetSoulforgedSteel"));
         GameRegistry.addShapedRecipe(new ItemStack(ModItems.greatarrow,1),"a","b","c",'a',arrowhead,'b',haft,'c',feather);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.greatbow,1)," bc","b c"," bc",'b',haft,'c',string));
-        BWMRecipeHelper.addStokedCauldronRecipe(new ItemStack(ModBlocks.pcbblock),ItemStack.EMPTY,new Object[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Blocks.STONEBRICK), "dustPotash" });
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedBeetroot),ItemStack.EMPTY,new Object[] { new ItemStack(Items.BEETROOT) });
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedCarrot),ItemStack.EMPTY,new Object[] { new ItemStack(Items.CARROT) });
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedPotato),ItemStack.EMPTY,new Object[] { new ItemStack(Items.POTATO) });
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedEgg),ItemStack.EMPTY,new Object[] { new ItemStack(Items.EGG) });
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedClownfish),ItemStack.EMPTY,new Object[] { new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()) });
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.cookedPuffer),ItemStack.EMPTY,new Object[] { new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()) });
+        StokedCauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.pcbblock),ItemStack.EMPTY,new Object[] { new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Blocks.STONEBRICK), "dustPotash" });
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.cookedBeetroot),ItemStack.EMPTY,new Object[] { new ItemStack(Items.BEETROOT) });
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.cookedCarrot),ItemStack.EMPTY,new Object[] { new ItemStack(Items.CARROT) });
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.cookedPotato),ItemStack.EMPTY,new Object[] { new ItemStack(Items.POTATO) });
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.cookedEgg),ItemStack.EMPTY,new Object[] { new ItemStack(Items.EGG) });
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.cookedClownfish),ItemStack.EMPTY,new Object[] { new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()) });
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.cookedPuffer),ItemStack.EMPTY,new Object[] { new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()) });
 
-        BWMRecipeHelper.addCauldronRecipe(ModItems.material.getMaterial("bone_ingot"),ItemStack.EMPTY,new Object[] { new ItemStack(Items.BONE,2),new ItemStack(Items.DYE,8,15) });
-        BWMRecipeHelper.addCauldronRecipe(ModItems.material.getMaterial("midori_popped"),ItemStack.EMPTY,new Object[] { ModItems.material.getMaterial("midori") });
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.meatballs),ItemStack.EMPTY,new Object[] { new ItemStack(ModItems.groundMeat,3) });
-        BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,3),ItemStack.EMPTY,new Object[] { new ItemStack(Items.BEEF) });
-        BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,2),ItemStack.EMPTY,new Object[] { new ItemStack(Items.MUTTON) });
-        BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,1),ItemStack.EMPTY,new Object[] { new ItemStack(Items.CHICKEN) });
-        BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,3),ItemStack.EMPTY,new Object[] { new ItemStack(Items.PORKCHOP) });
-        BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.groundMeat,1),ItemStack.EMPTY,new Object[] { new ItemStack(Items.RABBIT) });
+        CauldronManager.getInstance().addRecipe(ModItems.material.getMaterial("bone_ingot"),ItemStack.EMPTY,new Object[] { new ItemStack(Items.BONE,2),new ItemStack(Items.DYE,8,15) });
+        CauldronManager.getInstance().addRecipe(ModItems.material.getMaterial("midori_popped"),ItemStack.EMPTY,new Object[] { ModItems.material.getMaterial("midori") });
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.meatballs),ItemStack.EMPTY,new Object[] { new ItemStack(ModItems.groundMeat,3) });
+        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,3),ItemStack.EMPTY,new Object[] { new ItemStack(Items.BEEF) });
+        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,2),ItemStack.EMPTY,new Object[] { new ItemStack(Items.MUTTON) });
+        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,1),ItemStack.EMPTY,new Object[] { new ItemStack(Items.CHICKEN) });
+        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,3),ItemStack.EMPTY,new Object[] { new ItemStack(Items.PORKCHOP) });
+        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,1),ItemStack.EMPTY,new Object[] { new ItemStack(Items.RABBIT) });
 
-        BWMRecipeHelper.addMillRecipe(new ItemStack(ModBlocks.worldScale,1),ItemStack.EMPTY,new Object[] { new ItemStack(ModBlocks.worldScaleOre,1,1) });
+        MillManager.getInstance().addRecipe(new ItemStack(ModBlocks.worldScale,1),ItemStack.EMPTY,new Object[] { new ItemStack(ModBlocks.worldScaleOre,1,1) });
 
         //Bark
         ModBlocks.mulberryLog.barkStack = ModItems.materialJapan.getMaterial("bark_mulberry");
@@ -102,18 +103,18 @@ public class InteractionBWM implements IInteraction {
         ItemStack soulurn = new ItemStack(BWMBlocks.URN,1,BlockUrn.EnumUrnType.FULL.getMeta());
         ItemStack cactus = new ItemStack(Blocks.CACTUS,1);
         ItemStack dung = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG,1);
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModBlocks.thornrose),ItemStack.EMPTY,new Object[] {cactus,rosebush,dung,soulurn});
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModBlocks.thornrose),ItemStack.EMPTY,new Object[] {cactus,thornrose,dung,soulurn});
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.thornrose),ItemStack.EMPTY,new Object[] {cactus,rosebush,dung,soulurn});
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.thornrose),ItemStack.EMPTY,new Object[] {cactus,thornrose,dung,soulurn});
 
         //Alicio Sapling
         ItemStack wheat = new ItemStack(Items.WHEAT,16);
         ItemStack flesh = new ItemStack(Items.ROTTEN_FLESH,4);
         ItemStack red = new ItemStack(Items.DYE,8,EnumDyeColor.RED.getDyeDamage());
         ItemStack tree = new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.BIRCH.getMetadata());
-        BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModBlocks.luretreeSapling),ItemStack.EMPTY,new Object[] {tree,wheat,red,flesh});
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.luretreeSapling),ItemStack.EMPTY,new Object[] {tree,wheat,red,flesh});
 
         if(MILL_CLAY) {
-            BWMRecipeHelper.addMillRecipe(new ItemStack(Items.BRICK, 4),ItemStack.EMPTY,new Object[] { new ItemStack(Blocks.HARDENED_CLAY, 1) });
+            MillManager.getInstance().addRecipe(new ItemStack(Items.BRICK, 4),ItemStack.EMPTY,new Object[] { new ItemStack(Blocks.HARDENED_CLAY, 1) });
 
             EnumDyeColor[] dyes = EnumDyeColor.values();
             int len = dyes.length;
@@ -121,7 +122,7 @@ public class InteractionBWM implements IInteraction {
             for (int i = 0; i < len; ++i) {
                 EnumDyeColor dye = dyes[i];
                 ItemStack brick = new ItemStack(ModItems.stainedBrick, 1, dye.getMetadata());
-                BWMRecipeHelper.addMillRecipe(new ItemStack(ModItems.stainedBrick, 4, dye.getMetadata()), ItemStack.EMPTY, new Object[]{new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata())});
+                MillManager.getInstance().addRecipe(new ItemStack(ModItems.stainedBrick, 4, dye.getMetadata()), ItemStack.EMPTY, new Object[]{new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata())});
                 GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.coloredBrick, 1, dye.getMetadata()), "bb", "bb", 'b', brick);
             }
         }
@@ -163,6 +164,6 @@ public class InteractionBWM implements IInteraction {
 
     private static void removeCauldronRecipe(ItemStack output)
     {
-        CraftingManagerCauldron.getInstance().getRecipes().removeIf(r -> r.getOutput().isItemEqual(output));
+        CauldronManager.getInstance().getRecipes().removeIf(r -> r.getOutput().isItemEqual(output));
     }
 }

@@ -12,8 +12,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 
-import javax.annotation.Nullable;
-
 public class TileEntityTatara extends TileEntityBase implements ITickable {
     public int furnaceBurnTime;
     public int currentItemBurnTime;

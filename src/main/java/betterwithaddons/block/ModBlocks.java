@@ -59,6 +59,9 @@ public class ModBlocks {
     public static BlockChandelier chandelier;
     public static BlockLantern paperLantern;
     public static BlockLantern wroughtLantern;
+    public static BlockTatami tatami;
+    public static BlockPavement pavement;
+    public static BlockSoap wetSoap;
 
     public static void load(FMLPreInitializationEvent event) {
         bannerDetector = (BlockBannerDetector) addBlock(new BlockBannerDetector());
@@ -108,6 +111,7 @@ public class ModBlocks {
         shoji = (BlockModPane) addBlock(new BlockModPane("shoji", Material.WOOD).setHardness(1.0f));
         fusuma = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma").setHardness(1.0f));
         //fusuma2 = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma2", 1).setHardness(1.0f));
+        tatami = (BlockTatami) addBlock(new BlockTatami().setHardness(1.0f));
 
         /*FusumaPicture.addPicture(new FusumaPicture(0).withSubblock(fusuma, 0));
         FusumaPicture.addPicture(new FusumaPicture(1).withSubblock(fusuma, 2).withSubblock(fusuma, 1));
@@ -129,11 +133,14 @@ public class ModBlocks {
         //connectPanes(shoji, fusuma2);
         //connectPanes(fusuma, fusuma2);
 
+        wetSoap = (BlockSoap) addBlock(new BlockSoap());
+
         chandelier = (BlockChandelier) addBlock(new BlockChandelier().setLightLevel(0.9375F));
         paperWall = (BlockModPane) addBlock(new BlockModPane("paper_wall", Material.WOOD).setHardness(1.0f));
         wroughtBars = (BlockModPane) addBlock(new BlockModPane("wrought_bars", Material.IRON).setHardness(5.0f));
         paperLantern = (BlockLantern) addBlock(new BlockLantern("wood_lamp", Material.WOOD).setHardness(1.0f));
         wroughtLantern = (BlockLantern) addBlock(new BlockLantern("wrought_lamp", Material.IRON).setHardness(5.0f));
+        pavement = (BlockPavement) addBlock(new BlockPavement());
 
         coloredBrick = (BlockColoredBrick) addBlock(new BlockColoredBrick(),ItemCloth.class,true);
     }

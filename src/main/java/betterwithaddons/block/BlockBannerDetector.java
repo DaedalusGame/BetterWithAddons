@@ -3,7 +3,6 @@ package betterwithaddons.block;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.GuiIds;
 import betterwithaddons.tileentity.TileEntityBannerDetector;
-import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;

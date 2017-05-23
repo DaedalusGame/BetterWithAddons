@@ -8,14 +8,12 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Optional.Interface(iface = "betterwithmods.api.block.IDebarkable", modid = "betterwithmods", striprefs = true)
 public class BlockModLog extends BlockLog implements IDebarkable
@@ -76,5 +74,10 @@ public class BlockModLog extends BlockLog implements IDebarkable
 
     public ItemStack getBark(IBlockState iBlockState) {
         return barkStack.copy();
+    }
+
+    @Override
+    public IBlockState getStrippedState(IBlockState iBlockState) {
+        return null;
     }
 }

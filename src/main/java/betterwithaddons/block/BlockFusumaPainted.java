@@ -105,9 +105,13 @@ public class BlockFusumaPainted extends BlockModPane {
             }
         }
 
+        boolean upper = world.getBlockState(pos.up()).getBlock() == this;
         int paint = state.getValue(PAINT);
-        int nextpaint = meta2paint[(paint2meta[paint]+1) % meta2paint.length];
-        if(upperpaint[nextpaint] != 0 && world.getBlockState(pos.up()).getBlock() == this)
+        int nextpaint = paint;
+        do {
+            nextpaint = meta2paint[(paint2meta[nextpaint] + 1) % meta2paint.length];
+        } while(!upper && upperpaint[nextpaint] != 0);
+        if(upper)
             world.setBlockState(pos.up(),this.getDefaultState(), 2);
         world.setBlockState(pos,state.withProperty(PAINT,nextpaint), 2);
     }

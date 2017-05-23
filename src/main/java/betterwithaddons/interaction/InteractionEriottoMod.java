@@ -4,9 +4,9 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.ArmorDecorateRecipe;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.item.ModItems;
-import betterwithmods.api.BWMRecipeHelper;
 import betterwithmods.common.items.ItemMaterial;
-import betterwithmods.common.registry.SawInteraction;
+import betterwithmods.common.registry.blockmeta.managers.SawManager;
+import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -67,17 +67,17 @@ public class InteractionEriottoMod implements IInteraction {
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("mulberry_sheet"),"aa","aa",'a',ModItems.materialJapan.getMaterial("mulberry_paste"));
 
         if(ModInteractions.bwm.isActive()) {
-            SawInteraction.INSTANCE.removeRecipes(new ItemStack(ModBlocks.mulberryLog));
-            SawInteraction.INSTANCE.removeRecipes(new ItemStack(ModBlocks.sakuraLog));
-            SawInteraction.INSTANCE.addRecipe(ModBlocks.mulberryLog,OreDictionary.WILDCARD_VALUE,new ItemStack(ModBlocks.mulberryPlanks,2),ModItems.materialJapan.getMaterial("bark_mulberry"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));
-            SawInteraction.INSTANCE.addRecipe(ModBlocks.mulberryLog,OreDictionary.WILDCARD_VALUE,new ItemStack(ModBlocks.sakuraPlanks,6),ModItems.materialJapan.getMaterial("bark_sakura"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));
+            SawManager.INSTANCE.removeRecipes(new ItemStack(ModBlocks.mulberryLog));
+            SawManager.INSTANCE.removeRecipes(new ItemStack(ModBlocks.sakuraLog));
+            SawManager.INSTANCE.addRecipe(ModBlocks.mulberryLog,OreDictionary.WILDCARD_VALUE,new ItemStack(ModBlocks.mulberryPlanks,2),ModItems.materialJapan.getMaterial("bark_mulberry"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));
+            SawManager.INSTANCE.addRecipe(ModBlocks.sakuraLog,OreDictionary.WILDCARD_VALUE,new ItemStack(ModBlocks.sakuraPlanks,6),ModItems.materialJapan.getMaterial("bark_sakura"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));
 
             ItemStack dung = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG,1);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()),dung);
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()),dung);
             //BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.preparedCookedPuffer),new Object[]{new ItemStack(ModItems.preparedPuffer)}); automatically added
-            BWMRecipeHelper.addCauldronRecipe(new ItemStack(ModItems.rice),new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
+            CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.rice),new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
         }
         else {
             GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()));
@@ -136,12 +136,17 @@ public class InteractionEriottoMod implements IInteraction {
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.cherrybox,1,1),"pxp","p p","ppp",'p',new ItemStack(ModBlocks.sakuraPlanks),'x',new ItemStack(Blocks.GLASS_PANE));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.shoji,4),"bwb","wbw","bwb",'b',ModItems.materialJapan.getMaterial("bamboo_slats"),'w',ModItems.materialJapan.getMaterial("washi"));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.fusuma,4),"bwb","wpw","bwb",'b',ModItems.materialJapan.getMaterial("bamboo_slats"),'w',ModItems.materialJapan.getMaterial("washi"),'p',new ItemStack(ModBlocks.sakuraPlanks));
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.tatami,2),"rrr","www",'r',ModItems.materialJapan.getMaterial("rush"),'w',ModItems.materialJapan.getMaterial("rice_hay"));
+
 
         GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("rice_stalk"),ModItems.materialJapan.getMaterial("rice_ash"),0.1f);
 
         CraftingManagerSoakingBox.instance().addWorkingRecipe(new ItemStack(ModBlocks.bamboo),ModItems.materialJapan.getMaterial("soaked_bamboo"));
         CraftingManagerSoakingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("rice"),ModItems.materialJapan.getMaterial("soaked_rice"));
-        CraftingManagerSoakingBox.instance().addWorkingRecipe(new ItemStack(ModBlocks.mulberryLog),ModItems.materialJapan.getMaterial("soaked_mulberry"));
+        if(ModInteractions.bwm.isActive())
+            CraftingManagerSoakingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("bark_mulberry"),ModItems.materialJapan.getMaterial("soaked_mulberry"));
+        else
+            CraftingManagerSoakingBox.instance().addWorkingRecipe(new ItemStack(ModBlocks.mulberryLog),ModItems.materialJapan.getMaterial("soaked_mulberry"));
 
         CraftingManagerDryingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("rice_stalk"),ModItems.materialJapan.getMaterial("rice_hay"));
         CraftingManagerDryingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("soaked_mulberry"),ModItems.materialJapan.getMaterial("mulberry_paste"));

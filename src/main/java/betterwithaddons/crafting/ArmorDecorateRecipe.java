@@ -1,22 +1,14 @@
 package betterwithaddons.crafting;
 
 import betterwithaddons.item.ItemSamuraiArmor;
-import betterwithaddons.item.ModItems;
-import com.google.common.collect.Lists;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.NonNullList;
-import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class ArmorDecorateRecipe extends ShapedOreRecipe
 {
