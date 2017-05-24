@@ -62,6 +62,7 @@ public class ModBlocks {
     public static BlockTatami tatami;
     public static BlockPavement pavement;
     public static BlockSoap wetSoap;
+    public static BlockWhiteBrick whiteBrick;
 
     public static void load(FMLPreInitializationEvent event) {
         bannerDetector = (BlockBannerDetector) addBlock(new BlockBannerDetector());
@@ -141,6 +142,7 @@ public class ModBlocks {
         paperLantern = (BlockLantern) addBlock(new BlockLantern("wood_lamp", Material.WOOD).setHardness(1.0f));
         wroughtLantern = (BlockLantern) addBlock(new BlockLantern("wrought_lamp", Material.IRON).setHardness(5.0f));
         pavement = (BlockPavement) addBlock(new BlockPavement());
+        whiteBrick = (BlockWhiteBrick) addBlock(new BlockWhiteBrick());
 
         coloredBrick = (BlockColoredBrick) addBlock(new BlockColoredBrick(),ItemCloth.class,true);
     }

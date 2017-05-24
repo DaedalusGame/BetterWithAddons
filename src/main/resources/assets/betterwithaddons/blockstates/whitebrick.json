@@ -1,0 +1,33 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"model": "cube_all",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+    "variant": {
+		"default": { 
+			"textures": {
+				"all": "betterwithaddons:blocks/whitestone_brick"
+			}
+		},
+		"mossy": { 
+			"textures": {
+				"all": "betterwithaddons:blocks/whitestone_mossy"
+			}
+		},
+		"cracked": { 
+			"textures": {
+				"all": "betterwithaddons:blocks/whitestone_cracked"
+			}
+		},
+		"chiseled": { 
+			"textures": {
+				"all": "betterwithaddons:blocks/whitestone_chisel"
+			}
+		}
+    }
+  }
+}

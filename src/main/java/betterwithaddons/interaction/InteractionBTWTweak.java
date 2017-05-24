@@ -3,13 +3,20 @@ package betterwithaddons.interaction;
 import betterwithaddons.crafting.DisplaySawRecipe;
 import betterwithaddons.handler.StumpingHandler;
 import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.BWOreDictionary;
 import betterwithmods.common.blocks.BlockMechMachines;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.blockmeta.managers.KilnManager;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
+import betterwithmods.common.registry.blockmeta.recipe.BlockMetaRecipe;
+import betterwithmods.module.ModuleLoader;
+import betterwithmods.module.tweaks.KilnSmelting;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.Arrays;
@@ -20,7 +27,7 @@ public class InteractionBTWTweak implements IInteraction {
     public static boolean HARD_STUMPS = true;
     public static boolean SOFT_WOODS = true;
     public static boolean SAW_RECYCLING = true;
-    //public static boolean KILN_DOUBLING = true;
+    public static boolean KILN_DOUBLING = true;
 
     @Override
     public boolean isActive() {
@@ -103,12 +110,12 @@ public class InteractionBTWTweak implements IInteraction {
     @Override
     public void postInit() {
 
-        /*if(KILN_DOUBLING && ModuleLoader.isFeatureEnabled(KilnSmelting.class))
+        if(KILN_DOUBLING && ModuleLoader.isFeatureEnabled(KilnSmelting.class))
         {
             for (ItemStack ore : BWOreDictionary.oreNames) {
                 if(ore.getItem() instanceof ItemBlock)
                 {
-                    BlockMetaRecipe recipe = KilnInteraction.INSTANCE.getRecipe(ore);
+                    BlockMetaRecipe recipe = KilnManager.INSTANCE.getRecipe(ore);
                     List<ItemStack> outputs = recipe.getOutputs();
                     if(outputs.size() > 0)
                     {
@@ -118,6 +125,6 @@ public class InteractionBTWTweak implements IInteraction {
                     }
                 }
             }
-        }*/
+        }
     }
 }
