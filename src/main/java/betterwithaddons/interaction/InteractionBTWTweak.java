@@ -27,7 +27,7 @@ public class InteractionBTWTweak implements IInteraction {
     public static boolean HARD_STUMPS = true;
     public static boolean SOFT_WOODS = true;
     public static boolean SAW_RECYCLING = true;
-    public static boolean KILN_DOUBLING = true;
+    //public static boolean KILN_DOUBLING = true;
 
     @Override
     public boolean isActive() {
@@ -110,7 +110,7 @@ public class InteractionBTWTweak implements IInteraction {
     @Override
     public void postInit() {
 
-        if(KILN_DOUBLING && ModuleLoader.isFeatureEnabled(KilnSmelting.class))
+        /*if(KILN_DOUBLING && ModuleLoader.isFeatureEnabled(KilnSmelting.class))
         {
             for (ItemStack ore : BWOreDictionary.oreNames) {
                 if(ore.getItem() instanceof ItemBlock)
@@ -125,6 +125,6 @@ public class InteractionBTWTweak implements IInteraction {
                     }
                 }
             }
-        }
+        }*/
     }
 }
