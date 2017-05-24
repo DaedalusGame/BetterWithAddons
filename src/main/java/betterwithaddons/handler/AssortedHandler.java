@@ -6,6 +6,8 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.util.BannerUtil;
+import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockLight;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBanner;
@@ -183,9 +185,8 @@ public class AssortedHandler
 	}
 
 	private boolean hasPadding(World world, BlockPos pos) {
-		//TODO: This should be BWM padding block instead.
 		IBlockState state = world.getBlockState(pos);
-		return state.getBlock() == Blocks.HAY_BLOCK;
+		return state.getBlock() == BWMBlocks.AESTHETIC && state.getValue(BlockAesthetic.blockType).equals(BlockAesthetic.EnumType.PADDING);
 	}
 
 	@SubscribeEvent

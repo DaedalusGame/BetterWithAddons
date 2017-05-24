@@ -20,6 +20,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -79,11 +80,17 @@ public class InteractionDecoAddon implements IInteraction {
 
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.paperLantern),"pwp","wtw","pwp",'p',new ItemStack(Items.PAPER),'w',new ItemStack(BWMBlocks.WOOD_MOULDING,1, OreDictionary.WILDCARD_VALUE),'t',woodLanternLight);
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.wroughtLantern)," w ","wtw"," w ",'w',new ItemStack(ModBlocks.wroughtBars),'t',ironLanternLight);
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.wroughtBars,6),"bbb","bbb",'b',new ItemStack(Blocks.IRON_BARS)); //TODO: both anvil recipes
-        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars,8), "bbbb", "bbbb", 'b', new ItemStack(Blocks.IRON_BARS));
-        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars,10), "b b ", "bbbb", "b b ", "b b ", 'b', new ItemStack(Items.IRON_INGOT));
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chandelier)," b ","tbt","tbt",'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight); //TODO: anvil recipe
+        if(ALTERNATE_WROUGHT_BARS)
+            SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars, 8), "bbbb", "bbbb", 'b', new ItemStack(Blocks.IRON_BARS));
+        else
+            SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars,10), "b b ", "bbbb", "b b ", "b b ", 'b', new ItemStack(Items.IRON_INGOT));
+        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chandelier)," b ","tbt","tbt",'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight);
         SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.chandelier), " ss ", " bb ", "tbbt", "tbbt", 's', new ItemStack(Blocks.STONE),'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight);
+
+        ItemStack whiteBrick = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata());
+        ItemStack whiteBrick_mossy = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.MOSSY.getMetadata());
+        ItemStack whiteBrick_cracked = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.CRACKED.getMetadata());
+
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.whiteBrick, 4, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()),"bb","bb",'b',new ItemStack(BWMBlocks.AESTHETIC, 1, BlockAesthetic.EnumType.WHITESTONE.getMeta()));
         if(CHISEL_BRICKS_IN_ANVIL) {
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.CHISELED.getMetadata()));
@@ -92,8 +99,10 @@ public class InteractionDecoAddon implements IInteraction {
         }
         else
         {
-            GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.CHISELED.getMetadata()),"b","b",'b',new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()));
+            GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.whiteBrick, 2, BlockWhiteBrick.EnumType.CHISELED.getMetadata()),"b","b",'b',new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()));
         }
+        FurnaceRecipes.instance().addSmeltingRecipe(whiteBrick,whiteBrick_cracked,0.1f);
+        GameRegistry.addShapelessRecipe(whiteBrick_mossy,whiteBrick,new ItemStack(Blocks.VINE,1));
 
         StokedCrucibleManager.getInstance().addRecipe(new ItemStack(ModBlocks.pavement),new ItemStack[]{new ItemStack(Blocks.GRAVEL), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHER_SLUDGE)});
 

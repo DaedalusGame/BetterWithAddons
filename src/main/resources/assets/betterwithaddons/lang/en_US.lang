@@ -46,6 +46,22 @@ tile.cherrybox.soaking.name=Cherrywood Soaking Unit
 tile.cherrybox.drying.name=Cherrywood Drying Unit
 tile.crop_rice.name=Rice Seeds
 tile.crop_rush.name=Common Rush Seeds
+tile.shoji.name=Shoji
+tile.fusuma.name=Fusuma
+tile.tatami.name=Tatami Mat
+
+tile.wet_soap.name=Block of Wet Soap
+
+tile.whitebrick.default.name=White Stone Bricks
+tile.whitebrick.mossy.name=Mossy White Stone Bricks
+tile.whitebrick.cracked.name=Cracked White Stone Bricks
+tile.whitebrick.chiseled.name=Chiseled White Stone Bricks
+tile.chandelier.name=Chandelier
+tile.paper_wall.name=Paper Wall
+tile.wrought_bars.name=Wrought Iron Bars
+tile.wood_lamp.name=Wood Lamp
+tile.wrought_lamp.name=Wrought Lamp
+tile.pavement.name=Pavement
 
 tile.bricks_stained.white.name=White Stained Bricks
 tile.bricks_stained.orange.name=Orange Stained Bricks
@@ -148,6 +164,7 @@ item.crate.enderpearl.name=Crated Enderpearls
 item.decomat.hemp_oil.name=Hemp Oil
 item.decomat.wood_bleach.name=Wood Bleach
 item.decomat.wood_stain.name=Wood Stain
+item.decomat.glass_chunk.name=Glass Chunk
 
 item.food_mushroom_baked.name=Baked Mushroom
 item.food_amanita_baked.name=Baked Mushroom
@@ -217,6 +234,8 @@ item.japanmat.helmet_undecorated.name=Undecorated Samurai Helmet
 item.japanmat.chest_undecorated.name=Undecorated Samurai Chestplate
 item.japanmat.legs_undecorated.name=Undecorated Samurai Leggings
 item.japanmat.boots_undecorated.name=Undecorated Samurai Boots
+item.japanmat.bark_sakura.name=Sakura Bark
+item.japanmat.bark_mulberry.name=Mulberry Bark
 
 item.helmet_samurai.name=Samurai Helmet [WIP]
 item.chest_samurai.name=Samurai Chestplate [WIP]

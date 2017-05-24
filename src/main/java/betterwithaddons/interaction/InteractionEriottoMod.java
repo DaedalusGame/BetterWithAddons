@@ -145,8 +145,7 @@ public class InteractionEriottoMod implements IInteraction {
         CraftingManagerSoakingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("rice"),ModItems.materialJapan.getMaterial("soaked_rice"));
         if(ModInteractions.bwm.isActive())
             CraftingManagerSoakingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("bark_mulberry"),ModItems.materialJapan.getMaterial("soaked_mulberry"));
-        else
-            CraftingManagerSoakingBox.instance().addWorkingRecipe(new ItemStack(ModBlocks.mulberryLog),ModItems.materialJapan.getMaterial("soaked_mulberry"));
+        CraftingManagerSoakingBox.instance().addWorkingRecipe(new ItemStack(ModBlocks.mulberryLog),ModItems.materialJapan.getMaterial("soaked_mulberry"));
 
         CraftingManagerDryingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("rice_stalk"),ModItems.materialJapan.getMaterial("rice_hay"));
         CraftingManagerDryingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("soaked_mulberry"),ModItems.materialJapan.getMaterial("mulberry_paste"));

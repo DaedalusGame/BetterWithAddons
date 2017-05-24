@@ -4,9 +4,7 @@ import net.minecraft.block.material.Material;
 
 public class BlockSoap extends BlockBase {
     public BlockSoap() {
-        super("wetsoap", Material.GROUND);
-        this.slipperiness = 0.98F;
+        super("wet_soap", Material.GROUND);
+        this.slipperiness = 1.0F;
     }
-
-
 }

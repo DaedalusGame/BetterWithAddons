@@ -28,6 +28,12 @@ public class ModConfiguration {
 
     ConfigOptionBool DecoAddon_Enabled = new ConfigOptionBool("addons.DecoAddon", "Enabled", InteractionDecoAddon.ENABLED);
     ConfigOptionBool DecoAddon_WoodColoring = new ConfigOptionBool("addons.DecoAddon", "WoodColoring", InteractionDecoAddon.WOOD_COLORING, "Vanilla planks can be bleached or stained.");
+    ConfigOptionBool DecoAddon_AlternateWroughtBars = new ConfigOptionBool("addons.DecoAddon", "AlternateWroughtBars", InteractionDecoAddon.ALTERNATE_WROUGHT_BARS, "Wrought bars are made at a ratio of 1 iron ingot per bar instead of 1/2 an iron ingot per bar.");
+    ConfigOptionBool DecoAddon_ChiselBricksInAnvil = new ConfigOptionBool("addons.DecoAddon", "ChiselBricksInAnvil", InteractionDecoAddon.CHISEL_BRICKS_IN_ANVIL, "Chiseled Stone Bricks can only be crafted on a Steel Anvil.");
+    ConfigOptionBool DecoAddon_GlassPaneRebalance = new ConfigOptionBool("addons.DecoAddon", "GlassPaneRebalance", InteractionDecoAddon.GLASS_PANE_REBALANCE, "Glass becomes neatly divisable into two glass panes per block.");
+    ConfigOptionBool DecoAddon_GlassFurnace = new ConfigOptionBool("addons.DecoAddon", "GlassFurnace", InteractionDecoAddon.GLASS_FURNACE, "Glass chunks can be smelted in a furnace.");
+    ConfigOptionBool DecoAddon_CheaperBottles = new ConfigOptionBool("addons.DecoAddon", "CheaperBottles", InteractionDecoAddon.CHEAPER_BOTTLES, "Glass bottles are made from half as much glass as normal.");
+    ConfigOptionBool DecoAddon_RecycleBottles = new ConfigOptionBool("addons.DecoAddon", "RecycleBottles", InteractionDecoAddon.RECYCLE_BOTTLES, "Glass bottles can melted into chunks in a crucible. This allows you to make glass from a witch farm.");
 
     ConfigOptionBool BTWTweak_Enabled = new ConfigOptionBool("addons.BTWTweak", "Enabled", InteractionBTWTweak.ENABLED);
     //ConfigOptionBool BTWTweak_KilnDoubling = new ConfigOptionBool("addons.BTWTweak", "KilnDoubling", InteractionBTWTweak.KILN_DOUBLING, "Ores can be smelted into double the amount of output in a kiln.");
@@ -60,6 +66,12 @@ public class ModConfiguration {
         InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);
         InteractionDecoAddon.ENABLED = DecoAddon_Enabled.init(configuration);
         InteractionDecoAddon.WOOD_COLORING = DecoAddon_WoodColoring.init(configuration);
+        InteractionDecoAddon.ALTERNATE_WROUGHT_BARS = DecoAddon_AlternateWroughtBars.init(configuration);
+        InteractionDecoAddon.CHISEL_BRICKS_IN_ANVIL = DecoAddon_ChiselBricksInAnvil.init(configuration);
+        InteractionDecoAddon.GLASS_PANE_REBALANCE = DecoAddon_GlassPaneRebalance.init(configuration);
+        InteractionDecoAddon.GLASS_FURNACE = DecoAddon_GlassFurnace.init(configuration);
+        InteractionDecoAddon.CHEAPER_BOTTLES = DecoAddon_CheaperBottles.init(configuration);
+        InteractionDecoAddon.RECYCLE_BOTTLES = DecoAddon_RecycleBottles.init(configuration);
         InteractionCondensedOutputs.ENABLED = CondensedOutputs_Enabled.init(configuration);
         InteractionCondensedOutputs.LOSE_BINDER = CondensedOutputs_LoseBinder.init(configuration);
         InteractionBTWTweak.ENABLED = BTWTweak_Enabled.init(configuration);
