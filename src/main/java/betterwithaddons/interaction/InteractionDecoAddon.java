@@ -111,7 +111,7 @@ public class InteractionDecoAddon implements IInteraction {
 
         if(GLASS_PANE_REBALANCE) {
             modifyPaneRecipe();
-            StokedCrucibleManager.getInstance().removeRecipe(new ItemStack(Blocks.GLASS,3),new ItemStack(Blocks.GLASS_PANE,8));
+            StokedCrucibleManager.getInstance().removeRecipe(new ItemStack(Blocks.GLASS,3),ItemStack.EMPTY,new ItemStack(Blocks.GLASS_PANE,8));
         }
 
         StokedCrucibleManager.getInstance().addRecipe(ModItems.materialDeco.getMaterial("glass_chunk"),new ItemStack[]{new ItemStack(BWMItems.SAND_PILE,1)});
