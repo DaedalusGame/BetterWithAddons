@@ -17,7 +17,8 @@ public class GuiHandler implements IGuiHandler
         BANNER_DETECTOR(GuiIds.BANNER_DETECTOR, "betterwithaddons.client.gui.GuiBannerDetector", "betterwithaddons.container.ContainerBannerDetector"),
         TATARA(GuiIds.TATARA, "betterwithaddons.client.gui.GuiTatara", "betterwithaddons.container.ContainerTatara"),
         SOAKING_BOX(GuiIds.SOAKING_BOX, "betterwithaddons.client.gui.GuiSoakingBox", "betterwithaddons.container.ContainerCherryBox"),
-        DRYING_BOX(GuiIds.DRYING_BOX, "betterwithaddons.client.gui.GuiDryingBox", "betterwithaddons.container.ContainerCherryBox");
+        DRYING_BOX(GuiIds.DRYING_BOX, "betterwithaddons.client.gui.GuiDryingBox", "betterwithaddons.container.ContainerCherryBox"),
+        CHUTE(GuiIds.CHUTE, "betterwithaddons.client.gui.GuiChute", "betterwithaddons.container.ContainerChute");
 
         int guiID;
         String guiClass;

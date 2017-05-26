@@ -17,6 +17,7 @@ tile.extra_grass.name=Grass [WIP]
 tile.lattice.name=Iron Lattice
 tile.thorns.name=Thorny Vine
 tile.thorn_rose.name=Thorny Vine Seed
+tile.chute.name=Chute
 
 tile.log_luretree.name=Alicio Wood
 tile.log_luretree_face.name=Alicio Wood Visage
@@ -59,8 +60,9 @@ tile.whitebrick.chiseled.name=Chiseled White Stone Bricks
 tile.chandelier.name=Chandelier
 tile.paper_wall.name=Paper Wall
 tile.wrought_bars.name=Wrought Iron Bars
-tile.wood_lamp.name=Wood Lamp
-tile.wrought_lamp.name=Wrought Lamp
+tile.wood_lamp.name=Wooden Lantern
+tile.wood_lamp.firefly.name=Firefly Lantern
+tile.wrought_lamp.name=Wrought Iron Lantern
 tile.pavement.name=Pavement
 
 tile.bricks_stained.white.name=White Stained Bricks

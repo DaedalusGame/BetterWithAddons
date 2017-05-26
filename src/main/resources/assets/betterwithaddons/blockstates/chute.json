@@ -1,0 +1,27 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "betterwithaddons:blocks/chute_top",
+	  "bottom": "betterwithaddons:blocks/chute_bottom",
+	  "output": "betterwithaddons:blocks/chute_output",
+      "side": "blocks/planks_oak"
+    },
+    "model": "betterwithaddons:chute",
+    "uvlock": false
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ],
+	"ison": {
+		"true": {},
+		"false": {}
+	}
+  }
+}

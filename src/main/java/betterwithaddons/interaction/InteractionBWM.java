@@ -113,6 +113,8 @@ public class InteractionBWM implements IInteraction {
         ItemStack tree = new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.BIRCH.getMetadata());
         CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.luretreeSapling),ItemStack.EMPTY,new Object[] {tree,wheat,red,flesh});
 
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chute,1),"s s"," p ","mgm",'s',new ItemStack(BWMBlocks.WOOD_SIDING),'m',new ItemStack(BWMBlocks.WOOD_MOULDING),'g',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR),'p',new ItemStack(Blocks.WOODEN_PRESSURE_PLATE));
+
         if(MILL_CLAY) {
             MillManager.getInstance().addRecipe(new ItemStack(Items.BRICK, 4),ItemStack.EMPTY,new Object[] { new ItemStack(Blocks.HARDENED_CLAY, 1) });
 

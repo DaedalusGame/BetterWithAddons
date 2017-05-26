@@ -63,6 +63,7 @@ public class ModBlocks {
     public static BlockPavement pavement;
     public static BlockSoap wetSoap;
     public static BlockWhiteBrick whiteBrick;
+    public static BlockChute chute;
 
     public static void load(FMLPreInitializationEvent event) {
         bannerDetector = (BlockBannerDetector) addBlock(new BlockBannerDetector());
@@ -76,6 +77,7 @@ public class ModBlocks {
         lattice = (BlockLattice) addBlock(new BlockLattice());
         thornrose = (BlockThornRose) addBlock(new BlockThornRose());
         thorns = (BlockThorns) addBlock(new BlockThorns());
+        chute = (BlockChute) addBlock(new BlockChute());
         //alchDragon = (BlockAlchDragon) addBlock(new BlockAlchDragon());
 
         luretreeLeaves = (BlockModLeaves) addBlock(new BlockModLeaves(ModWoods.LURETREE));

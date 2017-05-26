@@ -16,6 +16,7 @@ public class ModTileEntities
         registerTE(TileEntitySoakingBox.class, "soakingbox");
         registerTE(TileEntityDryingBox.class, "dryingbox");
         registerTE(TileEntityLureTree.class, "luretree");
+        registerTE(TileEntityChute.class, "chute");
     }
 
     private static void registerTE(Class<? extends TileEntity> clazz, String name)

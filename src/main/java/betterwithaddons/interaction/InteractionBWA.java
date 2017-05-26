@@ -80,7 +80,6 @@ public class InteractionBWA implements IInteraction {
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.elytraMagma,1),"aa","aa",'a',ModItems.material.getMaterial("ender_cream"));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.bannerDetector,1),"aaa","o r","aaa",'a',new ItemStack(Blocks.COBBLESTONE),'o',new ItemStack(Items.ENDER_EYE),'r',new ItemStack(Items.REDSTONE));
 
-
         if(STONEBRICKS_NEED_SMELTING) {
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 4));
             GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONEBRICK, 1), "aa", "aa", 'a', ModItems.material.getMaterial("stone_brick"));
