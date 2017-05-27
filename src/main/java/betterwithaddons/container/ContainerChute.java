@@ -1,7 +1,6 @@
 package betterwithaddons.container;
 
 import betterwithaddons.tileentity.TileEntityChute;
-import betterwithaddons.tileentity.TileEntityTatara;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -9,13 +8,9 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-
-import java.util.Iterator;
 
 public class ContainerChute extends Container {
     private BlockPos pos;

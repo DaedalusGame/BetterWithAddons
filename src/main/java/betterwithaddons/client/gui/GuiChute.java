@@ -1,10 +1,8 @@
 package betterwithaddons.client.gui;
 
 import betterwithaddons.container.ContainerChute;
-import betterwithaddons.container.ContainerTatara;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityChute;
-import betterwithaddons.tileentity.TileEntityTatara;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
