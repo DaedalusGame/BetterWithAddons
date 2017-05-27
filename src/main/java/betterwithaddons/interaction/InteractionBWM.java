@@ -1,6 +1,7 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
+import betterwithaddons.block.BlockEcksieSapling;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.handler.ButcherHandler;
 import betterwithaddons.item.ModItems;
@@ -13,6 +14,7 @@ import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockSapling;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -114,6 +116,14 @@ public class InteractionBWM implements IInteraction {
         CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.luretreeSapling),ItemStack.EMPTY,new Object[] {tree,wheat,red,flesh});
 
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chute,1),"s s"," p ","mgm",'s',new ItemStack(BWMBlocks.WOOD_SIDING),'m',new ItemStack(BWMBlocks.WOOD_MOULDING),'g',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR),'p',new ItemStack(Blocks.WOODEN_PRESSURE_PLATE));
+
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling,1,0),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(BWMBlocks.URN,1,BlockUrn.EnumUrnType.FULL.getMeta()));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling,1,1),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.BIRCH.getMetadata()),new ItemStack(BWMBlocks.URN,1,BlockUrn.EnumUrnType.FULL.getMeta()));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling,1,2),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.SPRUCE.getMetadata()),new ItemStack(BWMBlocks.URN,1,BlockUrn.EnumUrnType.FULL.getMeta()));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling,1,3),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.JUNGLE.getMetadata()),new ItemStack(BWMBlocks.URN,1,BlockUrn.EnumUrnType.FULL.getMeta()));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling,1,4),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.ACACIA.getMetadata()),new ItemStack(BWMBlocks.URN,1,BlockUrn.EnumUrnType.FULL.getMeta()));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling,1,5),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.DARK_OAK.getMetadata()),new ItemStack(BWMBlocks.URN,1,BlockUrn.EnumUrnType.FULL.getMeta()));
+
 
         if(MILL_CLAY) {
             MillManager.getInstance().addRecipe(new ItemStack(Items.BRICK, 4),ItemStack.EMPTY,new Object[] { new ItemStack(Blocks.HARDENED_CLAY, 1) });

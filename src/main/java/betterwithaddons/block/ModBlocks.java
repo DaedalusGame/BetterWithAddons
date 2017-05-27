@@ -3,8 +3,10 @@ package betterwithaddons.block;
 import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BetterRedstone.BlockWirePCB;
 import betterwithaddons.block.EriottoMod.*;
-import net.minecraft.block.Block;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemStack;
@@ -64,6 +66,7 @@ public class ModBlocks {
     public static BlockSoap wetSoap;
     public static BlockWhiteBrick whiteBrick;
     public static BlockChute chute;
+    public static BlockEcksieSapling ecksieSapling;
 
     public static void load(FMLPreInitializationEvent event) {
         bannerDetector = (BlockBannerDetector) addBlock(new BlockBannerDetector());
@@ -78,6 +81,16 @@ public class ModBlocks {
         thornrose = (BlockThornRose) addBlock(new BlockThornRose());
         thorns = (BlockThorns) addBlock(new BlockThorns());
         chute = (BlockChute) addBlock(new BlockChute());
+
+        IBlockState[] leaves1 = new IBlockState[]{
+                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.BIRCH).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.ACACIA).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.DECAYABLE,false),
+        };
+        ecksieSapling = (BlockEcksieSapling) addBlock(new BlockEcksieSapling("ecksie_sapling",leaves1));
         //alchDragon = (BlockAlchDragon) addBlock(new BlockAlchDragon());
 
         luretreeLeaves = (BlockModLeaves) addBlock(new BlockModLeaves(ModWoods.LURETREE));

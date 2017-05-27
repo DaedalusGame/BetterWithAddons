@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"transform": "forge:default-block",
+	"model": "betterwithaddons:ecksie_sapling_planted",
+	"textures": { 
+		"wood": "blocks/log_oak",
+		"side": "betterwithaddons:blocks/soulforged_steel",
+		"particle": "#wood"
+	}
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{
+		"model": "betterwithaddons:ecksie_sapling"
+	}],
+	"type": {
+		"0" : { "textures": { "wood": "blocks/log_oak"} },
+		"1" : { "textures": { "wood": "blocks/log_birch"} },
+		"2" : { "textures": { "wood": "blocks/log_spruce"} },
+		"3" : { "textures": { "wood": "blocks/log_jungle"} },
+		"4" : { "textures": { "wood": "blocks/log_acacia"} },
+		"5" : { "textures": { "wood": "blocks/log_big_oak"} },
+		"6" : {},
+		"7" : {},
+		"8" : {},
+		"9" : {},
+		"10" : {},
+		"11" : {},
+		"12" : {},
+		"13" : {},
+		"14" : {},
+		"15" : {}
+	}
+  }
+}
