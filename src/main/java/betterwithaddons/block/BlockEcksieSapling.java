@@ -33,6 +33,7 @@ public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantab
         super(name, Material.WOOD);
         treeLeaves = leaves;
         this.setTickRandomly(true);
+        this.setHardness(0.5f);
     }
 
     @Override
@@ -135,8 +136,9 @@ public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantab
         while(attempts > 0) {
             BlockPos.MutableBlockPos seeker = new BlockPos.MutableBlockPos(pos.up());
             for (int dist = 0; dist < 7; dist++) {
-                if (worldIn.getBlockState(seeker) != leaf) {
-                    if(worldIn.isAirBlock(seeker)) {
+                IBlockState seekstate = worldIn.getBlockState(seeker);
+                if (seekstate != leaf) {
+                    if(worldIn.isAirBlock(seeker) || seekstate.getBlock().isReplaceable(worldIn,seeker)) {
                         worldIn.setBlockState(seeker, leaf);
                         if (dist < 2) attempts--;
                     }
