@@ -1,6 +1,7 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.crafting.DisplaySawRecipe;
+import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.StumpingHandler;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockMechMachines;
@@ -45,6 +46,8 @@ public class InteractionBTWTweak implements IInteraction {
 
     @Override
     public void preInit() {
+        if(EGG_INCUBATION)
+            MinecraftForge.EVENT_BUS.register(new EggIncubationHandler());
         if(HARD_STUMPS || SOFT_WOODS)
             MinecraftForge.EVENT_BUS.register(new StumpingHandler());
     }

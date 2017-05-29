@@ -54,9 +54,6 @@ public class AssortedHandler
 {
 	static Random rng = new Random();
 
-	private LinkedList<EntityItem> TrackedItems = new LinkedList<>();
-	private LinkedList<EntityItem> TrackedItemsAdd = new LinkedList<>();
-	private Iterator<EntityItem> TrackedItemsIterator;
 	private HashMap<UUID,BossInfoServer> BossList = new HashMap<>();
 	private final int BossCleanupThreshold = 10;
 	private final float HardnessThreshold = 5.0f;
@@ -83,20 +80,7 @@ public class AssortedHandler
 		}
 	}
 
-	@SubscribeEvent
-	public void onEntityJoin(EntityJoinWorldEvent event)
-	{
-		Entity entity = event.getEntity();
 
-		if(entity instanceof EntityItem)
-		{
-			ItemStack stack = ((EntityItem) entity).getEntityItem();
-			if(!stack.isEmpty() && stack.getItem() == Items.EGG)
-			{
-				TrackedItemsAdd.add((EntityItem)entity);
-			}
-		}
-	}
 
 	@SubscribeEvent
 	public void blockNeighborUpdate(BlockEvent.NeighborNotifyEvent notifyEvent)
@@ -155,8 +139,6 @@ public class AssortedHandler
 		World world = tickEvent.world;
 		WorldScaleData.getInstance(world).cleanup();
 		if(!world.isRemote) {
-			if(InteractionBTWTweak.ENABLED && InteractionBTWTweak.EGG_INCUBATION)
-				handleEggs();
 			if(ScaleQuarryAmt > 0 && world.provider.getDimension() == 0)
 			if (!doScaleQuarriesExist())
 				generateScaleQuarries(world.getSeed());
@@ -215,49 +197,6 @@ public class AssortedHandler
 				}
 			}
 		}
-	}
-
-	private void handleEggs()
-	{
-		if(TrackedItemsIterator == null || !TrackedItemsIterator.hasNext())
-		{
-			TrackedItems.addAll(TrackedItemsAdd);
-			TrackedItemsAdd.clear();
-			TrackedItemsIterator = TrackedItems.iterator();
-		}
-		else
-		{
-			EntityItem entity = TrackedItemsIterator.next();
-			World world = entity.world;
-			ItemStack stack = entity.getEntityItem();
-			BlockPos pos = entity.getPosition();
-			boolean remove = false;
-			if(entity.isDead || stack.isEmpty() || stack.getItem() != Items.EGG || stack.getCount() > 1)
-				remove = true;
-			else if((int)ReflectionHelper.getPrivateValue(EntityItem.class, entity, "d", "field_70292_b", "age") > 5400 && hasPadding(world,pos.down()) && hasLitLight(world,pos.up()))
-			{
-				world.playSound(null,entity.posX,entity.posY,entity.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.NEUTRAL,  0.25F, world.rand.nextFloat() * 1.5F + 1.0F);
-				EntityChicken chick = new EntityChicken(world);
-				chick.setGrowingAge(-24000);
-				chick.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, 0F, 0F);
-				world.spawnEntity(chick);
-				stack.shrink(1);
-				if (stack.isEmpty()) entity.setDead();
-			}
-
-			if(remove)
-				TrackedItemsIterator.remove();
-		}
-	}
-
-	private boolean hasLitLight(World world, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos);
-		return state.getBlock() instanceof BlockLight && state.getValue(BlockLight.ACTIVE);
-	}
-
-	private boolean hasPadding(World world, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos);
-		return state.getBlock() == BWMBlocks.AESTHETIC && state.getValue(BlockAesthetic.blockType).equals(BlockAesthetic.EnumType.PADDING);
 	}
 
 	@SubscribeEvent

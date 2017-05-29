@@ -1,6 +1,7 @@
 package betterwithaddons.block.BetterRedstone;
 
 import betterwithaddons.block.BlockBase;
+import betterwithmods.api.block.ITurnable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockPCB extends BlockBase {
@@ -80,8 +82,11 @@ public class BlockPCB extends BlockBase {
         if(isEast) newstate = newstate.withProperty(EAST,!state.getValue(EAST));
         if(isWest) newstate = newstate.withProperty(WEST,!state.getValue(WEST));
 
+        newstate = state.withRotation(Rotation.CLOCKWISE_90);
+
         world.setBlockState(pos,newstate);
-        world.notifyNeighborsOfStateChange(pos.up(), this, false);
+        //world.notifyNeighborsOfStateChange(pos.up(), this, false);
+        //world.neighborChanged(pos.up(), this, pos);
 
         return true;
     }

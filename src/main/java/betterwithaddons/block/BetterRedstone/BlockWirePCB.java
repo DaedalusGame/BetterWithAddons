@@ -294,6 +294,9 @@ public class BlockWirePCB extends Block implements IColorable {
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if(!world.isRemote) {
+            if(fromPos.equals(pos.down()))
+                world.notifyNeighborsOfStateChange(pos, this, false);
+
             if(this.canPlaceBlockAt(world, pos)) {
                 this.updateSurroundingRedstone(world, pos, state);
             } else {
