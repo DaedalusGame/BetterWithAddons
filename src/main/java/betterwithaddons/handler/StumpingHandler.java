@@ -40,15 +40,15 @@ public class StumpingHandler {
         Block block = state.getBlock();
 
         float speed = breakEvent.getNewSpeed();
-        float hardness = 1.5f;
-        float multiplier = 1;
+        float multiplier = 1f;
         boolean issoft = false;
 
         if(InteractionBTWTweak.HARD_STUMPS) {
             if(block instanceof BlockLog && !issoft) {
                 IBlockState bottomstate = world.getBlockState(breakpos.down());
-                if (bottomstate.getMaterial() == Material.GROUND)
-                    multiplier = 10;
+                Material material = bottomstate.getMaterial();
+                if (material == Material.GROUND || material == Material.GRASS)
+                    multiplier = 0.1f;
             }
         }
 
@@ -57,14 +57,12 @@ public class StumpingHandler {
 
             for (WoodHardness wood : SOFT_WOODS) {
                 if (wood.matches(block, meta)) {
-                    hardness = wood.hardness;
+                    multiplier = wood.hardness / state.getBlockHardness(world,breakpos);
                     break;
                 }
             }
         }
 
-        float hardnessMultiplier = state.getBlockHardness(world,breakpos) != 0 ? (hardness * multiplier) / state.getBlockHardness(world,breakpos) : 1f;
-
-        breakEvent.setNewSpeed(speed / hardnessMultiplier);
+        breakEvent.setNewSpeed(speed * multiplier);
     }
 }

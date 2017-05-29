@@ -7,7 +7,8 @@
         "pane": "betterwithaddons:blocks/fusuma",
         "particle": "betterwithaddons:blocks/fusuma"
 	},
-	"model": "glass_pane_post"
+	"model": "glass_pane_post",
+	"uvlock": true
   },
   "variants": {
     "normal": [{}],
@@ -40,48 +41,48 @@
 	"north":{
 		"true":{
 			"submodel": {
-				"north": { "model": "glass_pane_side" }
+				"north": { "model": "glass_pane_side", "uvlock": true }
 			}
 		},
 		"false":{
 			"submodel": {
-				"north": { "model": "glass_pane_noside" }
+				"north": { "model": "glass_pane_noside", "uvlock": true }
 			}
 		}
 	},
 	"east":{
 		"true":{
 			"submodel": {
-				"east": { "model": "glass_pane_side", "y": 90 }
+				"east": { "model": "glass_pane_side", "y": 90, "uvlock": true }
 			}
 		},
 		"false":{
 			"submodel": {
-				"east": { "model": "glass_pane_noside_alt" }
+				"east": { "model": "glass_pane_noside_alt", "uvlock": true }
 			}
 		}
 	},
 	"south":{
 		"true":{
 			"submodel": {
-				"south": { "model": "glass_pane_side_alt" }
+				"south": { "model": "glass_pane_side_alt", "uvlock": true }
 			}
 		},
 		"false":{
 			"submodel": {
-				"south": { "model": "glass_pane_noside_alt", "y": 90 }
+				"south": { "model": "glass_pane_noside_alt", "y": 90, "uvlock": true }
 			}
 		}
 	},
 	"west":{
 		"true":{
 			"submodel": {
-				"west": { "model": "glass_pane_side_alt", "y": 90 }
+				"west": { "model": "glass_pane_side_alt", "y": 90, "uvlock": true }
 			}
 		},
 		"false":{
 			"submodel": {
-				"west": { "model": "glass_pane_noside", "y": 270 }
+				"west": { "model": "glass_pane_noside", "y": 270, "uvlock": true }
 			}
 		}
 	}

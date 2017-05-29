@@ -1,0 +1,29 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "betterwithaddons:items/worldshard_0"
+    },
+    "overrides": [
+        {
+            "predicate": { "shine": 1 }, "model": "betterwithaddons:item/worldshard_1"
+        },
+		{
+            "predicate": { "shine": 2 }, "model": "betterwithaddons:item/worldshard_2"
+        },
+		{
+            "predicate": { "shine": 3 }, "model": "betterwithaddons:item/worldshard_3"
+        },
+		{
+            "predicate": { "shine": 4 }, "model": "betterwithaddons:item/worldshard_4"
+        },
+		{
+            "predicate": { "shine": 5 }, "model": "betterwithaddons:item/worldshard_5"
+        },
+		{
+            "predicate": { "shine": 6 }, "model": "betterwithaddons:item/worldshard_6"
+        },
+		{
+            "predicate": { "shine": 7 }, "model": "betterwithaddons:item/worldshard_7"
+        }
+    ]
+}

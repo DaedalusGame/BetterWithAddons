@@ -59,6 +59,7 @@ public class ModItems
     public static ItemFood preparedPuffer;
     public static ItemFood preparedCookedPuffer;
     public static ItemFood fuguSac;
+    public static ItemWorldScale worldShard;
 
     public static ItemFood sashimi;
     public static ItemFood rice;
@@ -97,6 +98,7 @@ public class ModItems
                 new String[]{"arrowhead","midori","midori_popped","thornrose","stone_brick","bone_ingot","ender_cream"}
         ));
 
+        worldShard = (ItemWorldScale)registerItem("worldshard",new ItemWorldScale());
         greatbow = (ItemGreatbow)registerItem("greatbow",new ItemGreatbow());
         greatarrow = (ItemGreatarrow)registerItem("greatarrow",new ItemGreatarrow());
         monument = (ItemMonument)registerItem("monument",new ItemMonument());

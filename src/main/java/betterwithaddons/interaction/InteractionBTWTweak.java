@@ -21,6 +21,7 @@ public class InteractionBTWTweak implements IInteraction {
     public static boolean SOFT_WOODS = true;
     public static boolean SAW_RECYCLING = true;
     //public static boolean KILN_DOUBLING = true;
+    public static boolean EGG_INCUBATION = true;
 
     @Override
     public boolean isActive() {

@@ -1,5 +1,6 @@
 package betterwithaddons.block;
 
+import betterwithaddons.item.ModItems;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.EnumPushReaction;
@@ -20,6 +21,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,13 +61,18 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
     }
 
     @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return ModItems.worldShard;
+    }
+
+    /*@Override
     public int damageDropped(IBlockState state) {
         return 1;
-    }
+    }*/
 
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random) {
-        return isBroken(state) ? 1 : 0;
+        return isBroken(state) ? random.nextInt(2)+3 : 0;
     }
 
     @Override
@@ -119,10 +126,39 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
 
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        if(isBroken(state))
+        if(willHarvest && isBroken(state) && exposedToElements(world,pos))
             return super.removedByPlayer(state,world,pos,player,willHarvest);
 
         return false;
+    }
+
+    public boolean exposedToElements(World world, BlockPos pos) {
+        Biome biome = world.getBiome(pos);
+        boolean isHot = biome.getTempCategory() == Biome.TempCategory.WARM;
+        boolean isRaining = world.isRainingAt(pos);
+        boolean isCold = biome.isSnowyBiome();
+        boolean isHumid = biome.canRain();
+        boolean isDaytime = world.isDaytime();
+        boolean isWaterAbove = world.getBlockState(pos.up()).getMaterial() == Material.WATER;
+
+        if(isHot && !isHumid && isDaytime) //TODO: Switch this out for a lens check maybe. That would push it back in the tech tree :/
+            return true;
+        if(isCold && isRaining)
+            return true;
+        if(isWaterAbove)
+            return true;
+
+        return false;
+    }
+
+    @Override
+    public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
+        float modifier = 1.0f;
+
+        if(!exposedToElements(worldIn,pos))
+            modifier = 15.0f;
+
+        return super.getBlockHardness(blockState, worldIn, pos) * modifier;
     }
 
     @Override

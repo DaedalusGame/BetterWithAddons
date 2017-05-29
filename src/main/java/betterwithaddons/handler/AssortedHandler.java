@@ -3,6 +3,7 @@ package betterwithaddons.handler;
 import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BlockLattice;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.interaction.InteractionBTWTweak;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.util.BannerUtil;
@@ -20,6 +21,7 @@ import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -30,6 +32,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.BossInfo.Overlay;
 import net.minecraft.world.BossInfoServer;
@@ -43,6 +46,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.util.*;
 
@@ -56,6 +60,15 @@ public class AssortedHandler
 	private HashMap<UUID,BossInfoServer> BossList = new HashMap<>();
 	private final int BossCleanupThreshold = 10;
 	private final float HardnessThreshold = 5.0f;
+
+	public static final int ScaleQuarryAmt = 5;
+	public static final int ScaleQuarryMinDist = 200;
+	public static final int ScaleQuarryMaxDist = 3000;
+	public static final int ScaleQuarryFuzzyness = 500;
+	public static final int ScaleQuarrySize = 16;
+	public static final int ScaleQuarryMinDepth = 0;
+	public static final int ScaleQuarryMaxDepth = 32;
+	public static BlockPos[] ScaleQuarries = new BlockPos[ScaleQuarryAmt];
 
 	@SubscribeEvent
 	public void onEntityDrop(LivingDropsEvent event) {
@@ -141,8 +154,67 @@ public class AssortedHandler
 	{
 		World world = tickEvent.world;
 		WorldScaleData.getInstance(world).cleanup();
-		if(!world.isRemote)
-			handleEggs();
+		if(!world.isRemote) {
+			if(InteractionBTWTweak.ENABLED && InteractionBTWTweak.EGG_INCUBATION)
+				handleEggs();
+			if(ScaleQuarryAmt > 0 && world.provider.getDimension() == 0)
+			if (!doScaleQuarriesExist())
+				generateScaleQuarries(world.getSeed());
+			else if(world.rand.nextInt(100) == 0)
+				fillScaleQuarries(world,world.rand);
+		}
+	}
+
+	public static boolean doScaleQuarriesExist()
+	{
+		return ScaleQuarryAmt > 0 && ScaleQuarries[0] != null;
+	}
+
+	private void generateScaleQuarries(long seed)
+	{
+		Random rand = new Random(seed);
+
+		for(int i = 0; i < ScaleQuarryAmt; i++)
+		{
+			float dist = rand.nextInt(ScaleQuarryMaxDist - ScaleQuarryMinDist) + ScaleQuarryMinDist;
+			float ang = (float)Math.toRadians(i * (360f / ScaleQuarryAmt));
+			float x = (float)(dist * Math.sin(ang));
+			float z = (float)(dist * Math.cos(ang));
+
+			x += rand.nextInt(ScaleQuarryFuzzyness) - rand.nextInt(ScaleQuarryFuzzyness);
+			z += rand.nextInt(ScaleQuarryFuzzyness) - rand.nextInt(ScaleQuarryFuzzyness);
+			int y = ScaleQuarryMinDepth + rand.nextInt(ScaleQuarryMaxDepth - ScaleQuarryMinDepth);
+
+			ScaleQuarries[i] = new BlockPos(x,y,z);
+			//System.out.print("Scale quarry at "+x+","+y+","+z);
+		}
+	}
+
+	private void fillScaleQuarries(World world,Random rand)
+	{
+		BlockPos root = ScaleQuarries[rand.nextInt(ScaleQuarryAmt)];
+
+		if(!world.isBlockLoaded(root))
+			return;
+
+		int maxdist = rand.nextInt(ScaleQuarrySize) + 1;
+		BlockPos.MutableBlockPos seeker = new BlockPos.MutableBlockPos(root);
+		for(int attempts = 0; attempts < maxdist; attempts++)
+		{
+			int xoff = rand.nextInt(3) - 1;
+			int zoff = xoff == 0 ? rand.nextInt(3) - 1 : 0;
+			int yoff = zoff == 0 ? rand.nextInt(2) * 2 - 1 : 0;
+			seeker.setPos(seeker.getX() + xoff, seeker.getY() + yoff, seeker.getZ() + zoff);
+			if(world.isAirBlock(seeker))
+				return;
+			else if(world.getBlockState(seeker).getBlock() == Blocks.STONE)
+			{
+				if(rand.nextInt(maxdist - attempts) == 0) {
+					world.setBlockState(seeker, ModBlocks.worldScaleOre.getDefaultState(), 2);
+					break;
+				}
+			}
+		}
 	}
 
 	private void handleEggs()
@@ -162,7 +234,7 @@ public class AssortedHandler
 			boolean remove = false;
 			if(entity.isDead || stack.isEmpty() || stack.getItem() != Items.EGG || stack.getCount() > 1)
 				remove = true;
-			else if(entity.getAge() > 5400 && hasPadding(world,pos.down()) && hasLitLight(world,pos.up()))
+			else if((int)ReflectionHelper.getPrivateValue(EntityItem.class, entity, "d", "field_70292_b", "age") > 5400 && hasPadding(world,pos.down()) && hasLitLight(world,pos.up()))
 			{
 				world.playSound(null,entity.posX,entity.posY,entity.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.NEUTRAL,  0.25F, world.rand.nextFloat() * 1.5F + 1.0F);
 				EntityChicken chick = new EntityChicken(world);

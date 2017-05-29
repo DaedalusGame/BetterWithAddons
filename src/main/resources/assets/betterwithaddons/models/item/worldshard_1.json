@@ -1,0 +1,6 @@
+{
+    "parent": "betterwithaddons:item/worldShard",
+    "textures": {
+        "layer0": "betterwithaddons:items/worldshard_1"
+    }
+}
