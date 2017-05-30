@@ -32,6 +32,7 @@ public class InteractionBWM implements IInteraction {
     public static boolean MILL_CLAY = true;
     public static boolean CHORUS_IN_CAULDRON = true;
     public static boolean BUTCHER_BLOCKS = true;
+    public static boolean FALLING_PLATFORMS = false;
 
     @Override
     public boolean isActive() {
