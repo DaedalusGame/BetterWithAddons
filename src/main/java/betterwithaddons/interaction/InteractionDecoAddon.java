@@ -68,7 +68,7 @@ public class InteractionDecoAddon implements IInteraction {
 
     @Override
     public void init() {
-        MillManager.getInstance().addRecipe(ModItems.materialDeco.getMaterial("hemp_oil"), new Object[]{new ItemStack(BWMBlocks.HEMP, 1), new ItemStack(Items.GLASS_BOTTLE, 1)});
+        MillManager.getInstance().addRecipe(0,ModItems.materialDeco.getMaterial("hemp_oil"), new Object[]{new ItemStack(BWMBlocks.HEMP, 1), new ItemStack(Items.GLASS_BOTTLE, 1)});
         CauldronManager.getInstance().addRecipe(ModItems.materialDeco.getMaterial("wood_bleach",4),new Object[]{ModItems.materialDeco.getMaterial("hemp_oil",4),new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())});
         CauldronManager.getInstance().addRecipe(ModItems.materialDeco.getMaterial("wood_stain",4),new Object[]{ModItems.materialDeco.getMaterial("hemp_oil",4),new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage())});
 

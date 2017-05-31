@@ -86,13 +86,13 @@ public class InteractionBWM implements IInteraction {
         CauldronManager.getInstance().addRecipe(ModItems.material.getMaterial("bone_ingot"),ItemStack.EMPTY,new Object[] { new ItemStack(Items.BONE,2),new ItemStack(Items.DYE,8,15) });
         CauldronManager.getInstance().addRecipe(ModItems.material.getMaterial("midori_popped"),ItemStack.EMPTY,new Object[] { ModItems.material.getMaterial("midori") });
         CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.meatballs),ItemStack.EMPTY,new Object[] { new ItemStack(ModItems.groundMeat,3) });
-        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,3),ItemStack.EMPTY,new Object[] { new ItemStack(Items.BEEF) });
-        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,2),ItemStack.EMPTY,new Object[] { new ItemStack(Items.MUTTON) });
-        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,1),ItemStack.EMPTY,new Object[] { new ItemStack(Items.CHICKEN) });
-        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,3),ItemStack.EMPTY,new Object[] { new ItemStack(Items.PORKCHOP) });
-        MillManager.getInstance().addRecipe(new ItemStack(ModItems.groundMeat,1),ItemStack.EMPTY,new Object[] { new ItemStack(Items.RABBIT) });
+        MillManager.getInstance().addRecipe(0,new ItemStack(ModItems.groundMeat,3),ItemStack.EMPTY,new Object[] { new ItemStack(Items.BEEF) });
+        MillManager.getInstance().addRecipe(0,new ItemStack(ModItems.groundMeat,2),ItemStack.EMPTY,new Object[] { new ItemStack(Items.MUTTON) });
+        MillManager.getInstance().addRecipe(0,new ItemStack(ModItems.groundMeat,1),ItemStack.EMPTY,new Object[] { new ItemStack(Items.CHICKEN) });
+        MillManager.getInstance().addRecipe(0,new ItemStack(ModItems.groundMeat,3),ItemStack.EMPTY,new Object[] { new ItemStack(Items.PORKCHOP) });
+        MillManager.getInstance().addRecipe(0,new ItemStack(ModItems.groundMeat,1),ItemStack.EMPTY,new Object[] { new ItemStack(Items.RABBIT) });
 
-        MillManager.getInstance().addRecipe(new ItemStack(ModBlocks.worldScale,1),ItemStack.EMPTY,new Object[] { new ItemStack(ModBlocks.worldScaleOre,1,1) });
+        MillManager.getInstance().addRecipe(0,new ItemStack(ModBlocks.worldScale,1),ItemStack.EMPTY,new Object[] { new ItemStack(ModBlocks.worldScaleOre,1,1) });
 
         //Bark
         ModBlocks.mulberryLog.barkStack = ModItems.materialJapan.getMaterial("bark_mulberry");
@@ -125,7 +125,7 @@ public class InteractionBWM implements IInteraction {
 
 
         if(MILL_CLAY) {
-            MillManager.getInstance().addRecipe(new ItemStack(Items.BRICK, 4),ItemStack.EMPTY,new Object[] { new ItemStack(Blocks.HARDENED_CLAY, 1) });
+            MillManager.getInstance().addRecipe(0,new ItemStack(Items.BRICK, 4),ItemStack.EMPTY,new Object[] { new ItemStack(Blocks.HARDENED_CLAY, 1) });
 
             EnumDyeColor[] dyes = EnumDyeColor.values();
             int len = dyes.length;
@@ -133,7 +133,7 @@ public class InteractionBWM implements IInteraction {
             for (int i = 0; i < len; ++i) {
                 EnumDyeColor dye = dyes[i];
                 ItemStack brick = new ItemStack(ModItems.stainedBrick, 1, dye.getMetadata());
-                MillManager.getInstance().addRecipe(new ItemStack(ModItems.stainedBrick, 4, dye.getMetadata()), ItemStack.EMPTY, new Object[]{new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata())});
+                MillManager.getInstance().addRecipe(0,new ItemStack(ModItems.stainedBrick, 4, dye.getMetadata()), ItemStack.EMPTY, new Object[]{new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata())});
                 GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.coloredBrick, 1, dye.getMetadata()), "bb", "bb", 'b', brick);
             }
         }

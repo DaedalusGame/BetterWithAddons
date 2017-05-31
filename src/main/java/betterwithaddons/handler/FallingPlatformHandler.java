@@ -4,6 +4,7 @@ import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAnchor;
 import betterwithmods.common.blocks.tile.TileEntityPulley;
 import betterwithmods.module.GlobalConfig;
+import betterwithmods.util.DirUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityFallingBlock;
@@ -31,7 +32,7 @@ public class FallingPlatformHandler {
         Block block = blockstate.getBlock();
 
         if (!world.isRemote && block == BWMBlocks.ANCHOR && !isAnchorSupported(world, anchorpos)) {
-            EnumFacing facing = blockstate.getValue(BlockAnchor.FACING);
+            EnumFacing facing = blockstate.getValue(DirUtils.FACING);
 
             HashSet<BlockPos> platformBlocks = new HashSet<>();
             boolean success = findPlatformPart(world,anchorpos,platformBlocks);
@@ -47,7 +48,7 @@ public class FallingPlatformHandler {
     private boolean isAnchorSupported(World world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
         Block topblock = world.getBlockState(pos.up()).getBlock();
-        EnumFacing facing = state.getValue(BlockAnchor.FACING).getOpposite();
+        EnumFacing facing = state.getValue(DirUtils.FACING).getOpposite();
         IBlockState sidingblock = world.getBlockState(pos.offset(facing));
 
         return topblock == BWMBlocks.ROPE || (sidingblock.isSideSolid(world,pos,facing.getOpposite()) && !TileEntityPulley.isValidPlatform(sidingblock.getBlock()));

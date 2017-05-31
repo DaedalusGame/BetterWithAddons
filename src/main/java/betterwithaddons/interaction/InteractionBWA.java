@@ -3,14 +3,20 @@ package betterwithaddons.interaction;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.item.ModItems;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class InteractionBWA implements IInteraction {
     public static boolean STONEBRICKS_NEED_SMELTING = false;
@@ -41,7 +47,6 @@ public class InteractionBWA implements IInteraction {
 
     @Override
     public void preInit() {
-
     }
 
     @Override
