@@ -19,6 +19,10 @@ public class ModConfiguration {
     ConfigOptionInteger BWA_LureTreeTime = new ConfigOptionInteger("addons.BetterWithAddons", "LureTreeTime", InteractionBWA.MAXCHARGE, "Time it takes for the tree to do one spawning cycle.");
     ConfigOptionInteger BWA_LureTreeMaxFood = new ConfigOptionInteger("addons.BetterWithAddons", "LureTreeMaxFood", InteractionBWA.MAXFOOD, "How much food the tree can hold.");
     ConfigOptionInteger BWA_LureTreeFoodGlowstone = new ConfigOptionInteger("addons.BetterWithAddons", "LureTreeFoodGlowstone", InteractionBWA.FOODGLOWSTONE, "How much food is contained in one glowstone dust.");
+    ConfigOptionBool BWA_ObviousStorms = new ConfigOptionBool("addons.BetterWithAddons", "ObviousStorms", InteractionBWA.OBVIOUS_STORMS, "Storms in dry biomes are much more obvious.");
+    ConfigOptionBool BWA_ObviousSandStorms = new ConfigOptionBool("addons.BetterWithAddons", "ObviousSandStorms", InteractionBWA.OBVIOUS_SAND_STORMS, "Storms in sandy biomes are even more obvious.");
+    ConfigOptionInteger BWA_ObviousDustParticles = new ConfigOptionInteger("addons.BetterWithAddons", "ObviousDustParticles", InteractionBWA.DUST_PARTICLES, "How many dust particles are kicked up every tick.");
+    ConfigOptionInteger BWA_ObviousAirParticles = new ConfigOptionInteger("addons.BetterWithAddons", "ObviousAirParticles", InteractionBWA.AIR_PARTICLES, "How many wind particles are generated every tick.");
 
     ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED);
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
@@ -63,6 +67,10 @@ public class ModConfiguration {
         InteractionBWA.MAXCHARGE = BWA_LureTreeTime.init(configuration);
         InteractionBWA.MAXFOOD = BWA_LureTreeMaxFood.init(configuration);
         InteractionBWA.FOODGLOWSTONE = BWA_LureTreeFoodGlowstone.init(configuration);
+        InteractionBWA.OBVIOUS_STORMS = BWA_ObviousStorms.init(configuration);
+        InteractionBWA.OBVIOUS_SAND_STORMS = BWA_ObviousSandStorms.init(configuration);
+        InteractionBWA.DUST_PARTICLES = BWA_ObviousDustParticles.init(configuration);
+        InteractionBWA.AIR_PARTICLES = BWA_ObviousAirParticles.init(configuration);
         InteractionEriottoMod.ENABLED = EriottoMod_Enabled.init(configuration);
         InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);
         InteractionDecoAddon.ENABLED = DecoAddon_Enabled.init(configuration);

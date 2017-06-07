@@ -4,9 +4,6 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.client.GuiHandler;
 import betterwithaddons.config.ModConfiguration;
 import betterwithaddons.entity.ModEntities;
-import betterwithaddons.handler.AssortedHandler;
-import betterwithaddons.handler.ElytraUpdriftHandler;
-import betterwithaddons.handler.HarvestHandler;
 import betterwithaddons.interaction.ModInteractions;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
@@ -16,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -73,11 +69,6 @@ public class BetterWithAddons
 		ModPotions.preInit(event);
 		ModInteractions.preInit(event);
 		proxy.preInit();
-
-		MinecraftForge.EVENT_BUS.register(new AssortedHandler());
-		//MinecraftForge.EVENT_BUS.register(new TerratorialHandler()); //TODO: Make this do something
-		MinecraftForge.EVENT_BUS.register(new ElytraUpdriftHandler());
-		MinecraftForge.EVENT_BUS.register(new HarvestHandler());
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 	}

@@ -2,11 +2,13 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -67,11 +69,12 @@ public class InteractionCondensedOutputs implements IInteraction {
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed_melon"),new ItemStack(Items.MELON_SEEDS));
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed_pumpkin"),new ItemStack(Items.PUMPKIN_SEEDS));
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed_beets"),new ItemStack(Items.BEETROOT_SEEDS));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("cocoa"),new ItemStack(Items.DYE,1,EnumDyeColor.BROWN.getDyeDamage()));
         addBaggingRecipe(ModItems.materialBag.getMaterial("redstone"),new ItemStack(Items.REDSTONE));
         addBaggingRecipe(ModItems.materialBag.getMaterial("glowstone"),new ItemStack(Items.GLOWSTONE_DUST));
         addBaggingRecipe(ModItems.materialBag.getMaterial("sugar"),new ItemStack(Items.SUGAR));
         addBaggingRecipe(ModItems.materialBag.getMaterial("gunpowder"),new ItemStack(Items.GUNPOWDER));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("flour"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.FLOUR));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("flour"),new ItemStack(BWMBlocks.RAW_PASTRY,1, BlockRawPastry.EnumType.BREAD.getMetadata()));
         addBaggingRecipe(ModItems.materialBag.getMaterial("sulfur"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BRIMSTONE));
         addBaggingRecipe(ModItems.materialBag.getMaterial("nitre"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NITER));
         addBaggingRecipe(ModItems.materialBag.getMaterial("sawdust"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));

@@ -122,7 +122,7 @@ public class ContainerBannerDetector extends Container
                 slot = this.inventorySlots.get(k);
                 itemstack1 = slot.getStack();
 
-                if (itemstack1 != ItemStack.EMPTY && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1) && slot.isItemValid(par1ItemStack))
+                if (!itemstack1.isEmpty() && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1) && slot.isItemValid(par1ItemStack))
                 {
                     int l = itemstack1.getCount() + par1ItemStack.getCount();
 

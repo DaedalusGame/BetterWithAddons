@@ -3,6 +3,7 @@ package betterwithaddons.interaction;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.handler.ButcherHandler;
+import betterwithaddons.handler.FallingPlatformHandler;
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockBUD;
@@ -58,6 +59,8 @@ public class InteractionBWM implements IInteraction {
     public void preInit() {
         if(BUTCHER_BLOCKS)
             MinecraftForge.EVENT_BUS.register(new ButcherHandler());
+        if(FALLING_PLATFORMS)
+            MinecraftForge.EVENT_BUS.register(new FallingPlatformHandler());
     }
 
     @Override
@@ -138,9 +141,7 @@ public class InteractionBWM implements IInteraction {
             }
         }
 
-        if(CHORUS_IN_CAULDRON)
-            BetterWithAddons.instance.removeSmeltingRecipe(new ItemStack(Items.CHORUS_FRUIT_POPPED));
-        else
+        if(!CHORUS_IN_CAULDRON)
             GameRegistry.addSmelting(ModItems.material.getMaterial("midori"),ModItems.material.getMaterial("midori_popped"),0.1f);
 
         fixRecipes();
@@ -152,6 +153,9 @@ public class InteractionBWM implements IInteraction {
         removeCauldronRecipe(new ItemStack(Items.BAKED_POTATO));
         removeCauldronRecipe(new ItemStack(ModItems.bakedCarrot));
         removeCauldronRecipe(new ItemStack(ModItems.bakedBeetroot));
+
+        if(CHORUS_IN_CAULDRON)
+            BetterWithAddons.instance.removeSmeltingRecipe(new ItemStack(Items.CHORUS_FRUIT_POPPED));
     }
 
     public void fixRecipes()

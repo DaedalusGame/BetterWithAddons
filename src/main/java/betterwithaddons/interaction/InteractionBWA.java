@@ -2,23 +2,26 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.handler.AssortedHandler;
+import betterwithaddons.handler.ElytraUpdriftHandler;
+import betterwithaddons.handler.HarvestHandler;
+import betterwithaddons.handler.StormHandler;
 import betterwithaddons.item.ModItems;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class InteractionBWA implements IInteraction {
+    public static boolean OBVIOUS_STORMS = false;
+    public static boolean OBVIOUS_SAND_STORMS = false;
+    public static int DUST_PARTICLES = 2;
+    public static int AIR_PARTICLES = 3;
     public static boolean STONEBRICKS_NEED_SMELTING = false;
     public static int RADIUS = 6;
     public static int MAXCHARGE = 600;
@@ -47,6 +50,12 @@ public class InteractionBWA implements IInteraction {
 
     @Override
     public void preInit() {
+        MinecraftForge.EVENT_BUS.register(new AssortedHandler());
+        //MinecraftForge.EVENT_BUS.register(new TerratorialHandler()); //TODO: Make this do something
+        MinecraftForge.EVENT_BUS.register(new ElytraUpdriftHandler());
+        MinecraftForge.EVENT_BUS.register(new HarvestHandler());
+        if(OBVIOUS_SAND_STORMS || OBVIOUS_STORMS)
+            MinecraftForge.EVENT_BUS.register(new StormHandler());
     }
 
     @Override
