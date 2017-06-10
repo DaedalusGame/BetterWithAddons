@@ -27,7 +27,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.List;
 
-public class InteractionBWM implements IInteraction {
+public class InteractionBWM extends Interaction {
     final String modid = "betterwithmods";
     public static boolean ENABLED = true;
     public static boolean MILL_CLAY = true;
@@ -43,15 +43,16 @@ public class InteractionBWM implements IInteraction {
     @Override
     public void setEnabled(boolean active) {
         ENABLED = active;
+        super.setEnabled(active);
     }
 
     @Override
-    public List<IInteraction> getDependencies() {
+    public List<Interaction> getDependencies() {
         return null;
     }
 
     @Override
-    public List<IInteraction> getIncompatibilities() {
+    public List<Interaction> getIncompatibilities() {
         return null;
     }
 

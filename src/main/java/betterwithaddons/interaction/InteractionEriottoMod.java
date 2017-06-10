@@ -4,6 +4,7 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.ArmorDecorateRecipe;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.util.IDisableable;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
@@ -19,9 +20,21 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
-public class InteractionEriottoMod implements IInteraction {
+public class InteractionEriottoMod extends Interaction {
     public static boolean ENABLED = true;
     public static boolean GRASS_DROPS_SEEDS = true;
+
+    public InteractionEriottoMod()
+    {
+        associatedItems = new IDisableable[] {
+                ModItems.materialJapan, ModItems.katana,ModItems.wakizashi,ModItems.tanto,ModItems.shinai,ModItems.samuraiBoots,ModItems.samuraiLeggings,ModItems.samuraiHelm,ModItems.samuraiChestplate,
+                ModItems.fuguSac,ModItems.sashimi,ModItems.preparedPuffer,ModItems.preparedCookedPuffer,ModItems.rice,ModItems.riceBowl,ModItems.yumi,ModItems.ya,
+                ModBlocks.bamboo, ModBlocks.bambooSlats, ModBlocks.rice, ModBlocks.rush, ModBlocks.shoji, ModBlocks.fusuma, ModBlocks.tatami,
+                ModBlocks.cherrybox, ModBlocks.tatara, ModBlocks.nettedScreen, ModBlocks.kera, ModBlocks.ironSand,
+                ModBlocks.mulberryLog, ModBlocks.mulberryLeaves, ModBlocks.mulberryPlanks, ModBlocks.mulberrySapling,
+                ModBlocks.sakuraLog,ModBlocks.sakuraLeaves,ModBlocks.sakuraPlanks,ModBlocks.sakuraSapling,ModBlocks.sakuraLeafPile
+        };
+    }
 
     @Override
     public boolean isActive() {
@@ -31,15 +44,16 @@ public class InteractionEriottoMod implements IInteraction {
     @Override
     public void setEnabled(boolean active) {
         ENABLED = active;
+        super.setEnabled(active);
     }
 
     @Override
-    public List<IInteraction> getDependencies() {
+    public List<Interaction> getDependencies() {
         return null;
     }
 
     @Override
-    public List<IInteraction> getIncompatibilities() {
+    public List<Interaction> getIncompatibilities() {
         return null;
     }
 

@@ -2,25 +2,30 @@ package betterwithaddons.block;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
+import betterwithaddons.util.IDisableable;
 import betterwithmods.api.block.IDebarkable;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.Optional;
 
 @Optional.Interface(iface = "betterwithmods.api.block.IDebarkable", modid = "betterwithmods", striprefs = true)
-public class BlockModLog extends BlockLog implements IDebarkable
+public class BlockModLog extends BlockLog implements IDebarkable, IDisableable
 {
     // Each instance has a reference to its own variant property
     public ModWoods woodVariant;
     public ItemStack barkStack;
+    private boolean disabled;
 
     @Override
     protected BlockStateContainer createBlockState()
@@ -79,5 +84,16 @@ public class BlockModLog extends BlockLog implements IDebarkable
     @Override
     public IBlockState getStrippedState(IBlockState iBlockState) {
         return null;
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    @Override
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+        if(!disabled)
+            super.getSubBlocks(itemIn, tab, list);
     }
 }

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.List;
 
-public class InteractionQuark implements IInteraction {
+public class InteractionQuark extends Interaction {
     final String modid = "Quark";
     public static boolean ENABLED = true;
     public static boolean MIDORI_BLOCKS_NEED_CHUNKS = true;
@@ -21,15 +21,16 @@ public class InteractionQuark implements IInteraction {
     @Override
     public void setEnabled(boolean active) {
         ENABLED = active;
+        super.setEnabled(active);
     }
 
     @Override
-    public List<IInteraction> getDependencies() {
+    public List<Interaction> getDependencies() {
         return null;
     }
 
     @Override
-    public List<IInteraction> getIncompatibilities() {
+    public List<Interaction> getIncompatibilities() {
         return null;
     }
 

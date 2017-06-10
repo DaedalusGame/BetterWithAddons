@@ -110,8 +110,10 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
 
     @Override
     public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
-        subItems.add(new ItemStack(this,1,0));
-        subItems.add(new ItemStack(this,1,1));
+        if(!disabled) {
+            subItems.add(new ItemStack(this, 1, 0));
+            subItems.add(new ItemStack(this, 1, 1));
+        }
     }
 
     @Override

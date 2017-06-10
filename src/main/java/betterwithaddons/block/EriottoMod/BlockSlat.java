@@ -1,7 +1,6 @@
 package betterwithaddons.block.EriottoMod;
 
-import betterwithaddons.BetterWithAddons;
-import betterwithaddons.lib.Reference;
+import betterwithaddons.block.BlockBase;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -13,7 +12,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
@@ -22,19 +20,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockSlat extends Block implements IHasVariants {
+public class BlockSlat extends BlockBase implements IHasVariants {
     public static final PropertyInteger SANDFILL = PropertyInteger.create("sandfill",0,8);
 
     public BlockSlat() {
-        super(Material.WOOD);
+        super("slat",Material.WOOD);
 
         this.setHardness(1.0F);
         this.setResistance(0.2F);
         this.setHarvestLevel("axe", 0);
-
-        this.setUnlocalizedName("slat");
-        this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "slat"));
-        this.setCreativeTab(BetterWithAddons.instance.creativeTab);
     }
 
     @Override

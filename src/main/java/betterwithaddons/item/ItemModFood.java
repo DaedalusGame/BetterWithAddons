@@ -1,29 +1,21 @@
 package betterwithaddons.item;
 
-import betterwithaddons.entity.EntityYa;
 import betterwithaddons.util.IDisableable;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.world.World;
 
-public class ItemYa extends Item implements IDisableable {
+public class ItemModFood extends ItemFood implements IDisableable {
     private boolean disabled;
 
-    public ItemYa() {
-        super();
+    public ItemModFood(int amount, boolean isWolfFood) {
+        super(amount, isWolfFood);
     }
 
-    public EntityYa createArrow(World worldIn, ItemStack stack, EntityLivingBase shooter) {
-        EntityYa entityarrow = new EntityYa(worldIn, shooter);
-        return entityarrow;
-    }
-
-    public boolean isInfinite(ItemStack stack, ItemStack bow, EntityPlayer player) {
-        return false;
+    public ItemModFood(int amount, float saturation, boolean isWolfFood) {
+        super(amount, saturation, isWolfFood);
     }
 
     @Override

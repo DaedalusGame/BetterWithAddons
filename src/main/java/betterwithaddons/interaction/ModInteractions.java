@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import java.util.ArrayList;
 
 public class ModInteractions {
-    public static ArrayList<IInteraction> LIST = new ArrayList<>();
+    public static ArrayList<Interaction> LIST = new ArrayList<>();
 
     public static InteractionBWA bwa;
     public static InteractionBWM bwm;
@@ -30,26 +30,26 @@ public class ModInteractions {
 
         validate();
 
-        for (IInteraction interaction: LIST)
+        for (Interaction interaction: LIST)
             if(interaction.isActive())
                 interaction.preInit();
     }
 
     public static void init(FMLInitializationEvent event)
     {
-        for (IInteraction interaction: LIST)
+        for (Interaction interaction: LIST)
             if(interaction.isActive())
                 interaction.init();
     }
 
     public static void postInit(FMLPostInitializationEvent event)
     {
-        for (IInteraction interaction: LIST)
+        for (Interaction interaction: LIST)
             if(interaction.isActive())
                 interaction.postInit();
     }
 
-    private static IInteraction addInteraction(IInteraction interaction)
+    private static Interaction addInteraction(Interaction interaction)
     {
         LIST.add(interaction);
         return interaction;
@@ -57,9 +57,9 @@ public class ModInteractions {
 
     private static void validate()
     {
-        for (IInteraction interaction: LIST) {
+        for (Interaction interaction: LIST) {
             if(interaction.getDependencies() != null)
-            for(IInteraction dependency: interaction.getDependencies())
+            for(Interaction dependency: interaction.getDependencies())
             {
                 if(!dependency.isActive())
                 {
@@ -69,7 +69,7 @@ public class ModInteractions {
             }
 
             if(interaction.getIncompatibilities() != null)
-            for(IInteraction incompatibility: interaction.getIncompatibilities())
+            for(Interaction incompatibility: interaction.getIncompatibilities())
             {
                 if(incompatibility.isActive())
                 {

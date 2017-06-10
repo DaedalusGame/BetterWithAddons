@@ -4,6 +4,7 @@ import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockWhiteBrick;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.util.IDisableable;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.blocks.BlockAesthetic;
@@ -29,7 +30,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class InteractionDecoAddon implements IInteraction {
+public class InteractionDecoAddon extends Interaction {
     public static boolean ENABLED = true;
     public static boolean WOOD_COLORING = true;
 
@@ -41,6 +42,13 @@ public class InteractionDecoAddon implements IInteraction {
     public static boolean CHEAPER_BOTTLES = true;
     public static boolean RECYCLE_BOTTLES = true;
 
+    public InteractionDecoAddon()
+    {
+        associatedItems = new IDisableable[] {
+                ModItems.materialDeco, ModBlocks.wroughtBars, ModBlocks.wroughtLantern, ModBlocks.paperLantern, ModBlocks.chandelier, ModBlocks.pavement, ModBlocks.whiteBrick
+        };
+    }
+
     @Override
     public boolean isActive() {
         return ENABLED;
@@ -49,15 +57,16 @@ public class InteractionDecoAddon implements IInteraction {
     @Override
     public void setEnabled(boolean active) {
         ENABLED = active;
+        super.setEnabled(active);
     }
 
     @Override
-    public List<IInteraction> getDependencies() {
-        return Arrays.asList(new IInteraction[]{ ModInteractions.bwm });
+    public List<Interaction> getDependencies() {
+        return Arrays.asList(new Interaction[]{ ModInteractions.bwm });
     }
 
     @Override
-    public List<IInteraction> getIncompatibilities() {
+    public List<Interaction> getIncompatibilities() {
         return null;
     }
 

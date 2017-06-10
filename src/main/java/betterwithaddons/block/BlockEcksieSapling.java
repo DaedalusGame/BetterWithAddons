@@ -176,6 +176,7 @@ public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantab
 
     @Override
     public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+        if(!disabled)
         for(int i = 0; i < 16; ++i) {
             if(i < treeLeaves.length && treeLeaves[i] != null)
                 list.add(new ItemStack(this,1,i));

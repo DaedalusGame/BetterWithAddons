@@ -39,31 +39,31 @@ public class ModItems
     public static ItemGreatbow greatbow;
     public static ItemGreatarrow greatarrow;
     public static ItemMonument monument;
-    public static ItemFood bakedMushroom;
-    public static ItemFood bakedAmanita;
-    public static ItemFood cookedBeetroot;
-    public static ItemFood bakedBeetroot;
-    public static ItemFood cookedCarrot;
-    public static ItemFood bakedCarrot;
-    public static ItemFood cookedPotato;
-    public static ItemFood pieMelon;
-    public static ItemFood pieMeat;
-    public static ItemFood pieMushroom;
-    public static ItemFood pieAmanita;
-    public static ItemFood meatballs;
-    public static ItemFood cookedEgg;
-    public static ItemFood groundMeat;
+    public static ItemModFood bakedMushroom;
+    public static ItemModFood bakedAmanita;
+    public static ItemModFood cookedBeetroot;
+    public static ItemModFood bakedBeetroot;
+    public static ItemModFood cookedCarrot;
+    public static ItemModFood bakedCarrot;
+    public static ItemModFood cookedPotato;
+    public static ItemModFood pieMelon;
+    public static ItemModFood pieMeat;
+    public static ItemModFood pieMushroom;
+    public static ItemModFood pieAmanita;
+    public static ItemModFood meatballs;
+    public static ItemModFood cookedEgg;
+    public static ItemModFood groundMeat;
 
-    public static ItemFood cookedClownfish;
-    public static ItemFood cookedPuffer;
-    public static ItemFood preparedPuffer;
-    public static ItemFood preparedCookedPuffer;
-    public static ItemFood fuguSac;
+    public static ItemModFood cookedClownfish;
+    public static ItemModFood cookedPuffer;
+    public static ItemModFood preparedPuffer;
+    public static ItemModFood preparedCookedPuffer;
+    public static ItemModFood fuguSac;
     public static ItemWorldScale worldShard;
 
-    public static ItemFood sashimi;
-    public static ItemFood rice;
-    public static ItemFood riceBowl;
+    public static ItemModFood sashimi;
+    public static ItemModFood rice;
+    public static ItemModFood riceBowl;
     public static ItemStainedBrick stainedBrick;
     public static ItemMaterial material;
     public static ItemMaterial materialJapan;
@@ -103,32 +103,32 @@ public class ModItems
         greatarrow = (ItemGreatarrow)registerItem("greatarrow",new ItemGreatarrow());
         monument = (ItemMonument)registerItem("monument",new ItemMonument());
         //Food
-        bakedMushroom = (ItemFood)registerItem("food_mushroom_baked",new ItemFood(3, 0.2F, false));
-        bakedAmanita = (ItemFood)registerItem("food_amanita_baked",new ItemFood(3, 0.2F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1), 1.0F));
-        cookedBeetroot = (ItemFood)registerItem("food_beetroot_cooked",new ItemFood(4, 0.5F, false));
-        bakedBeetroot = (ItemFood)registerItem("food_beetroot_baked",new ItemFood(5, 0.4F, false));
-        cookedCarrot = (ItemFood)registerItem("food_carrot_cooked",new ItemFood(3, 0.6F, false));
-        bakedCarrot = (ItemFood)registerItem("food_carrot_baked",new ItemFood(4, 0.5F, false));
-        cookedPotato = (ItemFood)registerItem("food_potato_cooked",new ItemFood(4, 0.7F, false));
-        cookedEgg = (ItemFood)registerItem("food_egg_cooked",new ItemFood(4, 0.3F, false));
-        meatballs = (ItemFood)registerItem("food_meatballs",new ItemFood(6, 0.6F, true));
+        bakedMushroom = (ItemModFood)registerItem("food_mushroom_baked",new ItemModFood(3, 0.2F, false));
+        bakedAmanita = (ItemModFood)registerItem("food_amanita_baked",new ItemModFood(3, 0.2F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1), 1.0F));
+        cookedBeetroot = (ItemModFood)registerItem("food_beetroot_cooked",new ItemModFood(4, 0.5F, false));
+        bakedBeetroot = (ItemModFood)registerItem("food_beetroot_baked",new ItemModFood(5, 0.4F, false));
+        cookedCarrot = (ItemModFood)registerItem("food_carrot_cooked",new ItemModFood(3, 0.6F, false));
+        bakedCarrot = (ItemModFood)registerItem("food_carrot_baked",new ItemModFood(4, 0.5F, false));
+        cookedPotato = (ItemModFood)registerItem("food_potato_cooked",new ItemModFood(4, 0.7F, false));
+        cookedEgg = (ItemModFood)registerItem("food_egg_cooked",new ItemModFood(4, 0.3F, false));
+        meatballs = (ItemModFood)registerItem("food_meatballs",new ItemModFood(6, 0.6F, true));
 
-        groundMeat = (ItemFood)registerItem("food_ground_meat",new ItemFood(2, 0.1F, true));
+        groundMeat = (ItemModFood)registerItem("food_ground_meat",new ItemModFood(2, 0.1F, true));
 
-        pieMushroom = (ItemFood)registerItem("food_pie_mushroom",new ItemFood(8, 0.3F, false));
-        pieAmanita = (ItemFood)registerItem("food_pie_amanita",new ItemFood(8, 0.3F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1), 1.0F));
-        pieMeat = (ItemFood)registerItem("food_pie_meat",new ItemFood(9, 0.5F, true));
-        pieMelon = (ItemFood)registerItem("food_pie_melon",new ItemFood(8, 0.4F, false));
+        pieMushroom = (ItemModFood)registerItem("food_pie_mushroom",new ItemModFood(8, 0.3F, false));
+        pieAmanita = (ItemModFood)registerItem("food_pie_amanita",new ItemModFood(8, 0.3F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1), 1.0F));
+        pieMeat = (ItemModFood)registerItem("food_pie_meat",new ItemModFood(9, 0.5F, true));
+        pieMelon = (ItemModFood)registerItem("food_pie_melon",new ItemModFood(8, 0.4F, false));
 
-        cookedClownfish = (ItemFood)registerItem("food_clownfish_cooked",new ItemFood(6, 0.5F, false));
-        cookedPuffer = (ItemFood)registerItem("food_pufferfish_baked",new ItemFood(6, 0.6F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 500, 1), 0.1F));
-        preparedPuffer = (ItemFood)registerItem("food_pufferfish_prepared",new ItemFood(2, 0.1F, false));
-        preparedCookedPuffer = (ItemFood)registerItem("food_pufferfish_cooked",new ItemFood(4, 0.5F, false));
-        fuguSac = (ItemFood)registerItem("food_fugu_sac",new ItemFood(2, 0.1F, false).setPotionEffect(new PotionEffect(MobEffects.WITHER, 2000, 1), 1.0F));
+        cookedClownfish = (ItemModFood)registerItem("food_clownfish_cooked",new ItemModFood(6, 0.5F, false));
+        cookedPuffer = (ItemModFood)registerItem("food_pufferfish_baked",new ItemModFood(6, 0.6F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 500, 1), 0.1F));
+        preparedPuffer = (ItemModFood)registerItem("food_pufferfish_prepared",new ItemModFood(2, 0.1F, false));
+        preparedCookedPuffer = (ItemModFood)registerItem("food_pufferfish_cooked",new ItemModFood(4, 0.5F, false));
+        fuguSac = (ItemModFood)registerItem("food_fugu_sac",new ItemModFood(2, 0.1F, false).setPotionEffect(new PotionEffect(MobEffects.WITHER, 2000, 1), 1.0F));
 
-        sashimi = (ItemFood)registerItem("food_sashimi",new ItemFood(2, 0.1F, false));
-        rice = (ItemFood)registerItem("food_cooked_rice",new ItemFood(2, 0.3F, false));
-        riceBowl = (ItemFood)registerItem("food_bowl_rice",new ItemFood(9, 0.6F, false));
+        sashimi = (ItemModFood)registerItem("food_sashimi",new ItemModFood(2, 0.1F, false));
+        rice = (ItemModFood)registerItem("food_cooked_rice",new ItemModFood(2, 0.3F, false));
+        riceBowl = (ItemModFood)registerItem("food_bowl_rice",new ItemModFood(9, 0.6F, false).setMaxStackSize(1));
 
         stainedBrick = (ItemStainedBrick)registerItem("brick_stained",new ItemStainedBrick());
 

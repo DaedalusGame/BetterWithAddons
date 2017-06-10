@@ -1,5 +1,6 @@
 package betterwithaddons.item;
 
+import betterwithaddons.util.IDisableable;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,10 +13,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemMaterial extends Item implements IHasVariants{
+public class ItemMaterial extends Item implements IHasVariants,IDisableable {
     String[] subItemNames;
     boolean[] subItemDisabled;
     ItemStack container = ItemStack.EMPTY;
+    boolean disabled;
 
     public ItemMaterial(String[] subnames) {
         subItemNames = subnames;
@@ -28,6 +30,11 @@ public class ItemMaterial extends Item implements IHasVariants{
     {
         container = stack;
         return this;
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 
     @Override
@@ -81,6 +88,7 @@ public class ItemMaterial extends Item implements IHasVariants{
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(Item item, CreativeTabs tabs, NonNullList<ItemStack> subitems) {
+        if(!disabled)
         for(int i = 0; i < subItemNames.length; ++i) {
             if(!subItemDisabled[i])
                 subitems.add(new ItemStack(item, 1, i));

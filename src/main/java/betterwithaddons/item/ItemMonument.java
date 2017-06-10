@@ -1,5 +1,7 @@
 package betterwithaddons.item;
 
+import betterwithaddons.util.IDisableable;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -14,7 +16,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class ItemMonument extends Item {
+public class ItemMonument extends Item implements IDisableable {
+    private boolean disabled;
+
     public ItemMonument() {
         super();
 
@@ -48,5 +52,16 @@ public class ItemMonument extends Item {
         entityPlayer.setActiveHand(enumHand);
         ItemStack itemStack = entityPlayer.getHeldItem(enumHand);
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    @Override
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+        if(!disabled)
+        super.getSubItems(itemIn, tab, subItems);
     }
 }

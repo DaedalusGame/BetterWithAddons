@@ -1,5 +1,6 @@
 package betterwithaddons.block;
 
+import betterwithaddons.util.IDisableable;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -36,6 +37,7 @@ public class BlockWhiteBrick extends BlockBase implements IHasVariants {
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
     {
+        if(!disabled)
         for (EnumType type : EnumType.values())
         {
             list.add(new ItemStack(itemIn, 1, type.getMetadata()));

@@ -75,7 +75,7 @@ public class ModBlocks {
         worldScaleActive = (BlockWorldScaleActive) addBlock(new BlockWorldScaleActive());
         elytraMagma = (BlockElytraMagma) addBlock(new BlockElytraMagma());
         grass = (BlockExtraGrass) addBlock(new BlockExtraGrass());
-        pcbwire = (BlockWirePCB) addBlock(new BlockWirePCB());
+        pcbwire = (BlockWirePCB) addBlock(new BlockWirePCB(),null,false);
         pcbblock = (BlockPCB) addBlock(new BlockPCB());
         lattice = (BlockLattice) addBlock(new BlockLattice());
         thornrose = (BlockThornRose) addBlock(new BlockThornRose());
@@ -173,12 +173,13 @@ public class ModBlocks {
     protected static Block register(Block block, Class<? extends ItemBlock> itemBlock, boolean hasSubtypes)
     {
         GameRegistry.register(block);
-        try {
-            GameRegistry.register(itemBlock.getConstructor(Block.class).newInstance(block).setRegistryName(block.getRegistryName()).setHasSubtypes(hasSubtypes));
-        } catch (Exception e) {
-            System.out.println("Error Registering ItemBlock for " + block.getRegistryName());
-            e.printStackTrace();
-        }
+        if(itemBlock != null)
+            try {
+                GameRegistry.register(itemBlock.getConstructor(Block.class).newInstance(block).setRegistryName(block.getRegistryName()).setHasSubtypes(hasSubtypes));
+            } catch (Exception e) {
+                System.out.println("Error Registering ItemBlock for " + block.getRegistryName());
+                e.printStackTrace();
+            }
 
         return block;
     }

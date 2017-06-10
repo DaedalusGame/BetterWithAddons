@@ -2,7 +2,7 @@ package betterwithaddons.interaction;
 
 import java.util.List;
 
-public class InteractionJEI implements IInteraction {
+public class InteractionJEI extends Interaction {
     @Override
     public boolean isActive() {
         return false;
@@ -12,12 +12,12 @@ public class InteractionJEI implements IInteraction {
     public void setEnabled(boolean active) {}
 
     @Override
-    public List<IInteraction> getDependencies() {
+    public List<Interaction> getDependencies() {
         return null;
     }
 
     @Override
-    public List<IInteraction> getIncompatibilities() {
+    public List<Interaction> getIncompatibilities() {
         return null;
     }
 

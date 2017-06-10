@@ -4,17 +4,21 @@ import betterwithaddons.block.ColorHandlers;
 import betterwithaddons.block.IColorable;
 import betterwithaddons.client.models.ModelSamurai;
 import betterwithaddons.lib.Reference;
+import betterwithaddons.util.IDisableable;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,9 +27,10 @@ import javax.annotation.Nonnull;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class ItemSamuraiArmor extends ItemArmor implements ISpecialArmor, IColorable {
+public class ItemSamuraiArmor extends ItemArmor implements ISpecialArmor, IColorable, IDisableable {
     protected Map<EntityEquipmentSlot, ModelBiped> models = null;
     public final EntityEquipmentSlot type;
+    private boolean disabled;
 
     public ItemSamuraiArmor(EntityEquipmentSlot equipmentSlotIn) {
         super(ModItems.samuraiArmorMaterial, 0, equipmentSlotIn);
@@ -170,5 +175,16 @@ public class ItemSamuraiArmor extends ItemArmor implements ISpecialArmor, IColor
     @Override
     public IItemColor getItemColor() {
         return ColorHandlers.ARMOR_COLORING;
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    @Override
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+        if(!disabled)
+            super.getSubItems(itemIn, tab, subItems);
     }
 }

@@ -2,11 +2,13 @@ package betterwithaddons.block;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
+import betterwithaddons.util.IDisableable;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -17,6 +19,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -29,10 +32,11 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class BlockModLeaves extends BlockLeaves {
+public class BlockModLeaves extends BlockLeaves implements IDisableable {
     protected ItemStack sapling;
 
     public ModWoods woodVariant;
+    private boolean disabled;
 
     public BlockModLeaves(ModWoods variant)
     {
@@ -170,5 +174,16 @@ public class BlockModLeaves extends BlockLeaves {
     @Override
     public BlockPlanks.EnumType getWoodType(int meta) {
         return null;
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    @Override
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+        if(!disabled)
+            super.getSubBlocks(itemIn, tab, list);
     }
 }

@@ -17,7 +17,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.List;
 
-public class InteractionBWA implements IInteraction {
+public class InteractionBWA extends Interaction {
     public static boolean OBVIOUS_STORMS = false;
     public static boolean OBVIOUS_SAND_STORMS = false;
     public static int DUST_PARTICLES = 2;
@@ -35,16 +35,15 @@ public class InteractionBWA implements IInteraction {
 
     @Override
     public void setEnabled(boolean active) {
-
     }
 
     @Override
-    public List<IInteraction> getDependencies() {
+    public List<Interaction> getDependencies() {
         return null;
     }
 
     @Override
-    public List<IInteraction> getIncompatibilities() {
+    public List<Interaction> getIncompatibilities() {
         return null;
     }
 

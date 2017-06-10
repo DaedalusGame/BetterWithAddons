@@ -98,8 +98,10 @@ public class BlockCherryBox extends BlockContainerBase implements IHasVariants {
 
     @Override
     public void getSubBlocks(Item item, CreativeTabs tabs, NonNullList<ItemStack> stacks) {
-        stacks.add(new ItemStack(item,1,0));
-        stacks.add(new ItemStack(item,1,1));
+        if(!disabled) {
+            stacks.add(new ItemStack(item, 1, 0));
+            stacks.add(new ItemStack(item, 1, 1));
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package betterwithaddons.item;
 
+import betterwithaddons.util.IDisableable;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,7 +14,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemStainedBrick extends Item implements IHasVariants {
+public class ItemStainedBrick extends Item implements IHasVariants, IDisableable {
+    private boolean disabled;
+
     public ItemStainedBrick() {
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
@@ -46,9 +49,15 @@ public class ItemStainedBrick extends Item implements IHasVariants {
 
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item p_getSubItems_1_, CreativeTabs p_getSubItems_2_, NonNullList<ItemStack> p_getSubItems_3_) {
+        if(!disabled)
         for(int i = 0; i < 16; ++i) {
             p_getSubItems_3_.add(new ItemStack(p_getSubItems_1_, 1, i));
         }
 
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 }

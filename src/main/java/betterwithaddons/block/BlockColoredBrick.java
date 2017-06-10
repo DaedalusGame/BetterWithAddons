@@ -2,18 +2,25 @@ package betterwithaddons.block;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
+import betterwithaddons.util.IDisableable;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockColoredBrick extends BlockColored implements IHasVariants {
+public class BlockColoredBrick extends BlockColored implements IHasVariants, IDisableable {
+    private boolean disabled;
+
     public BlockColoredBrick()
     {
         super(Material.ROCK);
@@ -48,5 +55,16 @@ public class BlockColoredBrick extends BlockColored implements IHasVariants {
     @Override
     public String getVariantName(int meta) {
         return null;
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    @Override
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+        if(!disabled)
+            super.getSubBlocks(itemIn, tab, list);
     }
 }

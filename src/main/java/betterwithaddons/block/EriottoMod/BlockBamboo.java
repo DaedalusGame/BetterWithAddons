@@ -2,15 +2,18 @@ package betterwithaddons.block.EriottoMod;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
+import betterwithaddons.util.IDisableable;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -22,7 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockBamboo extends BlockReed implements IHasVariants {
+public class BlockBamboo extends BlockReed implements IHasVariants, IDisableable {
+    private boolean disabled;
+
     public BlockBamboo()
     {
         super();
@@ -131,5 +136,16 @@ public class BlockBamboo extends BlockReed implements IHasVariants {
     @Override
     public String getVariantName(int meta) {
         return null;
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    @Override
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+        if(!disabled)
+            super.getSubBlocks(itemIn, tab, list);
     }
 }

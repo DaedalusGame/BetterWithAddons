@@ -16,7 +16,7 @@ import net.minecraftforge.common.MinecraftForge;
 import java.util.Arrays;
 import java.util.List;
 
-public class InteractionBTWTweak implements IInteraction {
+public class InteractionBTWTweak extends Interaction {
     public static boolean ENABLED = true;
     public static boolean HARD_STUMPS = true;
     public static boolean SOFT_WOODS = true;
@@ -32,15 +32,16 @@ public class InteractionBTWTweak implements IInteraction {
     @Override
     public void setEnabled(boolean active) {
         ENABLED = active;
+        super.setEnabled(active);
     }
 
     @Override
-    public List<IInteraction> getDependencies() {
-        return Arrays.asList(new IInteraction[]{ ModInteractions.bwm });
+    public List<Interaction> getDependencies() {
+        return Arrays.asList(new Interaction[]{ ModInteractions.bwm });
     }
 
     @Override
-    public List<IInteraction> getIncompatibilities() {
+    public List<Interaction> getIncompatibilities() {
         return null;
     }
 

@@ -1,10 +1,13 @@
 package betterwithaddons.item;
 
+import betterwithaddons.util.IDisableable;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.potion.PotionEffect;
@@ -12,7 +15,9 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 
-public class ItemTanto extends ItemSword {
+public class ItemTanto extends ItemSword implements IDisableable {
+    private boolean disabled;
+
     public ItemTanto()
     {
         super(ModItems.tamahaganeToolMaterial);
@@ -69,5 +74,16 @@ public class ItemTanto extends ItemSword {
     @Override
     public EnumAction getItemUseAction(ItemStack stack) {
         return EnumAction.BOW;
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    @Override
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+        if(!disabled)
+            super.getSubItems(itemIn, tab, subItems);
     }
 }

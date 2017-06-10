@@ -2,6 +2,7 @@ package betterwithaddons.block;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
+import betterwithaddons.util.IDisableable;
 import betterwithaddons.world.WorldGenBigTrees;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -28,7 +29,7 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 
-public class BlockModSapling extends BlockBush implements IGrowable, IPlantable {
+public class BlockModSapling extends BlockBush implements IGrowable, IPlantable, IDisableable {
     protected IBlockState leaves = Blocks.AIR.getDefaultState();
     protected IBlockState log = Blocks.AIR.getDefaultState();
     protected boolean isBig = false;
@@ -37,6 +38,7 @@ public class BlockModSapling extends BlockBush implements IGrowable, IPlantable 
 
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
     public ModWoods woodVariant;
+    private boolean disabled;
 
     public BlockModSapling(ModWoods variant)
     {
@@ -115,7 +117,8 @@ public class BlockModSapling extends BlockBush implements IGrowable, IPlantable 
 
     @Override
     public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-        list.add(new ItemStack(this));
+        if(!disabled)
+            list.add(new ItemStack(this));
     }
 
     @Override
@@ -167,5 +170,10 @@ public class BlockModSapling extends BlockBush implements IGrowable, IPlantable 
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() != this) return getDefaultState();
         return state;
+    }
+
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 }
