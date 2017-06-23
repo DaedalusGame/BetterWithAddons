@@ -21,6 +21,7 @@ import java.util.List;
 public class InteractionBTWTweak extends Interaction {
     public static boolean ENABLED = true;
     public static boolean HARD_STUMPS = true;
+    public static double HARD_STUMPS_MODIFIER = 0.1;
     public static boolean SOFT_WOODS = true;
     public static boolean SAW_RECYCLING = true;
     //public static boolean KILN_DOUBLING = true;

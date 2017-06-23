@@ -41,14 +41,13 @@ public class StumpingHandler {
 
         float speed = breakEvent.getNewSpeed();
         float multiplier = 1f;
-        boolean issoft = false;
 
         if(InteractionBTWTweak.HARD_STUMPS) {
-            if(block instanceof BlockLog && !issoft) {
+            if(block instanceof BlockLog && state.getValue(BlockLog.LOG_AXIS) == BlockLog.EnumAxis.Y) {
                 IBlockState bottomstate = world.getBlockState(breakpos.down());
                 Material material = bottomstate.getMaterial();
                 if (material == Material.GROUND || material == Material.GRASS)
-                    multiplier = 0.1f;
+                    multiplier = (float)InteractionBTWTweak.HARD_STUMPS_MODIFIER;
             }
         }
 

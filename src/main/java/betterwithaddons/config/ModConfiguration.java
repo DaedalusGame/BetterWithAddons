@@ -45,6 +45,7 @@ public class ModConfiguration {
     //ConfigOptionBool BTWTweak_KilnDoubling = new ConfigOptionBool("addons.BTWTweak", "KilnDoubling", InteractionBTWTweak.KILN_DOUBLING, "Ores can be smelted into double the amount of output in a kiln.");
     ConfigOptionBool BTWTweak_SoftWoods = new ConfigOptionBool("addons.BTWTweak", "SoftWoods", InteractionBTWTweak.SOFT_WOODS, "Spruce, Jungle and Dark Oak logs are much easier to break.");
     ConfigOptionBool BTWTweak_HardStumps = new ConfigOptionBool("addons.BTWTweak", "HardStumps", InteractionBTWTweak.HARD_STUMPS, "Makes treefarms great ag- I mean, makes logs with dirt underneath them much harder to break to encourage leaving awesome stumps.");
+    ConfigOptionDouble BTWTweak_HardStumpModifier = new ConfigOptionDouble("addons.BTWTweak", "HardStumpsModifier", InteractionBTWTweak.HARD_STUMPS_MODIFIER, "Speed modifier for harvesting logs. 0.5 is half speed.");
     ConfigOptionBool BTWTweak_SawRecycling = new ConfigOptionBool("addons.BTWTweak", "SawRecycling", InteractionBTWTweak.SAW_RECYCLING, "Many wooden blocks can be recycled by putting them infront of a saw, at a bit of a loss.");
     ConfigOptionBool BTWTweak_EggIncubation = new ConfigOptionBool("addons.BTWTweak", "EggIncubation", InteractionBTWTweak.EGG_INCUBATION, "Allows eggs to be incubated into chicken by placing them on a Block of Padding with a lit Light Block above.");
     ConfigOptionBool BTWTweak_SlipperyWhenWet = new ConfigOptionBool("addons.BTWTweak", "SlipperyWhenWet", InteractionBTWTweak.SLIPPERY_WHEN_WET, "Water running over blocks of soap will make them slippery.");
@@ -93,6 +94,7 @@ public class ModConfiguration {
         //InteractionBTWTweak.KILN_DOUBLING = BTWTweak_KilnDoubling.init(configuration);
         InteractionBTWTweak.SOFT_WOODS = BTWTweak_SoftWoods.init(configuration);
         InteractionBTWTweak.HARD_STUMPS = BTWTweak_HardStumps.init(configuration);
+        InteractionBTWTweak.HARD_STUMPS_MODIFIER = BTWTweak_HardStumpModifier.init(configuration);
         InteractionBTWTweak.SAW_RECYCLING = BTWTweak_SawRecycling.init(configuration);
         InteractionBTWTweak.EGG_INCUBATION = BTWTweak_EggIncubation.init(configuration);
         InteractionBTWTweak.SLIPPERY_WHEN_WET = BTWTweak_SlipperyWhenWet.init(configuration);
