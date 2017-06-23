@@ -61,16 +61,16 @@ public class BlockAqueductWater extends BlockLiquid {
         world.scheduleUpdate(pos, this, this.tickRate(world));
     }
 
-    @Nullable
+    /*@Nullable
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
         return FULL_BLOCK_AABB;
-    }
+    }*/
 
-    public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
+    /*public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
     {
         return false;
-    }
+    }*/
 
     public boolean checkAndDry(World world, BlockPos pos, IBlockState state) {
         IBlockState bottomstate = world.getBlockState(pos.down());
