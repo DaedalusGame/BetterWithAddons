@@ -4,10 +4,12 @@ import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockModLeaves;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.block.ModWoods;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.BlockFluidBase;
 
 import java.util.Random;
 
@@ -37,10 +39,10 @@ public class BlockCherryLeaves extends BlockModLeaves {
             for(int i = 1; i <= 50; i++)
             {
                 BlockPos checkpos = pos.down(i);
-                IBlockState checkstate = world.getBlockState(checkpos);
                 if(world.isSideSolid(checkpos, EnumFacing.UP))
                 {
-                    if(world.isAirBlock(checkpos.up()) || checkstate.getBlock().isReplaceable(world,checkpos.up()))
+                    IBlockState checkstate = world.getBlockState(checkpos.up());
+                    if(world.isAirBlock(checkpos.up()) || checkstate.getBlock().isReplaceable(world,checkpos.up()) && !(checkstate.getBlock() instanceof BlockLiquid || checkstate.getBlock() instanceof BlockFluidBase))
                         world.setBlockState(checkpos.up(), ModBlocks.sakuraLeafPile.getDefaultState(), 3);
                     break;
                 }

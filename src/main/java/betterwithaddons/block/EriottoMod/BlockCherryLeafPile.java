@@ -2,6 +2,7 @@ package betterwithaddons.block.EriottoMod;
 
 import betterwithaddons.block.BlockBase;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +14,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -24,7 +26,7 @@ public class BlockCherryLeafPile extends BlockBase {
 
     public BlockCherryLeafPile()
     {
-        super("leafpile_sakura", Material.LEAVES);
+        super("leafpile_sakura", Material.PLANTS);
         this.setSoundType(SoundType.PLANT);
     }
 
@@ -92,7 +94,10 @@ public class BlockCherryLeafPile extends BlockBase {
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return world.isSideSolid(pos.down(),EnumFacing.UP);
+        IBlockState state = world.getBlockState(pos.down());
+        Material material = state.getMaterial();
+
+        return /*state.getBlock() instanceof BlockLiquid || state.getBlock() instanceof BlockFluidBase &&*/ world.isSideSolid(pos.down(),EnumFacing.UP);
     }
 
     @Override
