@@ -9,6 +9,7 @@ import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockSponge;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -166,10 +167,12 @@ public class InteractionEriottoMod extends Interaction {
         if(ModInteractions.bwm.isActive())
             CraftingManagerSoakingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("bark_mulberry"),ModItems.materialJapan.getMaterial("soaked_mulberry"));
         CraftingManagerSoakingBox.instance().addWorkingRecipe(new ItemStack(ModBlocks.mulberryLog),ModItems.materialJapan.getMaterial("soaked_mulberry"));
+        CraftingManagerSoakingBox.instance().addWorkingRecipe(new ItemStack(Blocks.SPONGE,1,0),new ItemStack(Blocks.SPONGE,1,1));
 
         CraftingManagerDryingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("rice_stalk"),ModItems.materialJapan.getMaterial("rice_hay"));
         CraftingManagerDryingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("soaked_mulberry"),ModItems.materialJapan.getMaterial("mulberry_paste"));
         CraftingManagerDryingBox.instance().addWorkingRecipe(ModItems.materialJapan.getMaterial("soaked_bamboo"),ModItems.materialJapan.getMaterial("bamboo_slats"));
+        CraftingManagerDryingBox.instance().addWorkingRecipe(new ItemStack(Blocks.SPONGE,1,1),new ItemStack(Blocks.SPONGE,1,0));
 
         CraftingManagerTatara.instance().addSmeltingRecipe(new ItemStack(ModBlocks.ironSand),new ItemStack(ModBlocks.kera));
         CraftingManagerTatara.instance().addSmeltingRecipe(ModItems.materialJapan.getMaterial("tamahagane"),ModItems.materialJapan.getMaterial("tamahagane_heated"));

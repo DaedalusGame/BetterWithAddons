@@ -2,17 +2,22 @@ package betterwithaddons.tileentity;
 
 import betterwithaddons.entity.EntityArtifactFrame;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.lib.Reference;
 import betterwithaddons.util.InventoryUtil;
 import betterwithaddons.util.ItemUtil;
 import net.minecraft.entity.item.EntityItemFrame;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +25,8 @@ public class TileEntityLegendarium extends TileEntityBase {
     public final float MIN_DAMAGE = 0.1f;
     public final int DAMAGE_PAD = 24;
     public final int POSTER_RANGE = 16;
+    public final int MIN_QUEUE_SIZE = 7;
+    public final int TURN_IN_DELAY = 24000 * 7;
 
     private long lastClick = 0;
     private long lastTurnIn = 0;
@@ -43,12 +50,17 @@ public class TileEntityLegendarium extends TileEntityBase {
         lastTurnIn = compound.getLong("LastTurnIn");
     }
 
-    public ItemStack insertItem(ItemStack stack)
+    public ItemStack insertItem(EntityPlayer player, ItemStack stack)
     {
         if(stack.getItem() == ModItems.artifactFrame)
         {
-            if(cleanItemFrames() == 0)
+            if(cleanItemFrames() == 0) {
                 populateItemFrames();
+                player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.frames_populated"),true);
+            }
+            else
+                player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.frames_cleared"),true);
+
             return stack;
         }
 
@@ -56,15 +68,33 @@ public class TileEntityLegendarium extends TileEntityBase {
 
         if(analysis != null)
         {
-            //if(analysis.equals("not_broken"))
-            //    stack.setItemDamage(stack.getMaxDamage()-1);
+            player.sendStatusMessage(new TextComponentTranslation("tile.legendarium."+analysis),true);
+
+            return stack;
+        }
+
+        long timeUntilNextTurnIn = lastTurnIn + TURN_IN_DELAY - world.getTotalWorldTime();
+
+        if(timeUntilNextTurnIn > 0)
+        {
+            long days = timeUntilNextTurnIn / 24000;
+            long hours = (timeUntilNextTurnIn % 24000) / 1000;
+            player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.not_now",days,hours),true);
+
             return stack;
         }
 
         ItemStack retain = queue.insertItem(0, ModItems.brokenArtifact.makeFrom(stack),false);
         if(retain.isEmpty())
         {
+            lastTurnIn = world.getTotalWorldTime();
             populateItemFrames();
+        }
+
+
+        if(queue.getSlots() >= MIN_QUEUE_SIZE)
+        {
+            player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.ready"),true);
         }
         return retain;
     }
@@ -78,13 +108,21 @@ public class TileEntityLegendarium extends TileEntityBase {
         int actualDamage = (stack.getMaxDamage() - stack.getItemDamage());
         float maxDamage = stack.getMaxDamage() * MIN_DAMAGE + DAMAGE_PAD;
         if(actualDamage > maxDamage) return "not_broken";
+        if(stack.getRepairCost() <= 30) return "not_at_limit";
         return null;
     }
 
-    public ItemStack retrieveItem()
+    public ItemStack retrieveItem(EntityPlayer player)
     {
         long time = world.getTotalWorldTime();
-        if(time - lastClick > 3)
+
+        if(queue.getSlots() < MIN_QUEUE_SIZE)
+        {
+            player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.not_enough_artifacts"),true);
+            return ItemStack.EMPTY;
+        }
+
+        if(time - lastClick > 3 && queue.getSlots() >= MIN_QUEUE_SIZE)
         {
             lastClick = time;
             ItemStack retrieved = queue.extractItem(0,1,false);

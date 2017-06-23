@@ -13,10 +13,9 @@ import betterwithmods.common.blocks.BlockAnchor;
 import betterwithmods.common.blocks.BlockLight;
 import betterwithmods.common.blocks.tile.TileEntityPulley;
 import betterwithmods.module.GlobalConfig;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBanner;
-import net.minecraft.block.BlockQuartz;
-import net.minecraft.block.BlockRedstoneWire;
+import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockPistonStructureHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,12 +55,6 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import java.util.*;
 
 public class AssortedHandler {
-    static Random rng = new Random();
-
-    private HashMap<UUID, BossInfoServer> BossList = new HashMap<>();
-    private final int BossCleanupThreshold = 10;
-    private final float HardnessThreshold = 5.0f;
-
     public static final int ScaleQuarryAmt = 5;
     public static final int ScaleQuarryMinDist = 200;
     public static final int ScaleQuarryMaxDist = 3000;
@@ -70,6 +63,14 @@ public class AssortedHandler {
     public static final int ScaleQuarryMinDepth = 0;
     public static final int ScaleQuarryMaxDepth = 32;
     public static BlockPos[] ScaleQuarries = new BlockPos[ScaleQuarryAmt];
+    static Random rng = new Random();
+    private final int BossCleanupThreshold = 10;
+    private final float HardnessThreshold = 5.0f;
+    private HashMap<UUID, BossInfoServer> BossList = new HashMap<>();
+
+    public static boolean doScaleQuarriesExist() {
+        return ScaleQuarryAmt > 0 && ScaleQuarries[0] != null;
+    }
 
     @SubscribeEvent
     public void onEntityDrop(LivingDropsEvent event) {
@@ -84,7 +85,6 @@ public class AssortedHandler {
         }
     }
 
-
     @SubscribeEvent
     public void blockNeighborUpdate(BlockEvent.NeighborNotifyEvent notifyEvent) {
         World world = notifyEvent.getWorld();
@@ -98,6 +98,44 @@ public class AssortedHandler {
         if (!world.isRemote && block instanceof BlockRedstoneWire && bottomblock instanceof BlockPCB) {
             world.setBlockState(pos, ModBlocks.pcbwire.getDefaultState());
         }
+    }
+
+    //@SubscribeEvent
+    public void hardcorePacking(BlockEvent.NeighborNotifyEvent notifyEvent) {
+        World world = notifyEvent.getWorld();
+        BlockPos pos = notifyEvent.getPos();
+        IBlockState state = notifyEvent.getState();
+        if(state.getBlock() instanceof BlockPistonBase)
+        {
+            boolean extended = state.getValue(BlockPistonBase.EXTENDED);
+            EnumFacing facing = state.getValue(BlockPistonBase.FACING);
+            if(world.isBlockPowered(pos) && !extended)
+            {
+                BlockPos shovePos = pos.offset(facing);
+                IBlockState shoveState = world.getBlockState(shovePos);
+
+                if(!isEmpty(world,shovePos,shoveState))
+                {
+                    shovePos = shovePos.offset(facing);
+                    shoveState = world.getBlockState(shovePos);
+                }
+
+                if(isEmpty(world, shovePos, shoveState))
+                {
+                    BlockPos compressPos = shovePos.offset(facing);
+                    IBlockState compressState = world.getBlockState(compressPos);
+                    if(isEmpty(world, compressPos, compressState))
+                    {
+                        world.setBlockState(compressPos,Blocks.CLAY.getDefaultState());
+                    }
+                }
+            }
+
+        }
+    }
+
+    public boolean isEmpty(World world, BlockPos shovePos, IBlockState shoveState) {
+        return shoveState.getBlock().isAir(shoveState,world,shovePos) || shoveState.getBlock().isReplaceable(world,shovePos);
     }
 
     /*@SubscribeEvent
@@ -165,10 +203,6 @@ public class AssortedHandler {
         }
     }
 
-    public static boolean doScaleQuarriesExist() {
-        return ScaleQuarryAmt > 0 && ScaleQuarries[0] != null;
-    }
-
     private void generateScaleQuarries(long seed) {
         Random rand = new Random(seed);
 
@@ -221,7 +255,7 @@ public class AssortedHandler {
         BlockPos breakpos = breakEvent.getPos();
         IBlockState blockstate = world.getBlockState(breakpos);
         /*if(entity instanceof EntityPlayer) {
-			ItemStack stack = breakEvent.getEntityPlayer().getHeldItemMainhand();
+            ItemStack stack = breakEvent.getEntityPlayer().getHeldItemMainhand();
 			if (toolShouldntBreak(stack) && breakEvent.getState().getBlockHardness(world,breakEvent.getPos()) > 0.0f) {
 				breakEvent.setNewSpeed(0f);
 				return;

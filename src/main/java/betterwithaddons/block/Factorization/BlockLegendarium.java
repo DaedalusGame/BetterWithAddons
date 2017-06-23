@@ -36,7 +36,7 @@ public class BlockLegendarium extends BlockContainerBase {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
 
             if (tileEntity instanceof TileEntityLegendarium) {
-                ItemStack retain = ((TileEntityLegendarium) tileEntity).insertItem(heldItem);
+                ItemStack retain = ((TileEntityLegendarium) tileEntity).insertItem(playerIn,heldItem);
                 playerIn.setItemStackToSlot(hand == EnumHand.MAIN_HAND ? EntityEquipmentSlot.MAINHAND : EntityEquipmentSlot.OFFHAND, retain);
                 if (retain.isEmpty()) {
                     worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
@@ -59,7 +59,7 @@ public class BlockLegendarium extends BlockContainerBase {
 
         if (tileEntity instanceof TileEntityLegendarium)
         {
-            ItemStack retrieved = ((TileEntityLegendarium) tileEntity).retrieveItem();
+            ItemStack retrieved = ((TileEntityLegendarium) tileEntity).retrieveItem(playerIn);
             if (!retrieved.isEmpty())
                 if (playerIn.inventory.addItemStackToInventory(retrieved))
                 {

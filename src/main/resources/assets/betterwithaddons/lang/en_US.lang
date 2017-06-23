@@ -55,6 +55,16 @@ tile.fusuma.name=Fusuma
 tile.tatami.name=Tatami Mat
 
 tile.legendarium.name=Hall of Legends
+tile.legendarium.frames_populated=Frames populated.
+tile.legendarium.frames_cleared=Frames cleared.
+tile.legendarium.not_item=An artifact can be retired here.
+tile.legendarium.not_tool=This is not a tool.
+tile.legendarium.not_artifact=This is not an artifact. Artifacts have names and enchantments.
+tile.legendarium.not_broken=This is not broken.
+tile.legendarium.not_at_limit=This can still be repaired.
+tile.legendarium.not_enough_artifacts=There's not enough artifacts.
+tile.legendarium.not_now=Not ready yet. Try in %s days and %s hours.
+tile.legendarium.ready=Artifact is ready for retrieval!
 
 tile.wet_soap.name=Block of Wet Soap
 
