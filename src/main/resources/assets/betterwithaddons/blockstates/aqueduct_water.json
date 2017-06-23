@@ -1,0 +1,12 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "level": "0"
+      },
+      "apply": {
+        "model": "builtin/generated"
+      }
+    }
+  ]
+}

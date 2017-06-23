@@ -18,6 +18,8 @@ tile.lattice.name=Iron Lattice
 tile.thorns.name=Thorny Vine
 tile.thorn_rose.name=Thorny Vine Seed
 tile.chute.name=Chute
+tile.aqueduct.name=Aqueduct
+
 tile.ecksie_sapling.name=Ecksie Sapling
 
 tile.log_luretree.name=Alicio Wood
@@ -51,6 +53,8 @@ tile.crop_rush.name=Common Rush Seeds
 tile.shoji.name=Shoji
 tile.fusuma.name=Fusuma
 tile.tatami.name=Tatami Mat
+
+tile.legendarium.name=Hall of Legends
 
 tile.wet_soap.name=Block of Wet Soap
 
@@ -95,6 +99,7 @@ item.greatbow.name=Greatbow
 item.greatarrow.name=Greatarrow
 item.monument.name=Monument
 item.warwall.name=Warwall
+item.artifact_frame.name=Artifact Display
 
 item.brick_stained.white.name=White Stained Brick
 item.brick_stained.orange.name=Orange Stained Brick
@@ -152,6 +157,7 @@ item.bag.sawdust.name=Bag of Sawdust
 item.bag.sawdust_soul.name=Bag of Soul Dust
 item.bag.potash.name=Bag of Potash
 item.bag.hellfire.name=Bag of Hellfire
+item.bag.kibble.name=Bag of Kibble
 item.crate.pork.name=Crated Cooked Porkchops
 item.crate.pork_raw.name=Crated Raw Porkchops
 item.crate.steak.name=Crated Steak

@@ -71,6 +71,12 @@ public class InteractionEriottoMod extends Interaction {
         CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.materialJapan.getMaterial("iron_scales",27)},new ItemStack(ModBlocks.ironSand,1),0);
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY,ModItems.materialJapan.getMaterial("washi",9)},ModItems.materialJapan.getMaterial("mulberry_sheet"),0);
 
+        OreDictionary.registerOre("cropRice",ModItems.materialJapan.getMaterial("rice"));
+        OreDictionary.registerOre("seedRice",new ItemStack(ModBlocks.rice));
+        OreDictionary.registerOre("cropRush",ModItems.materialJapan.getMaterial("rush"));
+        OreDictionary.registerOre("seedRush",new ItemStack(ModBlocks.rush));
+        OreDictionary.registerOre("materialBamboo",new ItemStack(ModBlocks.bamboo));
+
         OreDictionary.registerOre("logWood",ModBlocks.sakuraLog);
         OreDictionary.registerOre("logWood",ModBlocks.mulberryLog);
         OreDictionary.registerOre("plankWood",ModBlocks.sakuraPlanks);

@@ -1,12 +1,16 @@
 package betterwithaddons.block;
 
 import betterwithaddons.block.BetterRedstone.BlockWirePCB;
+import betterwithaddons.item.ModItems;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
@@ -49,5 +53,14 @@ public class ColorHandlers {
         IBlockState state = ((ItemBlock)stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
         IBlockColor blockColor = ((IColorable)state.getBlock()).getBlockColor();
         return blockColor == null ? 0xFFFFFF : blockColor.colorMultiplier(state, null, null, tintIndex);
+    };
+
+    public static final IItemColor MIMIC_COLORING = (stack,tintindex) -> {
+        if(stack.hasCapability(ModItems.brokenArtifact.DATA_CAP,null)) {
+            ItemStack innerstack = stack.getCapability(ModItems.brokenArtifact.DATA_CAP,null).inner;
+            if (!innerstack.isEmpty())
+                return Minecraft.getMinecraft().getItemColors().getColorFromItemstack(innerstack, tintindex);
+        }
+        return 0xFFFFFF;
     };
 }

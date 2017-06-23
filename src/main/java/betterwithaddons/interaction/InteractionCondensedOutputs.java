@@ -3,6 +3,7 @@ package betterwithaddons.interaction;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.IDisableable;
 import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.BWMItems;
 import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
@@ -90,6 +91,7 @@ public class InteractionCondensedOutputs extends Interaction {
         addBaggingRecipe(ModItems.materialBag.getMaterial("sawdust_soul"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOUL_DUST));
         addBaggingRecipe(ModItems.materialBag.getMaterial("potash"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
         addBaggingRecipe(ModItems.materialBag.getMaterial("hellfire"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HELLFIRE_DUST));
+        addBaggingRecipe(ModItems.materialBag.getMaterial("kibble"), new ItemStack(BWMItems.KIBBLE));
 
         addCratingRecipe(ModItems.materialCrate.getMaterial("pork"),new ItemStack(Items.COOKED_PORKCHOP));
         addCratingRecipe(ModItems.materialCrate.getMaterial("pork_raw"),new ItemStack(Items.PORKCHOP));

@@ -2,7 +2,7 @@ package betterwithaddons.util;
 
 import betterwithaddons.crafting.OreStack;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
@@ -50,6 +50,11 @@ public class ItemUtil
 		}
 
 		return false;
+	}
+
+	public static boolean isTool(Item item)
+	{
+		return item instanceof ItemTool || item instanceof ItemArmor || item instanceof ItemSword || item instanceof ItemShears || item instanceof ItemBow || item instanceof ItemHoe;
 	}
 
 	public static boolean consumeItem(List<EntityItem> inv, Object stack)

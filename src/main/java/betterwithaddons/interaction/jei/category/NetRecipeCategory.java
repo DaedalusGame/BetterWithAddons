@@ -1,6 +1,7 @@
 package betterwithaddons.interaction.jei.category;
 
 import betterwithaddons.interaction.jei.wrapper.NetRecipeWrapper;
+import betterwithaddons.lib.Reference;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
@@ -48,5 +49,10 @@ public abstract class NetRecipeCategory extends BlankRecipeCategory<NetRecipeWra
         guiItemStacks.set(1, recipeWrapper.getSandInput());
         guiItemStacks.set(2, recipeWrapper.getUpperOutputs());
         guiItemStacks.set(3, recipeWrapper.getLowerOutputs());
+    }
+
+    @Override
+    public String getModName() {
+        return Reference.MOD_NAME;
     }
 }

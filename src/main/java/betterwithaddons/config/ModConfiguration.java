@@ -23,6 +23,8 @@ public class ModConfiguration {
     ConfigOptionBool BWA_ObviousSandStorms = new ConfigOptionBool("addons.BetterWithAddons", "ObviousSandStorms", InteractionBWA.OBVIOUS_SAND_STORMS, "Storms in sandy biomes are even more obvious.");
     ConfigOptionInteger BWA_ObviousDustParticles = new ConfigOptionInteger("addons.BetterWithAddons", "ObviousDustParticles", InteractionBWA.DUST_PARTICLES, "How many dust particles are kicked up every tick.");
     ConfigOptionInteger BWA_ObviousAirParticles = new ConfigOptionInteger("addons.BetterWithAddons", "ObviousAirParticles", InteractionBWA.AIR_PARTICLES, "How many wind particles are generated every tick.");
+    ConfigOptionBool BWA_GatedAqueducts = new ConfigOptionBool("addons.BetterWithAddons", "GatedAqueducts", InteractionBWA.GATED_AQUEDUCTS, "Aqueducts require white stone to craft. This means you need to go to the end to transport water over long distances without power usage.");
+    ConfigOptionInteger BWA_MaxAqueductLength = new ConfigOptionInteger("addons.BetterWithAddons", "MaxAqueductLength", InteractionBWA.AQUEDUCT_MAX_LENGTH, "How long aqueducts can be.");
 
     ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED);
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
@@ -71,6 +73,8 @@ public class ModConfiguration {
         InteractionBWA.OBVIOUS_SAND_STORMS = BWA_ObviousSandStorms.init(configuration);
         InteractionBWA.DUST_PARTICLES = BWA_ObviousDustParticles.init(configuration);
         InteractionBWA.AIR_PARTICLES = BWA_ObviousAirParticles.init(configuration);
+        InteractionBWA.GATED_AQUEDUCTS = BWA_GatedAqueducts.init(configuration);
+        InteractionBWA.AQUEDUCT_MAX_LENGTH = BWA_MaxAqueductLength.init(configuration);
         InteractionEriottoMod.ENABLED = EriottoMod_Enabled.init(configuration);
         InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);
         InteractionDecoAddon.ENABLED = DecoAddon_Enabled.init(configuration);

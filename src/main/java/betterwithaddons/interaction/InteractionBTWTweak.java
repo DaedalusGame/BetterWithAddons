@@ -2,8 +2,10 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.crafting.DisplaySawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
+import betterwithaddons.handler.SoapHandler;
 import betterwithaddons.handler.StumpingHandler;
 import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockMechMachines;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
@@ -23,6 +25,7 @@ public class InteractionBTWTweak extends Interaction {
     public static boolean SAW_RECYCLING = true;
     //public static boolean KILN_DOUBLING = true;
     public static boolean EGG_INCUBATION = true;
+    public static boolean SLIPPERY_WHEN_WET = true;
 
     @Override
     public boolean isActive() {
@@ -47,6 +50,8 @@ public class InteractionBTWTweak extends Interaction {
 
     @Override
     public void preInit() {
+        if(SLIPPERY_WHEN_WET)
+            MinecraftForge.EVENT_BUS.register(new SoapHandler(BWMBlocks.AESTHETIC.getDefaultState().withProperty(BlockAesthetic.blockType, BlockAesthetic.EnumType.SOAP)));
         if(EGG_INCUBATION)
             MinecraftForge.EVENT_BUS.register(new EggIncubationHandler());
         if(HARD_STUMPS || SOFT_WOODS)

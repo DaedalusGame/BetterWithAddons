@@ -1,0 +1,17 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "betterwithaddons:aqueduct",
+		"transform": "forge:default-block"
+	},
+    "variants": {
+		"normal": [{}],
+		"inventory": [{}],
+		"variant": {
+			"stone_bricks": { "textures": { "bottom": "blocks/stonebrick" }},
+			"bricks": { "textures": { "bottom": "blocks/brick" }},
+			"quartz": { "textures": { "bottom": "blocks/quartz_block_side" }},
+			"whitestone_bricks": { "textures": { "bottom": "betterwithaddons:blocks/whitestone_brick" }}
+		}
+    }
+}

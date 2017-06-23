@@ -1,0 +1,16 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"model": "cube_bottom_top",
+    "textures": {
+        "bottom": "betterwithaddons:blocks/legendarium_top",
+        "top": "betterwithaddons:blocks/legendarium_top",
+        "side": "betterwithaddons:blocks/legendarium_side"
+    },
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}]
+  }
+}

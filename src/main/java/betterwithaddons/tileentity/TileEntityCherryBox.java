@@ -67,7 +67,7 @@ public class TileEntityCherryBox extends TileEntityBase implements ITickable {
     }
 
     public int getWorkTime(@Nullable ItemStack stack) {
-        return 1000;
+        return 500;
     }
 
     private boolean canWork() {

@@ -60,13 +60,13 @@ public class BlockLantern extends BlockBase {
 
         ItemStack heldItem = playerIn.getHeldItem(hand);
 
-        if(!isLit && heldItem != null && heldItem.getItem() == Items.FLINT_AND_STEEL)
+        if(!isLit && !heldItem.isEmpty() && heldItem.getItem() == Items.FLINT_AND_STEEL)
         {
             worldIn.setBlockState(pos,state.withProperty(LIT,true));
             heldItem.damageItem(1,playerIn);
             return true;
         }
-        else if(isLit && heldItem == null)
+        else if(isLit && heldItem.isEmpty())
         {
             worldIn.setBlockState(pos,state.withProperty(LIT,false));
             return true;

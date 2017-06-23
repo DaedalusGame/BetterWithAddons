@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class ItemModels
         for (Item item: ModItems.LIST) {
             registerItem(item);
         }
+
+        ModelLoaderRegistry.registerLoader(ModelToolShard.LoaderToolShard.INSTANCE);
     }
 
     private static void registerBlock(Block block)

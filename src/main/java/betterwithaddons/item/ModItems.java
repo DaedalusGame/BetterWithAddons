@@ -21,7 +21,6 @@ public class ModItems
     public static ArrayList<Item> LIST = new ArrayList<Item>();
 
     public static Item.ToolMaterial bambooToolMaterial = EnumHelper.addToolMaterial("bamboo", 0, 51, 0.5f, -4.0f, 1);
-
     {
         bambooToolMaterial.setRepairItem(materialJapan.getMaterial("bamboo_slats"));
     }
@@ -39,6 +38,7 @@ public class ModItems
     public static ItemGreatbow greatbow;
     public static ItemGreatarrow greatarrow;
     public static ItemMonument monument;
+    public static ItemArtifactFrame artifactFrame;
     public static ItemModFood bakedMushroom;
     public static ItemModFood bakedAmanita;
     public static ItemModFood cookedBeetroot;
@@ -83,6 +83,8 @@ public class ModItems
     public static ItemSamuraiArmor samuraiChestplate;
     public static ItemSamuraiArmor samuraiLeggings;
     public static ItemSamuraiArmor samuraiBoots;
+
+    public static ItemToolShard brokenArtifact;
 
     public static void load(FMLPreInitializationEvent event)
     {
@@ -130,6 +132,8 @@ public class ModItems
         rice = (ItemModFood)registerItem("food_cooked_rice",new ItemModFood(2, 0.3F, false));
         riceBowl = (ItemModFood)registerItem("food_bowl_rice",new ItemModFood(9, 0.6F, false).setMaxStackSize(1));
 
+        artifactFrame = (ItemArtifactFrame)registerItem("artifact_frame",new ItemArtifactFrame());
+
         stainedBrick = (ItemStainedBrick)registerItem("brick_stained",new ItemStainedBrick());
 
         shinai = (ItemShinai) registerItem("shinai",new ItemShinai());
@@ -138,6 +142,8 @@ public class ModItems
         tanto = (ItemTanto) registerItem("tanto",new ItemTanto());
         yumi = (ItemYumi) registerItem("yumi",new ItemYumi());
         ya = (ItemYa) registerItem("ya",new ItemYa());
+
+        brokenArtifact = (ItemToolShard)registerItem("tool_shard",new ItemToolShard().setMaxStackSize(1));
 
         materialJapan = (ItemMaterial)registerItem("japanmat",new ItemMaterial(
                 new String[]{"rice","soaked_rice","rice_stalk","rice_hay","rice_ash","rush",
@@ -154,7 +160,7 @@ public class ModItems
         samuraiBoots = (ItemSamuraiArmor)registerItem("boots_samurai",new ItemSamuraiArmor(EntityEquipmentSlot.FEET));
 
         materialBag = (ItemMaterial)registerItem("bag",new ItemMaterial(
-                new String[]{"seed","seed_hemp","seed_melon","seed_pumpkin","seed_beets","cocoa","redstone","glowstone","sugar","gunpowder","flour","sulfur","nitre","sawdust","sawdust_soul","potash","hellfire"}
+                new String[]{"seed","seed_hemp","seed_melon","seed_pumpkin","seed_beets","cocoa","redstone","glowstone","sugar","gunpowder","flour","sulfur","nitre","sawdust","sawdust_soul","potash","hellfire","kibble"}
         ));
         materialCrate = (ItemMaterial)registerItem("crate",new ItemMaterial(
                 new String[]{"pork","pork_raw","chicken","chicken_raw","steak","steak_raw","mutton","mutton_raw","rabbit","rabbit_raw","egg","slime","enderpearl"}

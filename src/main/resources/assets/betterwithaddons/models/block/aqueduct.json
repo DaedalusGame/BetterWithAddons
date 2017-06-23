@@ -1,0 +1,31 @@
+{
+	"textures": {
+		"top": "blocks/clay",
+		"bottom": "blocks/stonebrick",
+		"particle": "#bottom"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 8, 16],
+			"faces": {
+				"north": {"texture": "#bottom"},
+				"east": {"texture": "#bottom"},
+				"south": {"texture": "#bottom"},
+				"west": {"texture": "#bottom"},
+				"down": {"texture": "#bottom"}
+			}
+		},
+		{
+			"from": [0, 8, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"texture": "#top"},
+				"east": {"texture": "#top"},
+				"south": {"texture": "#top"},
+				"west": {"texture": "#top"},
+				"up": {"texture": "#top"}
+			}
+		}
+	]
+}

@@ -3,6 +3,7 @@ package betterwithaddons.block;
 import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BetterRedstone.BlockWirePCB;
 import betterwithaddons.block.EriottoMod.*;
+import betterwithaddons.block.Factorization.BlockLegendarium;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -67,6 +68,9 @@ public class ModBlocks {
     public static BlockWhiteBrick whiteBrick;
     public static BlockChute chute;
     public static BlockEcksieSapling ecksieSapling;
+    public static BlockAqueductWater aqueductWater;
+    public static BlockAqueduct aqueduct;
+    public static BlockLegendarium legendarium;
 
     public static void load(FMLPreInitializationEvent event) {
         bannerDetector = (BlockBannerDetector) addBlock(new BlockBannerDetector());
@@ -81,6 +85,10 @@ public class ModBlocks {
         thornrose = (BlockThornRose) addBlock(new BlockThornRose());
         thorns = (BlockThorns) addBlock(new BlockThorns());
         chute = (BlockChute) addBlock(new BlockChute());
+        aqueduct = (BlockAqueduct) addBlock(new BlockAqueduct());
+        aqueductWater = (BlockAqueductWater) addBlock(new BlockAqueductWater());
+
+        legendarium = (BlockLegendarium)addBlock(new BlockLegendarium());
 
         IBlockState[] leaves1 = new IBlockState[]{
                 Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.DECAYABLE,false),

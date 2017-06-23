@@ -70,4 +70,9 @@ public class TataraRecipeCategory extends BlankRecipeCategory<TataraRecipeWrappe
         guiItemStacks.set(1, ModItems.materialJapan.getMaterial("rice_ash"));
         guiItemStacks.set(2, recipeWrapper.getOutputs());
     }
+
+    @Override
+    public String getModName() {
+        return Reference.MOD_NAME;
+    }
 }

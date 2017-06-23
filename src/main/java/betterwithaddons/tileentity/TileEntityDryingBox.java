@@ -22,7 +22,7 @@ public class TileEntityDryingBox extends TileEntityCherryBox {
     {
         if(world == null) return false;
         Biome biome = world.getBiome(pos);
-        if(biome != null && biome.getTempCategory() == Biome.TempCategory.COLD)
+        if(biome != null && biome.isSnowyBiome())
             return false;
         return true;
     }

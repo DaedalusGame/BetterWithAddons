@@ -15,6 +15,7 @@ import betterwithmods.common.blocks.tile.TileEntityPulley;
 import betterwithmods.module.GlobalConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBanner;
+import net.minecraft.block.BlockQuartz;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -29,7 +30,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -99,7 +100,27 @@ public class AssortedHandler {
         }
     }
 
+    /*@SubscribeEvent
+    public void onArtifactInteract(PlayerInteractEvent event) {
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        IBlockState blockstate = world.getBlockState(pos);
+        EntityPlayer player = event.getEntityPlayer();
 
+        if (blockstate.getBlock() instanceof BlockQuartz) {
+            ItemStack stack = player.getHeldItemMainhand();
+            Item item = stack.getItem();
+
+            if (!stack.isEmpty() && (item instanceof ItemTool || item instanceof ItemSword || item instanceof ItemArmor || item instanceof ItemBow)) {
+                player.swingArm(EnumHand.MAIN_HAND);
+                player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ModItems.brokenArtifact.makeFrom(stack));
+
+                if (!event.getWorld().isRemote) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }*/
 
     @SubscribeEvent
     public void beginTrack(PlayerEvent.StartTracking trackEvent) {

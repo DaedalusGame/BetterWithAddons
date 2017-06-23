@@ -56,6 +56,11 @@ public class BlockCherryBox extends BlockContainerBase implements IHasVariants {
     }
 
     @Override
+    public int damageDropped(IBlockState state) {
+        return ((CherryBoxType)state.getValue(VARIANT)).ordinal();
+    }
+
+    @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }

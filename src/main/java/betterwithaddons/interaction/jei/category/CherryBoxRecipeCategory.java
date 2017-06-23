@@ -1,6 +1,7 @@
 package betterwithaddons.interaction.jei.category;
 
 import betterwithaddons.interaction.jei.wrapper.CherryBoxRecipeWrapper;
+import betterwithaddons.lib.Reference;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.*;
 import mezz.jei.api.ingredients.IIngredients;
@@ -50,5 +51,10 @@ public abstract class CherryBoxRecipeCategory extends BlankRecipeCategory<Cherry
 
         guiItemStacks.set(0, recipeWrapper.getInputs());
         guiItemStacks.set(1, recipeWrapper.getOutputs());
+    }
+
+    @Override
+    public String getModName() {
+        return Reference.MOD_NAME;
     }
 }

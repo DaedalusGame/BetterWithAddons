@@ -6,6 +6,7 @@ import betterwithaddons.util.IDisableable;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -27,6 +28,8 @@ import java.util.Random;
 
 public class BlockBamboo extends BlockReed implements IHasVariants, IDisableable {
     private boolean disabled;
+    private final int MAX_AGE = 5;
+    private final int MIN_SPREAD_AGE = 4;
 
     public BlockBamboo()
     {
@@ -34,11 +37,14 @@ public class BlockBamboo extends BlockReed implements IHasVariants, IDisableable
 
         this.setUnlocalizedName("bamboo");
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "bamboo"));
+        this.setSoundType(SoundType.PLANT);
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
     }
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
+        int j = state.getValue(AGE);
+
         if (worldIn.getBlockState(pos.down()).getBlock() == this || this.checkForDrop(worldIn, pos, state))
         {
             if (worldIn.isAirBlock(pos.up()))
@@ -49,9 +55,7 @@ public class BlockBamboo extends BlockReed implements IHasVariants, IDisableable
 
                 if (i < 5)
                 {
-                    int j = ((Integer)state.getValue(AGE)).intValue();
-
-                    if (j == 15)
+                    if (j == MAX_AGE)
                     {
                         worldIn.setBlockState(pos.up(), this.getDefaultState());
                         worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(0)), 4);
@@ -64,7 +68,7 @@ public class BlockBamboo extends BlockReed implements IHasVariants, IDisableable
             }
         }
 
-        if(isProperSoil(worldIn,pos.down()))
+        if(j >= MIN_SPREAD_AGE && isProperSoil(worldIn,pos.down()))
         {
             spread(worldIn,pos,rand);
         }
