@@ -106,7 +106,7 @@ public class ModItems
         monument = (ItemMonument)registerItem("monument",new ItemMonument());
         //Food
         bakedMushroom = (ItemModFood)registerItem("food_mushroom_baked",new ItemModFood(3, 0.2F, false));
-        bakedAmanita = (ItemModFood)registerItem("food_amanita_baked",new ItemModFood(3, 0.2F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1), 1.0F));
+        bakedAmanita = (ItemModFood)registerItem("food_amanita_baked",new ItemModFood(3, 0.2F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
         cookedBeetroot = (ItemModFood)registerItem("food_beetroot_cooked",new ItemModFood(4, 0.5F, false));
         bakedBeetroot = (ItemModFood)registerItem("food_beetroot_baked",new ItemModFood(5, 0.4F, false));
         cookedCarrot = (ItemModFood)registerItem("food_carrot_cooked",new ItemModFood(3, 0.6F, false));
@@ -118,7 +118,7 @@ public class ModItems
         groundMeat = (ItemModFood)registerItem("food_ground_meat",new ItemModFood(2, 0.1F, true));
 
         pieMushroom = (ItemModFood)registerItem("food_pie_mushroom",new ItemModFood(8, 0.3F, false));
-        pieAmanita = (ItemModFood)registerItem("food_pie_amanita",new ItemModFood(8, 0.3F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1), 1.0F));
+        pieAmanita = (ItemModFood)registerItem("food_pie_amanita",new ItemModFood(8, 0.3F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
         pieMeat = (ItemModFood)registerItem("food_pie_meat",new ItemModFood(9, 0.5F, true));
         pieMelon = (ItemModFood)registerItem("food_pie_melon",new ItemModFood(8, 0.4F, false));
 
