@@ -2,6 +2,8 @@ package betterwithaddons.client;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.client.models.ModelToolShardInner;
+import betterwithaddons.interaction.InteractionBWA;
+import betterwithaddons.interaction.InteractionBWM;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.ItemUtil;
@@ -47,6 +49,9 @@ public class ToolShardModelHandler {
     @SideOnly(Side.CLIENT)
     public void onModelBake(ModelBakeEvent event)
     {
+        if(!InteractionBWA.ARMOR_SHARD_RENDER)
+            return;
+
         for (Item item : Item.REGISTRY) {
             if (!ItemUtil.isTool(item)) continue;
             for (String s : getVariantNames(event.getModelLoader(), item)) {
@@ -62,6 +67,7 @@ public class ToolShardModelHandler {
                         //e1.printStackTrace();
                     }
                 }
+                if(model == null) continue;
                 IModel brokenmodel = new ModelToolShardInner(ImmutableList.copyOf(model.getTextures()));
                 IBakedModel bakedbrokenmodel = brokenmodel.bake(brokenmodel.getDefaultState(), DefaultVertexFormats.ITEM, location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString()));
                 ToolShardOverrideHandler.INSTANCE.addModel(item,bakedbrokenmodel);

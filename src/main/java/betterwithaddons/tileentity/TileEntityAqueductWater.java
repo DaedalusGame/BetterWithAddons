@@ -39,7 +39,7 @@ public class TileEntityAqueductWater extends TileEntityBase {
             BlockPos neighborpos = checkpos.offset(facing);
             IBlockState state = world.getBlockState(neighborpos);
 
-            if(state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0)
+            if(isProperSource(state))
             {
                 minDistance = Math.min(minDistance,0);
             }
@@ -54,5 +54,9 @@ public class TileEntityAqueductWater extends TileEntityBase {
         }
 
         return minDistance;
+    }
+
+    public static boolean isProperSource(IBlockState state) {
+        return state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0;
     }
 }

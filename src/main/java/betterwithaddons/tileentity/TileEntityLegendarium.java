@@ -1,6 +1,7 @@
 package betterwithaddons.tileentity;
 
 import betterwithaddons.entity.EntityArtifactFrame;
+import betterwithaddons.interaction.InteractionBWA;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.InventoryUtil;
@@ -22,11 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityLegendarium extends TileEntityBase {
-    public final float MIN_DAMAGE = 0.1f;
-    public final int DAMAGE_PAD = 24;
-    public final int POSTER_RANGE = 16;
-    public final int MIN_QUEUE_SIZE = 7;
-    public final int TURN_IN_DELAY = 24000 * 7;
+
 
     private long lastClick = 0;
     private long lastTurnIn = 0;
@@ -73,7 +70,7 @@ public class TileEntityLegendarium extends TileEntityBase {
             return stack;
         }
 
-        long timeUntilNextTurnIn = lastTurnIn + TURN_IN_DELAY - world.getTotalWorldTime();
+        long timeUntilNextTurnIn = lastTurnIn + InteractionBWA.LEGENDARIUM_TURN_IN_DELAY - world.getTotalWorldTime();
 
         if(timeUntilNextTurnIn > 0)
         {
@@ -92,7 +89,7 @@ public class TileEntityLegendarium extends TileEntityBase {
         }
 
 
-        if(queue.getSlots() >= MIN_QUEUE_SIZE)
+        if(queue.getSlots() >= InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE)
         {
             player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.ready"),true);
         }
@@ -106,7 +103,7 @@ public class TileEntityLegendarium extends TileEntityBase {
         if(!stack.hasDisplayName()) return "not_artifact";
         if(!stack.isItemEnchanted()) return "not_artifact";
         int actualDamage = (stack.getMaxDamage() - stack.getItemDamage());
-        float maxDamage = stack.getMaxDamage() * MIN_DAMAGE + DAMAGE_PAD;
+        double maxDamage = stack.getMaxDamage() * InteractionBWA.LEGENDARIUM_MIN_DAMAGE + InteractionBWA.LEGENDARIUM_DAMAGE_PAD;
         if(actualDamage > maxDamage) return "not_broken";
         if(stack.getRepairCost() <= 30) return "not_at_limit";
         return null;
@@ -116,13 +113,13 @@ public class TileEntityLegendarium extends TileEntityBase {
     {
         long time = world.getTotalWorldTime();
 
-        if(queue.getSlots() < MIN_QUEUE_SIZE)
+        if(queue.getSlots() < InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE)
         {
             player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.not_enough_artifacts"),true);
             return ItemStack.EMPTY;
         }
 
-        if(time - lastClick > 3 && queue.getSlots() >= MIN_QUEUE_SIZE)
+        if(time - lastClick > 3 && queue.getSlots() >= InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE)
         {
             lastClick = time;
             ItemStack retrieved = queue.extractItem(0,1,false);
@@ -135,7 +132,8 @@ public class TileEntityLegendarium extends TileEntityBase {
 
     private void populateItemFrames()
     {
-        AxisAlignedBB posterArea = new AxisAlignedBB(pos.add(-POSTER_RANGE,-POSTER_RANGE,-POSTER_RANGE),pos.add(POSTER_RANGE,POSTER_RANGE,POSTER_RANGE));
+        int posterRange = InteractionBWA.LEGENDARIUM_POSTER_RANGE;
+        AxisAlignedBB posterArea = new AxisAlignedBB(pos.add(-posterRange,-posterRange,-posterRange),pos.add(posterRange,posterRange,posterRange));
         List<EntityArtifactFrame> frames = world.getEntitiesWithinAABB(EntityArtifactFrame.class,posterArea);
         cleanItemFrames();
 
@@ -169,7 +167,8 @@ public class TileEntityLegendarium extends TileEntityBase {
 
     private int cleanItemFrames()
     {
-        AxisAlignedBB posterArea = new AxisAlignedBB(pos.add(-POSTER_RANGE,-POSTER_RANGE,-POSTER_RANGE),pos.add(POSTER_RANGE,POSTER_RANGE,POSTER_RANGE));
+        int posterRange = InteractionBWA.LEGENDARIUM_POSTER_RANGE;
+        AxisAlignedBB posterArea = new AxisAlignedBB(pos.add(-posterRange,-posterRange,-posterRange),pos.add(posterRange,posterRange,posterRange));
         List<EntityArtifactFrame> frames = world.getEntitiesWithinAABB(EntityArtifactFrame.class,posterArea);
 
         int ret = 0;
