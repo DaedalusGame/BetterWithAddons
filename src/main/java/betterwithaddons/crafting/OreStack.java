@@ -43,8 +43,10 @@ public class OreStack
 
     public List<ItemStack> getOres()
     {
-        if(OreDictionary.getOres(oreName).size() > 0)
-            return OreDictionary.getOres(oreName);
+        List<ItemStack> ores = OreDictionary.getOres(oreName);
+
+        if(ores.size() > 0)
+            return ores;
         return null;
     }
 

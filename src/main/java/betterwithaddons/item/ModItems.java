@@ -2,13 +2,16 @@ package betterwithaddons.item;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -21,6 +24,7 @@ public class ModItems
     public static ArrayList<Item> LIST = new ArrayList<Item>();
 
     public static Item.ToolMaterial bambooToolMaterial = EnumHelper.addToolMaterial("bamboo", 0, 51, 0.5f, -4.0f, 1);
+
     {
         bambooToolMaterial.setRepairItem(materialJapan.getMaterial("bamboo_slats"));
     }
@@ -85,6 +89,8 @@ public class ModItems
     public static ItemSamuraiArmor samuraiBoots;
 
     public static ItemToolShard brokenArtifact;
+
+    public static Item explosion;
 
     public static void load(FMLPreInitializationEvent event)
     {
@@ -178,6 +184,13 @@ public class ModItems
         materialDeco = (ItemMaterial)registerItem("decomat",new ItemMaterial(
                 new String[]{"hemp_oil","wood_bleach","wood_stain","glass_chunk"}
         ));
+
+        explosion = registerItem("explosion",new Item() {
+            @Override
+            public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+                //NOOP
+            }
+        });
     }
 
     private static Item registerItem(String name,Item item)

@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "betterwithaddons:items/explosion"
+    },
+    "display": {
+        "gui": {
+            "scale": [ 2.0, 2.0, 2.0 ]
+        },
+		"fixed": {
+            "scale": [ 2.0, 2.0, 2.0 ]
+        }
+    }
+}

@@ -111,6 +111,8 @@ item.monument.name=Monument
 item.warwall.name=Warwall
 item.artifact_frame.name=Artifact Display
 
+item.explosion.name=§eHIGHLY VOLATILE!
+
 item.brick_stained.white.name=White Stained Brick
 item.brick_stained.orange.name=Orange Stained Brick
 item.brick_stained.magenta.name=Magenta Stained Brick

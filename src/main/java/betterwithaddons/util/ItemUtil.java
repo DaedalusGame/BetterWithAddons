@@ -9,6 +9,16 @@ import java.util.List;
 
 public class ItemUtil
 {
+	public static boolean matchesOreDict(ItemStack stack, String oreDictName)
+	{
+		int[] ids = OreDictionary.getOreIDs(stack);
+		int checkid = OreDictionary.getOreID(oreDictName);
+		for (int id:ids) {
+			if(id == checkid) return true;
+		}
+		return false;
+	}
+
 	public static boolean areItemStackContentEqual(ItemStack is1, ItemStack is2)
 	{
 		if (is1.isEmpty() || is2.isEmpty())
