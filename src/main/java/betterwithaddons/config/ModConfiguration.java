@@ -30,7 +30,7 @@ public class ModConfiguration {
     ConfigOptionInteger BWA_LegendariumDamagePad = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumDamagePad", InteractionBWA.LEGENDARIUM_DAMAGE_PAD, "How much durability more than the minimum the artifact can have to still be considered broken. (As a static value)");
     ConfigOptionInteger BWA_LegendariumPosterRange = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumPosterRange", InteractionBWA.LEGENDARIUM_POSTER_RANGE, "How far away Display Frames are recognized. (in blocks; as a cubic radius)");
     ConfigOptionInteger BWA_LegendariumMinQueueSize = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumMinQueueSize", InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE, "How many artifacts must be in the Hall of Legends to take one out.");
-    ConfigOptionLong BWA_LegendariumTurnInDelay = new ConfigOptionLong("addons.BetterWithAddons", "LegendariumTurnInDelay", InteractionBWA.LEGENDARIUM_TURN_IN_DELAY, "How long until the next artifact can be turned in. (in ticks; 1000 ticks is one Minecraft hour)");
+    ConfigOptionInteger BWA_LegendariumTurnInDelay = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumTurnInDelay", InteractionBWA.LEGENDARIUM_TURN_IN_DELAY, "How long until the next artifact can be turned in. (in ticks; 1000 ticks is one Minecraft hour)");
 
 
     ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED);

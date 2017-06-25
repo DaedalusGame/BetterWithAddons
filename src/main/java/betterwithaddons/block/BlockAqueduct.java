@@ -53,7 +53,7 @@ public class BlockAqueduct extends BlockBase implements IHasVariants {
         IBlockState waterState = worldIn.getBlockState(pos.up());
         Block block = waterState.getBlock();
 
-        if((block == Blocks.FLOWING_WATER || block == Blocks.WATER) && waterState.getValue(BlockLiquid.LEVEL) == 1) //Specifically almost full water... maybe needs to check falling water too...
+        if(waterState.getMaterial() == Material.WATER && waterState.getValue(BlockLiquid.LEVEL) != 0) //Specifically almost full water... maybe needs to check falling water too...
         {
             int dist = TileEntityAqueductWater.getMinDistance(worldIn,pos.up())+1;
             if(dist <= InteractionBWA.AQUEDUCT_MAX_LENGTH) {

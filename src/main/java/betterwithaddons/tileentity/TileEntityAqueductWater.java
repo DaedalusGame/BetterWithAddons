@@ -1,5 +1,6 @@
 package betterwithaddons.tileentity;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -9,8 +10,16 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.HashSet;
+
 public class TileEntityAqueductWater extends TileEntityBase {
     private int distanceFromSource;
+    private static final HashSet<Block> WATER_SOURCES = new HashSet<>();
+
+    public static void addWaterSource(Block block)
+    {
+        WATER_SOURCES.add(block);
+    }
 
     public int getDistanceFromSource() {
         return distanceFromSource;
@@ -57,6 +66,6 @@ public class TileEntityAqueductWater extends TileEntityBase {
     }
 
     public static boolean isProperSource(IBlockState state) {
-        return state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0;
+        return (state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0) || WATER_SOURCES.contains(state.getBlock());
     }
 }

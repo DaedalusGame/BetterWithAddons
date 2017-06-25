@@ -5,6 +5,7 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.handler.ButcherHandler;
 import betterwithaddons.handler.FallingPlatformHandler;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockBUD;
 import betterwithmods.common.blocks.BlockUrn;
@@ -69,6 +70,7 @@ public class InteractionBWM extends Interaction {
         if(!isActive())
             return;
 
+        TileEntityAqueductWater.addWaterSource(BWMBlocks.TEMP_LIQUID_SOURCE);
         BlockBUD.addBlacklistBlock(ModBlocks.pcbwire);
 
         ItemStack arrowhead = ModItems.material.getMaterial("arrowhead");

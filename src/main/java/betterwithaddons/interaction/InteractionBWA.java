@@ -33,7 +33,7 @@ public class InteractionBWA extends Interaction {
     public static int LEGENDARIUM_DAMAGE_PAD = 24;
     public static int LEGENDARIUM_POSTER_RANGE = 16;
     public static int LEGENDARIUM_MIN_QUEUE_SIZE = 7;
-    public static long LEGENDARIUM_TURN_IN_DELAY = 24000 * 7;
+    public static int LEGENDARIUM_TURN_IN_DELAY = 24000 * 5;
 
     public static int RADIUS = 6;
     public static int MAXCHARGE = 600;
