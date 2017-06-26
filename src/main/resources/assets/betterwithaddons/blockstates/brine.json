@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "forge:fluid"
+  },
+  "variants": {
+	"water": [{
+      "custom": { "fluid": "water" }
+	}],
+	"brine": [{
+      "custom": { "fluid": "brine" }
+	}],
+	"salinated_brine": [{
+      "custom": { "fluid": "salinated_brine" }
+	}]
+  }
+}

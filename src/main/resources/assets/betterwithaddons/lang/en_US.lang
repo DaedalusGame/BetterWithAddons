@@ -65,6 +65,12 @@ tile.legendarium.not_at_limit=This can still be repaired.
 tile.legendarium.not_enough_artifacts=There's not enough artifacts.
 tile.legendarium.not_now=Not ready yet. Try in %s days and %s hours.
 tile.legendarium.ready=Artifact is ready for retrieval!
+tile.pond_base.dry.name=Salination Pond
+tile.pond_base.wet.name=Sandy Clay
+tile.salt_layer.name=Layer of Salt
+
+fluid.brine=Brine
+fluid.salinated_brine=Saturated Brine
 
 tile.wet_soap.name=Block of Wet Soap
 
@@ -109,7 +115,9 @@ item.greatbow.name=Greatbow
 item.greatarrow.name=Greatarrow
 item.monument.name=Monument
 item.warwall.name=Warwall
+
 item.artifact_frame.name=Artifact Display
+tile.bowl.salt.name=Bowl of Salt
 
 item.explosion.name=§eHIGHLY VOLATILE!
 

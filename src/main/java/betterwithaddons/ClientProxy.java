@@ -3,6 +3,7 @@ package betterwithaddons;
 import betterwithaddons.block.BlockThorns;
 import betterwithaddons.block.IColorable;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.client.BrineStateMapper;
 import betterwithaddons.client.ToolShardModelHandler;
 import betterwithaddons.client.fx.FXLeafParticle;
 import betterwithaddons.client.handler.ParticleHandler;
@@ -21,7 +22,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -63,6 +63,7 @@ public class ClientProxy implements IProxy
         //BlockModels.register();
 
         ModelLoader.setCustomStateMapper(ModBlocks.thorns,new StateMap.Builder().ignore(BlockThorns.FACING).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.brine, new BrineStateMapper());
 
         RenderingRegistry.registerEntityRenderingHandler(EntityGreatarrow.class, RenderGreatarrow.GREATARROW_RENDER);
         RenderingRegistry.registerEntityRenderingHandler(EntityYa.class, RenderYa.YA_RENDER);

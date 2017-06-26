@@ -3,7 +3,11 @@ package betterwithaddons.block;
 import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BetterRedstone.BlockWirePCB;
 import betterwithaddons.block.EriottoMod.*;
+import betterwithaddons.block.Factorization.BlockBrine;
 import betterwithaddons.block.Factorization.BlockLegendarium;
+import betterwithaddons.block.Factorization.BlockPondBase;
+import betterwithaddons.block.Factorization.BlockSaltLayer;
+import betterwithaddons.lib.Reference;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,6 +15,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -71,8 +78,14 @@ public class ModBlocks {
     public static BlockAqueductWater aqueductWater;
     public static BlockAqueduct aqueduct;
     public static BlockLegendarium legendarium;
+    public static BlockPondBase pondBase;
+    public static BlockBrine brine;
+    public static BlockSaltLayer saltLayer;
 
     public static void load(FMLPreInitializationEvent event) {
+        FluidRegistry.registerFluid(new Fluid("brine",new ResourceLocation(Reference.MOD_ID,"blocks/brine_still"),new ResourceLocation(Reference.MOD_ID,"blocks/brine_flow")));
+        FluidRegistry.registerFluid(new Fluid("salinated_brine",new ResourceLocation(Reference.MOD_ID,"blocks/salinated_brine_still"),new ResourceLocation(Reference.MOD_ID,"blocks/salinated_brine_flow")));
+
         bannerDetector = (BlockBannerDetector) addBlock(new BlockBannerDetector());
         worldScale = (BlockWorldScale) addBlock(new BlockWorldScale());
         worldScaleOre = (BlockWorldScaleOre) addBlock(new BlockWorldScaleOre());
@@ -89,6 +102,9 @@ public class ModBlocks {
         aqueductWater = (BlockAqueductWater) addBlock(new BlockAqueductWater());
 
         legendarium = (BlockLegendarium)addBlock(new BlockLegendarium());
+        pondBase = (BlockPondBase)addBlock(new BlockPondBase());
+        brine = (BlockBrine)addBlock(new BlockBrine());
+        saltLayer = (BlockSaltLayer)addBlock(new BlockSaltLayer());
 
         IBlockState[] leaves1 = new IBlockState[]{
                 Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.DECAYABLE,false),

@@ -1,5 +1,6 @@
 package betterwithaddons.util;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -14,6 +15,22 @@ import java.util.Random;
 
 public class InventoryUtil
 {
+    public static void addItemToPlayer(EntityPlayer playerIn, ItemStack retrieved) {
+        if (playerIn.inventory.addItemStackToInventory(retrieved))
+        {
+            playerIn.inventory.markDirty();
+            if (playerIn.openContainer != null)
+                playerIn.openContainer.detectAndSendChanges();
+        }
+        else
+        {
+            EntityItem ei = new EntityItem(playerIn.world, playerIn.posX, playerIn.posY, playerIn.posZ, retrieved);
+            ei.motionX = ei.motionY = ei.motionZ = 0D;
+            ei.setPickupDelay(0);
+            playerIn.world.spawnEntity(ei);
+        }
+    }
+
     public static void copyTags(ItemStack destStack, ItemStack sourceStack) {
         if (sourceStack.hasTagCompound()) {
             destStack.setTagCompound(sourceStack.getTagCompound().copy());

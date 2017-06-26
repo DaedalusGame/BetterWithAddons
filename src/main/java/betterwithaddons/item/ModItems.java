@@ -3,6 +3,7 @@ package betterwithaddons.item;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -16,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 
@@ -57,6 +59,8 @@ public class ModItems
     public static ItemModFood meatballs;
     public static ItemModFood cookedEgg;
     public static ItemModFood groundMeat;
+
+    public static ItemMaterial bowls;
 
     public static ItemModFood cookedClownfish;
     public static ItemModFood cookedPuffer;
@@ -138,7 +142,14 @@ public class ModItems
         rice = (ItemModFood)registerItem("food_cooked_rice",new ItemModFood(2, 0.3F, false));
         riceBowl = (ItemModFood)registerItem("food_bowl_rice",new ItemModFood(9, 0.6F, false).setMaxStackSize(1));
 
+        bowls = (ItemMaterial)registerItem("bowl",new ItemMaterial(
+                new String[]{"salt"}
+        ));
+        bowls.setContainer(new ItemStack(Items.BOWL));
+        OreDictionary.registerOre("dustSalt",bowls.getMaterial("salt"));
+
         artifactFrame = (ItemArtifactFrame)registerItem("artifact_frame",new ItemArtifactFrame());
+        brokenArtifact = (ItemToolShard)registerItem("tool_shard",new ItemToolShard().setMaxStackSize(1));
 
         stainedBrick = (ItemStainedBrick)registerItem("brick_stained",new ItemStainedBrick());
 
@@ -148,8 +159,6 @@ public class ModItems
         tanto = (ItemTanto) registerItem("tanto",new ItemTanto());
         yumi = (ItemYumi) registerItem("yumi",new ItemYumi());
         ya = (ItemYa) registerItem("ya",new ItemYa());
-
-        brokenArtifact = (ItemToolShard)registerItem("tool_shard",new ItemToolShard().setMaxStackSize(1));
 
         materialJapan = (ItemMaterial)registerItem("japanmat",new ItemMaterial(
                 new String[]{"rice","soaked_rice","rice_stalk","rice_hay","rice_ash","rush",

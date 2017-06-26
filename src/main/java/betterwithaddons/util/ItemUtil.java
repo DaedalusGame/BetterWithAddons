@@ -11,9 +11,8 @@ public class ItemUtil
 {
 	public static boolean matchesOreDict(ItemStack stack, String oreDictName)
 	{
-		int[] ids = OreDictionary.getOreIDs(stack);
 		int checkid = OreDictionary.getOreID(oreDictName);
-		for (int id:ids) {
+		for (int id:OreDictionary.getOreIDs(stack)) {
 			if(id == checkid) return true;
 		}
 		return false;

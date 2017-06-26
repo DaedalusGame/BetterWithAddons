@@ -2,6 +2,7 @@ package betterwithaddons.block.Factorization;
 
 import betterwithaddons.block.BlockContainerBase;
 import betterwithaddons.tileentity.TileEntityLegendarium;
+import betterwithaddons.util.InventoryUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -61,19 +62,7 @@ public class BlockLegendarium extends BlockContainerBase {
         {
             ItemStack retrieved = ((TileEntityLegendarium) tileEntity).retrieveItem(playerIn);
             if (!retrieved.isEmpty())
-                if (playerIn.inventory.addItemStackToInventory(retrieved))
-                {
-                    playerIn.inventory.markDirty();
-                    if (playerIn.openContainer != null)
-                        playerIn.openContainer.detectAndSendChanges();
-                }
-                else
-                {
-                    EntityItem ei = new EntityItem(playerIn.world, playerIn.posX, playerIn.posY, playerIn.posZ, retrieved);
-                    ei.motionX = ei.motionY = ei.motionZ = 0D;
-                    ei.setPickupDelay(0);
-                    playerIn.world.spawnEntity(ei);
-                }
+                InventoryUtil.addItemToPlayer(playerIn, retrieved);
         }
     }
 }
