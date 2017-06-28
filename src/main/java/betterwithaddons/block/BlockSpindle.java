@@ -68,7 +68,7 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(ISACTIVE) ? 1 : 0 | (state.getValue(AXIS).ordinal() << 1);
+        return (state.getValue(ISACTIVE) ? 1 : 0) | (state.getValue(AXIS).ordinal() << 1);
     }
 
     @Override
