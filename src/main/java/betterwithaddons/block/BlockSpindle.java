@@ -106,7 +106,7 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
             setMechanicalOn(world, pos, powered);
         } else if (powered) {
             if(!world.isRemote)
-                spinUpBolt(world, pos);
+                spinUpBolt(world, pos, state);
             world.scheduleBlockUpdate(pos, this, tickRate(world) + rand.nextInt(6), 5);
         }
     }
@@ -115,8 +115,9 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
         return world.getBlockState(pos).getValue(ISACTIVE);
     }
 
-    private void spinUpBolt(World world, BlockPos pos) {
+    private void spinUpBolt(World world, BlockPos pos, IBlockState state) {
         List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos,pos.add(1,1,1)), EntitySelectors.IS_ALIVE);
+        EnumFacing.Axis axis = state.getValue(AXIS);
 
         if(list.size() > 0) {
             CraftingManagerSpindle manager = CraftingManagerSpindle.getInstance();
@@ -128,7 +129,10 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
                 List<ItemStack> ret = recipe.getOutput();
                 if (ret != null && ret.size() > 0) {
                     List<EnumFacing> validDirections = new ArrayList<>();
-                    for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+                    for (EnumFacing facing : EnumFacing.VALUES) {
+                        if(facing.getAxis() == axis || facing == EnumFacing.UP)
+                            continue;
+
                         IBlockState check = world.getBlockState(pos.offset(facing));
                         if (check.getBlock().isReplaceable(world, pos.offset(facing)) || world.isAirBlock(pos.offset(facing)))
                             validDirections.add(facing);
@@ -141,7 +145,7 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
 
                         EnumFacing ejectdir;
                         if(validDirections.isEmpty())
-                            ejectdir = EnumFacing.HORIZONTALS[world.rand.nextInt(4)];
+                            ejectdir = axis.isVertical() ? EnumFacing.HORIZONTALS[world.rand.nextInt(4)] : EnumFacing.DOWN;
                         else
                             ejectdir = validDirections.get(world.rand.nextInt(validDirections.size()));
 

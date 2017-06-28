@@ -2,6 +2,7 @@ package betterwithaddons.config;
 
 import betterwithaddons.interaction.*;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ModConfiguration {
@@ -26,6 +27,9 @@ public class ModConfiguration {
     ConfigOptionInteger BWA_ObviousAirParticles = new ConfigOptionInteger("addons.BetterWithAddons", "ObviousAirParticles", InteractionBWA.AIR_PARTICLES, "How many wind particles are generated every tick.");
     ConfigOptionBool BWA_GatedAqueducts = new ConfigOptionBool("addons.BetterWithAddons", "GatedAqueducts", InteractionBWA.GATED_AQUEDUCTS, "Aqueducts require white stone to craft. This means you need to go to the end to transport water over long distances without power usage.");
     ConfigOptionInteger BWA_MaxAqueductLength = new ConfigOptionInteger("addons.BetterWithAddons", "MaxAqueductLength", InteractionBWA.AQUEDUCT_MAX_LENGTH, "How long aqueducts can be.");
+    ConfigOptionStringList BWA_AqueductBiomes = new ConfigOptionStringList("addons.BetterWithAddons", "AqueductBiomes", InteractionBWA.AQUEDUCT_BIOME_STRINGS, "Aqueducts can only draw water from sources in specific biomes.");
+    ConfigOptionBool BWA_AqueductBiomeWhitelist = new ConfigOptionBool("addons.BetterWithAddons", "AqueductBiomesIsWhitelist", InteractionBWA.AQUEDUCT_BIOMES_IS_WHITELIST, "Whether aqueduct biomes should be whitelisted or blacklisted.");
+
     ConfigOptionBool BWA_ArmorShardRender = new ConfigOptionBool("addons.BetterWithAddons", "ArmorShardRender", InteractionBWA.ARMOR_SHARD_RENDER, "Enables or disables the custom armor shard renderer, for when it causes crashes.");
     ConfigOptionDouble BWA_LegendariumMinDamage = new ConfigOptionDouble("addons.BetterWithAddons", "LegendariumDamageMin", InteractionBWA.LEGENDARIUM_MIN_DAMAGE, "How much durability the artifact you're turning in can have at max. (As a factor of max durability; 0.1 means 1/10 of max durability)");
     ConfigOptionInteger BWA_LegendariumDamagePad = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumDamagePad", InteractionBWA.LEGENDARIUM_DAMAGE_PAD, "How much durability more than the minimum the artifact can have to still be considered broken. (As a static value)");
@@ -87,6 +91,8 @@ public class ModConfiguration {
         InteractionBWA.AIR_PARTICLES = BWA_ObviousAirParticles.init(configuration);
         InteractionBWA.GATED_AQUEDUCTS = BWA_GatedAqueducts.init(configuration);
         InteractionBWA.AQUEDUCT_MAX_LENGTH = BWA_MaxAqueductLength.init(configuration);
+        InteractionBWA.AQUEDUCT_BIOME_STRINGS = BWA_AqueductBiomes.init(configuration);
+        InteractionBWA.AQUEDUCT_BIOMES_IS_WHITELIST = BWA_AqueductBiomeWhitelist.init(configuration);
         InteractionBWA.ARMOR_SHARD_RENDER = BWA_ArmorShardRender.init(configuration);
         InteractionBWA.LEGENDARIUM_MIN_DAMAGE = BWA_LegendariumMinDamage.init(configuration);
         InteractionBWA.LEGENDARIUM_DAMAGE_PAD = BWA_LegendariumDamagePad.init(configuration);
@@ -118,5 +124,10 @@ public class ModConfiguration {
         {
             configuration.save();
         }
+    }
+
+    public void init(FMLInitializationEvent event)
+    {
+
     }
 }

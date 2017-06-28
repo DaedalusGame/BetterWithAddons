@@ -5,21 +5,28 @@ import betterwithaddons.block.BlockAqueduct;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.handler.*;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.tileentity.TileEntityAqueductWater;
 import net.minecraft.block.BlockQuartz;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class InteractionBWA extends Interaction {
     public static boolean GATED_AQUEDUCTS = true;
     public static int AQUEDUCT_MAX_LENGTH = 128;
+    public static String[] AQUEDUCT_BIOME_STRINGS = new String[0];
+    public static boolean AQUEDUCT_BIOMES_IS_WHITELIST = true;
 
     public static boolean OBVIOUS_STORMS = false;
     public static boolean OBVIOUS_SAND_STORMS = false;
@@ -90,6 +97,9 @@ public class InteractionBWA extends Interaction {
 
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.worldScale,1)," i ","iai"," i ",'a',new ItemStack(ModBlocks.worldScaleOre,0,1),'i',new ItemStack(Items.IRON_INGOT));
         }
+
+        //TODO: Make this more sensible holy shit
+        TileEntityAqueductWater.reloadBiomeList();
 
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.legendarium,1) ,"gsg","qqq","gqg",'g',new ItemStack(Items.GOLD_INGOT),'q',new ItemStack(Blocks.QUARTZ_BLOCK,1, BlockQuartz.EnumType.CHISELED.getMetadata()),'s', new ItemStack(Items.NETHER_STAR));
         GameRegistry.addShapedRecipe(new ItemStack(ModItems.artifactFrame,1) ,"gsg","gqg","ggg",'g',new ItemStack(Items.GOLD_NUGGET),'q',new ItemStack(Blocks.WOOL,1,EnumDyeColor.PURPLE.getMetadata()),'s', new ItemStack(Items.SIGN));
