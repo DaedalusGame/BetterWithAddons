@@ -31,6 +31,8 @@ tile.planks_luretree.name=Alicio Wood Planks
 tile.pcb_wire.name=Redstone Wire
 tile.pcb_block.name=PCB
 
+tile.spindle.name=Spindle
+
 tile.log_mulberry.name=Mulberry Wood
 tile.log_sakura.name=Sakura Wood
 tile.planks_mulberry.name=Mulberry Wood Planks
@@ -117,7 +119,7 @@ item.monument.name=Monument
 item.warwall.name=Warwall
 
 item.artifact_frame.name=Artifact Display
-tile.bowl.salt.name=Bowl of Salt
+item.bowl.salt.name=Bowl of Salt
 
 item.explosion.name=§eHIGHLY VOLATILE!
 

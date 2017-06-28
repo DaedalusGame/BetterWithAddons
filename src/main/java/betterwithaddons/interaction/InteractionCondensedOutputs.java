@@ -1,9 +1,12 @@
 package betterwithaddons.interaction;
 
+import betterwithaddons.block.ModBlocks;
+import betterwithaddons.crafting.manager.CraftingManagerSpindle;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.IDisableable;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
+import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
@@ -11,6 +14,7 @@ import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -74,6 +78,8 @@ public class InteractionCondensedOutputs extends Interaction {
 
     @Override
     public void init() {
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.spindle,3),"s","s","s",'s',new ItemStack(BWMBlocks.WOOD_MOULDING,1));
+
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed"),new ItemStack(Items.WHEAT_SEEDS));
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed_hemp"),new ItemStack(BWMBlocks.HEMP));
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed_melon"),new ItemStack(Items.MELON_SEEDS));
@@ -131,6 +137,9 @@ public class InteractionCondensedOutputs extends Interaction {
         addBundlingRecipe(ModItems.materialBundle.getMaterial("jungle"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.JUNGLE.getMetadata()));
         addBundlingRecipe(ModItems.materialBundle.getMaterial("acacia"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.ACACIA.getMetadata()));
         addBundlingRecipe(ModItems.materialBundle.getMaterial("darkoak"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
+
+        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.ROPE.getMeta())},new ItemStack(BWMBlocks.ROPE,9),false);
+        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH)},ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_FIBERS,9),false);
     }
 
     @Override
@@ -160,6 +169,10 @@ public class InteractionCondensedOutputs extends Interaction {
     private void addRollupRecipe(ItemStack output, ItemStack material)
     {
         addCondensingRecipe(output, material, boltStack);
+
+        ItemStack material8 = material.copy();
+        material8.setCount(8);
+        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material8,true);
     }
 
     private void addBundlingRecipe(ItemStack output, ItemStack material)

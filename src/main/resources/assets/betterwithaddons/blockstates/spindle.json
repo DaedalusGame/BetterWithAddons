@@ -1,0 +1,33 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"textures": {
+		"top": "betterwithmods:blocks/axle_end",
+		"side": "betterwithaddons:blocks/spindle_off",
+		"bottom": "betterwithmods:blocks/axle_end",
+		"particle": "betterwithaddons:blocks/spindle_off"
+    },
+	"model": "betterwithmods:axle",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+	"ison": {
+		"true":{
+			"textures": { "side": "betterwithaddons:blocks/spindle_on" }
+		},
+		"false":{}
+	},
+	"axis": {
+      "y": {},
+      "z": {
+        "x": 90
+      },
+      "x": {
+        "x": 90,
+        "y": 90
+      }
+	}
+  }
+}

@@ -81,6 +81,7 @@ public class ModBlocks {
     public static BlockPondBase pondBase;
     public static BlockBrine brine;
     public static BlockSaltLayer saltLayer;
+    public static BlockSpindle spindle;
 
     public static void load(FMLPreInitializationEvent event) {
         FluidRegistry.registerFluid(new Fluid("brine",new ResourceLocation(Reference.MOD_ID,"blocks/brine_still"),new ResourceLocation(Reference.MOD_ID,"blocks/brine_flow")));
@@ -105,6 +106,8 @@ public class ModBlocks {
         pondBase = (BlockPondBase)addBlock(new BlockPondBase());
         brine = (BlockBrine)addBlock(new BlockBrine());
         saltLayer = (BlockSaltLayer)addBlock(new BlockSaltLayer());
+
+        spindle = (BlockSpindle)addBlock(new BlockSpindle());
 
         IBlockState[] leaves1 = new IBlockState[]{
                 Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.DECAYABLE,false),

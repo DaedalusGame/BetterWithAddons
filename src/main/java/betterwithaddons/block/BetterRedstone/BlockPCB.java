@@ -82,7 +82,7 @@ public class BlockPCB extends BlockBase {
         if(isEast) newstate = newstate.withProperty(EAST,!state.getValue(EAST));
         if(isWest) newstate = newstate.withProperty(WEST,!state.getValue(WEST));
 
-        newstate = state.withRotation(Rotation.CLOCKWISE_90);
+        //newstate = state.withRotation(Rotation.CLOCKWISE_90);
 
         world.setBlockState(pos,newstate);
         //world.notifyNeighborsOfStateChange(pos.up(), this, false);
