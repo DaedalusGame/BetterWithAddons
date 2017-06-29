@@ -25,6 +25,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -167,7 +168,7 @@ public class BlockPondBase extends BlockBase implements IHasVariants {
         BlockPos checkpos = pos.up();
         Biome biome = world.getBiome(checkpos);
 
-        return world.isDaytime() && !world.isRaining() && !world.isThundering() && biome.getTemperature() >= 0.8f && world.canSeeSky(checkpos); //TODO: configurable check for biome?
+        return world.isDaytime() && !world.isRaining() && !world.isThundering() && !world.provider.hasNoSky() && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.COLD) && world.canSeeSky(checkpos); //TODO: configurable check for biome?
     }
 
     @Override
