@@ -277,11 +277,10 @@ item.chest_samurai.name=Samurai Chestplate [WIP]
 item.legs_samurai.name=Samurai Leggings [WIP]
 item.boots_samurai.name=Samurai Boots [WIP]
 
-
-
-
-
-
+tooltip.pond_creation.name=Put at bottom of water basin will eventually dry into salt layers.
+tooltip.salt_creation.name=Place in sun to dry into Salination Pond.
+tooltip.salt_layer.name=Pick up with a bowl to get salt.
+bwm.manual.bwa=Better With Addons
 
 
 

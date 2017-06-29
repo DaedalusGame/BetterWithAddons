@@ -16,11 +16,23 @@ import betterwithaddons.entity.EntityArtifactFrame;
 import betterwithaddons.entity.EntityGreatarrow;
 import betterwithaddons.entity.EntityYa;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityAlchDragon;
+import betterwithmods.BWMod;
+import li.cil.manual.api.ManualAPI;
+import li.cil.manual.api.prefab.manual.ItemStackTabIconRenderer;
+import li.cil.manual.api.prefab.manual.ResourceContentProvider;
+import li.cil.manual.api.prefab.manual.TextureTabIconRenderer;
+import li.cil.manual.client.manual.provider.BlockImageProvider;
+import li.cil.manual.client.manual.provider.ItemImageProvider;
+import li.cil.manual.client.manual.provider.OreDictImageProvider;
+import li.cil.manual.client.manual.provider.TextureImageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -43,6 +55,13 @@ public class ClientProxy implements IProxy
         registerColorable(ModItems.brokenArtifact);
         MinecraftForge.EVENT_BUS.register(ParticleHandler.class);
         MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
+        //TODO definition provider
+        ManualAPI.addProvider(new ResourceContentProvider(Reference.MOD_ID, "docs/"));
+        ManualAPI.addProvider("", new TextureImageProvider());
+        ManualAPI.addProvider("item", new ItemImageProvider());
+        ManualAPI.addProvider("block", new BlockImageProvider());
+        ManualAPI.addProvider("oredict", new OreDictImageProvider());
+        ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.chute)), "bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
     }
 
     @Override

@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -19,6 +20,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 public class BlockSaltLayer extends BlockBase {
@@ -30,6 +32,13 @@ public class BlockSaltLayer extends BlockBase {
         this.setHardness(0.5f);
         this.setSoundType(SoundType.SAND);
         this.setHarvestLevel("shovel", 0);
+    }
+
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+        tooltip.add(I18n.format("tooltip.salt_layer.name"));
+        super.addInformation(stack, player, tooltip, advanced);
     }
 
     @Override
