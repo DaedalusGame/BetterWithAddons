@@ -6,6 +6,8 @@ inv.tatara.name=Tatara
 inv.firenet.name=Netted Screen
 inv.waternet.name=Netted Screen
 inv.sandnet.name=Netted Screen
+inv.spindle.name=Spindle
+inv.spindle.throw.name=Throw Items
 
 tile.banner_detector.name=Banner Detector
 tile.world_scale_ore.name=World Scale Ore

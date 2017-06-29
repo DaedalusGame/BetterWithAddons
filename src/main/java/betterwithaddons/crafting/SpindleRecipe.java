@@ -1,6 +1,7 @@
 package betterwithaddons.crafting;
 
 import betterwithaddons.block.EriottoMod.BlockNettedScreen.SifterType;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -77,8 +78,13 @@ public class SpindleRecipe
         return this.jeiInput;
     }
 
-    public Object getRecipeInput() {
-        return this.input;
+    public List<ItemStack> getRecipeInputs() {
+        Object o = getInput();
+        if(o instanceof ItemStack)
+            return Lists.newArrayList((ItemStack) o);
+        if(o instanceof OreStack)
+            return ((OreStack)o).getOres();
+        return null;
     }
 
     public boolean willConsumeSpindle() {
