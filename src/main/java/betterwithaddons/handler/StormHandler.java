@@ -128,7 +128,11 @@ public class StormHandler {
         Entity entity = fogEvent.getEntity();
         World world = entity.world;
         BlockPos pos = entity.getPosition();
-        Color desiredcolor = new Color(fogEvent.getRed(), fogEvent.getGreen(), fogEvent.getBlue());
+        Color desiredcolor = new Color(
+                Math.min(fogEvent.getRed(),1.0f),
+                Math.min(fogEvent.getGreen(),1.0f),
+                Math.min(fogEvent.getBlue(),1.0f)
+        );
 
         if (world.isRaining()) {
             float red = 0;
@@ -142,9 +146,9 @@ public class StormHandler {
                     Biome biome = world.getBiome(probepos);
                     MapColor mapcolor = biome.topBlock.getMapColor();
                     Color color = new Color(mapcolor.colorValue);
-                    red += 2 * color.getRed() / 255.0f;
-                    green += 2 * color.getGreen() / 255.0f;
-                    blue += 2 * color.getBlue() / 255.0f;
+                    red += 2 * (color.getRed() / 255.0f);
+                    green += 2 * (color.getGreen() / 255.0f);
+                    blue += 2 * (color.getBlue() / 255.0f);
                     totalweight += 2;
                 } else if (aboveground) {
                     red += fogEvent.getRed();
@@ -153,7 +157,7 @@ public class StormHandler {
                     totalweight += 1;
                 }
             }
-            desiredcolor = new Color(red / totalweight, green / totalweight, blue / totalweight);
+            desiredcolor = new Color(Math.min(red / totalweight,1.0f), Math.min(green / totalweight,1.0f), Math.min(blue / totalweight,1.0f));
             fogEvent.setRed(currentRed / 255.0f);
             fogEvent.setGreen(currentGreen / 255.0f);
             fogEvent.setBlue(currentBlue / 255.0f);

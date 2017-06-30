@@ -1,0 +1,89 @@
+{
+	"textures": {
+		"base": "betterwithaddons:blocks/chute_bottom",
+		"wheel": "betterwithaddons:blocks/loom",
+		"wheel_side": "betterwithaddons:blocks/loom_side",
+		"wheel_inside": "betterwithaddons:blocks/loom_inside",
+		"spindle": "blocks/iron_block",
+		"particle": "betterwithaddons:blocks/chute_bottom"
+	},
+	"elements": [
+		{
+			"from": [0, 14, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {
+					"texture": "#wheel_side",
+					"rotation": 90
+				},
+				"east": {
+					"texture": "#wheel_side",
+					"rotation": 90
+				},
+				"south": {
+					"texture": "#wheel_side",
+					"rotation": 90
+				},
+				"west": {
+					"texture": "#wheel_side",
+					"rotation": 90
+				},
+				"up": {"texture": "#wheel"},
+				"down": {"texture": "#wheel"}
+			}
+		},
+		{
+			"from": [0, 15, 0],
+			"to": [16, 15, 16],
+			"faces": {
+				"up": {"texture": "#wheel_inside"},
+				"down": {"texture": "#wheel_inside"}
+			}
+		},
+		{
+			"from": [2, 16, 2],
+			"to": [14, 14, 14],
+			"faces": {
+				"north": {
+					"texture": "#wheel_side",
+					"rotation": 90
+				},
+				"east": {
+					"texture": "#wheel_side",
+					"rotation": 90
+				},
+				"south": {
+					"texture": "#wheel_side",
+					"rotation": 90
+				},
+				"west": {
+					"texture": "#wheel_side",
+					"rotation": 90
+				}
+			}
+		},
+		{
+			"from": [7, 12, 7],
+			"to": [9, 16, 9],
+			"faces": {
+				"north": {"texture": "#spindle"},
+				"east": {"texture": "#spindle"},
+				"south": {"texture": "#spindle"},
+				"west": {"texture": "#spindle"},
+				"up": {"texture": "#spindle"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [16, 12, 16],
+			"faces": {
+				"north": {"texture": "#base"},
+				"east": {"texture": "#base"},
+				"south": {"texture": "#base"},
+				"west": {"texture": "#base"},
+				"up": {"texture": "#base"},
+				"down": {"texture": "#base"}
+			}
+		}
+	]
+}

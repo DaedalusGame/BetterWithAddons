@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
+public class BlockSpindle extends BlockBase {
     public static final PropertyBool ISACTIVE = PropertyBool.create("ison");
     public static final PropertyEnum<EnumFacing.Axis> AXIS = PropertyEnum.create("axis",EnumFacing.Axis.class);
 
@@ -58,7 +58,7 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return getDefaultState().withProperty(AXIS,facing.getAxis());
+        return getDefaultState().withProperty(AXIS,facing.getAxis()).withProperty(ISACTIVE,false);
     }
 
     @Override
@@ -88,27 +88,56 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
 
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos other) {
-        world.scheduleBlockUpdate(pos, this, tickRate(world), 5);
+        if(block instanceof BlockLoom)
+            world.scheduleBlockUpdate(pos, this, 5, 5);
     }
 
     @Override
     public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
         super.onBlockAdded(world, pos, state);
-        world.scheduleBlockUpdate(pos, this, tickRate(world), 5);
+        world.scheduleBlockUpdate(pos, this, 5, 5);
+    }
+
+    @Override
+    public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+        //NOOP
     }
 
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        boolean powered = isInputtingMechPower(world, pos);
+        boolean powered = isPowered(world, pos);
         boolean isOn = isBlockOn(world, pos);
 
         if (isOn != powered) {
-            setMechanicalOn(world, pos, powered);
+            setBlockOn(world, pos, powered);
+            world.scheduleBlockUpdate(pos, this, 5, 5);
         } else if (powered) {
             if(!world.isRemote)
                 spinUpBolt(world, pos, state);
-            world.scheduleBlockUpdate(pos, this, tickRate(world) + rand.nextInt(6), 5);
+            world.scheduleBlockUpdate(pos, this, tickRate(world), 5);
         }
+    }
+
+    //TODO: ISpindle??? Why would anyone make an addon for an addon???
+    public boolean isPowered(World world, BlockPos pos)
+    {
+        IBlockState state = world.getBlockState(pos);
+        EnumFacing facing = getFacingFromAxis(state.getValue(AXIS));
+
+        return isSpinningWheelPowering(world,pos.offset(facing),facing.getOpposite()) != isSpinningWheelPowering(world,pos.offset(facing.getOpposite()),facing);
+    }
+
+    public boolean isSpinningWheelPowering(World world, BlockPos pos, EnumFacing facing)
+    {
+        IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+
+        return block instanceof BlockLoom && ((BlockLoom) block).isBlockOn(world,pos) && ((BlockLoom) block).getFacing(world,pos) != facing;
+    }
+
+    public void setBlockOn(World world, BlockPos pos, boolean powered)
+    {
+        world.setBlockState(pos,world.getBlockState(pos).withProperty(ISACTIVE,powered));
     }
 
     public boolean isBlockOn(IBlockAccess world, BlockPos pos) {
@@ -167,10 +196,10 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
 
     @Override
     public int tickRate(World world) {
-        return 5;
+        return 40;
     }
 
-    @Override
+    /*@Override
     public boolean canOutputMechanicalPower() {
         return false;
     }
@@ -190,7 +219,7 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
     @Override
     public boolean isOutputtingMechPower(World world, BlockPos pos) {
         return false;
-    }
+    }*/
 
     //This may break in the n-dimensional update
     public EnumFacing getFacingFromAxis(EnumFacing.Axis axis)
@@ -208,7 +237,7 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
         return null;
     }
 
-    @Override
+    /*@Override
     public boolean canInputPowerToSide(IBlockAccess world, BlockPos pos, EnumFacing dir) {
         IBlockState state = world.getBlockState(pos);
         return state.getValue(AXIS).apply(dir);
@@ -252,5 +281,5 @@ public class BlockSpindle extends BlockBase implements IMechanicalBlock, IAxle {
     @Override
     public int getPowerLevel(IBlockAccess iBlockAccess, BlockPos blockPos) {
         return 0;
-    }
+    }*/
 }
