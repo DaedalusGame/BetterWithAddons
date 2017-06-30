@@ -81,6 +81,8 @@ public class InteractionCondensedOutputs extends Interaction {
 
     @Override
     public void init() {
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "plankWood", 'i', "nuggetIron"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "sidingWood", 'i', "nuggetIron"));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.spindle,3),"s","s","s",'s',new ItemStack(BWMBlocks.WOOD_MOULDING,1));
 
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed"),new ItemStack(Items.WHEAT_SEEDS));

@@ -88,7 +88,9 @@ public class BlockSpindle extends BlockBase {
 
     @Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos other) {
-        if(block instanceof BlockLoom)
+        IBlockState checkState = world.getBlockState(other);
+
+        if(checkState.getBlock() instanceof BlockLoom)
             world.scheduleBlockUpdate(pos, this, 5, 5);
     }
 
