@@ -72,7 +72,6 @@ public class ItemUtil
 			return consumeItem(inv,(ItemStack)stack);
 		if(stack instanceof OreStack)
 			return consumeItem(inv,(OreStack)stack);
-
 		return false;
 	}
 

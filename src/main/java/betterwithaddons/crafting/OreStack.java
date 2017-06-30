@@ -1,5 +1,6 @@
 package betterwithaddons.crafting;
 
+import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -44,14 +45,17 @@ public class OreStack
     public List<ItemStack> getOres()
     {
         List<ItemStack> ores = OreDictionary.getOres(oreName);
-
         if(ores.size() > 0)
             return ores;
-        return null;
+        return Lists.newArrayList();
     }
 
     public int getStackSize()
     {
         return this.stackSize;
+    }
+
+    public void setCount(int stackSize) {
+        this.stackSize = stackSize;
     }
 }

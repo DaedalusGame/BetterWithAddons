@@ -1,6 +1,7 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.crafting.OreStack;
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.IDisableable;
@@ -17,6 +18,8 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.Arrays;
 import java.util.List;
@@ -120,13 +123,13 @@ public class InteractionCondensedOutputs extends Interaction {
         addCongealingRecipe(ModItems.materialCongealed.getMaterial("eye"),new ItemStack(Items.SPIDER_EYE));
         addCongealingRecipe(ModItems.materialCongealed.getMaterial("wart"),new ItemStack(Items.NETHER_WART));
 
-        addRollupRecipe(ModItems.materialBolt.getMaterial("fabric"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("fabric"),new OreStack("fiberHemp",9));
         addRollupRecipe(ModItems.materialBolt.getMaterial("vine"),new ItemStack(Blocks.VINE));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("paper"),new ItemStack(Items.PAPER));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("leather"),new ItemStack(Items.LEATHER));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("scoured_leather"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("tanned_leather"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("string"),new ItemStack(Items.STRING));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("paper"),new OreStack("paper",8));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("leather"),new OreStack("leather",8));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("scoured_leather"),new OreStack("hideScoured",8));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("tanned_leather"),new OreStack("hideTanned",8));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("string"),new OreStack("string",8));
 
         addBundlingRecipe(ModItems.materialBundle.getMaterial("feather"),new ItemStack(Items.FEATHER));
         addBundlingRecipe(ModItems.materialBundle.getMaterial("blazerods"),new ItemStack(Items.BLAZE_ROD));
@@ -139,7 +142,6 @@ public class InteractionCondensedOutputs extends Interaction {
         addBundlingRecipe(ModItems.materialBundle.getMaterial("darkoak"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
 
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.ROPE.getMeta())},new ItemStack(BWMBlocks.ROPE,9),false);
-        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH)},ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_FIBERS,9),false);
     }
 
     @Override
@@ -175,6 +177,12 @@ public class InteractionCondensedOutputs extends Interaction {
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material8,true);
     }
 
+    private void addRollupRecipe(ItemStack output, OreStack material)
+    {
+        addCondensingRecipe(output, material, boltStack);
+        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material.copy(),true);
+    }
+
     private void addBundlingRecipe(ItemStack output, ItemStack material)
     {
         addCondensingRecipe(output, material, bundleStack);
@@ -186,5 +194,14 @@ public class InteractionCondensedOutputs extends Interaction {
         outmaterial.setCount(8);
         GameRegistry.addShapedRecipe(output,"aaa","aba","aaa",'a',material,'b',frame);
         GameRegistry.addShapelessRecipe(outmaterial,output);
+    }
+
+
+    private void addCondensingRecipe(ItemStack output, OreStack material, ItemStack frame)
+    {
+        OreStack outmaterial = material.copy();
+        outmaterial.setCount(8);
+        GameRegistry.addRecipe(new ShapedOreRecipe(output,"aaa","aba","aaa",'a',material.getOreName(),'b',frame));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(output, outmaterial.getOreName()));
     }
 }

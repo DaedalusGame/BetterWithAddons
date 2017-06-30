@@ -75,7 +75,7 @@ public class SpindleRecipe
 
     public Object getInput()
     {
-        return this.jeiInput;
+        return this.input;
     }
 
     public List<ItemStack> getRecipeInputs() {
@@ -83,7 +83,7 @@ public class SpindleRecipe
         if(o instanceof ItemStack)
             return Lists.newArrayList((ItemStack) o);
         if(o instanceof OreStack)
-            return ((OreStack)o).getOres();
+            return getOreList((OreStack)o);
         return null;
     }
 
