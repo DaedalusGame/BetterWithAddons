@@ -1,12 +1,8 @@
 package betterwithaddons.block;
 
-import betterwithaddons.crafting.SpindleRecipe;
+import betterwithaddons.crafting.recipes.SpindleRecipe;
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
 import betterwithaddons.util.ItemUtil;
-import betterwithmods.api.block.IAxle;
-import betterwithmods.api.block.IMechanicalBlock;
-import betterwithmods.util.DirUtils;
-import betterwithmods.util.MechanicalUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

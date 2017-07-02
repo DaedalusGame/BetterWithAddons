@@ -6,6 +6,7 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.handler.*;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
+import betterwithaddons.tileentity.TileEntityLureTree;
 import net.minecraft.block.BlockQuartz;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -45,7 +46,6 @@ public class InteractionBWA extends Interaction {
     public static int RADIUS = 6;
     public static int MAXCHARGE = 600;
     public static int MAXFOOD = 5000;
-    public static int FOODGLOWSTONE = 450;
 
     @Override
     public boolean isActive() {
@@ -97,6 +97,8 @@ public class InteractionBWA extends Interaction {
 
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.worldScale,1)," i ","iai"," i ",'a',new ItemStack(ModBlocks.worldScaleOre,0,1),'i',new ItemStack(Items.IRON_INGOT));
         }
+
+        TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),450);
 
         //TODO: Make this more sensible holy shit
         TileEntityAqueductWater.reloadBiomeList();

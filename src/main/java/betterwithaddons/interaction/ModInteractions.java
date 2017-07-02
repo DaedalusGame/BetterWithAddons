@@ -3,6 +3,7 @@ package betterwithaddons.interaction;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class ModInteractions {
     public static InteractionCondensedOutputs condensedOutputs;
     public static InteractionDecoAddon decoAddon;
     public static InteractionBTWTweak btwTweak;
+    public static InteractionMinetweaker minetweaker;
 
     public static void preInit(FMLPreInitializationEvent event) {
         bwa = (InteractionBWA) addInteraction(new InteractionBWA());
@@ -27,6 +29,7 @@ public class ModInteractions {
         condensedOutputs = (InteractionCondensedOutputs) addInteraction(new InteractionCondensedOutputs());
         decoAddon = (InteractionDecoAddon) addInteraction(new InteractionDecoAddon());
         btwTweak = (InteractionBTWTweak) addInteraction(new InteractionBTWTweak());
+        minetweaker = (InteractionMinetweaker) addInteraction(new InteractionMinetweaker());
 
         validate();
 

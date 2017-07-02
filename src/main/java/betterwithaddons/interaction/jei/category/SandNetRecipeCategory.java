@@ -6,6 +6,9 @@ import mezz.jei.util.Translator;
 import net.minecraft.util.ResourceLocation;
 
 public class SandNetRecipeCategory extends NetRecipeCategory {
+
+    public static final String UID = "bwa.sandnet";
+
     public SandNetRecipeCategory(IGuiHelper helper) {
         super(helper);
     }
@@ -17,7 +20,7 @@ public class SandNetRecipeCategory extends NetRecipeCategory {
 
     @Override
     public String getUid() {
-        return "bwa.sandnet";
+        return UID;
     }
 
     @Override

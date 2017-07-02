@@ -26,17 +26,17 @@ minecraft {
     version = "1.11.2-13.20.0.2296"
     runDir = "run"
     mappings = "snapshot_20161220"
+    useDepAts = true
 }
 
 repositories {
-    maven {
-        name 'DVS1 Maven FS'
-        url 'http://dvs1.progwml6.com/files/maven'
-    }
+    maven { url 'http://dvs1.progwml6.com/files/maven' }
+    maven { url "http://blamejared.com/maven" }
 }
 
 dependencies {
 	deobfCompile "mezz.jei:jei_1.11.2:+"
+    deobfCompile "com.blamejared:MTLib:2.+"
 	compile files('libs/')
 }
 

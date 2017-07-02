@@ -105,7 +105,7 @@ public class ModBlocks {
 
         legendarium = (BlockLegendarium)addBlock(new BlockLegendarium());
         pondBase = (BlockPondBase)addBlock(new BlockPondBase());
-        brine = (BlockBrine)addBlock(new BlockBrine());
+        brine = (BlockBrine)addBlock(new BlockBrine(),null,false);
         saltLayer = (BlockSaltLayer)addBlock(new BlockSaltLayer());
 
         spindle = (BlockSpindle)addBlock(new BlockSpindle());

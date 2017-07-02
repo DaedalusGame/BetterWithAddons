@@ -6,6 +6,9 @@ import mezz.jei.util.Translator;
 import net.minecraft.util.ResourceLocation;
 
 public class SoakingBoxRecipeCategory extends CherryBoxRecipeCategory {
+
+    public static final String UID = "bwa.soakingbox";
+
     public SoakingBoxRecipeCategory(IGuiHelper helper) {
         super(helper);
     }
@@ -17,7 +20,7 @@ public class SoakingBoxRecipeCategory extends CherryBoxRecipeCategory {
 
     @Override
     public String getUid() {
-        return "bwa.soakingbox";
+        return UID;
     }
 
     @Override

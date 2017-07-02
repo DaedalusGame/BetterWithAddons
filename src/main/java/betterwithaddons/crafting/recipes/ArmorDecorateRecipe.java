@@ -1,4 +1,4 @@
-package betterwithaddons.crafting;
+package betterwithaddons.crafting.recipes;
 
 import betterwithaddons.item.ItemSamuraiArmor;
 import net.minecraft.entity.passive.EntitySheep;

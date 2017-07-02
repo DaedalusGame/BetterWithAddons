@@ -1,54 +1,69 @@
 package betterwithaddons.crafting.manager;
 
+import betterwithaddons.block.EriottoMod.BlockCherryBox;
+import betterwithaddons.crafting.recipes.CherryBoxRecipe;
+import betterwithaddons.crafting.recipes.SmeltingRecipe;
 import com.google.common.collect.Maps;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CraftingManagerTatara {
     private static final CraftingManagerTatara instance = new CraftingManagerTatara();
-    private final Map<ItemStack, ItemStack> smeltingList = Maps.newHashMap();
 
     public static CraftingManagerTatara instance() {
         return instance;
     }
 
+    private final ArrayList<SmeltingRecipe> recipes = new ArrayList<>();
+
     private CraftingManagerTatara() {
     }
 
-    public void addSmeltingRecipe(ItemStack input, ItemStack output) {
-        if(!this.getSmeltingResult(input).isEmpty()) {
-            FMLLog.info("Ignored tatara recipe with conflicting input: " + input + " = " + output, new Object[0]);
-        } else {
-            this.smeltingList.put(input, output);
-        }
+
+    public BlockCherryBox.CherryBoxType getType() {
+        return BlockCherryBox.CherryBoxType.NONE;
     }
+
+    public void addRecipe(Object input, ItemStack output) {
+        this.recipes.add(createRecipe(input, output));
+    }
+
+    protected SmeltingRecipe createRecipe(Object input, ItemStack output)
+    {
+        return new CherryBoxRecipe(getType(),input,output);
+    }
+
+    public List<SmeltingRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
+        return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
+    }
+
 
     @Nullable
     public ItemStack getSmeltingResult(ItemStack input) {
-        Iterator var2 = this.smeltingList.entrySet().iterator();
+        Iterator<SmeltingRecipe> var2 = this.recipes.iterator();
 
-        Map.Entry entry;
+        SmeltingRecipe entry;
         do {
             if(!var2.hasNext()) {
                 return ItemStack.EMPTY;
             }
 
-            entry = (Map.Entry)var2.next();
-        } while(!this.compareItemStacks(input, (ItemStack)entry.getKey()));
+            entry = var2.next();
+        } while(!entry.matchesInput(input));
 
-        return (ItemStack)entry.getValue();
+        return entry.getOutput();
     }
 
-    private boolean compareItemStacks(ItemStack p_compareItemStacks_1_, ItemStack p_compareItemStacks_2_) {
-        return p_compareItemStacks_2_.getItem() == p_compareItemStacks_1_.getItem() && (p_compareItemStacks_2_.getMetadata() == OreDictionary.WILDCARD_VALUE || p_compareItemStacks_2_.getMetadata() == p_compareItemStacks_1_.getMetadata());
-    }
-
-    public Map<ItemStack, ItemStack> getSmeltingList() {
-        return this.smeltingList;
+    public List<SmeltingRecipe> getRecipes() {
+        return this.recipes;
     }
 }

@@ -20,7 +20,6 @@ public class ModConfiguration {
     ConfigOptionInteger BWA_LureTreeRadius = new ConfigOptionInteger("addons.BetterWithAddons", "LureTreeRadius", InteractionBWA.RADIUS, "Radius in which the tree can spawn mobs.");
     ConfigOptionInteger BWA_LureTreeTime = new ConfigOptionInteger("addons.BetterWithAddons", "LureTreeTime", InteractionBWA.MAXCHARGE, "Time it takes for the tree to do one spawning cycle.");
     ConfigOptionInteger BWA_LureTreeMaxFood = new ConfigOptionInteger("addons.BetterWithAddons", "LureTreeMaxFood", InteractionBWA.MAXFOOD, "How much food the tree can hold.");
-    ConfigOptionInteger BWA_LureTreeFoodGlowstone = new ConfigOptionInteger("addons.BetterWithAddons", "LureTreeFoodGlowstone", InteractionBWA.FOODGLOWSTONE, "How much food is contained in one glowstone dust.");
     ConfigOptionBool BWA_ObviousStorms = new ConfigOptionBool("addons.BetterWithAddons", "ObviousStorms", InteractionBWA.OBVIOUS_STORMS, "Storms in dry biomes are much more obvious.");
     ConfigOptionBool BWA_ObviousSandStorms = new ConfigOptionBool("addons.BetterWithAddons", "ObviousSandStorms", InteractionBWA.OBVIOUS_SAND_STORMS, "Storms in sandy biomes are even more obvious.");
     ConfigOptionInteger BWA_ObviousDustParticles = new ConfigOptionInteger("addons.BetterWithAddons", "ObviousDustParticles", InteractionBWA.DUST_PARTICLES, "How many dust particles are kicked up every tick.");
@@ -84,7 +83,6 @@ public class ModConfiguration {
         InteractionBWA.RADIUS = BWA_LureTreeRadius.init(configuration);
         InteractionBWA.MAXCHARGE = BWA_LureTreeTime.init(configuration);
         InteractionBWA.MAXFOOD = BWA_LureTreeMaxFood.init(configuration);
-        InteractionBWA.FOODGLOWSTONE = BWA_LureTreeFoodGlowstone.init(configuration);
         InteractionBWA.OBVIOUS_STORMS = BWA_ObviousStorms.init(configuration);
         InteractionBWA.OBVIOUS_SAND_STORMS = BWA_ObviousSandStorms.init(configuration);
         InteractionBWA.DUST_PARTICLES = BWA_ObviousDustParticles.init(configuration);

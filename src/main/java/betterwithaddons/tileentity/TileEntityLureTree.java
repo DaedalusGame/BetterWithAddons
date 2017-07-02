@@ -6,7 +6,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -23,6 +22,45 @@ import java.util.List;
 import java.util.Random;
 
 public class TileEntityLureTree extends TileEntityBase implements ITickable {
+    private static ArrayList<TreeFood> TREE_FOODS = new ArrayList<>();
+
+    public static ArrayList<TreeFood> getTreeFoods()
+    {
+        return TREE_FOODS;
+    }
+
+    public static class TreeFood
+    {
+        public ItemStack stack;
+        public int amount;
+
+        public TreeFood(ItemStack stack, int amount) {
+            this.stack = stack;
+            this.amount = amount;
+        }
+
+        public boolean matches(ItemStack stack)
+        {
+            return ItemStack.areItemsEqual(this.stack,stack);
+        }
+    }
+
+    public static void addTreeFood(ItemStack stack, int amount)
+    {
+        TREE_FOODS.add(new TreeFood(stack,amount));
+    }
+
+    public static TreeFood getTreeFood(ItemStack stack)
+    {
+        for (TreeFood food : TREE_FOODS) {
+            if (food.matches(stack)) {
+                return food;
+            }
+        }
+
+        return null;
+    }
+
     int currentFood = 0;
     int chargeTicks = 0;
     private static ArrayList<Class> BLACKLIST = new ArrayList<>();
@@ -123,9 +161,11 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
     }
 
     public boolean feed(ItemStack stack) {
-        if(stack.getItem() == Items.GLOWSTONE_DUST && currentFood < InteractionBWA.MAXFOOD - InteractionBWA.FOODGLOWSTONE)
+        TreeFood food = getTreeFood(stack);
+
+        if(food != null && currentFood < InteractionBWA.MAXFOOD - food.amount)
         {
-            currentFood = Math.min(InteractionBWA.MAXFOOD,currentFood+ InteractionBWA.FOODGLOWSTONE);
+            currentFood = Math.min(InteractionBWA.MAXFOOD,currentFood+ food.amount);
             return true;
         }
 
@@ -143,7 +183,7 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
 
         if (flag && state.getValue(BlockLureTree.FACING) == facing) {
             if (!playerIn.isCreative()) {
-                heldItem.shrink(1);;
+                heldItem.shrink(1);
                 playerIn.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, heldItem.getCount() == 0 ? null : heldItem);
             }
             this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(),

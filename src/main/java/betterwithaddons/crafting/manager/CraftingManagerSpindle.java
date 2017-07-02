@@ -1,15 +1,16 @@
 package betterwithaddons.crafting.manager;
 
-import betterwithaddons.crafting.NetRecipe;
 import betterwithaddons.crafting.OreStack;
-import betterwithaddons.crafting.SpindleRecipe;
+import betterwithaddons.crafting.recipes.SpindleRecipe;
 import betterwithaddons.util.InventoryUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CraftingManagerSpindle
 {
@@ -39,6 +40,10 @@ public class CraftingManagerSpindle
     public void addRecipe(ItemStack[] outputs, Object input, boolean consumesSpindle)
     {
         recipes.add(createRecipe(outputs, input, consumesSpindle));
+    }
+
+    public List<SpindleRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
+        return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
     }
 
     public boolean removeRecipe(ItemStack[] outputs, Object input)

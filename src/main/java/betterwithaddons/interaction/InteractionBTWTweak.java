@@ -1,6 +1,6 @@
 package betterwithaddons.interaction;
 
-import betterwithaddons.crafting.DisplaySawRecipe;
+import betterwithaddons.crafting.recipes.DisplaySawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.SoapHandler;
 import betterwithaddons.handler.StumpingHandler;

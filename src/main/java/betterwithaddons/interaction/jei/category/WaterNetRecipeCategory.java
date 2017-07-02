@@ -6,6 +6,9 @@ import mezz.jei.util.Translator;
 import net.minecraft.util.ResourceLocation;
 
 public class WaterNetRecipeCategory extends NetRecipeCategory {
+
+    public static final String UID = "bwa.waternet";
+
     public WaterNetRecipeCategory(IGuiHelper helper) {
         super(helper);
     }
@@ -17,7 +20,7 @@ public class WaterNetRecipeCategory extends NetRecipeCategory {
 
     @Override
     public String getUid() {
-        return "bwa.waternet";
+        return UID;
     }
 
     @Override

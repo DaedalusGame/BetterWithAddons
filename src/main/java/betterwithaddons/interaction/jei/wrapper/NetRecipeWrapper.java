@@ -1,7 +1,7 @@
 package betterwithaddons.interaction.jei.wrapper;
 
 import betterwithaddons.block.EriottoMod.BlockNettedScreen.SifterType;
-import betterwithaddons.crafting.NetRecipe;
+import betterwithaddons.crafting.recipes.NetRecipe;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.init.Blocks;

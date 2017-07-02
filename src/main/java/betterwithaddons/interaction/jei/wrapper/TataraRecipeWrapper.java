@@ -1,5 +1,7 @@
 package betterwithaddons.interaction.jei.wrapper;
 
+import betterwithaddons.crafting.recipes.CherryBoxRecipe;
+import betterwithaddons.crafting.recipes.SmeltingRecipe;
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
@@ -8,11 +10,10 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 
 public class TataraRecipeWrapper extends BlankRecipeWrapper {
-    public List<ItemStack> inputs = Lists.newArrayList(), outputs = Lists.newArrayList();
+    SmeltingRecipe recipe;
 
-    public TataraRecipeWrapper(ItemStack input, ItemStack output) {
-        inputs.add(input);
-        outputs.add(output);
+    public TataraRecipeWrapper(SmeltingRecipe recipe) {
+        this.recipe = recipe;
     }
 
     @Override
@@ -22,10 +23,8 @@ public class TataraRecipeWrapper extends BlankRecipeWrapper {
     }
 
     public List<ItemStack> getInputs() {
-        return inputs;
+        return recipe.getRecipeInputs();
     }
 
-    public List<ItemStack> getOutputs() {
-        return outputs;
-    }
+    public List<ItemStack> getOutputs() { return Lists.newArrayList(recipe.getOutput()); }
 }

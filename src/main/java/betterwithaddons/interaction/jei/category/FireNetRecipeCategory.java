@@ -6,6 +6,8 @@ import mezz.jei.util.Translator;
 import net.minecraft.util.ResourceLocation;
 
 public class FireNetRecipeCategory extends NetRecipeCategory {
+    public static final String UID = "bwa.firenet";
+
     public FireNetRecipeCategory(IGuiHelper helper) {
         super(helper);
     }
@@ -17,7 +19,7 @@ public class FireNetRecipeCategory extends NetRecipeCategory {
 
     @Override
     public String getUid() {
-        return "bwa.firenet";
+        return UID;
     }
 
     @Override

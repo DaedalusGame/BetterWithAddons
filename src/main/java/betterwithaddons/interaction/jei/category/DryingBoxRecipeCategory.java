@@ -10,6 +10,8 @@ public class DryingBoxRecipeCategory extends CherryBoxRecipeCategory {
         super(helper);
     }
 
+    public static final String UID = "bwa.dryingbox";
+
     @Override
     protected ResourceLocation getBackgroundResource() {
         return new ResourceLocation(Reference.MOD_ID, "textures/gui/dryingbox.png");
@@ -17,7 +19,7 @@ public class DryingBoxRecipeCategory extends CherryBoxRecipeCategory {
 
     @Override
     public String getUid() {
-        return "bwa.dryingbox";
+        return UID;
     }
 
     @Override

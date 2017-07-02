@@ -22,6 +22,7 @@ import java.awt.*;
  */
 public class SpindleRecipeCategory extends BlankRecipeCategory<SpindleRecipeWrapper> {
 
+    public static final String UID = "bwa.spindle";
     @Nonnull
     private final IDrawable background;
 
@@ -35,7 +36,7 @@ public class SpindleRecipeCategory extends BlankRecipeCategory<SpindleRecipeWrap
 
     @Override
     public String getUid() {
-        return "bwa.spindle";
+        return UID;
     }
 
     @Override

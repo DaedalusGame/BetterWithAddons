@@ -1,17 +1,20 @@
 package betterwithaddons.crafting.manager;
 
 import betterwithaddons.block.EriottoMod.BlockCherryBox.CherryBoxType;
-import com.google.common.collect.Maps;
+import betterwithaddons.crafting.recipes.CherryBoxRecipe;
+import betterwithaddons.crafting.recipes.NetRecipe;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class CraftingManagerCherryBox {
-    private final Map<ItemStack, ItemStack> workingList = Maps.newHashMap();
+    //private final Map<ItemStack, ItemStack> workingList = Maps.newHashMap();
+    private final ArrayList<CherryBoxRecipe> recipes = new ArrayList<>();
 
     public CraftingManagerCherryBox() {
     }
@@ -20,35 +23,37 @@ public abstract class CraftingManagerCherryBox {
         return CherryBoxType.NONE;
     }
 
-    public void addWorkingRecipe(ItemStack input, ItemStack output) {
-        if(!this.getWorkResult(input).isEmpty()) {
-            FMLLog.info("Ignored cherrybox recipe with conflicting input: " + input + " = " + output, new Object[0]);
-        } else {
-            this.workingList.put(input, output);
-        }
+    public void addRecipe(Object input, ItemStack output) {
+        this.recipes.add(createRecipe(input, output));
     }
+
+    protected CherryBoxRecipe createRecipe(Object input, ItemStack output)
+    {
+        return new CherryBoxRecipe(getType(),input,output);
+    }
+
+    public List<CherryBoxRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
+        return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
+    }
+
 
     @Nullable
     public ItemStack getWorkResult(ItemStack input) {
-        Iterator var2 = this.workingList.entrySet().iterator();
+        Iterator<CherryBoxRecipe> var2 = this.recipes.iterator();
 
-        Map.Entry entry;
+        CherryBoxRecipe entry;
         do {
             if(!var2.hasNext()) {
                 return ItemStack.EMPTY;
             }
 
-            entry = (Map.Entry)var2.next();
-        } while(!this.compareItemStacks(input, (ItemStack)entry.getKey()));
+            entry = var2.next();
+        } while(!entry.matchesInput(input));
 
-        return (ItemStack)entry.getValue();
+        return entry.getOutput();
     }
 
-    private boolean compareItemStacks(ItemStack p_compareItemStacks_1_, ItemStack p_compareItemStacks_2_) {
-        return p_compareItemStacks_2_.getItem() == p_compareItemStacks_1_.getItem() && (p_compareItemStacks_2_.getMetadata() == OreDictionary.WILDCARD_VALUE || p_compareItemStacks_2_.getMetadata() == p_compareItemStacks_1_.getMetadata());
-    }
-
-    public Map<ItemStack, ItemStack> getWorkingList() {
-        return this.workingList;
+    public List<CherryBoxRecipe> getRecipes() {
+        return this.recipes;
     }
 }

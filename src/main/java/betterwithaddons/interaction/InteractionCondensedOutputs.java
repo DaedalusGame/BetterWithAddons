@@ -125,7 +125,7 @@ public class InteractionCondensedOutputs extends Interaction {
         addCongealingRecipe(ModItems.materialCongealed.getMaterial("eye"),new ItemStack(Items.SPIDER_EYE));
         addCongealingRecipe(ModItems.materialCongealed.getMaterial("wart"),new ItemStack(Items.NETHER_WART));
 
-        addRollupRecipe(ModItems.materialBolt.getMaterial("fabric"),new OreStack("fiberHemp",9));
+        addRollupRecipe(ModItems.materialBolt.getMaterial("fabric"),new OreStack("fabricHemp",8));
         addRollupRecipe(ModItems.materialBolt.getMaterial("vine"),new ItemStack(Blocks.VINE));
         addRollupRecipe(ModItems.materialBolt.getMaterial("paper"),new OreStack("paper",8));
         addRollupRecipe(ModItems.materialBolt.getMaterial("leather"),new OreStack("leather",8));
@@ -143,6 +143,7 @@ public class InteractionCondensedOutputs extends Interaction {
         addBundlingRecipe(ModItems.materialBundle.getMaterial("acacia"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.ACACIA.getMetadata()));
         addBundlingRecipe(ModItems.materialBundle.getMaterial("darkoak"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
 
+        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH)},new OreStack("fiberHemp",9),false);
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.ROPE.getMeta())},new ItemStack(BWMBlocks.ROPE,9),false);
     }
 

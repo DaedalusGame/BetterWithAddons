@@ -1,6 +1,7 @@
 package betterwithaddons.handler;
 
 import betterwithaddons.interaction.InteractionBTWTweak;
+import betterwithaddons.interaction.minetweaker.SoftWoods;
 import betterwithaddons.util.BlockMeta;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
@@ -16,7 +17,12 @@ import java.util.ArrayList;
 public class StumpingHandler {
     private static ArrayList<WoodHardness> SOFT_WOODS = new ArrayList<>();
 
-    private static class WoodHardness extends BlockMeta
+    public static ArrayList<WoodHardness> getSoftWoods()
+    {
+        return SOFT_WOODS;
+    }
+
+    public static class WoodHardness extends BlockMeta
     {
         public float hardness;
 
@@ -29,6 +35,17 @@ public class StumpingHandler {
     public static void addSoftWood(Block block, int meta, float hardness)
     {
         SOFT_WOODS.add(new WoodHardness(block,meta,hardness));
+    }
+
+    public static WoodHardness getSoftWood(Block block, int meta)
+    {
+        for (WoodHardness wood : SOFT_WOODS) {
+            if (wood.matches(block, meta)) {
+                return wood;
+            }
+        }
+
+        return null;
     }
 
     @SubscribeEvent
@@ -52,14 +69,10 @@ public class StumpingHandler {
         }
 
         if(InteractionBTWTweak.SOFT_WOODS) {
-            int meta = block.damageDropped(state);
+            WoodHardness wood = getSoftWood(block,block.damageDropped(state));
 
-            for (WoodHardness wood : SOFT_WOODS) {
-                if (wood.matches(block, meta)) {
-                    multiplier = wood.hardness / state.getBlockHardness(world,breakpos);
-                    break;
-                }
-            }
+            if(wood != null)
+                multiplier = wood.hardness / state.getBlockHardness(world,breakpos);
         }
 
         breakEvent.setNewSpeed(speed * multiplier);

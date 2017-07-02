@@ -1,6 +1,6 @@
 package betterwithaddons.interaction.jei.wrapper;
 
-import betterwithaddons.crafting.SpindleRecipe;
+import betterwithaddons.crafting.recipes.SpindleRecipe;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;

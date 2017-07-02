@@ -5,10 +5,22 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.*;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ItemUtil
 {
+	public static List<ItemStack> getOreList(OreStack stack)
+	{
+		int stackSize = stack.getStackSize();
+		List<ItemStack> list = new ArrayList<ItemStack>();
+		if(stack.getOres() != null && !stack.getOres().isEmpty()) {
+			list.addAll(stack.getOres().stream().map(s -> new ItemStack(s.getItem(), stackSize, s.getItemDamage())).collect(Collectors.toList()));
+		}
+		return list;
+	}
+
 	public static boolean matchesOreDict(ItemStack stack, String oreDictName)
 	{
 		int checkid = OreDictionary.getOreID(oreDictName);

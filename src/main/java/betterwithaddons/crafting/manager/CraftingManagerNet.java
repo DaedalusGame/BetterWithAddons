@@ -1,15 +1,17 @@
 package betterwithaddons.crafting.manager;
 
 import betterwithaddons.block.EriottoMod.BlockNettedScreen.SifterType;
-import betterwithaddons.crafting.NetRecipe;
+import betterwithaddons.crafting.recipes.NetRecipe;
 import betterwithaddons.crafting.OreStack;
 import betterwithaddons.util.InventoryUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class CraftingManagerNet
 {
@@ -35,6 +37,10 @@ public abstract class CraftingManagerNet
     public void addRecipe(ItemStack[] outputs, Object input, int sand)
     {
         recipes.add(createRecipe(outputs, input, sand));
+    }
+
+    public List<NetRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
+        return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
     }
 
     public boolean removeRecipe(ItemStack[] outputs, Object input)
@@ -115,7 +121,7 @@ public abstract class CraftingManagerNet
         return null;
     }*/
 
-    private NetRecipe createRecipe(ItemStack[] outputs, Object input, int sand)
+    protected NetRecipe createRecipe(ItemStack[] outputs, Object input, int sand)
     {
         return new NetRecipe(craftType, input, sand, outputs);
     }
@@ -123,18 +129,5 @@ public abstract class CraftingManagerNet
     public List<NetRecipe> getRecipes()
     {
         return this.recipes;
-    }
-
-    //Lazy way of ensuring the ore dictionary entries were properly implemented.
-    public void refreshRecipes()
-    {
-        List<NetRecipe> recipes = getRecipes();
-        if(!recipes.isEmpty())
-        {
-            this.recipes = new ArrayList<NetRecipe>();
-            for(NetRecipe r : recipes) {
-                this.recipes.add(createRecipe(r.getOutput().toArray(new ItemStack[0]), r.input, r.getSandRequired()));
-            }
-        }
     }
 }

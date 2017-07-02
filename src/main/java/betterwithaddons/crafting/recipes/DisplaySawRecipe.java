@@ -1,4 +1,4 @@
-package betterwithaddons.crafting;
+package betterwithaddons.crafting.recipes;
 
 import betterwithmods.common.registry.blockmeta.recipe.SawRecipe;
 import net.minecraft.block.Block;

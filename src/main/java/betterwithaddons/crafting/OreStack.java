@@ -58,4 +58,9 @@ public class OreStack
     public void setCount(int stackSize) {
         this.stackSize = stackSize;
     }
+
+    @Override
+    public String toString() {
+        return oreName+"@"+stackSize;
+    }
 }

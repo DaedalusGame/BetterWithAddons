@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nonnull;
 
 public class TataraRecipeCategory extends BlankRecipeCategory<TataraRecipeWrapper> {
+    public static final String UID = "bwa.tatara";
     @Nonnull
     private final IDrawable background;
     @Nonnull
@@ -44,7 +45,7 @@ public class TataraRecipeCategory extends BlankRecipeCategory<TataraRecipeWrappe
     @Nonnull
     @Override
     public String getUid() {
-        return "bwa.tatara";
+        return UID;
     }
 
     @Nonnull

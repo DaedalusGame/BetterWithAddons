@@ -1,7 +1,8 @@
-package betterwithaddons.crafting;
+package betterwithaddons.crafting.recipes;
 
 import betterwithaddons.block.EriottoMod.BlockNettedScreen.SifterType;
-import com.google.common.collect.Lists;
+import betterwithaddons.crafting.OreStack;
+import betterwithaddons.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -11,17 +12,19 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpindleRecipe
+public class NetRecipe
 {
     public ArrayList<ItemStack> outputs = new ArrayList<ItemStack>();
     public Object input = ItemStack.EMPTY;
     public Object jeiInput = ItemStack.EMPTY;
+    public int sandrequired = 0;
 
-    public boolean consumesSpindle = false;
+    public SifterType type = SifterType.NONE;
 
-    public SpindleRecipe(boolean consumesSpindle,Object input, ItemStack... outputs)
+    public NetRecipe(SifterType type, Object input, int sand, ItemStack... outputs)
     {
-        this.consumesSpindle = consumesSpindle;
+        this.sandrequired = sand;
+        this.type = type;
 
         for (ItemStack out: outputs) {
             if(out.isEmpty())
@@ -44,28 +47,16 @@ public class SpindleRecipe
         }
         else if(input instanceof OreStack) {
             this.input = ((OreStack) input).copy();
-            this.jeiInput = getOreList(((OreStack)input).copy());
+            this.jeiInput = ItemUtil.getOreList(((OreStack)input).copy());
         }
         else
         {
-            String ret = "Invalid spindle recipe: ";
+            String ret = "Invalid " + type.getName() + " recipe: ";
             for(Object tmp : outputs)
                 ret += tmp + ", ";
             ret += "Input: " + input;
             throw new RuntimeException(ret);
         }
-    }
-
-    private List<ItemStack> getOreList(OreStack stack)
-    {
-        int stackSize = stack.getStackSize();
-        List<ItemStack> list = new ArrayList<ItemStack>();
-        if(stack.getOres() != null && !stack.getOres().isEmpty()) {
-            for (ItemStack s : stack.getOres()) {
-                list.add(new ItemStack(s.getItem(), stackSize, s.getItemDamage()));
-            }
-        }
-        return list;
     }
 
     public ArrayList<ItemStack> getOutput()
@@ -75,23 +66,23 @@ public class SpindleRecipe
 
     public Object getInput()
     {
+        return this.jeiInput;
+    }
+
+    public Object getRecipeInput() {
         return this.input;
     }
 
-    public List<ItemStack> getRecipeInputs() {
-        Object o = getInput();
-        if(o instanceof ItemStack)
-            return Lists.newArrayList((ItemStack) o);
-        if(o instanceof OreStack)
-            return getOreList((OreStack)o);
-        return null;
+    public int getSandRequired()
+    {
+        return this.sandrequired;
     }
 
-    public boolean willConsumeSpindle() {
-        return consumesSpindle;
+    public SifterType getType() {
+        return type;
     }
 
-    public boolean matches(SpindleRecipe recipe)
+    public boolean matches(NetRecipe recipe)
     {
         if(!isInputEmpty(this.getInput()) && !isInputEmpty(recipe.getInput()))
         {

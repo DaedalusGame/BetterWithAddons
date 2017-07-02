@@ -2,7 +2,7 @@ package betterwithaddons.tileentity;
 
 import betterwithaddons.block.EriottoMod.BlockNettedScreen;
 import betterwithaddons.block.EriottoMod.BlockSlat;
-import betterwithaddons.crafting.NetRecipe;
+import betterwithaddons.crafting.recipes.NetRecipe;
 import betterwithaddons.crafting.manager.CraftingManagerFireNet;
 import betterwithaddons.crafting.manager.CraftingManagerNet;
 import betterwithaddons.crafting.manager.CraftingManagerSandNet;
