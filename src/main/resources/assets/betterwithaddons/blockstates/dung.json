@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"textures": {
+		"all": "betterwithaddons:blocks/dung"
+    },
+	"model": "cube_all",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}]
+  }
+}

@@ -36,6 +36,20 @@ public class ModConfiguration {
     ConfigOptionInteger BWA_LegendariumMinQueueSize = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumMinQueueSize", InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE, "How many artifacts must be in the Hall of Legends to take one out.");
     ConfigOptionInteger BWA_LegendariumTurnInDelay = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumTurnInDelay", InteractionBWA.LEGENDARIUM_TURN_IN_DELAY, "How long until the next artifact can be turned in. (in ticks; 1000 ticks is one Minecraft hour)");
 
+    ConfigOptionBool BWR_Enabled = new ConfigOptionBool("addons.BetterWithRenewables","Enabled",InteractionBWR.ENABLED);
+    ConfigOptionBool BWR_RedstoneSynthesis = new ConfigOptionBool("addons.BetterWithRenewables","RedstoneSynthesis",InteractionBWR.REDSTONE_SYNTHESIS,"Allows redstone to be farbricated from concentrated hellfire and gold.");
+    ConfigOptionBool BWR_RedstoneSynthesisEarly = new ConfigOptionBool("addons.BetterWithRenewables","RedstoneSynthesisEarly",InteractionBWR.REDSTONE_SYNTHESIS_EARLY,"Allows redstone to be synthesized earlier to create Hibachis.");
+    ConfigOptionInteger BWR_RedstonePerSynthesis = new ConfigOptionInteger("addons.BetterWithRenewables","RedstonePerSynthesis",InteractionBWR.REDSTONE_PER_SYNTHESIS,"How much redstone is obtained per bar of concentrated hellfire.");
+    ConfigOptionBool BWR_HellfireEarly = new ConfigOptionBool("addons.BetterWithRenewables","HellfireEarly",InteractionBWR.HELLFIRE_EARLY,"Allows hellfire dust to be created earlier in the tech tree.");
+    ConfigOptionBool BWR_BoilingBushes = new ConfigOptionBool("addons.BetterWithRenewables","BoilingBushes",InteractionBWR.BOILING_BUSHES,"Allows dead bushes to be created from oak saplings.");
+    ConfigOptionBool BWR_WeavingWebs = new ConfigOptionBool("addons.BetterWithRenewables","WeavingWebs",InteractionBWR.WEAVING_WEBS,"Allows webs to be created from string and slimeballs.");
+    ConfigOptionBool BWR_LapisFromWool = new ConfigOptionBool("addons.BetterWithRenewables","LapisFromWool",InteractionBWR.LAPIS_FROM_WOOL,"Allows lapis to be created from blue wool and clay.");
+    ConfigOptionBool BWR_DiamondSynthesis = new ConfigOptionBool("addons.BetterWithRenewables","DiamondSynthesis",InteractionBWR.DIAMOND_SYNTHESIS,"Allows diamonds to be fabricated from ghast tears.");
+    ConfigOptionBool BWR_DiamondRecovery = new ConfigOptionBool("addons.BetterWithRenewables","DiamondRecovery",InteractionBWR.DIAMOND_RECOVERY,"Allows diamond ingots to be taken apart into diamonds and iron ingots using strong alkaline.");
+    ConfigOptionBool BWR_GoldGrinding = new ConfigOptionBool("addons.BetterWithRenewables","GoldGrinding",InteractionBWR.GOLD_GRINDING,"Allows only tools and armor made from gold to be milled into nuggets at a lower efficiency than when melted in a Crucible.");
+    ConfigOptionInteger BWR_GoldPerIngot = new ConfigOptionInteger("addons.BetterWithRenewables","GoldPerIngot",InteractionBWR.GOLD_PER_INGOT,"Gold nuggets returned when grinding gold tools or armor in a millstone.");
+    ConfigOptionBool BWR_NetherrackSynthesis = new ConfigOptionBool("addons.BetterWithRenewables","NetherrackSynthesis",InteractionBWR.NETHERRACK_SYNTHESIS,"Allows netherrack to be farbricated from a usable medium, a hellborn plant and some residents from the nether.");
+    ConfigOptionBool BWR_SoulsandInfusion = new ConfigOptionBool("addons.BetterWithRenewables","SoulsandInfusion",InteractionBWR.SOULSAND_INFUSION,"Allows netherrack to be fabricated from dung and experience.");
 
     ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED);
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
@@ -97,8 +111,10 @@ public class ModConfiguration {
         InteractionBWA.LEGENDARIUM_POSTER_RANGE = BWA_LegendariumPosterRange.init(configuration);
         InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE = BWA_LegendariumMinQueueSize.init(configuration);
         InteractionBWA.LEGENDARIUM_TURN_IN_DELAY = BWA_LegendariumTurnInDelay.init(configuration);
+
         InteractionEriottoMod.ENABLED = EriottoMod_Enabled.init(configuration);
         InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);
+
         InteractionDecoAddon.ENABLED = DecoAddon_Enabled.init(configuration);
         InteractionDecoAddon.WOOD_COLORING = DecoAddon_WoodColoring.init(configuration);
         InteractionDecoAddon.ALTERNATE_WROUGHT_BARS = DecoAddon_AlternateWroughtBars.init(configuration);
@@ -107,8 +123,10 @@ public class ModConfiguration {
         InteractionDecoAddon.GLASS_FURNACE = DecoAddon_GlassFurnace.init(configuration);
         InteractionDecoAddon.CHEAPER_BOTTLES = DecoAddon_CheaperBottles.init(configuration);
         InteractionDecoAddon.RECYCLE_BOTTLES = DecoAddon_RecycleBottles.init(configuration);
+
         InteractionCondensedOutputs.ENABLED = CondensedOutputs_Enabled.init(configuration);
         InteractionCondensedOutputs.LOSE_BINDER = CondensedOutputs_LoseBinder.init(configuration);
+
         InteractionBTWTweak.ENABLED = BTWTweak_Enabled.init(configuration);
         //InteractionBTWTweak.KILN_DOUBLING = BTWTweak_KilnDoubling.init(configuration);
         InteractionBTWTweak.SOFT_WOODS = BTWTweak_SoftWoods.init(configuration);
@@ -117,6 +135,21 @@ public class ModConfiguration {
         InteractionBTWTweak.SAW_RECYCLING = BTWTweak_SawRecycling.init(configuration);
         InteractionBTWTweak.EGG_INCUBATION = BTWTweak_EggIncubation.init(configuration);
         InteractionBTWTweak.SLIPPERY_WHEN_WET = BTWTweak_SlipperyWhenWet.init(configuration);
+
+        InteractionBWR.ENABLED = BWR_Enabled.init(configuration);
+        InteractionBWR.REDSTONE_SYNTHESIS = BWR_RedstoneSynthesis.init(configuration);
+        InteractionBWR.REDSTONE_SYNTHESIS_EARLY = BWR_RedstoneSynthesisEarly.init(configuration);
+        InteractionBWR.REDSTONE_PER_SYNTHESIS = BWR_RedstonePerSynthesis.init(configuration);
+        InteractionBWR.HELLFIRE_EARLY = BWR_HellfireEarly.init(configuration);
+        InteractionBWR.BOILING_BUSHES = BWR_BoilingBushes.init(configuration);
+        InteractionBWR.WEAVING_WEBS = BWR_WeavingWebs.init(configuration);
+        InteractionBWR.LAPIS_FROM_WOOL = BWR_LapisFromWool.init(configuration);
+        InteractionBWR.DIAMOND_SYNTHESIS = BWR_DiamondSynthesis.init(configuration);
+        InteractionBWR.DIAMOND_RECOVERY = BWR_DiamondRecovery.init(configuration);
+        InteractionBWR.GOLD_GRINDING = BWR_GoldGrinding.init(configuration);
+        InteractionBWR.GOLD_PER_INGOT = BWR_GoldPerIngot.init(configuration);
+        InteractionBWR.NETHERRACK_SYNTHESIS = BWR_NetherrackSynthesis.init(configuration);
+        InteractionBWR.SOULSAND_INFUSION = BWR_SoulsandInfusion.init(configuration);
 
         if (configuration.hasChanged())
         {

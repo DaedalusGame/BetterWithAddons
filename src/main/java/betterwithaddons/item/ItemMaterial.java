@@ -39,7 +39,8 @@ public class ItemMaterial extends Item implements IHasVariants,IDisableable {
 
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
-        return container;
+
+        return container.copy();
     }
 
     @Override

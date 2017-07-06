@@ -19,6 +19,7 @@ public class ModInteractions {
     public static InteractionDecoAddon decoAddon;
     public static InteractionBTWTweak btwTweak;
     public static InteractionMinetweaker minetweaker;
+    public static InteractionBWR betterWithRenewables;
 
     public static void preInit(FMLPreInitializationEvent event) {
         bwa = (InteractionBWA) addInteraction(new InteractionBWA());
@@ -29,6 +30,7 @@ public class ModInteractions {
         condensedOutputs = (InteractionCondensedOutputs) addInteraction(new InteractionCondensedOutputs());
         decoAddon = (InteractionDecoAddon) addInteraction(new InteractionDecoAddon());
         btwTweak = (InteractionBTWTweak) addInteraction(new InteractionBTWTweak());
+        betterWithRenewables = (InteractionBWR) addInteraction(new InteractionBWR());
         minetweaker = (InteractionMinetweaker) addInteraction(new InteractionMinetweaker());
 
         validate();

@@ -83,6 +83,7 @@ public class ModBlocks {
     public static BlockSaltLayer saltLayer;
     public static BlockSpindle spindle;
     public static BlockLoom loom;
+    public static BlockDung dung;
 
     public static void load(FMLPreInitializationEvent event) {
         FluidRegistry.registerFluid(new Fluid("brine",new ResourceLocation(Reference.MOD_ID,"blocks/brine_still"),new ResourceLocation(Reference.MOD_ID,"blocks/brine_flow")));
@@ -179,6 +180,7 @@ public class ModBlocks {
         //connectPanes(fusuma, fusuma2);
 
         wetSoap = (BlockSoap) addBlock(new BlockSoap());
+        dung = (BlockDung) addBlock(new BlockDung());
 
         chandelier = (BlockChandelier) addBlock(new BlockChandelier().setLightLevel(0.9375F));
         paperWall = (BlockModPane) addBlock(new BlockModPane("paper_wall", Material.WOOD).setHardness(1.0f));

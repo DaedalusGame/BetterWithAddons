@@ -46,7 +46,6 @@ public class EggIncubationHandler {
     public void worldTick(TickEvent.WorldTickEvent tickEvent)
     {
         World world = tickEvent.world;
-        WorldScaleData.getInstance(world).cleanup();
         if(!world.isRemote) {
             handleEggs();
         }

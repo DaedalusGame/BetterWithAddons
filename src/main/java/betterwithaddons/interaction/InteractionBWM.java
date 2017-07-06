@@ -138,6 +138,9 @@ public class InteractionBWM extends Interaction {
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BLASTING_OIL));
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HELLFIRE_DUST));
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE));
+        OreDictionary.registerOre("blockDung", ModBlocks.dung);
+
+        registerCompressRecipe(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG),new ItemStack(ModBlocks.dung),"dung","blockDung");
 
         if(CAULDRONS_EXPLODE)
             addCauldronExplosion();
@@ -179,11 +182,11 @@ public class InteractionBWM extends Interaction {
         //Thorn Vines
         ItemStack rosebush = new ItemStack(Blocks.DOUBLE_PLANT, 4, BlockDoublePlant.EnumPlantType.ROSE.getMeta());
         ItemStack thornrose = ModItems.material.getMaterial("thornrose", 2);
-        ItemStack soulurn = new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta());
+        ItemStack soulUrn = new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta());
         ItemStack cactus = new ItemStack(Blocks.CACTUS, 1);
         ItemStack dung = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG, 1);
-        CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.thornrose), ItemStack.EMPTY, new Object[]{cactus, rosebush, dung, soulurn});
-        CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.thornrose), ItemStack.EMPTY, new Object[]{cactus, thornrose, dung, soulurn});
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.thornrose), ItemStack.EMPTY, new Object[]{cactus, rosebush, dung, soulUrn});
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.thornrose), ItemStack.EMPTY, new Object[]{cactus, thornrose, dung, soulUrn});
 
         //Alicio Sapling
         ItemStack wheat = new ItemStack(Items.WHEAT, 16);
@@ -194,12 +197,12 @@ public class InteractionBWM extends Interaction {
 
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chute, 1), "s s", " p ", "mgm", 's', new ItemStack(BWMBlocks.WOOD_SIDING), 'm', new ItemStack(BWMBlocks.WOOD_MOULDING), 'g', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), 'p', new ItemStack(Blocks.WOODEN_PRESSURE_PLATE));
 
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 0), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta()));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 1), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta()));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 2), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.SPRUCE.getMetadata()), new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta()));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 3), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.JUNGLE.getMetadata()), new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta()));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 4), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.ACACIA.getMetadata()), new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta()));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 5), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata()), new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta()));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 0), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), soulUrn);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 1), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), soulUrn);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 2), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.SPRUCE.getMetadata()), soulUrn);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 3), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.JUNGLE.getMetadata()), soulUrn);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 4), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.ACACIA.getMetadata()), soulUrn);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 5), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata()), soulUrn);
 
 
         if (MILL_CLAY) {

@@ -18,6 +18,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -79,6 +80,9 @@ public class InteractionBWA extends Interaction {
 
     @Override
     public void init() {
+        if(PatientiaHandler.shouldRegister())
+            MinecraftForge.EVENT_BUS.register(new PatientiaHandler());
+
         if(!ModInteractions.bwm.isActive()) //add recipes even if better with mods isn't installed.
         {
             String oreArrowhead = "ingotIron";

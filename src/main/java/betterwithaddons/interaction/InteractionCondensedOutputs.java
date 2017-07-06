@@ -18,6 +18,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -85,6 +86,9 @@ public class InteractionCondensedOutputs extends Interaction {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "sidingWood", 'i', "nuggetIron"));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.spindle,3),"s","s","s",'s',new ItemStack(BWMBlocks.WOOD_MOULDING,1));
 
+        OreDictionary.registerOre("listAllExplosives",ModItems.materialBag.getMaterial("gunpowder"));
+        OreDictionary.registerOre("listAllExplosives",ModItems.materialBag.getMaterial("hellfire"));
+
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed"),new ItemStack(Items.WHEAT_SEEDS));
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed_hemp"),new ItemStack(BWMBlocks.HEMP));
         addBaggingRecipe(ModItems.materialBag.getMaterial("seed_melon"),new ItemStack(Items.MELON_SEEDS));
@@ -143,6 +147,8 @@ public class InteractionCondensedOutputs extends Interaction {
         addBundlingRecipe(ModItems.materialBundle.getMaterial("acacia"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.ACACIA.getMetadata()));
         addBundlingRecipe(ModItems.materialBundle.getMaterial("darkoak"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
 
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.dung),new Object[]{new betterwithmods.common.registry.OreStack("dung",9)});
+
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH)},new OreStack("fiberHemp",9),false);
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.ROPE.getMeta())},new ItemStack(BWMBlocks.ROPE,9),false);
     }
@@ -183,7 +189,9 @@ public class InteractionCondensedOutputs extends Interaction {
     private void addRollupRecipe(ItemStack output, OreStack material)
     {
         addCondensingRecipe(output, material, boltStack);
-        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material.copy(),true);
+        OreStack material8 = material.copy();
+        material8.setCount(8);
+        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material8,true);
     }
 
     private void addBundlingRecipe(ItemStack output, ItemStack material)
@@ -202,9 +210,14 @@ public class InteractionCondensedOutputs extends Interaction {
 
     private void addCondensingRecipe(ItemStack output, OreStack material, ItemStack frame)
     {
-        OreStack outmaterial = material.copy();
-        outmaterial.setCount(8);
+        ItemStack outmaterial = ItemStack.EMPTY;
+        List<ItemStack> orestacks = material.getOres();
+        if(!orestacks.isEmpty())
+        {
+            outmaterial = orestacks.get(0).copy();
+            outmaterial.setCount(8);
+        }
         GameRegistry.addRecipe(new ShapedOreRecipe(output,"aaa","aba","aaa",'a',material.getOreName(),'b',frame));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(output, outmaterial.getOreName()));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(outmaterial, output));
     }
 }
