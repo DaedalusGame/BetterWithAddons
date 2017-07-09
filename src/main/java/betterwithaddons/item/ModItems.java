@@ -59,6 +59,7 @@ public class ModItems
     public static ItemModFood meatballs;
     public static ItemModFood cookedEgg;
     public static ItemModFood groundMeat;
+    public static Item soulSandPile;
 
     public static ItemMaterial bowls;
 
@@ -141,6 +142,8 @@ public class ModItems
         sashimi = (ItemModFood)registerItem("food_sashimi",new ItemModFood(2, 0.1F, false));
         rice = (ItemModFood)registerItem("food_cooked_rice",new ItemModFood(2, 0.3F, false));
         riceBowl = (ItemModFood)registerItem("food_bowl_rice",new ItemModFood(9, 0.6F, false).setMaxStackSize(1));
+
+        soulSandPile = registerItem("soulsand_pile",new Item());
 
         bowls = (ItemMaterial)registerItem("bowl",new ItemMaterial(
                 new String[]{"salt"}

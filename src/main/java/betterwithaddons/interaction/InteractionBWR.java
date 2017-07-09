@@ -3,7 +3,9 @@ package betterwithaddons.interaction;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.recipes.LapisRinsingRecipe;
+import betterwithaddons.crafting.recipes.QuartzCrystalRecipe;
 import betterwithaddons.handler.*;
+import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.blocks.BlockUrn;
@@ -20,9 +22,11 @@ import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -48,6 +52,7 @@ public class InteractionBWR extends Interaction {
     public static boolean SAND_TO_CLAY = true;
     public static boolean CROSSBREED_PLANTS = true;
     public static boolean REDSTONE_BOILING = true;
+    public static boolean BLAZE_GOLEMS = true;
 
     public static int GOLD_PER_INGOT = 1;
     public static int REDSTONE_PER_SYNTHESIS = 7;
@@ -76,6 +81,7 @@ public class InteractionBWR extends Interaction {
             PatientiaHandler.addCustomBlock(BWMBlocks.FERTILE_FARMLAND);
             PatientiaHandler.addCustomBlock(BWMBlocks.PLANTER);
             PatientiaHandler.addCustomBlock(Blocks.SOUL_SAND);
+            PatientiaHandler.addCustomBlock(Blocks.END_STONE);
             MinecraftForge.EVENT_BUS.register(new PlantCrossbreedHandler());
         }
         if(REDSTONE_BOILING)
@@ -87,6 +93,14 @@ public class InteractionBWR extends Interaction {
 
     @Override
     void init() {
+        PlantCrossbreedHandler.initialize();
+
+        OreDictionary.registerOre("listAllBlazeFoods",Items.COAL);
+        OreDictionary.registerOre("listAllBlazeFoods",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.COAL_DUST));
+        OreDictionary.registerOre("listAllBlazeFoods",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CHARCOAL_DUST));
+        OreDictionary.registerOre("listAllBlazeFoods",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL));
+        OreDictionary.registerOre("listAllBlazeFoods",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BLASTING_OIL));
+
         //Tanning Leather with dung blocks
         //TODO: This is hacky.
         CauldronManager.getInstance().addRecipe(
@@ -188,6 +202,9 @@ public class InteractionBWR extends Interaction {
 
         if(DIAMOND_SYNTHESIS)
             StokedCrucibleManager.getInstance().addRecipe(new ItemStack(Items.DIAMOND), hellfireDust.copy(),new Object[]{new ItemStack(Items.GHAST_TEAR),new ItemStack(Items.DYE, 1, EnumDyeColor.CYAN.getDyeDamage()),new OreStack("dustNetherrack", 1)});
+
+        CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ),ItemStack.EMPTY,new Object[]{new ItemStack(BWMItems.SAND_PILE)}));
+        CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ),ItemStack.EMPTY,new Object[]{new ItemStack(ModItems.soulSandPile)}));
     }
 
     private void addDiamondRecovery(Object input, int output)

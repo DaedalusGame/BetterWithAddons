@@ -50,6 +50,7 @@ public class ModConfiguration {
     ConfigOptionInteger BWR_GoldPerIngot = new ConfigOptionInteger("addons.BetterWithRenewables","GoldPerIngot",InteractionBWR.GOLD_PER_INGOT,"Gold nuggets returned when grinding gold tools or armor in a millstone.");
     ConfigOptionBool BWR_NetherrackSynthesis = new ConfigOptionBool("addons.BetterWithRenewables","NetherrackSynthesis",InteractionBWR.NETHERRACK_SYNTHESIS,"Allows netherrack to be farbricated from a usable medium, a hellborn plant and some residents from the nether.");
     ConfigOptionBool BWR_SoulsandInfusion = new ConfigOptionBool("addons.BetterWithRenewables","SoulsandInfusion",InteractionBWR.SOULSAND_INFUSION,"Allows netherrack to be fabricated from dung and experience.");
+    ConfigOptionBool BWR_BlazeGolems = new ConfigOptionBool("addons.BetterWithRenewables","BlazeGolems",InteractionBWR.BLAZE_GOLEMS,"Allows blazes to be created from a golem-like shape with appropriate blocks.");
 
     ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED);
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
@@ -150,6 +151,7 @@ public class ModConfiguration {
         InteractionBWR.GOLD_PER_INGOT = BWR_GoldPerIngot.init(configuration);
         InteractionBWR.NETHERRACK_SYNTHESIS = BWR_NetherrackSynthesis.init(configuration);
         InteractionBWR.SOULSAND_INFUSION = BWR_SoulsandInfusion.init(configuration);
+        InteractionBWR.BLAZE_GOLEMS = BWR_BlazeGolems.init(configuration);
 
         if (configuration.hasChanged())
         {

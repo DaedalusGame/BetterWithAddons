@@ -21,6 +21,7 @@ import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
+import betterwithmods.module.hardcore.HCPiles;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
@@ -129,6 +130,11 @@ public class InteractionBWM extends Interaction {
     public void init() {
         if (!isActive())
             return;
+
+        //Temporary until we PR soulsand piles
+        HCPiles.registerPile(Blocks.SOUL_SAND,new ItemStack(ModItems.soulSandPile,3));
+        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.soulSandPile,4),new ItemStack(Blocks.SOUL_SAND));
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.SOUL_SAND),new ItemStack(ModItems.soulSandPile),new ItemStack(ModItems.soulSandPile),new ItemStack(ModItems.soulSandPile),new ItemStack(ModItems.soulSandPile));
 
         OreDictionary.registerOre("listAllExplosives", new ItemStack(Blocks.TNT));
         OreDictionary.registerOre("listAllExplosives", new ItemStack(Items.GUNPOWDER));

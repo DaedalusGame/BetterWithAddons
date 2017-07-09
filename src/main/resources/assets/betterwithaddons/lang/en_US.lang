@@ -124,6 +124,7 @@ item.warwall.name=Warwall
 item.artifact_frame.name=Artifact Display
 item.bowl.salt.name=Bowl of Salt
 
+item.soulsand_pile.name=Pile of Soul Sand
 item.explosion.name=§eHIGHLY VOLATILE!
 
 item.brick_stained.white.name=White Stained Brick
@@ -283,7 +284,20 @@ tooltip.salt_creation.name=Place in sun to dry into Salination Pond.
 tooltip.salt_layer.name=Pick up with a bowl to get salt.
 bwm.manual.bwa=Better With Addons
 
+tooltip.quartz.verbose=%s%% Saturation
+tooltip.souls.verbose=%s Vindictive Souls
 
+tooltip.quartz.starting=Beginning to change...
+tooltip.quartz.longway=Will take a while longer...
+tooltip.quartz.halfway=Beginning to form crystalline structures.
+tooltip.quartz.readysoon=Will be ready soon.
+tooltip.quartz.almostready=Almost ready.
+
+tooltip.souls.one=Did it just move?
+tooltip.souls.two=Fidgeting
+tooltip.souls.three=Fidgeting wildly
+tooltip.souls.half=Screaming without a sound
+tooltip.souls.danger=§kWE RISE
 
 
 
