@@ -45,14 +45,17 @@ public class InteractionBWR extends Interaction {
     public static boolean DIAMOND_RECOVERY = true;
     public static boolean GOLD_GRINDING = true;
     public static boolean NETHERRACK_SYNTHESIS = true;
-    public static boolean SOULSAND_INFUSION = true;
+    public static boolean QUARTZ_GROWING = true;
 
     public static boolean MELT_HELLFIRE = true;
     public static boolean DUNG_TO_DIRT = true;
     public static boolean SAND_TO_CLAY = true;
     public static boolean CROSSBREED_PLANTS = true;
+    public static boolean CROSSBREED_ANIMALS = true;
     public static boolean REDSTONE_BOILING = true;
+    public static boolean SOULSAND_INFUSION = true;
     public static boolean BLAZE_GOLEMS = true;
+    public static boolean BLAZE_BREEDING = true;
 
     public static int GOLD_PER_INGOT = 1;
     public static int REDSTONE_PER_SYNTHESIS = 7;
@@ -84,6 +87,8 @@ public class InteractionBWR extends Interaction {
             PatientiaHandler.addCustomBlock(Blocks.END_STONE);
             MinecraftForge.EVENT_BUS.register(new PlantCrossbreedHandler());
         }
+        if(CROSSBREED_ANIMALS)
+            MinecraftForge.EVENT_BUS.register(new AnimalCrossbreedHandler());
         if(REDSTONE_BOILING)
             MinecraftForge.EVENT_BUS.register(new RedstoneBoilHandler());
         if(SOULSAND_INFUSION)
@@ -94,6 +99,7 @@ public class InteractionBWR extends Interaction {
     @Override
     void init() {
         PlantCrossbreedHandler.initialize();
+        AnimalCrossbreedHandler.initialize();
 
         OreDictionary.registerOre("listAllBlazeFoods",Items.COAL);
         OreDictionary.registerOre("listAllBlazeFoods",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.COAL_DUST));
@@ -203,8 +209,10 @@ public class InteractionBWR extends Interaction {
         if(DIAMOND_SYNTHESIS)
             StokedCrucibleManager.getInstance().addRecipe(new ItemStack(Items.DIAMOND), hellfireDust.copy(),new Object[]{new ItemStack(Items.GHAST_TEAR),new ItemStack(Items.DYE, 1, EnumDyeColor.CYAN.getDyeDamage()),new OreStack("dustNetherrack", 1)});
 
-        CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ),ItemStack.EMPTY,new Object[]{new ItemStack(BWMItems.SAND_PILE)}));
-        CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ),ItemStack.EMPTY,new Object[]{new ItemStack(ModItems.soulSandPile)}));
+        if(QUARTZ_GROWING) {
+            CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ), ItemStack.EMPTY, new Object[]{new ItemStack(BWMItems.SAND_PILE)}));
+            CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ), ItemStack.EMPTY, new Object[]{new ItemStack(ModItems.soulSandPile)}));
+        }
     }
 
     private void addDiamondRecovery(Object input, int output)

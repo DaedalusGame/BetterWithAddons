@@ -30,7 +30,6 @@ public class QuartzCrystalRecipe extends CauldronRecipe {
         NonNullList<ItemStack> result = NonNullList.create();
         Random random = world.rand;
 
-        //TODO: Implement this
         //Sand piles and Soulsand piles will stew into quartz over time, but only if the cauldron has a lid blocking the top.
         //Unsafe lids should break/pop off over time
         //Soulsand additionally accumulates soul value. The cauldron lid must be opened to let the souls escape.

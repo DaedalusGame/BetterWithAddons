@@ -131,6 +131,9 @@ public class RenewablesHandler {
     @SubscribeEvent
     public void feedBlaze(LivingEvent.LivingUpdateEvent event)
     {
+        if(!InteractionBWR.BLAZE_BREEDING)
+            return;
+
         Entity entity = event.getEntity();
         World world = entity.world;
         Random random = world.rand;
