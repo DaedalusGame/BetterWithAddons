@@ -51,6 +51,14 @@ public class ModConfiguration {
     ConfigOptionBool BWR_NetherrackSynthesis = new ConfigOptionBool("addons.BetterWithRenewables","NetherrackSynthesis",InteractionBWR.NETHERRACK_SYNTHESIS,"Allows netherrack to be farbricated from a usable medium, a hellborn plant and some residents from the nether.");
     ConfigOptionBool BWR_SoulsandInfusion = new ConfigOptionBool("addons.BetterWithRenewables","SoulsandInfusion",InteractionBWR.SOULSAND_INFUSION,"Allows netherrack to be fabricated from dung and experience.");
     ConfigOptionBool BWR_BlazeGolems = new ConfigOptionBool("addons.BetterWithRenewables","BlazeGolems",InteractionBWR.BLAZE_GOLEMS,"Allows blazes to be created from a golem-like shape with appropriate blocks.");
+    ConfigOptionBool BWR_BlazeBreeding = new ConfigOptionBool("addons.BetterWithRenewables","BlazeBreeding",InteractionBWR.BLAZE_BREEDING,"Allows blazes to replicate in fire when fed an appropriate item.");
+    ConfigOptionBool BWR_PlantBreeding = new ConfigOptionBool("addons.BetterWithRenewables","PlantBreeding",InteractionBWR.CROSSBREED_PLANTS,"Allows plants to be crossbreed from other plants.");
+    ConfigOptionBool BWR_AnimalBreeding = new ConfigOptionBool("addons.BetterWithRenewables","AnimalBreeding",InteractionBWR.CROSSBREED_ANIMALS,"Allows animals to be crossbreed from other animals. Disgusting.");
+    ConfigOptionBool BWR_QuartzSynthesis = new ConfigOptionBool("addons.BetterWithRenewables","QuartzSynthesis",InteractionBWR.QUARTZ_GROWING,"Allows quartz to be grown from silica in appropriate conditions.");
+    ConfigOptionBool BWR_DungToDirt = new ConfigOptionBool("addons.BetterWithRenewables","DungToDirt",InteractionBWR.DUNG_TO_DIRT,"Allows dung to be turned into dirt by rinsing acids out.");
+    ConfigOptionBool BWR_SandToClay = new ConfigOptionBool("addons.BetterWithRenewables","SandToClay",InteractionBWR.SAND_TO_CLAY,"Allows sand to be turned into clay by adding acidic substances.");
+    ConfigOptionBool BWR_MeltHellfire = new ConfigOptionBool("addons.BetterWithRenewables","MeltHellfire",InteractionBWR.MELT_HELLFIRE,"Allows Blocks of Hellfire to be melted into lava by proximity to it.");
+    ConfigOptionBool BWR_RedstoneBoiling = new ConfigOptionBool("addons.BetterWithRenewables","BoilRedstone",InteractionBWR.REDSTONE_BOILING,"Allows redstone to be 'boiled' into glowstone by exposure to focused sunlight.");
 
     ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED);
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
@@ -152,6 +160,14 @@ public class ModConfiguration {
         InteractionBWR.NETHERRACK_SYNTHESIS = BWR_NetherrackSynthesis.init(configuration);
         InteractionBWR.SOULSAND_INFUSION = BWR_SoulsandInfusion.init(configuration);
         InteractionBWR.BLAZE_GOLEMS = BWR_BlazeGolems.init(configuration);
+        InteractionBWR.BLAZE_BREEDING = BWR_BlazeBreeding.init(configuration);
+        InteractionBWR.DUNG_TO_DIRT = BWR_DungToDirt.init(configuration);
+        InteractionBWR.SAND_TO_CLAY = BWR_SandToClay.init(configuration);
+        InteractionBWR.QUARTZ_GROWING = BWR_QuartzSynthesis.init(configuration);
+        InteractionBWR.CROSSBREED_PLANTS = BWR_PlantBreeding.init(configuration);
+        InteractionBWR.CROSSBREED_ANIMALS = BWR_AnimalBreeding.init(configuration);
+        InteractionBWR.MELT_HELLFIRE = BWR_MeltHellfire.init(configuration);
+        InteractionBWR.REDSTONE_BOILING = BWR_RedstoneBoiling.init(configuration);
 
         if (configuration.hasChanged())
         {

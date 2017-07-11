@@ -35,6 +35,9 @@ public class InteractionBWA extends Interaction {
     public static int DUST_PARTICLES = 2;
     public static int AIR_PARTICLES = 3;
 
+    public static boolean GRASS_TO_CLAY = false;
+    public static boolean GRASS_TO_SAND = false;
+
     public static boolean STONEBRICKS_NEED_SMELTING = false;
 
     public static boolean ARMOR_SHARD_RENDER = true;
@@ -76,6 +79,10 @@ public class InteractionBWA extends Interaction {
         MinecraftForge.EVENT_BUS.register(new HarvestHandler());
         if(OBVIOUS_SAND_STORMS || OBVIOUS_STORMS)
             MinecraftForge.EVENT_BUS.register(new StormHandler());
+        if(GRASS_TO_CLAY || GRASS_TO_SAND) {
+            PatientiaHandler.addCustomBlock(Blocks.GRASS);
+            MinecraftForge.EVENT_BUS.register(new GrassHandler());
+        }
     }
 
     @Override

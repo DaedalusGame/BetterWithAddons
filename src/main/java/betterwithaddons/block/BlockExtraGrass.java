@@ -139,6 +139,7 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
                 if (plantType == EnumPlantType.Crop) {return true;}
                 break;
             case SAND:
+            case REDSAND:
                 if (plantType == EnumPlantType.Desert) {return true;}
                 break;
 
@@ -189,7 +190,7 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
             default:
                 break;
         }
-        this.spreadGrass(world, pos, state, rand, 40, 1, 3, 1);
+        this.spreadGrass(world, pos, state, rand, 4, 1, 3, 1);
 
     }
 
