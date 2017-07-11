@@ -1,4 +1,6 @@
-# Better With Addons!!!
+# Better With Addons
+
+Better With Addons is a modular compilation of successors to Better than Wolves addons. Pretty much everything can be turned on or off in the config.
 
 ## Content
 * [Blocks](blocks/index.md)
