@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 
 public class ItemTanto extends ItemSword implements IDisableable {
     private boolean disabled;
+    private static final int USE_TIME = 5000;
 
     public ItemTanto()
     {
@@ -28,7 +29,7 @@ public class ItemTanto extends ItemSword implements IDisableable {
     {
         boolean hit = super.hitEntity(stack,target,attacker);
 
-        if(hit && attacker.getHealth() <= 5.0f) {
+        if(hit && attacker.getHealth() < 12.0f) {
             target.attackEntityFrom(DamageSource.causeMobDamage(attacker).setDamageBypassesArmor(), 6.0f);
             attacker.addPotionEffect(new PotionEffect(MobEffects.SPEED,15 * 20));
         }
@@ -58,9 +59,9 @@ public class ItemTanto extends ItemSword implements IDisableable {
             EntityPlayer entityplayer = (EntityPlayer)entityLiving;
             int i = timeLeft;
             System.out.println(i);
-            if(i <= 1) {
-                entityplayer.getEntityWorld().playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_SKELETON_DEATH, SoundCategory.NEUTRAL, 1.0f, 1.0f / (itemRand.nextFloat() * 0.4f + 2.2f));
-                entityplayer.attackEntityFrom(DamageSource.causeMobDamage(entityplayer).setDamageBypassesArmor(), 1.0f);
+            if(i < USE_TIME-20 && i % 10 == 0) {
+                //entityplayer.getEntityWorld().playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_SKELETON_DEATH, SoundCategory.NEUTRAL, 1.0f, 1.0f / (itemRand.nextFloat() * 0.4f + 2.2f));
+                entityplayer.attackEntityFrom(DamageSource.CACTUS, 1.0f);
                 entityplayer.addStat(StatList.getObjectUseStats(this));
             }
         }
@@ -68,7 +69,7 @@ public class ItemTanto extends ItemSword implements IDisableable {
 
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
-        return 50;
+        return USE_TIME;
     }
 
     @Override

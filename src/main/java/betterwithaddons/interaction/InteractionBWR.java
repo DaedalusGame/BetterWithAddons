@@ -34,7 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InteractionBWR extends Interaction {
-    public static boolean ENABLED = true;
+    public static boolean ENABLED = false;
     public static boolean REDSTONE_SYNTHESIS = true;
     public static boolean REDSTONE_SYNTHESIS_EARLY = true;
     public static boolean HELLFIRE_EARLY = true;
