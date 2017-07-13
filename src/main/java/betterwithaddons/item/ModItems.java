@@ -70,6 +70,7 @@ public class ModItems
     public static ItemModFood fuguSac;
     public static ItemWorldScale worldShard;
 
+    public static ItemAncestryBottle ancestryBottle;
     public static ItemModFood sashimi;
     public static ItemModFood rice;
     public static ItemModFood riceBowl;
@@ -162,6 +163,7 @@ public class ModItems
         tanto = (ItemTanto) registerItem("tanto",new ItemTanto());
         yumi = (ItemYumi) registerItem("yumi",new ItemYumi());
         ya = (ItemYa) registerItem("ya",new ItemYa());
+        ancestryBottle = (ItemAncestryBottle) registerItem("ancestry_bottle",new ItemAncestryBottle());
 
         materialJapan = (ItemMaterial)registerItem("japanmat",new ItemMaterial(
                 new String[]{"rice","soaked_rice","rice_stalk","rice_hay","rice_ash","rush",

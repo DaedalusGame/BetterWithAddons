@@ -8,13 +8,8 @@ import betterwithaddons.client.ToolShardModelHandler;
 import betterwithaddons.client.fx.FXLeafParticle;
 import betterwithaddons.client.handler.ParticleHandler;
 import betterwithaddons.client.models.ItemModels;
-import betterwithaddons.client.render.RenderAlchDragon;
-import betterwithaddons.client.render.RenderArtifactFrame;
-import betterwithaddons.client.render.RenderGreatarrow;
-import betterwithaddons.client.render.RenderYa;
-import betterwithaddons.entity.EntityArtifactFrame;
-import betterwithaddons.entity.EntityGreatarrow;
-import betterwithaddons.entity.EntityYa;
+import betterwithaddons.client.render.*;
+import betterwithaddons.entity.*;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityAlchDragon;
@@ -29,7 +24,10 @@ import li.cil.manual.client.manual.provider.OreDictImageProvider;
 import li.cil.manual.client.manual.provider.TextureImageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -86,6 +84,8 @@ public class ClientProxy implements IProxy
 
         RenderingRegistry.registerEntityRenderingHandler(EntityGreatarrow.class, RenderGreatarrow.GREATARROW_RENDER);
         RenderingRegistry.registerEntityRenderingHandler(EntityYa.class, RenderYa.YA_RENDER);
+        RenderingRegistry.registerEntityRenderingHandler(EntitySpirit.class, manager -> new RenderSpirit(manager));
+        RenderingRegistry.registerEntityRenderingHandler(EntityAncestryBottle.class, manager -> new RenderSnowball<>(manager,ModItems.ancestryBottle,Minecraft.getMinecraft().getRenderItem()));
         RenderingRegistry.registerEntityRenderingHandler(EntityArtifactFrame.class, RenderArtifactFrame.ARTIFACEFRAME_RENDER);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAlchDragon.class, new RenderAlchDragon());
     }

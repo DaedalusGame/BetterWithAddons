@@ -20,6 +20,7 @@ public class ModTileEntities
         registerTE(TileEntityAqueductWater.class, "aqueductWater");
         registerTE(TileEntityLegendarium.class, "legendarium");
         registerTE(TileEntityBrine.class, "brine");
+        registerTE(TileEntityAncestrySand.class, "ancestrySand");
     }
 
     private static void registerTE(Class<? extends TileEntity> clazz, String name)
