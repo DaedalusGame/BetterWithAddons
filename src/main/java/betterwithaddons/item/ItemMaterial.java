@@ -32,6 +32,11 @@ public class ItemMaterial extends Item implements IHasVariants,IDisableable {
         return this;
     }
 
+    public ItemStack getContainer()
+    {
+        return container;
+    }
+
     @Override
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;

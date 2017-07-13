@@ -42,6 +42,7 @@ public class InteractionMinetweaker extends Interaction {
         MineTweakerAPI.registerClass(Tatara.class);
         MineTweakerAPI.registerClass(SoftWoods.class);
         MineTweakerAPI.registerClass(LureTree.class);
+        MineTweakerAPI.registerClass(Condensed.class);
     }
 
     @Override
