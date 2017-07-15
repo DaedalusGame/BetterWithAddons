@@ -1,5 +1,6 @@
 package betterwithaddons.entity;
 
+import betterwithaddons.interaction.InteractionEriottoMod;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityExpBottle;
@@ -24,7 +25,7 @@ public class EntityAncestryBottle extends EntityExpBottle {
         if (!this.world.isRemote)
         {
             this.world.playEvent(2002, new BlockPos(this), PotionUtils.getPotionColor(PotionTypes.HEALING));
-            int i = EntitySpirit.SPIRIT_PER_BOTTLE;
+            int i = InteractionEriottoMod.SPIRIT_PER_BOTTLE;
 
             while (i > 0)
             {

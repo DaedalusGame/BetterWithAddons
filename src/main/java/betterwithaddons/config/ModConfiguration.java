@@ -64,7 +64,12 @@ public class ModConfiguration {
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
 
     ConfigOptionBool EriottoMod_Enabled = new ConfigOptionBool("addons.EriottoMod", "Enabled", InteractionEriottoMod.ENABLED);
-    ConfigOptionBool EriottoMod_GrassDropsSeeds = new ConfigOptionBool("addons.EriottoMod", "GrassDropsSeeds", InteractionEriottoMod.GRASS_DROPS_SEEDS, "Rice and Rush seeds can be gotten from breaking grass.");
+    //ConfigOptionBool EriottoMod_GrassDropsSeeds = new ConfigOptionBool("addons.EriottoMod", "GrassDropsSeeds", InteractionEriottoMod.GRASS_DROPS_SEEDS, "Rice and Rush seeds can be gotten from breaking grass.");
+    ConfigOptionBool EriottoMod_AlternateInfuserRecipe = new ConfigOptionBool("addons.EriottoMod", "AlternateInfuserRecipe", InteractionEriottoMod.ALTERNATE_INFUSER_RECIPE, "Hardcore Structures pushes the Enchanting Table behind some exploration. This enables an alternate recipe if you want to start japanese culture before finding a Desert Temple.");
+    ConfigOptionBool EriottoMod_InfuserRepairs = new ConfigOptionBool("addons.EriottoMod", "InfuserRepairs", InteractionEriottoMod.INFUSER_REPAIRS, "Infusers can repair japanese weapons and armors.");
+    ConfigOptionInteger EriottoMod_SpiritsPerBottle = new ConfigOptionInteger("addons.EriottoMod", "SpiritsPerBottle", InteractionEriottoMod.SPIRIT_PER_BOTTLE, "How much spirit is contained in one bottle.");
+    ConfigOptionInteger EriottoMod_MaxSpirits = new ConfigOptionInteger("addons.EriottoMod", "MaxSpirits", InteractionEriottoMod.MAX_SPIRITS, "Maximum amount of spirit to be stored in Infused Soul Sand.");
+    ConfigOptionBool EriottoMod_RandomJapaneseMobs = new ConfigOptionBool("addons.EriottoMod", "RandomJapaneseMobs", InteractionEriottoMod.JAPANESE_RANDOM_SPAWN, "Mobs infused with ancestral spirit spawn randomly.");
 
     ConfigOptionBool DecoAddon_Enabled = new ConfigOptionBool("addons.DecoAddon", "Enabled", InteractionDecoAddon.ENABLED);
     ConfigOptionBool DecoAddon_WoodColoring = new ConfigOptionBool("addons.DecoAddon", "WoodColoring", InteractionDecoAddon.WOOD_COLORING, "Vanilla planks can be bleached or stained.");
@@ -122,7 +127,12 @@ public class ModConfiguration {
         InteractionBWA.LEGENDARIUM_TURN_IN_DELAY = BWA_LegendariumTurnInDelay.init(configuration);
 
         InteractionEriottoMod.ENABLED = EriottoMod_Enabled.init(configuration);
-        InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);
+        //InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);
+        InteractionEriottoMod.ALTERNATE_INFUSER_RECIPE = EriottoMod_AlternateInfuserRecipe.init(configuration);
+        InteractionEriottoMod.INFUSER_REPAIRS = EriottoMod_InfuserRepairs.init(configuration);
+        InteractionEriottoMod.JAPANESE_RANDOM_SPAWN = EriottoMod_RandomJapaneseMobs.init(configuration);
+        InteractionEriottoMod.MAX_SPIRITS = EriottoMod_MaxSpirits.init(configuration);
+        InteractionEriottoMod.SPIRIT_PER_BOTTLE = EriottoMod_SpiritsPerBottle.init(configuration);
 
         InteractionDecoAddon.ENABLED = DecoAddon_Enabled.init(configuration);
         InteractionDecoAddon.WOOD_COLORING = DecoAddon_WoodColoring.init(configuration);

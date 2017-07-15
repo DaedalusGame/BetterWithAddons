@@ -1,5 +1,6 @@
 package betterwithaddons.entity;
 
+import betterwithaddons.interaction.InteractionEriottoMod;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.InventoryUtil;
 import net.minecraft.block.material.Material;
@@ -28,8 +29,6 @@ public class EntitySpirit extends EntityXPOrb {
         super(worldIn,x,y,z,val);
         this.currentAngle = (float)Math.toRadians(rand.nextInt(360));
     }
-
-    public static int SPIRIT_PER_BOTTLE = 8;
 
     private void applyGravity()
     {
@@ -157,7 +156,7 @@ public class EntitySpirit extends EntityXPOrb {
                 for(EntitySpirit spirit : spirits)
                     totalSpirit += spirit.xpValue;
 
-                if (totalSpirit >= SPIRIT_PER_BOTTLE)
+                if (totalSpirit >= InteractionEriottoMod.SPIRIT_PER_BOTTLE)
                 {
                     for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
                         ItemStack itemstack = player.inventory.getStackInSlot(i);
@@ -165,7 +164,7 @@ public class EntitySpirit extends EntityXPOrb {
                         itemstack.shrink(1);
                         player.inventory.setInventorySlotContents(i,itemstack);
                         InventoryUtil.addItemToPlayer(player,new ItemStack(ModItems.ancestryBottle));
-                        int consumed = SPIRIT_PER_BOTTLE;
+                        int consumed = InteractionEriottoMod.SPIRIT_PER_BOTTLE;
                         for(EntitySpirit spirit : spirits)
                         {
                             int c = Math.min(consumed,spirit.xpValue);

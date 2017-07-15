@@ -3,6 +3,7 @@ package betterwithaddons.item;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.entity.EntityAncestryBottle;
 import betterwithaddons.entity.EntitySpirit;
+import betterwithaddons.interaction.InteractionEriottoMod;
 import betterwithaddons.tileentity.TileEntityAncestrySand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityExpBottle;
@@ -28,7 +29,7 @@ public class ItemAncestryBottle extends Item {
             worldIn.setBlockState(pos, ModBlocks.ancestrySand.getDefaultState());
             TileEntity te = worldIn.getTileEntity(pos);
             if(te instanceof TileEntityAncestrySand)
-                ((TileEntityAncestrySand) te).addSpirits(EntitySpirit.SPIRIT_PER_BOTTLE);
+                ((TileEntityAncestrySand) te).addSpirits(InteractionEriottoMod.SPIRIT_PER_BOTTLE);
             stack.shrink(1);
             return EnumActionResult.SUCCESS;
         }
@@ -36,7 +37,7 @@ public class ItemAncestryBottle extends Item {
         {
             TileEntity te = worldIn.getTileEntity(pos);
             if(te instanceof TileEntityAncestrySand)
-                ((TileEntityAncestrySand) te).addSpirits(EntitySpirit.SPIRIT_PER_BOTTLE);
+                ((TileEntityAncestrySand) te).addSpirits(InteractionEriottoMod.SPIRIT_PER_BOTTLE);
             stack.shrink(1);
             return EnumActionResult.SUCCESS;
         }
