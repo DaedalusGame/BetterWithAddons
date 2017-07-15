@@ -70,6 +70,7 @@ public class ModConfiguration {
     ConfigOptionInteger EriottoMod_SpiritsPerBottle = new ConfigOptionInteger("addons.EriottoMod", "SpiritsPerBottle", InteractionEriottoMod.SPIRIT_PER_BOTTLE, "How much spirit is contained in one bottle.");
     ConfigOptionInteger EriottoMod_MaxSpirits = new ConfigOptionInteger("addons.EriottoMod", "MaxSpirits", InteractionEriottoMod.MAX_SPIRITS, "Maximum amount of spirit to be stored in Infused Soul Sand.");
     ConfigOptionBool EriottoMod_RandomJapaneseMobs = new ConfigOptionBool("addons.EriottoMod", "RandomJapaneseMobs", InteractionEriottoMod.JAPANESE_RANDOM_SPAWN, "Mobs infused with ancestral spirit spawn randomly.");
+    ConfigOptionDouble EriottoMod_RandomJapaneseChance = new ConfigOptionDouble("addons.EriottoMod", "RandomJapaneseMobsChance", InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_CHANCE, "Chance for a zombie or skeleton to be infused.");
 
     ConfigOptionBool DecoAddon_Enabled = new ConfigOptionBool("addons.DecoAddon", "Enabled", InteractionDecoAddon.ENABLED);
     ConfigOptionBool DecoAddon_WoodColoring = new ConfigOptionBool("addons.DecoAddon", "WoodColoring", InteractionDecoAddon.WOOD_COLORING, "Vanilla planks can be bleached or stained.");
@@ -131,6 +132,7 @@ public class ModConfiguration {
         InteractionEriottoMod.ALTERNATE_INFUSER_RECIPE = EriottoMod_AlternateInfuserRecipe.init(configuration);
         InteractionEriottoMod.INFUSER_REPAIRS = EriottoMod_InfuserRepairs.init(configuration);
         InteractionEriottoMod.JAPANESE_RANDOM_SPAWN = EriottoMod_RandomJapaneseMobs.init(configuration);
+        InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_CHANCE = EriottoMod_RandomJapaneseChance.init(configuration);
         InteractionEriottoMod.MAX_SPIRITS = EriottoMod_MaxSpirits.init(configuration);
         InteractionEriottoMod.SPIRIT_PER_BOTTLE = EriottoMod_SpiritsPerBottle.init(configuration);
 

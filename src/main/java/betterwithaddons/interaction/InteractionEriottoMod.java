@@ -2,9 +2,10 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.OreStack;
-import betterwithaddons.crafting.recipes.ArmorDecorateRecipe;
 import betterwithaddons.crafting.manager.*;
+import betterwithaddons.crafting.recipes.ArmorDecorateRecipe;
 import betterwithaddons.crafting.recipes.SmeltingRecipe;
+import betterwithaddons.handler.JapaneseMobHandler;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.IDisableable;
 import betterwithmods.common.BWMBlocks;
@@ -12,7 +13,6 @@ import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import com.google.common.collect.Lists;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -30,12 +30,13 @@ import java.util.Random;
 
 public class InteractionEriottoMod extends Interaction {
     public static boolean ENABLED = true;
-    public static boolean GRASS_DROPS_SEEDS = true;
+    public static boolean GRASS_DROPS_SEEDS = false;
     public static boolean INFUSER_REPAIRS = true;
     public static boolean ALTERNATE_INFUSER_RECIPE = false;
     public static int MAX_SPIRITS = 128;
     public static int SPIRIT_PER_BOTTLE = 8;
-    public static boolean JAPANESE_RANDOM_SPAWN;
+    public static boolean JAPANESE_RANDOM_SPAWN = true;
+    public static double JAPANESE_RANDOM_SPAWN_CHANCE = 0.2;
     public final ArrayList<Item> REPAIRABLE_TOOLS;
 
     public InteractionEriottoMod() {
@@ -74,7 +75,8 @@ public class InteractionEriottoMod extends Interaction {
 
     @Override
     public void preInit() {
-
+        if(JAPANESE_RANDOM_SPAWN)
+            MinecraftForge.EVENT_BUS.register(new JapaneseMobHandler());
     }
 
     @Override
