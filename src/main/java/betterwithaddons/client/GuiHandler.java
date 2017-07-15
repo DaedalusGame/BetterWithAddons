@@ -18,7 +18,8 @@ public class GuiHandler implements IGuiHandler
         TATARA(GuiIds.TATARA, "betterwithaddons.client.gui.GuiTatara", "betterwithaddons.container.ContainerTatara"),
         SOAKING_BOX(GuiIds.SOAKING_BOX, "betterwithaddons.client.gui.GuiSoakingBox", "betterwithaddons.container.ContainerCherryBox"),
         DRYING_BOX(GuiIds.DRYING_BOX, "betterwithaddons.client.gui.GuiDryingBox", "betterwithaddons.container.ContainerCherryBox"),
-        CHUTE(GuiIds.CHUTE, "betterwithaddons.client.gui.GuiChute", "betterwithaddons.container.ContainerChute");
+        CHUTE(GuiIds.CHUTE, "betterwithaddons.client.gui.GuiChute", "betterwithaddons.container.ContainerChute"),
+        INFUSER(GuiIds.INFUSER, "betterwithaddons.client.gui.GuiInfuser", "betterwithaddons.container.ContainerInfuser");
 
         int guiID;
         String guiClass;

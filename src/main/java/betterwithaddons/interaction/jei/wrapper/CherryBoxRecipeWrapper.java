@@ -27,5 +27,5 @@ public class CherryBoxRecipeWrapper extends BlankRecipeWrapper {
         return recipe.getRecipeInputs();
     }
 
-    public List<ItemStack> getOutputs() { return Lists.newArrayList(recipe.getOutput()); }
+    public List<ItemStack> getOutputs() { return recipe.getRecipeOutputs(); }
 }

@@ -25,6 +25,7 @@ public class TileEntityBannerDetector extends TileEntityBase implements ITickabl
     boolean powered;
     int maxdist;
 
+    //TODO: Gross
     InventoryBasic bannerInventory;
 
     public TileEntityBannerDetector() {

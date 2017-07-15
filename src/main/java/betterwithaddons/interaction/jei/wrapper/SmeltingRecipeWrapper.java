@@ -9,10 +9,10 @@ import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class TataraRecipeWrapper extends BlankRecipeWrapper {
+public class SmeltingRecipeWrapper extends BlankRecipeWrapper {
     SmeltingRecipe recipe;
 
-    public TataraRecipeWrapper(SmeltingRecipe recipe) {
+    public SmeltingRecipeWrapper(SmeltingRecipe recipe) {
         this.recipe = recipe;
     }
 
@@ -26,5 +26,5 @@ public class TataraRecipeWrapper extends BlankRecipeWrapper {
         return recipe.getRecipeInputs();
     }
 
-    public List<ItemStack> getOutputs() { return Lists.newArrayList(recipe.getOutput()); }
+    public List<ItemStack> getOutputs() { return recipe.getRecipeOutputs(); }
 }

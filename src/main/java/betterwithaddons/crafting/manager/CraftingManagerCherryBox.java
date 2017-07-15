@@ -50,7 +50,7 @@ public abstract class CraftingManagerCherryBox {
             entry = var2.next();
         } while(!entry.matchesInput(input));
 
-        return entry.getOutput();
+        return entry.getOutput(input);
     }
 
     public List<CherryBoxRecipe> getRecipes() {

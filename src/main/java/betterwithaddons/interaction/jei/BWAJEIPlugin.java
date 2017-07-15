@@ -2,6 +2,7 @@ package betterwithaddons.interaction.jei;
 
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.client.gui.GuiDryingBox;
+import betterwithaddons.client.gui.GuiInfuser;
 import betterwithaddons.client.gui.GuiSoakingBox;
 import betterwithaddons.client.gui.GuiTatara;
 import betterwithaddons.crafting.manager.*;
@@ -10,12 +11,22 @@ import betterwithaddons.interaction.jei.category.*;
 import betterwithaddons.interaction.jei.wrapper.CherryBoxRecipeWrapper;
 import betterwithaddons.interaction.jei.wrapper.NetRecipeWrapper;
 import betterwithaddons.interaction.jei.wrapper.SpindleRecipeWrapper;
-import betterwithaddons.interaction.jei.wrapper.TataraRecipeWrapper;
+import betterwithaddons.interaction.jei.wrapper.SmeltingRecipeWrapper;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
+import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapperFactory;
+import mezz.jei.plugins.vanilla.crafting.ShapedOreRecipeWrapper;
+import mezz.jei.plugins.vanilla.crafting.ShapedRecipesWrapper;
+import mezz.jei.plugins.vanilla.crafting.ShapelessOreRecipeWrapper;
+import mezz.jei.plugins.vanilla.crafting.ShapelessRecipesWrapper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import javax.annotation.Nonnull;
 
@@ -33,7 +44,9 @@ public class BWAJEIPlugin extends BlankModPlugin {
                 new SandNetRecipeCategory(guiHelper),
                 new SoakingBoxRecipeCategory(guiHelper),
                 new DryingBoxRecipeCategory(guiHelper),
-                new SpindleRecipeCategory(guiHelper)
+                new SpindleRecipeCategory(guiHelper),
+                new InfuserRecipeCategory(guiHelper),
+                new TransmutationRecipeCategory(guiHelper)
         );
 
         reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, SandNetRecipeCategory.UID);
@@ -42,7 +55,13 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.handleRecipes(SpindleRecipe.class, SpindleRecipeWrapper::new, SpindleRecipeCategory.UID);
         reg.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, SoakingBoxRecipeCategory.UID);
         reg.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, DryingBoxRecipeCategory.UID);
-        reg.handleRecipes(SmeltingRecipe.class, TataraRecipeWrapper::new, TataraRecipeCategory.UID);
+        reg.handleRecipes(SmeltingRecipe.class, SmeltingRecipeWrapper::new, TataraRecipeCategory.UID);
+        reg.handleRecipes(SmeltingRecipe.class, SmeltingRecipeWrapper::new, TransmutationRecipeCategory.UID);
+
+        reg.handleRecipes(ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(helper, recipe), InfuserRecipeCategory.UID);
+        reg.handleRecipes(ShapedRecipes.class, ShapedRecipesWrapper::new, InfuserRecipeCategory.UID);
+        reg.handleRecipes(ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(helper, recipe), InfuserRecipeCategory.UID);
+        reg.handleRecipes(ShapelessRecipes.class, ShapelessRecipesWrapper::new, InfuserRecipeCategory.UID);
 
         reg.addRecipes(CraftingManagerSandNet.getInstance().getRecipes(),SandNetRecipeCategory.UID);
         reg.addRecipes(CraftingManagerWaterNet.getInstance().getRecipes(),WaterNetRecipeCategory.UID);
@@ -51,23 +70,20 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.addRecipes(CraftingManagerDryingBox.instance().getRecipes(),DryingBoxRecipeCategory.UID);
         reg.addRecipes(CraftingManagerSoakingBox.instance().getRecipes(),SoakingBoxRecipeCategory.UID);
         reg.addRecipes(CraftingManagerTatara.instance().getRecipes(),TataraRecipeCategory.UID);
-
-        //reg.addRecipes(JEIRecipeRegistry.getTataraRecipes(CraftingManagerTatara.instance()));
-        //reg.addRecipes(JEIRecipeRegistry.getNetRecipes(CraftingManagerFireNet.getInstance()));
-        //reg.addRecipes(JEIRecipeRegistry.getNetRecipes(CraftingManagerSandNet.getInstance()));
-        //reg.addRecipes(JEIRecipeRegistry.getNetRecipes(CraftingManagerWaterNet.getInstance()));
-        //reg.addRecipes(JEIRecipeRegistry.getCherryBoxRecipes(CraftingManagerSoakingBox.instance()));
-        //reg.addRecipes(JEIRecipeRegistry.getCherryBoxRecipes(CraftingManagerDryingBox.instance()));
-        //reg.addRecipes(JEIRecipeRegistry.getSpindleRecipes(CraftingManagerSpindle.getInstance()));
+        reg.addRecipes(CraftingManagerInfuser.getInstance().getRecipeList(),InfuserRecipeCategory.UID);
+        reg.addRecipes(CraftingManagerInfuserTransmutation.instance().getRecipes(),TransmutationRecipeCategory.UID);
 
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.tatara), TataraRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 0), SoakingBoxRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 1), DryingBoxRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.nettedScreen), WaterNetRecipeCategory.UID, SandNetRecipeCategory.UID, FireNetRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.spindle), SpindleRecipeCategory.UID);
+        reg.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), InfuserRecipeCategory.UID);
+        reg.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), TransmutationRecipeCategory.UID);
 
         reg.addRecipeClickArea(GuiTatara.class, 78, 32, 28, 23, TataraRecipeCategory.UID);
         reg.addRecipeClickArea(GuiSoakingBox.class, 78, 32, 28, 23, SoakingBoxRecipeCategory.UID);
         reg.addRecipeClickArea(GuiDryingBox.class, 78, 32, 28, 23, DryingBoxRecipeCategory.UID);
+        reg.addRecipeClickArea(GuiInfuser.class, 94, 35, 19, 16, InfuserRecipeCategory.UID);
     }
 }

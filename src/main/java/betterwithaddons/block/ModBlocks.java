@@ -85,6 +85,7 @@ public class ModBlocks {
     public static BlockLoom loom;
     public static BlockDung dung;
     public static BlockAncestrySand ancestrySand;
+    public static BlockInfuser infuser;
 
     public static void load(FMLPreInitializationEvent event) {
         FluidRegistry.registerFluid(new Fluid("brine",new ResourceLocation(Reference.MOD_ID,"blocks/brine_still"),new ResourceLocation(Reference.MOD_ID,"blocks/brine_flow")));
@@ -146,6 +147,7 @@ public class ModBlocks {
         sakuraLeaves.setSapling(new ItemStack(sakuraSapling));
 
         ancestrySand = (BlockAncestrySand) addBlock(new BlockAncestrySand());
+        infuser = (BlockInfuser) addBlock(new BlockInfuser());
         sakuraLeafPile = (BlockCherryLeafPile) addBlock(new BlockCherryLeafPile());
         rush = (BlockCropRush) addBlock(new BlockCropRush());
         rice = (BlockCropRice) addBlock(new BlockCropRice());

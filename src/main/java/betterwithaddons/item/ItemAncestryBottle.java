@@ -2,6 +2,8 @@ package betterwithaddons.item;
 
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.entity.EntityAncestryBottle;
+import betterwithaddons.entity.EntitySpirit;
+import betterwithaddons.tileentity.TileEntityAncestrySand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +12,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,6 +26,17 @@ public class ItemAncestryBottle extends Item {
         if(state.getBlock() == Blocks.SOUL_SAND)
         {
             worldIn.setBlockState(pos, ModBlocks.ancestrySand.getDefaultState());
+            TileEntity te = worldIn.getTileEntity(pos);
+            if(te instanceof TileEntityAncestrySand)
+                ((TileEntityAncestrySand) te).addSpirits(EntitySpirit.SPIRIT_PER_BOTTLE);
+            stack.shrink(1);
+            return EnumActionResult.SUCCESS;
+        }
+        else if(state.getBlock() == ModBlocks.ancestrySand)
+        {
+            TileEntity te = worldIn.getTileEntity(pos);
+            if(te instanceof TileEntityAncestrySand)
+                ((TileEntityAncestrySand) te).addSpirits(EntitySpirit.SPIRIT_PER_BOTTLE);
             stack.shrink(1);
             return EnumActionResult.SUCCESS;
         }

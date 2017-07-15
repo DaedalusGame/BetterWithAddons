@@ -15,13 +15,8 @@ public class ItemModels
 {
     public static void register()
     {
-        for (Block block: ModBlocks.LIST) {
-            registerBlock(block);
-        }
-
-        for (Item item: ModItems.LIST) {
-            registerItem(item);
-        }
+        ModBlocks.LIST.forEach(ItemModels::registerBlock);
+        ModItems.LIST.forEach(ItemModels::registerItem);
 
         ModelLoaderRegistry.registerLoader(ModelToolShard.LoaderToolShard.INSTANCE);
     }

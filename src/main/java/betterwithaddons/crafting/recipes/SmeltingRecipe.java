@@ -5,6 +5,7 @@ import betterwithaddons.util.ItemUtil;
 import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SmeltingRecipe {
@@ -17,7 +18,7 @@ public class SmeltingRecipe {
         this.output = output;
     }
 
-    public ItemStack getOutput()
+    public ItemStack getOutput(ItemStack input)
     {
         return this.output;
     }
@@ -34,6 +35,17 @@ public class SmeltingRecipe {
         if(o instanceof OreStack)
             return ItemUtil.getOreList((OreStack)o);
         return null;
+    }
+
+    public List<ItemStack> getRecipeOutputs() {
+        List<ItemStack> inputs = getRecipeInputs();
+        ArrayList<ItemStack> outputs = new ArrayList<>();
+
+        for (ItemStack input : inputs) {
+            outputs.add(getOutput(input));
+        }
+
+        return outputs;
     }
 
     public boolean matches(SmeltingRecipe recipe)
@@ -59,10 +71,19 @@ public class SmeltingRecipe {
         else if(input instanceof OreStack)
         {
             OreStack stack = (OreStack)input;
-            if(stack.matches(item))
+            if(stack.matches(item) && item.getCount() >= stack.getStackSize())
                 return true;
         }
         return false;
+    }
+
+    public int getInputCount()
+    {
+        if(input instanceof ItemStack)
+            return ((ItemStack) input).getCount();
+        else if(input instanceof OreStack)
+            return ((OreStack) input).getStackSize();
+        return 0;
     }
 
     private boolean isInputEmpty(Object stack) {

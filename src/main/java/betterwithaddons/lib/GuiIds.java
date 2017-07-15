@@ -7,4 +7,5 @@ public class GuiIds
 	public static final int SOAKING_BOX = 2;
 	public static final int DRYING_BOX = 3;
 	public static final int CHUTE = 4;
+	public static final int INFUSER = 5;
 }

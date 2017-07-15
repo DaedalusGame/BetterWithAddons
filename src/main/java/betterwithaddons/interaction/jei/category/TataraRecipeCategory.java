@@ -1,6 +1,6 @@
 package betterwithaddons.interaction.jei.category;
 
-import betterwithaddons.interaction.jei.wrapper.TataraRecipeWrapper;
+import betterwithaddons.interaction.jei.wrapper.SmeltingRecipeWrapper;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import mezz.jei.api.IGuiHelper;
@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class TataraRecipeCategory extends BlankRecipeCategory<TataraRecipeWrapper> {
+public class TataraRecipeCategory extends BlankRecipeCategory<SmeltingRecipeWrapper> {
     public static final String UID = "bwa.tatara";
     @Nonnull
     private final IDrawable background;
@@ -61,7 +61,7 @@ public class TataraRecipeCategory extends BlankRecipeCategory<TataraRecipeWrappe
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, TataraRecipeWrapper recipeWrapper, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, SmeltingRecipeWrapper recipeWrapper, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         guiItemStacks.init(0, true, 0, 0);
         guiItemStacks.init(1, true, 0, 36);

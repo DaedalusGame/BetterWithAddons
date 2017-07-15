@@ -1,10 +1,27 @@
 package betterwithaddons.tileentity;
 
+import betterwithaddons.block.EriottoMod.BlockAncestrySand;
 import betterwithaddons.entity.EntitySpirit;
+import betterwithaddons.item.ModItems;
+import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.blocks.BlockMechMachines;
+import betterwithmods.common.blocks.tile.TileEntityFilteredHopper;
+import betterwithmods.util.InvUtils;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +30,34 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable 
     private int spirits = 0;
     private int nextCheck = 0;
     private List<EntitySpirit> attractedSpirits = new ArrayList<>();
+    private boolean shouldSync;
+
+    public static final int MAX_SPIRITS = 128;
+
+    public int getSpirits()
+    {
+        return spirits;
+    }
+
+    public void setSpirits(int n)
+    {
+        spirits = Math.min(n,MAX_SPIRITS);
+        if(spirits <= 0)
+            world.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
+        shouldSync = true;
+    }
+
+    public void addSpirits(int n) { setSpirits(spirits + n); }
+
+    public void consumeSpirits(int n)
+    {
+        setSpirits(spirits - n);
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+        return oldState.getBlock() != newSate.getBlock();
+    }
 
     @Override
     public void writeDataToNBT(NBTTagCompound compound) {
@@ -22,6 +67,39 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable 
     @Override
     public void readDataFromNBT(NBTTagCompound compound) {
         spirits = compound.getInteger("Spirits");
+    }
+
+    public void fillBottles()
+    {
+        IBlockState hopper = world.getBlockState(pos.down());
+
+        if(spirits <= EntitySpirit.SPIRIT_PER_BOTTLE)
+            return;
+
+        if(hopper.getBlock() != BWMBlocks.SINGLE_MACHINES || hopper.getValue(BlockMechMachines.MACHINETYPE) != BlockMechMachines.EnumType.HOPPER)
+            return;
+
+        boolean isOn = false;
+        IBlockState state = world.getBlockState(pos);
+        if (state.getBlock() instanceof BlockAncestrySand) {
+            isOn = ((BlockAncestrySand) state.getBlock()).isMechanicalOn(world, pos);
+        }
+
+        if(isOn) {
+            TileEntity te = world.getTileEntity(pos.down());
+
+            if (te instanceof TileEntityFilteredHopper) {
+                TileEntityFilteredHopper tileHopper = (TileEntityFilteredHopper) te;
+                IItemHandler handler = tileHopper.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+                ItemStack stack = new ItemStack(ModItems.ancestryBottle);
+                ItemStack consumed = new ItemStack(Items.GLASS_BOTTLE);
+                if (tileHopper.getFilterStack().getItem() == Item.getItemFromBlock(Blocks.SOUL_SAND) && InvUtils.canInsert(handler, stack, 1) && InvUtils.getFirstOccupiedStackOfItem(handler, consumed) >= 0) {
+                    InvUtils.consumeItemsInInventory(handler, consumed, 1, false);
+                    InvUtils.insert(handler, stack, false);
+                    consumeSpirits(EntitySpirit.SPIRIT_PER_BOTTLE);
+                }
+            }
+        }
     }
 
     @Override
@@ -35,22 +113,22 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable 
         if(nextCheck-- < 0)
         {
             attractedSpirits = world.getEntitiesWithinAABB(EntitySpirit.class,aabb.expandXyz(maxdist - 0.5));
-            nextCheck = 100;
+            nextCheck = 50;
         }
 
         Vec3d middleOfBlock = new Vec3d(pos).addVector(0.5,0.5,0.5);
 
         //Can we even do this or is this awful?
-        if(spirits < 128)
+        if(spirits < MAX_SPIRITS)
         for(EntitySpirit spirit : attractedSpirits)
         {
             double spiritdist = spirit.getDistanceSq(middleOfBlock.xCoord,middleOfBlock.yCoord,middleOfBlock.zCoord);
 
-            if(spiritdist < 1.0f)
+            if(spiritdist < 1.2f)
             {
-                if(spirits < 128) {
-                    int consume = Math.min(128 - spirits,spirit.xpValue);
-                    spirits += consume;
+                if(spirits < MAX_SPIRITS) {
+                    int consume = Math.min(MAX_SPIRITS - spirits,spirit.xpValue);
+                    addSpirits(consume);
                     spirit.xpValue -= consume;
                     if(spirit.xpValue <= 0)
                         spirit.setDead();
@@ -74,6 +152,14 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable 
                 spirit.motionY += dy / dist * d5 * 0.1D;
                 spirit.motionZ += dz / dist * d5 * 0.1D;
             }
+        }
+
+        fillBottles();
+
+        if(shouldSync)
+        {
+            syncTE();
+            shouldSync = false;
         }
     }
 }

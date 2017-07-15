@@ -24,14 +24,13 @@ public class ContainerBannerDetector extends Container
         this.pos = new BlockPos(x, y, z);
         this.entityBannerDetector = (TileEntityBannerDetector) world.getTileEntity(pos);
 
-        this.addSlotToContainer(new SlotFiltered(entityBannerDetector.getInventory(), 0, 80, 18, new Predicate<ItemStack>()
+        this.addSlotToContainer(new SlotFiltered(entityBannerDetector.getInventory(), 0, 80, 18, (Predicate<ItemStack>) input -> input.getItem() == Items.BANNER)
         {
             @Override
-            public boolean apply(ItemStack input)
-            {
-                return input.getItem() == Items.BANNER;
+            public int getSlotStackLimit() {
+                return 1;
             }
-        }));
+        });
 
         bindPlayerInventory(player.inventory);
     }
