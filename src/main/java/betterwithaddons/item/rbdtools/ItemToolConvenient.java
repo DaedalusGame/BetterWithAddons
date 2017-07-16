@@ -24,6 +24,7 @@ public class ItemToolConvenient extends ItemTool {
         super(attackDamageIn, attackSpeedIn, materialIn, effectiveBlocksIn);
         effectiveBlockMatcher = (stack, state) -> false;
         itemUseMatcher = (stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ) -> false;
+        this.setMaxDamage((int)(materialIn.getMaxUses() * 1.1));
     }
 
     public ItemToolConvenient setEffectiveBlocks(IEffectiveBlock effectiveBlockMatcher) {

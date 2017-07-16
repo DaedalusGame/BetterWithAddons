@@ -33,6 +33,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 public class InteractionBWA extends Interaction {
     public static boolean GATED_AQUEDUCTS = true;
@@ -197,14 +198,27 @@ public class InteractionBWA extends Interaction {
     {
         Block block = state.getBlock();
 
-        return state.getMaterial() == Material.ROCK && (state.isFullCube() || block instanceof BlockStairs || block instanceof BlockSlab);
+        return state.getMaterial() == Material.ROCK && (!state.isFullCube() || !isOre(tool, state));
+    }
+
+    private boolean isOre(ItemStack tool, IBlockState state) {
+        Block block = state.getBlock();
+        ItemStack oreItem = new ItemStack(block.getItemDropped(state,new Random(),0),1,block.damageDropped(state));
+        return isItemOre(oreItem);
+    }
+
+    private boolean isItemOre(ItemStack ore)
+    {
+        if(ore.getItem() instanceof ItemBlock)
+        for(int oreid : OreDictionary.getOreIDs(ore))
+            if(OreDictionary.getOreName(oreid).startsWith("ore"))
+                return true;
+        return false;
     }
 
     private boolean isCarpentry(ItemStack tool, IBlockState state)
     {
-        Block block = state.getBlock();
-
-        return state.getMaterial() == Material.WOOD && (state.isFullCube() || block instanceof BlockStairs || block instanceof BlockSlab);
+        return state.getMaterial() == Material.WOOD && !isTree(tool,state);
     }
 
     private boolean isTree(ItemStack tool, IBlockState state)

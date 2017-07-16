@@ -77,6 +77,7 @@ public class InteractionEriottoMod extends Interaction {
     public void preInit() {
         if(JAPANESE_RANDOM_SPAWN)
             MinecraftForge.EVENT_BUS.register(new JapaneseMobHandler());
+        JapaneseMobHandler.registerCapability();
     }
 
     @Override

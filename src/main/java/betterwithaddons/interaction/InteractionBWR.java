@@ -94,6 +94,7 @@ public class InteractionBWR extends Interaction {
         if(SOULSAND_INFUSION)
             MinecraftForge.EVENT_BUS.register(new SoulSandHandler());
         MinecraftForge.EVENT_BUS.register(new RenewablesHandler());
+        RenewablesHandler.registerCapability();
     }
 
     @Override
