@@ -1,8 +1,11 @@
 package betterwithaddons.item;
 
 import betterwithaddons.BetterWithAddons;
+import betterwithaddons.item.rbdtools.ItemToolConvenient;
 import betterwithaddons.lib.Reference;
+import betterwithmods.common.BWMItems;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
@@ -20,6 +23,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class ModItems
 {
@@ -96,6 +100,13 @@ public class ModItems
 
     public static ItemToolShard brokenArtifact;
 
+    public static ItemToolConvenient spade;
+    public static ItemToolConvenient machete;
+    public static ItemToolConvenient matchpick;
+    public static ItemToolConvenient kukri;
+    public static ItemToolConvenient saw;
+    public static ItemToolConvenient masonpick;
+
     public static Item explosion;
 
     public static void load(FMLPreInitializationEvent event)
@@ -107,6 +118,13 @@ public class ModItems
         bone_ingot = registerItem("bone_ingot",new Item());
         ender_cream = registerItem("ender_cream",new Item());
         thornrose = registerItem("thornrose",new Item());*/
+
+        spade = (ItemToolConvenient)registerItem("steel_spade",new ItemToolConvenient(8.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
+        matchpick = (ItemToolConvenient)registerItem("steel_matchpick",new ItemToolConvenient(1.0F, -2.8F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
+        machete = (ItemToolConvenient)registerItem("steel_machete",new ItemToolConvenient(8.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
+        kukri = (ItemToolConvenient)registerItem("steel_kukri",new ItemToolConvenient(8.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
+        saw = (ItemToolConvenient)registerItem("steel_carpentersaw",new ItemToolConvenient(8.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
+        masonpick = (ItemToolConvenient)registerItem("steel_masonpick",new ItemToolConvenient(8.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
 
         material = (ItemMaterial)registerItem("material",new ItemMaterial(
                 new String[]{"arrowhead","midori","midori_popped","thornrose","stone_brick","bone_ingot","ender_cream"}

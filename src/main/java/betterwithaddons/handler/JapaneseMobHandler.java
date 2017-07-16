@@ -56,18 +56,10 @@ public class JapaneseMobHandler {
         public int spirits = 0;
         public int absorbDelay = 50;
 
-        public JapaneseMob() {
-        }
-
-        public JapaneseMob(int spirits)
-        {
-            this.spirits = spirits;
-        }
-
         @Override
         public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
         {
-            return capability == JAPANESE_MOB_CAP;
+            return capability == JAPANESE_MOB_CAP && spirits > 0;
         }
 
         @Nullable
@@ -99,7 +91,6 @@ public class JapaneseMobHandler {
         World world = living.world;
         if(!event.isCanceled() && !world.isRemote && living.hasCapability(JAPANESE_MOB_CAP,null))
         {
-            EntityMob zombie = (EntityMob) living;
             JapaneseMob japaneseMob = living.getCapability(JAPANESE_MOB_CAP,null);
             int i = japaneseMob.spirits;
 
@@ -109,27 +100,21 @@ public class JapaneseMobHandler {
                 i -= j;
                 world.spawnEntity(new EntitySpirit(world, living.posX, living.posY, living.posZ, j));
             }
-
-            zombie.setItemStackToSlot(EntityEquipmentSlot.MAINHAND,ItemStack.EMPTY);
-            zombie.setItemStackToSlot(EntityEquipmentSlot.HEAD,ItemStack.EMPTY);
-            zombie.setItemStackToSlot(EntityEquipmentSlot.CHEST,ItemStack.EMPTY);
-            zombie.setItemStackToSlot(EntityEquipmentSlot.LEGS,ItemStack.EMPTY);
-            zombie.setItemStackToSlot(EntityEquipmentSlot.FEET,ItemStack.EMPTY);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void japaneseSpawn(LivingSpawnEvent.SpecialSpawn event)
     {
+        World world = event.getWorld();
         EntityLivingBase living = event.getEntityLiving();
         if(!event.isCanceled() && living.hasCapability(JAPANESE_MOB_CAP,null))
         {
-            EntityMob zombie = (EntityMob) living;
-            zombie.setItemStackToSlot(EntityEquipmentSlot.MAINHAND,new ItemStack(ModItems.katana));
-            zombie.setItemStackToSlot(EntityEquipmentSlot.HEAD,new ItemStack(ModItems.samuraiHelm));
-            zombie.setItemStackToSlot(EntityEquipmentSlot.CHEST,new ItemStack(ModItems.samuraiChestplate));
-            zombie.setItemStackToSlot(EntityEquipmentSlot.LEGS,new ItemStack(ModItems.samuraiLeggings));
-            zombie.setItemStackToSlot(EntityEquipmentSlot.FEET,new ItemStack(ModItems.samuraiBoots));
+            JapaneseMob japaneseMob = living.getCapability(JAPANESE_MOB_CAP,null);
+            if(InteractionEriottoMod.JAPANESE_RANDOM_SPAWN && world.rand.nextDouble() < InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_CHANCE)
+            {
+                japaneseMob.spirits = world.rand.nextInt(4)+3;
+            }
         }
     }
 
@@ -137,16 +122,10 @@ public class JapaneseMobHandler {
     public void japaneseAttachCapability(AttachCapabilitiesEvent<Entity> event)
     {
         Entity entity = event.getObject();
-        World world = entity.getEntityWorld();
-        Random random = world.rand;
-
-        if(world.isRemote)
-            return;
 
         if(entity instanceof EntityZombie || entity instanceof EntitySkeleton)
         {
-            if(InteractionEriottoMod.JAPANESE_RANDOM_SPAWN && random.nextDouble() < InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_CHANCE)
-                event.addCapability(JAPANESE_MOB,new JapaneseMob(random.nextInt(4)+3));
+            event.addCapability(JAPANESE_MOB,new JapaneseMob());
         }
     }
 }

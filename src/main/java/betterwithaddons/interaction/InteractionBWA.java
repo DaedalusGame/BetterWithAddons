@@ -7,12 +7,22 @@ import betterwithaddons.handler.*;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithaddons.tileentity.TileEntityLureTree;
-import net.minecraft.block.BlockQuartz;
+import betterwithaddons.util.ItemUtil;
+import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -109,6 +119,16 @@ public class InteractionBWA extends Interaction {
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.worldScale,1)," i ","iai"," i ",'a',new ItemStack(ModBlocks.worldScaleOre,0,1),'i',new ItemStack(Items.IRON_INGOT));
         }
 
+        ModItems.machete.setInstantCollect(true);
+        ModItems.kukri.setInstantCollect(true);
+        ModItems.masonpick.setInstantCollect(true);
+        ModItems.saw.setInstantCollect(true);
+
+        ModItems.matchpick.setItemUse((stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ) -> ItemUtil.matchesOreDict(stack,"torch"));
+        ModItems.machete.setItemUse((stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ) -> ItemUtil.matchesOreDict(stack,"vine"));
+        ModItems.kukri.setItemUse((stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ) -> ItemUtil.matchesOreDict(stack,"treeSapling"));
+        ModItems.spade.setItemUse(this::isDirt);
+
         TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),450);
 
         //TODO: Make this more sensible holy shit
@@ -159,5 +179,38 @@ public class InteractionBWA extends Interaction {
     @Override
     public void postInit() {
 
+    }
+
+    private boolean isDirt(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
+        Item item = stack.getItem();
+        if(item instanceof ItemBlock) {
+            Block block = ((ItemBlock) item).getBlock();
+            IBlockState state = block.getStateForPlacement(worldIn,pos,facing,hitX,hitY,hitZ,stack.getMetadata(),player,hand);
+            Material material = state.getMaterial();
+            return material == Material.GROUND || material == Material.GRASS || material == Material.CLAY;
+        }
+        return false;
+    }
+
+    private boolean isMasonry(ItemStack tool, IBlockState state)
+    {
+        Block block = state.getBlock();
+
+        return state.getMaterial() == Material.ROCK && (state.isFullCube() || block instanceof BlockStairs || block instanceof BlockSlab);
+    }
+
+    private boolean isCarpentry(ItemStack tool, IBlockState state)
+    {
+        Block block = state.getBlock();
+
+        return state.getMaterial() == Material.WOOD && (state.isFullCube() || block instanceof BlockStairs || block instanceof BlockSlab);
+    }
+
+    private boolean isTree(ItemStack tool, IBlockState state)
+    {
+        Block block = state.getBlock();
+
+        return block instanceof BlockLog || block instanceof BlockLeaves;
     }
 }

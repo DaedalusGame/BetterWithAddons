@@ -5,8 +5,10 @@ import betterwithaddons.block.BlockLattice;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionBTWTweak;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.item.rbdtools.ItemToolConvenient;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.util.BannerUtil;
+import betterwithaddons.util.InventoryUtil;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockAnchor;
@@ -48,6 +50,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -97,6 +100,33 @@ public class AssortedHandler {
         Block bottomblock = world.getBlockState(pos.down()).getBlock();
         if (!world.isRemote && block instanceof BlockRedstoneWire && bottomblock instanceof BlockPCB) {
             world.setBlockState(pos, ModBlocks.pcbwire.getDefaultState());
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void harvestBlock(BlockEvent.HarvestDropsEvent event)
+    {
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        IBlockState state = event.getState();
+        EntityPlayer player = event.getHarvester();
+
+        if(player != null)
+        {
+            ItemStack tool = player.getHeldItemMainhand();
+            Item item = tool.getItem();
+
+            if(item instanceof ItemToolConvenient)
+            {
+                ItemToolConvenient toolItem = (ItemToolConvenient) item;
+                if(!toolItem.canInstantlyCollect())
+                    return;
+
+                for (ItemStack drop : event.getDrops()) {
+                    InventoryUtil.addItemToPlayer(player,drop);
+                }
+                event.getDrops().clear();
+            }
         }
     }
 
