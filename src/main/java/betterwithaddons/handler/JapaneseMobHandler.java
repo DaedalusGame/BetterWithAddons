@@ -59,7 +59,7 @@ public class JapaneseMobHandler {
         @Override
         public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
         {
-            return capability == JAPANESE_MOB_CAP && spirits > 0;
+            return capability == JAPANESE_MOB_CAP;
         }
 
         @Nullable
