@@ -120,7 +120,7 @@ public class InteractionBWA extends Interaction {
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.worldScale,1)," i ","iai"," i ",'a',new ItemStack(ModBlocks.worldScaleOre,0,1),'i',new ItemStack(Items.IRON_INGOT));
         }
 
-        ModItems.machete.setInstantCollect(true);
+        /*ModItems.machete.setInstantCollect(true);
         ModItems.kukri.setInstantCollect(true);
         ModItems.masonpick.setInstantCollect(true);
         ModItems.saw.setInstantCollect(true);
@@ -128,7 +128,7 @@ public class InteractionBWA extends Interaction {
         ModItems.matchpick.setItemUse((stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ) -> ItemUtil.matchesOreDict(stack,"torch"));
         ModItems.machete.setItemUse((stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ) -> ItemUtil.matchesOreDict(stack,"vine"));
         ModItems.kukri.setItemUse((stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ) -> ItemUtil.matchesOreDict(stack,"treeSapling"));
-        ModItems.spade.setItemUse(this::isDirt);
+        ModItems.spade.setItemUse(this::isDirt);*/
 
         TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),450);
 
@@ -209,6 +209,7 @@ public class InteractionBWA extends Interaction {
 
     private boolean isItemOre(ItemStack ore)
     {
+        if(ore.isEmpty()) return false;
         if(ore.getItem() instanceof ItemBlock)
         for(int oreid : OreDictionary.getOreIDs(ore))
             if(OreDictionary.getOreName(oreid).startsWith("ore"))

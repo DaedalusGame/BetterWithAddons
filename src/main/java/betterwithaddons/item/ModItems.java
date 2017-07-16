@@ -119,12 +119,12 @@ public class ModItems
         ender_cream = registerItem("ender_cream",new Item());
         thornrose = registerItem("thornrose",new Item());*/
 
-        spade = (ItemToolConvenient)registerItem("steel_spade",new ItemToolConvenient(1.5F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
+        /*spade = (ItemToolConvenient)registerItem("steel_spade",new ItemToolConvenient(1.5F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
         matchpick = (ItemToolConvenient)registerItem("steel_matchpick",new ItemToolConvenient(1.0F, -2.8F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
         machete = (ItemToolConvenient)registerItem("steel_machete",new ItemToolConvenient(3.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
         kukri = (ItemToolConvenient)registerItem("steel_kukri",new ItemToolConvenient(3.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
         saw = (ItemToolConvenient)registerItem("steel_carpentersaw",new ItemToolConvenient(0.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
-        masonpick = (ItemToolConvenient)registerItem("steel_masonpick",new ItemToolConvenient(1.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));
+        masonpick = (ItemToolConvenient)registerItem("steel_masonpick",new ItemToolConvenient(1.0F, -3.0F, BWMItems.SOULFORGED_STEEL, new HashSet<>()));*/
 
         material = (ItemMaterial)registerItem("material",new ItemMaterial(
                 new String[]{"arrowhead","midori","midori_popped","thornrose","stone_brick","bone_ingot","ender_cream"}
