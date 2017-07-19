@@ -7,6 +7,7 @@ import betterwithaddons.block.Factorization.BlockBrine;
 import betterwithaddons.block.Factorization.BlockLegendarium;
 import betterwithaddons.block.Factorization.BlockPondBase;
 import betterwithaddons.block.Factorization.BlockSaltLayer;
+import betterwithaddons.item.ItemBlockSeed;
 import betterwithaddons.lib.Reference;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -104,7 +105,7 @@ public class ModBlocks {
         thorns = (BlockThorns) addBlock(new BlockThorns());
         chute = (BlockChute) addBlock(new BlockChute());
         aqueduct = (BlockAqueduct) addBlock(new BlockAqueduct());
-        aqueductWater = (BlockAqueductWater) addBlock(new BlockAqueductWater());
+        aqueductWater = (BlockAqueductWater) addBlock(new BlockAqueductWater(),null,false);
 
         legendarium = (BlockLegendarium)addBlock(new BlockLegendarium());
         pondBase = (BlockPondBase)addBlock(new BlockPondBase());
@@ -149,8 +150,8 @@ public class ModBlocks {
         ancestrySand = (BlockAncestrySand) addBlock(new BlockAncestrySand());
         infuser = (BlockInfuser) addBlock(new BlockInfuser());
         sakuraLeafPile = (BlockCherryLeafPile) addBlock(new BlockCherryLeafPile());
-        rush = (BlockCropRush) addBlock(new BlockCropRush());
-        rice = (BlockCropRice) addBlock(new BlockCropRice());
+        rush = (BlockCropRush) addBlock(new BlockCropRush(), ItemBlockSeed.class, false);
+        rice = (BlockCropRice) addBlock(new BlockCropRice(), ItemBlockSeed.class, false);
         bamboo = (BlockBamboo) addBlock(new BlockBamboo());
         bambooSlats = (BlockSlat) addBlock(new BlockSlat());
         nettedScreen = (BlockNettedScreen) addBlock(new BlockNettedScreen());
@@ -160,28 +161,9 @@ public class ModBlocks {
         cherrybox = (BlockCherryBox) addBlock(new BlockCherryBox());
         shoji = (BlockModPane) addBlock(new BlockModPane("shoji", Material.WOOD).setHardness(1.0f));
         fusuma = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma").setHardness(1.0f));
-        //fusuma2 = (BlockFusumaPainted) addBlock(new BlockFusumaPainted("fusuma2", 1).setHardness(1.0f));
         tatami = (BlockTatami) addBlock(new BlockTatami().setHardness(1.0f));
 
-        /*FusumaPicture.addPicture(new FusumaPicture(0).withSubblock(fusuma, 0));
-        FusumaPicture.addPicture(new FusumaPicture(1).withSubblock(fusuma, 2).withSubblock(fusuma, 1));
-        FusumaPicture.addPicture(new FusumaPicture(2).withSubblock(fusuma, 4).withSubblock(fusuma, 3));
-        FusumaPicture.addPicture(new FusumaPicture(3).withSubblock(fusuma, 5));
-        FusumaPicture.addPicture(new FusumaPicture(4).withSubblock(fusuma, 6));
-        FusumaPicture.addPicture(new FusumaPicture(5).withSubblock(fusuma, 7));
-        FusumaPicture.addPicture(new FusumaPicture(6).withSubblock(fusuma, 10).withSubblock(fusuma, 8));
-        FusumaPicture.addPicture(new FusumaPicture(7).withSubblock(fusuma, 11).withSubblock(fusuma, 9));
-        FusumaPicture.addPicture(new FusumaPicture(8).withSubblock(fusuma, 12));
-        FusumaPicture.addPicture(new FusumaPicture(9).withSubblock(fusuma, 13));
-        FusumaPicture.addPicture(new FusumaPicture(10).withSubblock(fusuma, 14));
-        FusumaPicture.addPicture(new FusumaPicture(11).withSubblock(fusuma2, 1).withSubblock(fusuma, 15));
-        FusumaPicture.addPicture(new FusumaPicture(12).withSubblock(fusuma2, 2).withSubblock(fusuma2, 0));
-        FusumaPicture.addPicture(new FusumaPicture(13).withSubblock(fusuma2, 5).withSubblock(fusuma2, 3));
-        FusumaPicture.addPicture(new FusumaPicture(14).withSubblock(fusuma2, 6).withSubblock(fusuma2, 4));*/
-
         connectPanes(shoji, fusuma);
-        //connectPanes(shoji, fusuma2);
-        //connectPanes(fusuma, fusuma2);
 
         wetSoap = (BlockSoap) addBlock(new BlockSoap());
         dung = (BlockDung) addBlock(new BlockDung());

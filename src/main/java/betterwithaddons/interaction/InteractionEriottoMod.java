@@ -89,14 +89,14 @@ public class InteractionEriottoMod extends Interaction {
         CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.materialJapan.getMaterial("iron_scales", 27)}, new ItemStack(ModBlocks.ironSand, 1), 0);
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.materialJapan.getMaterial("washi", 9)}, ModItems.materialJapan.getMaterial("mulberry_sheet"), 0);
 
-        OreDictionary.registerOre("listAllSeeds", new ItemStack(Items.WHEAT_SEEDS)); //I'll beat the shit out of HarvestCraft
-        OreDictionary.registerOre("listAllSeeds", new ItemStack(Items.PUMPKIN_SEEDS));
-        OreDictionary.registerOre("listAllSeeds", new ItemStack(Items.MELON_SEEDS));
-        OreDictionary.registerOre("listAllSeeds", new ItemStack(Items.BEETROOT_SEEDS));
+        OreDictionary.registerOre("seed", new ItemStack(Items.WHEAT_SEEDS)); //I'll beat the shit out of HarvestCraft
+        OreDictionary.registerOre("seed", new ItemStack(Items.PUMPKIN_SEEDS));
+        OreDictionary.registerOre("seed", new ItemStack(Items.MELON_SEEDS));
+        OreDictionary.registerOre("seed", new ItemStack(Items.BEETROOT_SEEDS));
         if (ModInteractions.bwm.isActive())
-            OreDictionary.registerOre("listAllSeeds", new ItemStack(BWMBlocks.HEMP));
-        OreDictionary.registerOre("listAllSeeds", new ItemStack(ModBlocks.rice));
-        OreDictionary.registerOre("listAllSeeds", new ItemStack(ModBlocks.rush));
+            OreDictionary.registerOre("seed", new ItemStack(BWMBlocks.HEMP));
+        OreDictionary.registerOre("seed", new ItemStack(ModBlocks.rice));
+        OreDictionary.registerOre("seed", new ItemStack(ModBlocks.rush));
 
         OreDictionary.registerOre("cropRice", ModItems.materialJapan.getMaterial("rice"));
         OreDictionary.registerOre("seedRice", new ItemStack(ModBlocks.rice));
@@ -197,7 +197,7 @@ public class InteractionEriottoMod extends Interaction {
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.infuser), " a ", " a ", "wtw", 't', new ItemStack(Blocks.ENCHANTING_TABLE), 'w', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), 'a', new ItemStack(ModItems.ancestryBottle));
 
         //Random seeds
-        CraftingManagerInfuserTransmutation.instance().addRecipe(new SmeltingRecipe(new OreStack("listAllSeeds"), ItemStack.EMPTY) {
+        CraftingManagerInfuserTransmutation.instance().addRecipe(new SmeltingRecipe(new OreStack("seed"), ItemStack.EMPTY) {
             Random random = new Random();
 
             @Override

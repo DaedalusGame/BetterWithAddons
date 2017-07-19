@@ -3,47 +3,34 @@ package betterwithaddons.handler;
 import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BlockLattice;
 import betterwithaddons.block.ModBlocks;
-import betterwithaddons.interaction.InteractionBTWTweak;
 import betterwithaddons.item.ModItems;
-import betterwithaddons.item.rbdtools.ItemToolConvenient;
+import betterwithaddons.item.rbdtools.IConvenientTool;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.util.BannerUtil;
 import betterwithaddons.util.InventoryUtil;
-import betterwithmods.common.BWMBlocks;
-import betterwithmods.common.blocks.BlockAesthetic;
-import betterwithmods.common.blocks.BlockAnchor;
-import betterwithmods.common.blocks.BlockLight;
-import betterwithmods.common.blocks.tile.TileEntityPulley;
-import betterwithmods.module.GlobalConfig;
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockPistonStructureHelper;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBanner;
+import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityFallingBlock;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityShulker;
-import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.BossInfo.Overlay;
 import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -53,9 +40,11 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class AssortedHandler {
     public static final int ScaleQuarryAmt = 5;
@@ -106,8 +95,6 @@ public class AssortedHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void harvestBlock(BlockEvent.HarvestDropsEvent event)
     {
-        World world = event.getWorld();
-        BlockPos pos = event.getPos();
         IBlockState state = event.getState();
         EntityPlayer player = event.getHarvester();
 
@@ -116,10 +103,10 @@ public class AssortedHandler {
             ItemStack tool = player.getHeldItemMainhand();
             Item item = tool.getItem();
 
-            if(item instanceof ItemToolConvenient)
+            if(item instanceof IConvenientTool)
             {
-                ItemToolConvenient toolItem = (ItemToolConvenient) item;
-                if(!toolItem.canInstantlyCollect())
+                IConvenientTool toolItem = (IConvenientTool) item;
+                if(!toolItem.canCollect(tool,state))
                     return;
 
                 for (ItemStack drop : event.getDrops()) {
