@@ -12,7 +12,8 @@ public class ModConfiguration {
     ConfigOptionBool BWM_ChorusInCauldron = new ConfigOptionBool("interaction.BetterWithMods", "ChorusInCauldron", InteractionBWM.CHORUS_IN_CAULDRON, "Chorus fruit (and Midori) can only be popped in a cauldron.");
     ConfigOptionBool BWM_ButcherBlocks = new ConfigOptionBool("interaction.BetterWithMods", "ButcherBlocks", InteractionBWM.BUTCHER_BLOCKS, "Striking an enemy on chopping blocks will bloody them and bestow a short strenth buff.");
     ConfigOptionBool BWM_CauldronsExplode = new ConfigOptionBool("interaction.BetterWithMods", "CauldronsExplode", InteractionBWM.CAULDRONS_EXPLODE, "Cooking hellfire or any other explosive in a stoked cauldron or crucible will result in a violent explosion.");
-    ConfigOptionBool BWM_HardcoreShearing = new ConfigOptionBool("addons.BTWTweak", "HardcoreShearing", InteractionBWM.HARDCORE_SHEARING, "Sheep will only be sheared into wool items, which must be crafted into wool blocks. This does not work with machines that use onSheared, but should work with Fake Players.");
+    ConfigOptionBool BWM_HardcoreShearing = new ConfigOptionBool("interaction.BetterWithMods", "HardcoreShearing", InteractionBWM.HARDCORE_SHEARING, "Sheep will only be sheared into wool items, which must be crafted into wool blocks. This does not work with machines that use onSheared, but should work with Fake Players.");
+    ConfigOptionBool BWM_DyeInCauldron = new ConfigOptionBool("interaction.BetterWithMods", "DyeInCauldron", InteractionBWM.DYE_IN_CAULDRON, "Wool can be dyed in batches of 8 in a cauldron and bleached with potash.");
 
     ConfigOptionBool Quark_Enabled = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.ENABLED);
     ConfigOptionBool Quark_MidoriBlocksNeedChunks = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS, "Midori blocks require popped Midori chunks.");
@@ -107,6 +108,7 @@ public class ModConfiguration {
         InteractionBWM.BUTCHER_BLOCKS = BWM_ButcherBlocks.init(configuration);
         InteractionBWM.CAULDRONS_EXPLODE = BWM_CauldronsExplode.init(configuration);
         InteractionBWM.HARDCORE_SHEARING = BWM_HardcoreShearing.init(configuration);
+        InteractionBWM.DYE_IN_CAULDRON = BWM_DyeInCauldron.init(configuration);
         InteractionQuark.ENABLED = Quark_Enabled.init(configuration);
         InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS = Quark_MidoriBlocksNeedChunks.init(configuration);
 

@@ -147,7 +147,7 @@ public class InteractionCondensedOutputs extends Interaction {
         addBundlingRecipe(ModItems.materialBundle.getMaterial("acacia"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.ACACIA.getMetadata()));
         addBundlingRecipe(ModItems.materialBundle.getMaterial("darkoak"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
 
-        CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.dung),new Object[]{new betterwithmods.common.registry.OreStack("dung",9)});
+        CauldronManager.getInstance().addRecipe(new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.DUNG.getMeta()),new Object[]{new betterwithmods.common.registry.OreStack("dung",9)});
 
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH)},new OreStack("fiberHemp",9),false);
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.ROPE.getMeta())},new ItemStack(BWMBlocks.ROPE,9),false);

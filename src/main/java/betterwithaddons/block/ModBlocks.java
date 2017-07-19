@@ -84,7 +84,6 @@ public class ModBlocks {
     public static BlockSaltLayer saltLayer;
     public static BlockSpindle spindle;
     public static BlockLoom loom;
-    public static BlockDung dung;
     public static BlockAncestrySand ancestrySand;
     public static BlockInfuser infuser;
 
@@ -166,7 +165,6 @@ public class ModBlocks {
         connectPanes(shoji, fusuma);
 
         wetSoap = (BlockSoap) addBlock(new BlockSoap());
-        dung = (BlockDung) addBlock(new BlockDung());
 
         chandelier = (BlockChandelier) addBlock(new BlockChandelier().setLightLevel(0.9375F));
         paperWall = (BlockModPane) addBlock(new BlockModPane("paper_wall", Material.WOOD).setHardness(1.0f));

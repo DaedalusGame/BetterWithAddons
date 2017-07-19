@@ -8,6 +8,7 @@ import betterwithaddons.handler.*;
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
+import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockUrn;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.OreStack;
@@ -114,12 +115,12 @@ public class InteractionBWR extends Interaction {
                 ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER),
                 ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG,8),new Object[]{
                         ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER),
-                        new ItemStack(ModBlocks.dung)});
+                        new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.DUNG.getMeta())});
         CauldronManager.getInstance().addRecipe(
                 ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER_CUT,2),
                 ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG,8),new Object[]{
                         ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER_CUT,2),
-                        new ItemStack(ModBlocks.dung)});
+                        new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.DUNG.getMeta())});
 
         //Redstone synthesis
         ItemStack smallRedstone = new ItemStack(Items.REDSTONE, REDSTONE_PER_SYNTHESIS);

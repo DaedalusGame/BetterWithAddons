@@ -1,6 +1,8 @@
 package betterwithaddons.handler;
 
 import betterwithaddons.block.ModBlocks;
+import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.blocks.BlockAesthetic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -68,7 +70,7 @@ public class SoulSandHandler {
             {
                 IBlockState state = world.getBlockState(pos);
 
-                if(state.getBlock() != ModBlocks.dung)
+                if(state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.blockType) != BlockAesthetic.EnumType.DUNG)
                     return;
 
                 if(!isValidInfusionWall(world,pos.up(), EnumFacing.DOWN) ||

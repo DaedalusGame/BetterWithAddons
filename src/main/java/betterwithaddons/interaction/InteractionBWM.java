@@ -15,10 +15,12 @@ import betterwithmods.common.blocks.BlockBDispenser;
 import betterwithmods.common.blocks.BlockBUD;
 import betterwithmods.common.blocks.BlockUrn;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.OreStack;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
+import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
 import betterwithmods.module.hardcore.HCPiles;
@@ -29,6 +31,7 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -52,6 +55,7 @@ public class InteractionBWM extends Interaction {
     public static boolean FALLING_PLATFORMS = false;
     public static boolean CAULDRONS_EXPLODE = true;
     public static boolean HARDCORE_SHEARING = true;
+    public static boolean DYE_IN_CAULDRON = true;
 
     @Override
     public boolean isActive() {
@@ -157,6 +161,8 @@ public class InteractionBWM extends Interaction {
         if (!isActive())
             return;
 
+        String[] dyeOredictTags = new String[]{"White", "Orange", "Magenta", "LightBlue", "Yellow", "Lime", "Pink", "Gray", "LightGray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"};
+
         if(HARDCORE_SHEARING)
         {
             BlockBDispenser.ENTITY_COLLECT_REGISTRY.putObject(EntitySheep.class,(world, pos, entity, itemStack) -> {
@@ -172,6 +178,18 @@ public class InteractionBWM extends Interaction {
                 GameRegistry.addShapedRecipe(new ItemStack(Blocks.WOOL,1,color.getMetadata())," o ","oxo"," o ",'o',wool,'x',new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()));
             }
         }
+        if(DYE_IN_CAULDRON) {
+            //Dyeing
+            for (EnumDyeColor color : EnumDyeColor.values())
+                if (color != EnumDyeColor.WHITE) {
+                    CauldronManager.getInstance().addRecipe(new ItemStack(Blocks.WOOL, 8, color.getMetadata()), new Object[]{new ItemStack(Blocks.WOOL, 8, EnumDyeColor.WHITE.getMetadata()), new OreStack("dye" + dyeOredictTags[color.ordinal()], 1)});
+                }
+            //Bleaching
+            for (EnumDyeColor color : EnumDyeColor.values())
+                if (color != EnumDyeColor.WHITE) {
+                    CauldronManager.getInstance().addRecipe(new ItemStack(Blocks.WOOL, 8, EnumDyeColor.WHITE.getMetadata()), new Object[]{new ItemStack(Blocks.WOOL, 8, color.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH)});
+                }
+        }
 
         //Temporary until we PR soulsand piles
         HCPiles.registerPile(Blocks.SOUL_SAND,new ItemStack(ModItems.soulSandPile,3));
@@ -186,9 +204,6 @@ public class InteractionBWM extends Interaction {
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BLASTING_OIL));
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HELLFIRE_DUST));
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE));
-        OreDictionary.registerOre("blockDung", ModBlocks.dung);
-
-        registerCompressRecipe(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG),new ItemStack(ModBlocks.dung),"dung","blockDung");
 
         if(CAULDRONS_EXPLODE)
             addCauldronExplosion();

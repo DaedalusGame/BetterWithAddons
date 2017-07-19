@@ -7,6 +7,8 @@ import betterwithaddons.util.ItemUtil;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.blocks.BlockAesthetic;
+import betterwithmods.common.registry.heat.BWMHeatRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -59,6 +61,65 @@ import java.util.Random;
 
 public class RenewablesHandler {
     @SubscribeEvent
+    public void dungRinsing(RandomBlockTickEvent event) {
+        World world = event.getWorld();
+        IBlockState state = event.getState();
+        BlockPos pos = event.getPos();
+        Random random = event.getRandom();
+
+        if (world.isRemote || !InteractionBWR.DUNG_TO_DIRT || state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.blockType) != BlockAesthetic.EnumType.DUNG)
+            return;
+
+        IBlockState water = world.getBlockState(pos.up());
+
+        if (water.getMaterial() != Material.WATER) {
+            return;
+        }
+
+        int fireIntensity = 26; //Ambient
+
+        for (int i = 1; i <= 3; i++) {
+            if (!world.isBlockNormalCube(pos.down(i), true)) {
+                fireIntensity += getCurrentFireIntensity(world, pos.down(i));
+                break;
+            }
+        }
+
+        if (random.nextInt(300) < fireIntensity) {
+            world.setBlockState(pos, Blocks.DIRT.getDefaultState());
+            //TODO: Should we add minetweaker compat for other things to happen here?
+            if (InteractionBWR.SAND_TO_CLAY && isSand(world, pos.down())) {
+                world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (random.nextFloat() - random.nextFloat()) * 0.8F);
+                world.setBlockState(pos.down(), Blocks.CLAY.getDefaultState());
+            }
+        }
+    }
+
+    public boolean isSand(World world, BlockPos pos) {
+        IBlockState state = world.getBlockState(pos);
+        Block block = state.getBlock();
+
+        return block == Blocks.SAND;
+    }
+
+    public int getCurrentFireIntensity(World world, BlockPos pos) {
+        int fireFactor = 0;
+
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                BlockPos target = pos.add(x, 0, z);
+                IBlockState targetState = world.getBlockState(target);
+                Block block = targetState.getBlock();
+                int meta = targetState.getBlock().damageDropped(targetState);
+                if (BWMHeatRegistry.get(block, meta) != null)
+                    fireFactor += BWMHeatRegistry.get(block, meta).value;
+            }
+        }
+
+        return fireFactor;
+    }
+
+    @SubscribeEvent
     public void meltHellfire(RandomBlockTickEvent event)
     {
         World world = event.getWorld();
@@ -66,7 +127,7 @@ public class RenewablesHandler {
         BlockPos pos = event.getPos();
         Random rand = event.getRandom();
 
-        if(!InteractionBWR.MELT_HELLFIRE || state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.blockType) != BlockAesthetic.EnumType.HELLFIRE)
+        if(world.isRemote || !InteractionBWR.MELT_HELLFIRE || state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.blockType) != BlockAesthetic.EnumType.HELLFIRE)
             return;
 
         int sources = 0;
