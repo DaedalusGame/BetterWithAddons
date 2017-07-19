@@ -12,6 +12,7 @@ public class ModConfiguration {
     ConfigOptionBool BWM_ChorusInCauldron = new ConfigOptionBool("interaction.BetterWithMods", "ChorusInCauldron", InteractionBWM.CHORUS_IN_CAULDRON, "Chorus fruit (and Midori) can only be popped in a cauldron.");
     ConfigOptionBool BWM_ButcherBlocks = new ConfigOptionBool("interaction.BetterWithMods", "ButcherBlocks", InteractionBWM.BUTCHER_BLOCKS, "Striking an enemy on chopping blocks will bloody them and bestow a short strenth buff.");
     ConfigOptionBool BWM_CauldronsExplode = new ConfigOptionBool("interaction.BetterWithMods", "CauldronsExplode", InteractionBWM.CAULDRONS_EXPLODE, "Cooking hellfire or any other explosive in a stoked cauldron or crucible will result in a violent explosion.");
+    ConfigOptionBool BWM_HardcoreShearing = new ConfigOptionBool("addons.BTWTweak", "HardcoreShearing", InteractionBWM.HARDCORE_SHEARING, "Sheep will only be sheared into wool items, which must be crafted into wool blocks. This does not work with machines that use onSheared, but should work with Fake Players.");
 
     ConfigOptionBool Quark_Enabled = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.ENABLED);
     ConfigOptionBool Quark_MidoriBlocksNeedChunks = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS, "Midori blocks require popped Midori chunks.");
@@ -89,6 +90,8 @@ public class ModConfiguration {
     ConfigOptionBool BTWTweak_SawRecycling = new ConfigOptionBool("addons.BTWTweak", "SawRecycling", InteractionBTWTweak.SAW_RECYCLING, "Many wooden blocks can be recycled by putting them infront of a carpenterSaw, at a bit of a loss.");
     ConfigOptionBool BTWTweak_EggIncubation = new ConfigOptionBool("addons.BTWTweak", "EggIncubation", InteractionBTWTweak.EGG_INCUBATION, "Allows eggs to be incubated into chicken by placing them on a Block of Padding with a lit Light Block above.");
     ConfigOptionBool BTWTweak_SlipperyWhenWet = new ConfigOptionBool("addons.BTWTweak", "SlipperyWhenWet", InteractionBTWTweak.SLIPPERY_WHEN_WET, "Water running over blocks of soap will make them slippery.");
+    ConfigOptionBool BTWTweak_AshFertilizer = new ConfigOptionBool("addons.BTWTweak", "AshFertilizer", InteractionBTWTweak.ASH_FERTILIZER, "Potash is a valid fertilizer.");
+    ConfigOptionBool BTWTweak_WoolRecycling = new ConfigOptionBool("addons.BTWTweak", "WoolRecycling", InteractionBTWTweak.WOOL_RECYCLING, "Wool can be rendered back into it's components. You might want to disable this if you use mods that violate Hardcore Shearing.");
 
 
     public void preInit(FMLPreInitializationEvent event)
@@ -103,6 +106,7 @@ public class ModConfiguration {
         InteractionBWM.CHORUS_IN_CAULDRON = BWM_ChorusInCauldron.init(configuration);
         InteractionBWM.BUTCHER_BLOCKS = BWM_ButcherBlocks.init(configuration);
         InteractionBWM.CAULDRONS_EXPLODE = BWM_CauldronsExplode.init(configuration);
+        InteractionBWM.HARDCORE_SHEARING = BWM_HardcoreShearing.init(configuration);
         InteractionQuark.ENABLED = Quark_Enabled.init(configuration);
         InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS = Quark_MidoriBlocksNeedChunks.init(configuration);
 
@@ -156,6 +160,8 @@ public class ModConfiguration {
         InteractionBTWTweak.SAW_RECYCLING = BTWTweak_SawRecycling.init(configuration);
         InteractionBTWTweak.EGG_INCUBATION = BTWTweak_EggIncubation.init(configuration);
         InteractionBTWTweak.SLIPPERY_WHEN_WET = BTWTweak_SlipperyWhenWet.init(configuration);
+        InteractionBTWTweak.ASH_FERTILIZER = BTWTweak_AshFertilizer.init(configuration);
+        InteractionBTWTweak.WOOL_RECYCLING = BTWTweak_WoolRecycling.init(configuration);
 
         InteractionBWR.ENABLED = BWR_Enabled.init(configuration);
         InteractionBWR.REDSTONE_SYNTHESIS = BWR_RedstoneSynthesis.init(configuration);

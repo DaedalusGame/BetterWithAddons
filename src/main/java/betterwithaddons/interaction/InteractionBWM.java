@@ -4,26 +4,28 @@ import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.handler.ButcherHandler;
 import betterwithaddons.handler.FallingPlatformHandler;
+import betterwithaddons.handler.HardcoreWoolHandler;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithaddons.util.ItemUtil;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.blocks.BlockAesthetic;
+import betterwithmods.common.blocks.BlockBDispenser;
 import betterwithmods.common.blocks.BlockBUD;
 import betterwithmods.common.blocks.BlockUrn;
-import betterwithmods.common.blocks.tile.TileEntityCookingPot;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
-import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
 import betterwithmods.module.hardcore.HCPiles;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
@@ -49,6 +51,7 @@ public class InteractionBWM extends Interaction {
     public static boolean BUTCHER_BLOCKS = true;
     public static boolean FALLING_PLATFORMS = false;
     public static boolean CAULDRONS_EXPLODE = true;
+    public static boolean HARDCORE_SHEARING = true;
 
     @Override
     public boolean isActive() {
@@ -77,6 +80,8 @@ public class InteractionBWM extends Interaction {
             MinecraftForge.EVENT_BUS.register(new ButcherHandler());
         if (FALLING_PLATFORMS)
             MinecraftForge.EVENT_BUS.register(new FallingPlatformHandler());
+        if (HARDCORE_SHEARING)
+            MinecraftForge.EVENT_BUS.register(new HardcoreWoolHandler());
     }
 
     public void addCauldronExplosion() {
@@ -126,10 +131,47 @@ public class InteractionBWM extends Interaction {
         return NonNullList.create();
     }
 
+    public static NonNullList<ItemStack> convertShearedWool(List<ItemStack> sheared)
+    {
+        NonNullList<ItemStack> returnList = NonNullList.create();
+        for(ItemStack stack : sheared)
+        {
+            if(stack.getItem() == Item.getItemFromBlock(Blocks.WOOL))
+                returnList.add(new ItemStack(ModItems.wool,stack.getCount(),stack.getMetadata()));
+            else
+                returnList.add(stack);
+        }
+        return returnList;
+    }
+
+    public static void convertShearedWoolEntities(List<EntityItem> sheared) {
+        for (EntityItem item : sheared) {
+            ItemStack stack = item.getEntityItem();
+            if(stack.getItem() == Item.getItemFromBlock(Blocks.WOOL))
+                item.setEntityItemStack(new ItemStack(ModItems.wool,stack.getCount(),stack.getMetadata()));
+        }
+    }
+
     @Override
     public void init() {
         if (!isActive())
             return;
+
+        if(HARDCORE_SHEARING)
+        {
+            BlockBDispenser.ENTITY_COLLECT_REGISTRY.putObject(EntitySheep.class,(world, pos, entity, itemStack) -> {
+                EntitySheep sheep = (EntitySheep) entity;
+                if (sheep.isShearable(new ItemStack(Items.SHEARS), world, pos)) {
+                    return convertShearedWool(sheep.onSheared(new ItemStack(Items.SHEARS), world, pos, 0));
+                }
+                return NonNullList.create();});
+
+            BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.WOOL));
+            for (EnumDyeColor color : EnumDyeColor.values()) {
+                ItemStack wool = ModItems.wool.getByColor(color);
+                GameRegistry.addShapedRecipe(new ItemStack(Blocks.WOOL,1,color.getMetadata())," o ","oxo"," o ",'o',wool,'x',new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()));
+            }
+        }
 
         //Temporary until we PR soulsand piles
         HCPiles.registerPile(Blocks.SOUL_SAND,new ItemStack(ModItems.soulSandPile,3));

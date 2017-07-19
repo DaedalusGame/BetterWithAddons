@@ -22,6 +22,7 @@ import static net.minecraft.stats.StatList.getBlockStats;
 public class ItemSpadeConvenient extends ItemSpade implements IConvenientTool {
     public ItemSpadeConvenient(ToolMaterial material) {
         super(material);
+        this.setMaxDamage((int)(material.getMaxUses() * 1.1f));
     }
 
     @Override

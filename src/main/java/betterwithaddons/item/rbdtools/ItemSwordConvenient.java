@@ -23,6 +23,7 @@ import static net.minecraft.stats.StatList.getBlockStats;
 public class ItemSwordConvenient extends ItemSword implements IConvenientTool {
     public ItemSwordConvenient(ToolMaterial material) {
         super(material);
+        this.setMaxDamage((int)(material.getMaxUses() * 1.1f));
     }
 
     @Override

@@ -8,6 +8,7 @@ inv.waternet.name=Netted Screen
 inv.sandnet.name=Netted Screen
 inv.spindle.name=Spindle
 inv.spindle.throw.name=Throw Items
+inv.infuser.name=Ancestral Infuser
 inv.infuser.throw.name=Throw
 
 tile.banner_detector.name=Banner Detector
@@ -128,6 +129,24 @@ item.warwall.name=Warwall
 
 item.artifact_frame.name=Artifact Display
 item.bowl.salt.name=Bowl of Salt
+
+item.wool.white.name=White Fleece
+item.wool.orange.name=Orange Fleece
+item.wool.magenta.name=Magenta Fleece
+item.wool.lightBlue.name=Light Blue Fleece
+item.wool.yellow.name=Yellow Fleece
+item.wool.lime.name=Lime Fleece
+item.wool.pink.name=Pink Fleece
+item.wool.gray.name=Gray Fleece
+item.wool.silver.name=Light Gray Fleece
+item.wool.cyan.name=Cyan Fleece
+item.wool.purple.name=Purple Fleece
+item.wool.blue.name=Blue Fleece
+item.wool.brown.name=Brown Fleece
+item.wool.green.name=Green Fleece
+item.wool.red.name=Red Fleece
+item.wool.black.name=Black Fleece
+
 
 item.soulsand_pile.name=Pile of Soul Sand
 item.explosion.name=§eHIGHLY VOLATILE!

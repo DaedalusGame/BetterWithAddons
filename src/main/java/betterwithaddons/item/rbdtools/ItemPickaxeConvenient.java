@@ -22,6 +22,7 @@ import static net.minecraft.stats.StatList.getBlockStats;
 public class ItemPickaxeConvenient extends ItemPickaxe implements IConvenientTool {
     public ItemPickaxeConvenient(ToolMaterial material) {
         super(material);
+        this.setMaxDamage((int)(material.getMaxUses() * 1.1f));
     }
 
     @Override

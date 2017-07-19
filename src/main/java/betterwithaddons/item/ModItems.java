@@ -19,10 +19,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -80,7 +77,9 @@ public class ModItems {
     public static ItemModFood meatballs;
     public static ItemModFood cookedEgg;
     public static ItemModFood groundMeat;
+
     public static Item soulSandPile;
+    public static ItemColored wool;
 
     public static ItemMaterial bowls;
 
@@ -352,6 +351,7 @@ public class ModItems {
         riceBowl = (ItemModFood) registerItem("food_bowl_rice", new ItemModFood(9, 0.6F, false).setMaxStackSize(1));
 
         soulSandPile = registerItem("soulsand_pile", new Item());
+        wool = (ItemColored)registerItem("wool",new ItemColored());
 
         bowls = (ItemMaterial) registerItem("bowl", new ItemMaterial(
                 new String[]{"salt"}

@@ -22,6 +22,7 @@ import static net.minecraft.stats.StatList.getBlockStats;
 public class ItemAxeConvenient extends ItemAxe implements IConvenientTool {
     public ItemAxeConvenient(ToolMaterial material, float damage, float speed) {
         super(material,damage,speed);
+        this.setMaxDamage((int)(material.getMaxUses() * 1.1f));
     }
 
     @Override

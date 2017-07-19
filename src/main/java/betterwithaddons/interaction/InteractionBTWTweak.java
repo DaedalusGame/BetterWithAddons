@@ -4,14 +4,18 @@ import betterwithaddons.crafting.recipes.DisplaySawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.SoapHandler;
 import betterwithaddons.handler.StumpingHandler;
+import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockMechMachines;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
+import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
+import betterwithmods.module.hardcore.HCBonemeal;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -27,6 +31,8 @@ public class InteractionBTWTweak extends Interaction {
     //public static boolean KILN_DOUBLING = true;
     public static boolean EGG_INCUBATION = true;
     public static boolean SLIPPERY_WHEN_WET = true;
+    public static boolean ASH_FERTILIZER = true;
+    public static boolean WOOL_RECYCLING = true;
 
     @Override
     public boolean isActive() {
@@ -66,6 +72,18 @@ public class InteractionBTWTweak extends Interaction {
             StumpingHandler.addSoftWood(Blocks.LOG,BlockPlanks.EnumType.SPRUCE.getMetadata(),1.3f);
             StumpingHandler.addSoftWood(Blocks.LOG,BlockPlanks.EnumType.JUNGLE.getMetadata(),1.0f);
             StumpingHandler.addSoftWood(Blocks.LOG2,BlockPlanks.EnumType.DARK_OAK.getMetadata() - 4,1.3f);
+        }
+
+        if(ASH_FERTILIZER) {
+            HCBonemeal.registerFertilzier(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
+            //TODO: Ash
+        }
+
+        if(WOOL_RECYCLING && InteractionBWM.HARDCORE_SHEARING)
+        {
+            for (EnumDyeColor color: EnumDyeColor.values()) {
+                StokedCauldronManager.getInstance().addRecipe(new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()), ModItems.wool.getByColor(color,4), new Object[]{ new ItemStack(Blocks.WOOL,1,color.getMetadata()) });
+            }
         }
 
         if(SAW_RECYCLING)
