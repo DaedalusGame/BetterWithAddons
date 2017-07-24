@@ -13,6 +13,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -20,20 +21,30 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.PooledMutableBlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.BlockFluidClassic;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class BlockAqueductWater extends BlockLiquid {
+public class BlockAqueductWater extends BlockFluidClassic {
     protected BlockAqueductWater() {
-        super(Material.WATER);
+        super(FluidRegistry.WATER,Material.WATER);
 
         String name = "aqueduct_water";
 
@@ -61,17 +72,6 @@ public class BlockAqueductWater extends BlockLiquid {
         world.scheduleUpdate(pos, this, this.tickRate(world));
     }
 
-    /*@Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-    {
-        return FULL_BLOCK_AABB;
-    }*/
-
-    /*public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
-    {
-        return false;
-    }*/
-
     public boolean checkAndDry(World world, BlockPos pos, IBlockState state) {
         IBlockState bottomstate = world.getBlockState(pos.down());
 
@@ -94,6 +94,8 @@ public class BlockAqueductWater extends BlockLiquid {
                     return false;
                 }
                 ((TileEntityAqueductWater) te).setDistanceFromSource(dist);
+                if(dist != currdist)
+                    world.setBlockState(pos,state);
             }
             else
             {
@@ -132,138 +134,174 @@ public class BlockAqueductWater extends BlockLiquid {
 
 
     @Override
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        int level = state.getValue(LEVEL);
-
-        boolean keep = checkAndDry(worldIn, pos, state);
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        boolean keep = checkAndDry(world, pos, state);
 
         if(!keep)
             return;
 
-        IBlockState stateBelow = worldIn.getBlockState(pos.down());
+        int quantaRemaining = quantaPerBlock - state.getValue(LEVEL) % 8;
 
-        if (this.canFlowInto(worldIn, pos.down(), stateBelow)) {
-            if (level >= 8) {
-                this.tryFlowInto(worldIn, pos.down(), stateBelow, level);
-            } else {
-                this.tryFlowInto(worldIn, pos.down(), stateBelow, level + 8);
-            }
-        } else if (level >= 0 && (level == 0 || this.isBlocked(worldIn, pos.down(), stateBelow))) {
-            Set<EnumFacing> set = this.getPossibleFlowDirections(worldIn, pos);
-            int nextLevel = level + 1;
-
-            if (level >= 8) {
-                nextLevel = 1;
-            }
-
-            if (nextLevel >= 8) {
-                return;
-            }
-
-            for (EnumFacing facing : set) {
-                this.tryFlowInto(worldIn, pos.offset(facing), worldIn.getBlockState(pos.offset(facing)), nextLevel);
-            }
+        // Flow vertically if possible
+        if (canDisplace(world, pos.up(densityDir)))
+        {
+            flowIntoBlock(world, pos.up(densityDir), 1);
+            return;
         }
 
-        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
-    }
+        // Flow outward if possible
+        int flowMeta = quantaPerBlock - quantaRemaining + 1;
+        if (flowMeta >= quantaPerBlock)
+        {
+            return;
+        }
 
-    private boolean canFlowInto(World worldIn, BlockPos pos, IBlockState state) {
-        Material material = state.getMaterial();
-        return material != this.blockMaterial && material != Material.LAVA && !this.isBlocked(worldIn, pos, state);
-    }
-
-    private void tryFlowInto(World worldIn, BlockPos pos, IBlockState state, int level) {
-        if (this.canFlowInto(worldIn, pos, state)) {
-            if (state.getMaterial() != Material.AIR) {
-                state.getBlock().dropBlockAsItem(worldIn, pos, state, 0);
+        if (isSourceBlock(world, pos) || !isFlowingVertically(world, pos))
+        {
+            if (world.getBlockState(pos.down(densityDir)).getBlock() == this)
+            {
+                flowMeta = 1;
             }
+            boolean flowTo[] = getOptimalFlowDirections(world, pos);
 
-            worldIn.setBlockState(pos,
-                    Blocks.FLOWING_WATER.getDefaultState().withProperty(LEVEL, level), 3);
+            if (flowTo[0]) flowIntoBlock(world, pos.add(-1, 0,  0), flowMeta);
+            if (flowTo[1]) flowIntoBlock(world, pos.add( 1, 0,  0), flowMeta);
+            if (flowTo[2]) flowIntoBlock(world, pos.add( 0, 0, -1), flowMeta);
+            if (flowTo[3]) flowIntoBlock(world, pos.add( 0, 0,  1), flowMeta);
+        }
+
+        world.scheduleUpdate(pos, this, this.tickRate(world));
+    }
+
+    @Override
+    protected void flowIntoBlock(World world, BlockPos pos, int meta)
+    {
+        if (meta < 0) return;
+        if (displaceIfPossible(world, pos) && world.getBlockState(pos).getMaterial() != Material.WATER)
+        {
+            world.setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState().withProperty(LEVEL, meta), 3);
         }
     }
 
-    private boolean isBlocked(World worldIn, BlockPos pos, IBlockState state) {
+    /*private boolean isBlocked(World worldIn, BlockPos pos, IBlockState state) {
         Block block = worldIn.getBlockState(pos).getBlock();
         return !(!(block instanceof BlockDoor) && block != Blocks.STANDING_SIGN && block != Blocks.LADDER
                 && block != Blocks.REEDS) || (!(state.getMaterial() != Material.PORTAL
                 && state.getMaterial() != Material.STRUCTURE_VOID) || state.getMaterial().blocksMovement());
-    }
-
-    private Set<EnumFacing> getPossibleFlowDirections(World worldIn, BlockPos pos) {
-        int i = 1000;
-        Set<EnumFacing> set = EnumSet.noneOf(EnumFacing.class);
-
-        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
-            BlockPos blockpos = pos.offset(enumfacing);
-            IBlockState iblockstate = worldIn.getBlockState(blockpos);
-
-            if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial
-                    || iblockstate.getValue(LEVEL) > 0)) {
-                int j;
-
-                if (this.isBlocked(worldIn, blockpos.down(), worldIn.getBlockState(blockpos.down()))) {
-                    j = this.getSlopeDistance(worldIn, blockpos, 1, enumfacing.getOpposite());
-                } else {
-                    j = 0;
-                }
-
-                if (j < i) {
-                    set.clear();
-                }
-
-                if (j <= i) {
-                    set.add(enumfacing);
-                    i = j;
-                }
-            }
-        }
-
-        return set;
-    }
-
-    private int getSlopeDistance(World worldIn, BlockPos pos, int distance, EnumFacing calculateFlowCost) {
-        int i = 1000;
-
-        for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL) {
-            if (enumfacing != calculateFlowCost) {
-                BlockPos blockpos = pos.offset(enumfacing);
-                IBlockState iblockstate = worldIn.getBlockState(blockpos);
-
-                if (!this.isBlocked(worldIn, blockpos, iblockstate) && (iblockstate.getMaterial() != this.blockMaterial
-                        || iblockstate.getValue(LEVEL) > 0)) {
-                    if (!this.isBlocked(worldIn, blockpos.down(), iblockstate)) {
-                        return distance;
-                    }
-
-                    if (distance < 4) {
-                        int j = this.getSlopeDistance(worldIn, blockpos, distance + 1, enumfacing.getOpposite());
-
-                        if (j < i) {
-                            i = j;
-                        }
-                    }
-                }
-            }
-        }
-
-        return i;
-    }
+    }*/
 
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-        if (!this.checkForMixing(worldIn, pos, state)) {
-            worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
-        }
+        worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
     }
 
-    //@Override
-    //protected Vec3d getFlow(IBlockAccess world, BlockPos pos, IBlockState state) {
-        //EnumFacing flowfrom = state.getValue(FLOWFROM);
+    private int getDepth(IBlockAccess world, BlockPos pos)
+    {
+        IBlockState state = world.getBlockState(pos);
 
-    //    return new Vec3d(flowfrom.getFrontOffsetX(),flowfrom.getFrontOffsetY(),flowfrom.getFrontOffsetZ());
-    //}
+        int level = 0;
+        if(state.getMaterial() != Material.WATER)
+            level = -1;
+        else if(state.getBlock() == this)
+        {
+            TileEntity te = world.getTileEntity(pos);
+            if(te instanceof TileEntityAqueductWater)
+                return ((TileEntityAqueductWater) te).getDistanceFromSource();
+        }
+        else if(state.getValue(LEVEL) != 0)
+        {
+            level = state.getValue(LEVEL) + InteractionBWA.AQUEDUCT_MAX_LENGTH;
+        }
+
+        return level;
+    }
+
+    @Override
+    public Vec3d getFlowVector(IBlockAccess world, BlockPos pos) {
+        double flowx = 0.0D;
+        double flowy = 0.0D;
+        double flowz = 0.0D;
+        int thislevel = this.getDepth(world,pos);
+        PooledMutableBlockPos checkpos = PooledMutableBlockPos.retain();
+        EnumFacing flowDir = EnumFacing.DOWN;
+        HashSet<BlockPos> corners = new HashSet<>();
+
+        for (EnumFacing enumfacing : EnumFacing.HORIZONTALS)
+        {
+            checkpos.setPos(pos).move(enumfacing);
+            int otherlevel = this.getDepth(world,checkpos);
+
+            if (otherlevel >= 0)
+            {
+                int l = otherlevel - thislevel;
+                flowx += (double)(enumfacing.getFrontOffsetX() * l);
+                flowy += (double)(enumfacing.getFrontOffsetY() * l);
+                flowz += (double)(enumfacing.getFrontOffsetZ() * l);
+                corners.add(checkpos.offset(enumfacing.rotateY(),1));
+                corners.add(checkpos.offset(enumfacing.rotateY(),-1));
+            }
+        }
+
+        for(BlockPos cornerpos : corners)
+        {
+            int xdiff = cornerpos.getX() - pos.getX();
+            int zdiff = cornerpos.getZ() - pos.getZ();
+
+            int otherlevel = this.getDepth(world,cornerpos);
+
+            if (otherlevel >= 0)
+            {
+                int l = otherlevel - thislevel;
+                flowx += (double)(xdiff * l);
+                flowz += (double)(zdiff * l);
+            }
+        }
+
+        flowDir = EnumFacing.getFacingFromVector((float)flowx,(float)flowy,(float)flowz);
+
+        if(flowDir.getAxis().isHorizontal())
+        {
+            EnumFacing right = flowDir.rotateY();
+            EnumFacing left = flowDir.rotateYCCW();
+            boolean rightDone = false;
+            boolean leftDone = false;
+            int leftDist = 0;
+            int rightDist = 0;
+
+            for(int i = 1; i < 8; i++)
+            {
+                if(!rightDone)
+                {
+                    int rightDepth = this.getDepth(world,pos.offset(right,i));
+                    if(rightDepth > thislevel)
+                        rightDist = 8-1;
+                    rightDone = rightDepth == -1 || rightDepth > thislevel;
+                }
+
+                if(!leftDone)
+                {
+                    int leftDepth = this.getDepth(world,pos.offset(left,i));
+                    if(leftDepth > thislevel)
+                        leftDist = 8-i;
+                    leftDone = leftDepth == -1 || leftDepth > thislevel;
+                }
+            }
+
+            flowx += left.getFrontOffsetX() * leftDist + right.getFrontOffsetX() * rightDist;
+            flowz += left.getFrontOffsetZ() * leftDist + right.getFrontOffsetZ() * rightDist;
+        }
+
+        Vec3d vec3d = new Vec3d(flowx, flowy, flowz);
+
+        checkpos.release();
+        return vec3d.normalize();
+    }
+
+    @Override
+    public boolean canCollideCheck(@Nonnull IBlockState state, boolean fullHit)
+    {
+        return fullHit;
+    }
 
     @Override
     public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
@@ -282,9 +320,25 @@ public class BlockAqueductWater extends BlockLiquid {
         return 0;
     }
 
-    @Override
+    /*@Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[] { LEVEL });
+    }*/
+
+    @Override
+    public int place(World world, BlockPos pos, @Nonnull FluidStack fluidStack, boolean doPlace) {
+        return 0;
+    }
+
+    @Nullable
+    @Override
+    public FluidStack drain(World world, BlockPos pos, boolean doDrain) {
+        return stack.copy();
+    }
+
+    @Override
+    public boolean canDrain(World world, BlockPos pos) {
+        return true;
     }
 }

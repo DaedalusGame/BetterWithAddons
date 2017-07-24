@@ -168,8 +168,8 @@ public class PlantCrossbreedHandler {
             if (placePlant(world, pos, fernState)) placeGrass(world, pos);
         });
         PlantMutation lilypad = new PlantMutation().setCropMatcher(Blocks.WATERLILY).setCropPlacer(Blocks.WATERLILY);
-        PlantMutation vines = new PlantMutation().setCropMatcher(Blocks.VINE).setCropPlacer((world, pos) -> placeVines(world, pos));
-        PlantMutation cocoa = new PlantMutation().setCropMatcher(Blocks.COCOA).setCropPlacer((world, pos) -> placeCocoa(world, pos));
+        PlantMutation vines = new PlantMutation().setCropMatcher(Blocks.VINE).setCropPlacer(PlantCrossbreedHandler::placeVines);
+        PlantMutation cocoa = new PlantMutation().setCropMatcher(Blocks.COCOA).setCropPlacer(PlantCrossbreedHandler::placeCocoa);
 
         PlantMutation oak = new PlantMutation().setCropMatcher(oakState).setCropPlacer(oakState);
         PlantMutation spruce = new PlantMutation().setCropMatcher(spruceState).setCropPlacer(spruceState);

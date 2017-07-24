@@ -2,6 +2,7 @@ package betterwithaddons.container.slots;
 
 import betterwithaddons.container.ContainerInfuser;
 import betterwithaddons.crafting.manager.CraftingManagerInfuser;
+import betterwithaddons.crafting.recipes.IInfuserRecipe;
 import betterwithaddons.tileentity.TileEntityInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

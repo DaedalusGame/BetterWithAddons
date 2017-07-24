@@ -1,5 +1,6 @@
 package betterwithaddons.interaction.jei.category;
 
+import betterwithaddons.interaction.jei.wrapper.InfuserRecipeWrapper;
 import betterwithaddons.lib.Reference;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.ICraftingGridHelper;
@@ -12,6 +13,7 @@ import mezz.jei.api.recipe.wrapper.ICustomCraftingRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import mezz.jei.plugins.vanilla.crafting.CraftingRecipeCategory;
 import mezz.jei.util.Translator;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -71,22 +73,26 @@ public class InfuserRecipeCategory extends CraftingRecipeCategory {
             }
         }
 
-        if (recipeWrapper instanceof ICustomCraftingRecipeWrapper) {
-            ICustomCraftingRecipeWrapper customWrapper = (ICustomCraftingRecipeWrapper) recipeWrapper;
-            customWrapper.setRecipe(recipeLayout, ingredients);
-            return;
-        }
+        if(recipeWrapper instanceof InfuserRecipeWrapper) {
+            IRecipeWrapper innerWrapper = ((InfuserRecipeWrapper) recipeWrapper).getInner();
 
-        List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
-        List<List<ItemStack>> outputs = ingredients.getOutputs(ItemStack.class);
+            if (innerWrapper instanceof ICustomCraftingRecipeWrapper) {
+                ICustomCraftingRecipeWrapper customWrapper = (ICustomCraftingRecipeWrapper) innerWrapper;
+                customWrapper.setRecipe(recipeLayout, ingredients);
+                return;
+            }
 
-        if (recipeWrapper instanceof IShapedCraftingRecipeWrapper) {
-            IShapedCraftingRecipeWrapper wrapper = (IShapedCraftingRecipeWrapper) recipeWrapper;
-            craftingGridHelper.setInputs(guiItemStacks, inputs, wrapper.getWidth(), wrapper.getHeight());
-        } else {
-            craftingGridHelper.setInputs(guiItemStacks, inputs);
-            recipeLayout.setShapeless();
+            List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
+            List<List<ItemStack>> outputs = ingredients.getOutputs(ItemStack.class);
+
+            if (innerWrapper instanceof IShapedCraftingRecipeWrapper) {
+                IShapedCraftingRecipeWrapper wrapper = (IShapedCraftingRecipeWrapper) innerWrapper;
+                craftingGridHelper.setInputs(guiItemStacks, inputs, wrapper.getWidth(), wrapper.getHeight());
+            } else {
+                craftingGridHelper.setInputs(guiItemStacks, inputs);
+                recipeLayout.setShapeless();
+            }
+            guiItemStacks.set(craftOutputSlot, outputs.get(0));
         }
-        guiItemStacks.set(craftOutputSlot, outputs.get(0));
     }
 }

@@ -5,6 +5,8 @@ import betterwithaddons.crafting.OreStack;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.crafting.recipes.ArmorDecorateRecipe;
 import betterwithaddons.crafting.recipes.SmeltingRecipe;
+import betterwithaddons.crafting.recipes.infuser.ShapedInfuserRecipe;
+import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.handler.JapaneseMobHandler;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.IDisableable;
@@ -104,6 +106,8 @@ public class InteractionEriottoMod extends Interaction {
         OreDictionary.registerOre("seedRush", new ItemStack(ModBlocks.rush));
         OreDictionary.registerOre("materialBamboo", new ItemStack(ModBlocks.bamboo));
 
+        OreDictionary.registerOre("treeSapling", ModBlocks.sakuraSapling);
+        OreDictionary.registerOre("treeSapling", ModBlocks.mulberrySapling);
         OreDictionary.registerOre("logWood", ModBlocks.sakuraLog);
         OreDictionary.registerOre("logWood", ModBlocks.mulberryLog);
         OreDictionary.registerOre("plankWood", ModBlocks.sakuraPlanks);
@@ -163,28 +167,12 @@ public class InteractionEriottoMod extends Interaction {
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("yumi_top"), " b", "bs", "bl", 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STICK), 'b', ModItems.materialJapan.getMaterial("bamboo_slats"));
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("yumi_bottom"), "bl", "bs", " b", 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STICK), 'b', ModItems.materialJapan.getMaterial("bamboo_slats"));
 
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.katana), "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("half_katana_blade"), 'w', ModItems.materialJapan.getMaterial("tsuka")));
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.wakizashi), "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("tamahagane_finished"), 'w', ModItems.materialJapan.getMaterial("tsuka")));
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.tanto), "l", "w", 'l', ModItems.materialJapan.getMaterial("tamahagane_finished"), 'w', ModItems.materialJapan.getMaterial("tsuka")));
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.shinai), "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("bamboo_slats"), 'w', ModItems.materialJapan.getMaterial("tsuka")));
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ya, 12), "h", "l", "f", 'h', ModItems.materialJapan.getMaterial("ya_head"), 'l', ModItems.materialJapan.getMaterial("bamboo_slats"), 'f', new ItemStack(Items.FEATHER)));
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.yumi), " ns", "l s", " us", 'n', ModItems.materialJapan.getMaterial("yumi_top"), 'u', ModItems.materialJapan.getMaterial("yumi_bottom"), 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STRING)));
-
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("helmet_undecorated"), "lll", "l l", 'l', ModItems.materialJapan.getMaterial("lamellar"));
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("chest_undecorated"), "l l", "lll", "lll", 'l', ModItems.materialJapan.getMaterial("lamellar"));
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("legs_undecorated"), "lll", "l l", "l l", 'l', ModItems.materialJapan.getMaterial("lamellar"));
         GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("boots_undecorated"), "l l", "l l", 'l', ModItems.materialJapan.getMaterial("lamellar"));
 
-        addArmorFinishRecipe(new ItemStack(ModItems.samuraiHelm), ModItems.materialJapan.getMaterial("helmet_undecorated"));
-        addArmorFinishRecipe(new ItemStack(ModItems.samuraiChestplate), ModItems.materialJapan.getMaterial("chest_undecorated"));
-        addArmorFinishRecipe(new ItemStack(ModItems.samuraiLeggings), ModItems.materialJapan.getMaterial("legs_undecorated"));
-        addArmorFinishRecipe(new ItemStack(ModItems.samuraiBoots), ModItems.materialJapan.getMaterial("boots_undecorated"));
-
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.nettedScreen), "bsb", "sss", "bsb", 's', new ItemStack(Items.STRING), 'b', ModItems.materialJapan.getMaterial("bamboo_slats")));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.bambooSlats), "bb", "bb", 'b', ModItems.materialJapan.getMaterial("bamboo_slats"));
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.tatara), "idi", "g g", "ini", 'i', new ItemStack(Items.IRON_INGOT), 'g', new ItemStack(Items.GOLD_INGOT), 'd', new ItemStack(Items.DIAMOND), 'n', new ItemStack(Blocks.NETHERRACK)));
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.cherrybox, 1, 0), "pxp", "x x", "pxp", 'p', new ItemStack(ModBlocks.sakuraPlanks), 'x', new ItemStack(Blocks.IRON_BARS)));
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.cherrybox, 1, 1), "pxp", "p p", "ppp", 'p', new ItemStack(ModBlocks.sakuraPlanks), 'x', new ItemStack(Blocks.GLASS_PANE)));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.shoji, 4), "bwb", "wbw", "bwb", 'b', ModItems.materialJapan.getMaterial("bamboo_slats"), 'w', ModItems.materialJapan.getMaterial("washi"));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.fusuma, 4), "bwb", "wpw", "bwb", 'b', ModItems.materialJapan.getMaterial("bamboo_slats"), 'w', ModItems.materialJapan.getMaterial("washi"), 'p', new ItemStack(ModBlocks.sakuraPlanks));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.tatami, 2), "rrr", "www", 'r', ModItems.materialJapan.getMaterial("rush"), 'w', ModItems.materialJapan.getMaterial("rice_hay"));
@@ -196,8 +184,26 @@ public class InteractionEriottoMod extends Interaction {
         else
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.infuser), " a ", " a ", "wtw", 't', new ItemStack(Blocks.ENCHANTING_TABLE), 'w', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), 'a', new ItemStack(ModItems.ancestryBottle));
 
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModItems.katana), 8, "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("half_katana_blade"), 'w', ModItems.materialJapan.getMaterial("tsuka")));
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModItems.wakizashi), 6, "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("tamahagane_finished"), 'w', ModItems.materialJapan.getMaterial("tsuka")));
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModItems.tanto), 4, "l", "w", 'l', ModItems.materialJapan.getMaterial("tamahagane_finished"), 'w', ModItems.materialJapan.getMaterial("tsuka")));
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModItems.shinai), 2, "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("bamboo_slats"), 'w', ModItems.materialJapan.getMaterial("tsuka")));
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModItems.ya, 12), 2, "h", "l", "f", 'h', ModItems.materialJapan.getMaterial("ya_head"), 'l', ModItems.materialJapan.getMaterial("bamboo_slats"), 'f', new ItemStack(Items.FEATHER)));
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModItems.yumi), 5, " ns", "l s", " us", 'n', ModItems.materialJapan.getMaterial("yumi_top"), 'u', ModItems.materialJapan.getMaterial("yumi_bottom"), 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STRING)));
+
+        addArmorFinishRecipe(new ItemStack(ModItems.samuraiHelm), ModItems.materialJapan.getMaterial("helmet_undecorated"), 5);
+        addArmorFinishRecipe(new ItemStack(ModItems.samuraiChestplate), ModItems.materialJapan.getMaterial("chest_undecorated"), 8);
+        addArmorFinishRecipe(new ItemStack(ModItems.samuraiLeggings), ModItems.materialJapan.getMaterial("legs_undecorated"), 7);
+        addArmorFinishRecipe(new ItemStack(ModItems.samuraiBoots), ModItems.materialJapan.getMaterial("boots_undecorated"), 4);
+
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModBlocks.nettedScreen), 2, "bsb", "sss", "bsb", 's', new ItemStack(Items.STRING), 'b', ModItems.materialJapan.getMaterial("bamboo_slats")));
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModBlocks.tatara), 4, "idi", "g g", "ini", 'i', new ItemStack(Items.IRON_INGOT), 'g', new ItemStack(Items.GOLD_INGOT), 'd', new ItemStack(Items.DIAMOND), 'n', new ItemStack(Blocks.NETHERRACK)));
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModBlocks.cherrybox, 1, 0), 1, "pxp", "x x", "pxp", 'p', new ItemStack(ModBlocks.sakuraPlanks), 'x', new ItemStack(Blocks.IRON_BARS)));
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ItemStack(ModBlocks.cherrybox, 1, 1), 1, "pxp", "p p", "ppp", 'p', new ItemStack(ModBlocks.sakuraPlanks), 'x', new ItemStack(Blocks.GLASS_PANE)));
+
+
         //Random seeds
-        CraftingManagerInfuserTransmutation.instance().addRecipe(new SmeltingRecipe(new OreStack("seed"), ItemStack.EMPTY) {
+        CraftingManagerInfuserTransmutation.instance().addRecipe(new TransmutationRecipe(new OreStack("seed"), 1, ItemStack.EMPTY) {
             Random random = new Random();
 
             @Override
@@ -222,7 +228,7 @@ public class InteractionEriottoMod extends Interaction {
             }
         });
         //Random saplings
-        CraftingManagerInfuserTransmutation.instance().addRecipe(new SmeltingRecipe(new OreStack("treeSapling"), ItemStack.EMPTY) {
+        CraftingManagerInfuserTransmutation.instance().addRecipe(new TransmutationRecipe(new OreStack("treeSapling"), 1, ItemStack.EMPTY) {
             Random random = new Random();
 
             @Override
@@ -247,10 +253,10 @@ public class InteractionEriottoMod extends Interaction {
             }
         });
         //Bamboo
-        CraftingManagerInfuserTransmutation.instance().addRecipe(new OreStack("sugarcane"), new ItemStack(ModBlocks.bamboo));
+        CraftingManagerInfuserTransmutation.instance().addRecipe(new OreStack("sugarcane"), 1, new ItemStack(ModBlocks.bamboo));
         //Repair tools and armor
         if (INFUSER_REPAIRS)
-            CraftingManagerInfuserTransmutation.instance().addRecipe(new SmeltingRecipe(new ItemStack(ModItems.katana), ItemStack.EMPTY) {
+            CraftingManagerInfuserTransmutation.instance().addRecipe(new TransmutationRecipe(new ItemStack(ModItems.katana), 2, ItemStack.EMPTY) {
                 @Override
                 public boolean matchesInput(ItemStack item) {
                     return isRepairableTool(item);
@@ -305,12 +311,12 @@ public class InteractionEriottoMod extends Interaction {
         return REPAIRABLE_TOOLS.contains(stack.getItem()) && stack.isItemDamaged();
     }
 
-    private void addArmorFinishRecipe(ItemStack out, ItemStack in) {
+    private void addArmorFinishRecipe(ItemStack out, ItemStack in, int spirit) {
         //ItemStack gold = new ItemStack(Items.GOLD_NUGGET);
         //ItemStack dye = new ItemStack(Items.DYE,1,14);
         //ItemStack washi = ModItems.materialJapan.getMaterial("washi");
         //GameRegistry.addShapelessRecipe(out,gold,gold,gold,dye,in,dye,washi,washi,washi);
-        CraftingManagerInfuser.getInstance().addRecipe(new ArmorDecorateRecipe(out, "ggg", "dad", "www", 'g', "nuggetGold", 'd', "dye", 'a', in, 'w', ModItems.materialJapan.getMaterial("washi")));
+        CraftingManagerInfuser.getInstance().addRecipe(new ArmorDecorateRecipe(out, spirit, "ggg", "dad", "www", 'g', "nuggetGold", 'd', "dye", 'a', in, 'w', ModItems.materialJapan.getMaterial("washi")));
     }
 
     private void addFoldingRecipe(ItemStack out, ItemStack in) {

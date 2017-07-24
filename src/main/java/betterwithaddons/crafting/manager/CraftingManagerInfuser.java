@@ -1,11 +1,9 @@
 package betterwithaddons.crafting.manager;
 
+import betterwithaddons.crafting.recipes.IInfuserRecipe;
 import com.google.common.collect.Lists;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
@@ -15,7 +13,7 @@ public class CraftingManagerInfuser {
     /** The static instance of this class */
     private static final CraftingManagerInfuser INSTANCE = new CraftingManagerInfuser();
     /** A list of all the recipes added */
-    private final List<IRecipe> recipes = Lists.<IRecipe>newArrayList();
+    private final List<IInfuserRecipe> recipes = Lists.<IInfuserRecipe>newArrayList();
 
     /**
      * Returns the static instance of this class
@@ -33,7 +31,7 @@ public class CraftingManagerInfuser {
     /**
      * Adds an IRecipe to the list of crafting recipes.
      */
-    public void addRecipe(IRecipe recipe)
+    public void addRecipe(IInfuserRecipe recipe)
     {
         this.recipes.add(recipe);
     }
@@ -41,22 +39,22 @@ public class CraftingManagerInfuser {
     /**
      * Retrieves an ItemStack that has multiple recipes for it.
      */
-    public ItemStack findMatchingRecipe(InventoryCrafting craftMatrix, World worldIn)
+    public IInfuserRecipe findMatchingRecipe(InventoryCrafting craftMatrix, World worldIn)
     {
-        for (IRecipe irecipe : this.recipes)
+        for (IInfuserRecipe irecipe : this.recipes)
         {
             if (irecipe.matches(craftMatrix, worldIn))
             {
-                return irecipe.getCraftingResult(craftMatrix);
+                return irecipe;
             }
         }
 
-        return ItemStack.EMPTY;
+        return null;
     }
 
     public NonNullList<ItemStack> getRemainingItems(InventoryCrafting craftMatrix, World worldIn)
     {
-        for (IRecipe irecipe : this.recipes)
+        for (IInfuserRecipe irecipe : this.recipes)
         {
             if (irecipe.matches(craftMatrix, worldIn))
             {
@@ -77,7 +75,7 @@ public class CraftingManagerInfuser {
     /**
      * returns the List<> of all recipes
      */
-    public List<IRecipe> getRecipeList()
+    public List<IInfuserRecipe> getRecipeList()
     {
         return this.recipes;
     }

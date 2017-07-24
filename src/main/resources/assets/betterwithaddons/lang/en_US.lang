@@ -10,6 +10,8 @@ inv.spindle.name=Spindle
 inv.spindle.throw.name=Throw Items
 inv.infuser.name=Ancestral Infuser
 inv.infuser.throw.name=Throw
+inv.infuser.cost.name=%s
+inv.infuser.cost.description=Requires %s Ancestral Spirit
 
 tile.banner_detector.name=Banner Detector
 tile.world_scale_ore.name=World Scale Ore
@@ -147,6 +149,33 @@ item.wool.green.name=Green Fleece
 item.wool.red.name=Red Fleece
 item.wool.black.name=Black Fleece
 
+item.iron_spade.name=Iron Spade
+item.iron_matchpick.name=Iron Matchpick
+item.iron_machete.name=Iron Machete
+item.iron_kukri.name=Iron Kukri
+item.iron_carpentersaw.name=Iron Carpenter Saw
+item.iron_masonpick.name=Iron Mason Pick
+
+item.gold_spade.name=Golden Spade
+item.gold_matchpick.name=Golden Matchpick
+item.gold_machete.name=Golden Machete
+item.gold_kukri.name=Golden Kukri
+item.gold_carpentersaw.name=Golden Carpenter Saw
+item.gold_masonpick.name=Golden Mason Pick
+
+item.diamond_spade.name=Diamond Spade
+item.diamond_matchpick.name=Diamond Matchpick
+item.diamond_machete.name=Diamond Machete
+item.diamond_kukri.name=Diamond Kukri
+item.diamond_carpentersaw.name=Diamond Carpenter Saw
+item.diamond_masonpick.name=Diamond Mason Pick
+
+item.steel_spade.name=Soulforged Steel Spade
+item.steel_matchpick.name=Soulforged Steel Matchpick
+item.steel_machete.name=Soulforged Steel Machete
+item.steel_kukri.name=Soulforged Steel Kukri
+item.steel_carpentersaw.name=Soulforged Steel Carpenter Saw
+item.steel_masonpick.name=Soulforged Steel Mason Pick
 
 item.soulsand_pile.name=Pile of Soul Sand
 item.explosion.name=§eHIGHLY VOLATILE!
@@ -221,6 +250,9 @@ item.crate.rabbit_raw.name=Crated Raw Rabbit
 item.crate.egg.name=Crated Eggs
 item.crate.slime.name=Crated Slimeballs
 item.crate.enderpearl.name=Crated Enderpearls
+
+item.tweakmat.ash.name=Ash
+item.tweakmat.ink_and_quill.name=Ink and Quill
 
 item.decomat.hemp_oil.name=Hemp Oil
 item.decomat.wood_bleach.name=Wood Bleach

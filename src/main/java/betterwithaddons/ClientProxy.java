@@ -23,9 +23,13 @@ import li.cil.manual.client.manual.provider.ItemImageProvider;
 import li.cil.manual.client.manual.provider.OreDictImageProvider;
 import li.cil.manual.client.manual.provider.TextureImageProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -36,8 +40,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
+import java.util.Map;
+
 public class ClientProxy implements IProxy
 {
+    public ModelResourceLocation aqueductWaterLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "aqueduct_water"), "normal");
+
     @Override
     public void preInit() {
         registerModels();
@@ -81,6 +89,12 @@ public class ClientProxy implements IProxy
 
         ModelLoader.setCustomStateMapper(ModBlocks.thorns,new StateMap.Builder().ignore(BlockThorns.FACING).build());
         ModelLoader.setCustomStateMapper(ModBlocks.brine, new BrineStateMapper());
+        ModelLoader.setCustomStateMapper(ModBlocks.aqueductWater, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                return aqueductWaterLocation;
+            }
+        });
 
         RenderingRegistry.registerEntityRenderingHandler(EntityGreatarrow.class, RenderGreatarrow.GREATARROW_RENDER);
         RenderingRegistry.registerEntityRenderingHandler(EntityYa.class, RenderYa.YA_RENDER);

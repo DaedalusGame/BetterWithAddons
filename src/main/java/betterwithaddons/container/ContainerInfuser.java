@@ -2,10 +2,12 @@ package betterwithaddons.container;
 
 import betterwithaddons.container.slots.SlotInfuserCrafting;
 import betterwithaddons.crafting.manager.CraftingManagerInfuser;
+import betterwithaddons.crafting.recipes.IInfuserRecipe;
 import betterwithaddons.tileentity.TileEntityInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,6 +21,8 @@ public class ContainerInfuser extends Container {
     private BlockPos pos;
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
     public IInventory craftResult = new InventoryCraftResult();
+    public int requiredSpirit = 0;
+    private boolean spiritMet;
 
     public ContainerInfuser(EntityPlayer player, World world, int x, int y, int z) {
         this.world = world;
@@ -80,14 +84,18 @@ public class ContainerInfuser extends Container {
 
     public void onCraftMatrixChanged(IInventory inventoryIn)
     {
+        IInfuserRecipe recipe = CraftingManagerInfuser.getInstance().findMatchingRecipe(this.craftMatrix, this.tileInfuser.getWorld());
+
+        requiredSpirit = recipe != null ? recipe.getRequiredSpirit(craftMatrix) : 0;
+        spiritMet = recipe != null && tileInfuser.getSpirits() >= requiredSpirit;
         if(canCraft())
-            this.craftResult.setInventorySlotContents(0, CraftingManagerInfuser.getInstance().findMatchingRecipe(this.craftMatrix, this.tileInfuser.getWorld()));
+            this.craftResult.setInventorySlotContents(0, recipe.getCraftingResult(this.craftMatrix));
         else
             this.craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
     }
 
     public boolean canCraft() {
-        return tileInfuser.getSpirits() > 0 && tileInfuser.isValid();
+        return spiritMet && tileInfuser.isValid();
     }
 
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
@@ -160,6 +168,8 @@ public class ContainerInfuser extends Container {
     }
 
     public void onCrafting(ItemStack stack) {
-        tileInfuser.consumeSpirits(1);
+        IInfuserRecipe recipe = CraftingManagerInfuser.getInstance().findMatchingRecipe(craftMatrix,world);
+
+        tileInfuser.consumeSpirits(recipe.getRequiredSpirit(craftMatrix));
     }
 }

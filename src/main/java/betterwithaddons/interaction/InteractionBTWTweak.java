@@ -1,5 +1,6 @@
 package betterwithaddons.interaction;
 
+import betterwithaddons.BetterWithAddons;
 import betterwithaddons.crafting.recipes.DisplaySawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.SoapHandler;
@@ -17,7 +18,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +38,8 @@ public class InteractionBTWTweak extends Interaction {
     public static boolean SLIPPERY_WHEN_WET = true;
     public static boolean ASH_FERTILIZER = true;
     public static boolean WOOL_RECYCLING = true;
+    public static boolean LOGS_SMELT_TO_ASH = true;
+    public static boolean REPLACE_WRITABLE_BOOK_RECIPE = true;
 
     @Override
     public boolean isActive() {
@@ -76,7 +83,23 @@ public class InteractionBTWTweak extends Interaction {
 
         if(ASH_FERTILIZER) {
             HCBonemeal.registerFertilzier(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
-            //TODO: Ash
+            HCBonemeal.registerFertilzier(ModItems.materialTweak.getMaterial("ash"));
+        }
+
+        if(LOGS_SMELT_TO_ASH) {
+            for (ItemStack log : OreDictionary.getOres("logWood")) {
+                ItemStack result = FurnaceRecipes.instance().getSmeltingResult(log);
+                if(result.isEmpty())
+                    GameRegistry.addSmelting(log,ModItems.materialTweak.getMaterial("ash"),0.1f);
+            }
+        }
+
+        GameRegistry.addRecipe(new ShapelessOreRecipe(ModItems.materialTweak.getMaterial("ink_and_quill"),new ItemStack(Items.GLASS_BOTTLE),new ItemStack(Items.DYE,1,EnumDyeColor.BLACK.getDyeDamage()),"feather"));
+
+        if(REPLACE_WRITABLE_BOOK_RECIPE)
+        {
+            BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.WRITABLE_BOOK));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.WRITABLE_BOOK),"book",ModItems.materialTweak.getMaterial("ink_and_quill")));
         }
 
         if(WOOL_RECYCLING && InteractionBWM.HARDCORE_SHEARING)

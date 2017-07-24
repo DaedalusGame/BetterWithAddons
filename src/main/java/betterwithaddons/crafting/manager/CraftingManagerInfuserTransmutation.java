@@ -3,6 +3,7 @@ package betterwithaddons.crafting.manager;
 import betterwithaddons.block.EriottoMod.BlockCherryBox;
 import betterwithaddons.crafting.recipes.CherryBoxRecipe;
 import betterwithaddons.crafting.recipes.SmeltingRecipe;
+import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -19,50 +20,45 @@ public class CraftingManagerInfuserTransmutation {
         return instance;
     }
 
-    private final ArrayList<SmeltingRecipe> recipes = new ArrayList<>();
+    private final ArrayList<TransmutationRecipe> recipes = new ArrayList<>();
 
     private CraftingManagerInfuserTransmutation() {
     }
 
-    public void addRecipe(SmeltingRecipe recipe)
+    public void addRecipe(TransmutationRecipe recipe)
     {
         this.recipes.add(recipe);
     }
 
-    public void addRecipe(Object input, ItemStack output) {
-        this.recipes.add(createRecipe(input, output));
+    public void addRecipe(Object input, int spirits, ItemStack output) {
+        this.recipes.add(createRecipe(input, spirits, output));
     }
 
-    protected SmeltingRecipe createRecipe(Object input, ItemStack output)
+    protected TransmutationRecipe createRecipe(Object input, int spirits, ItemStack output)
     {
-        return new SmeltingRecipe(input,output);
+        return new TransmutationRecipe(input, spirits, output);
     }
 
-    public List<SmeltingRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
+    public List<TransmutationRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
         return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
     }
 
-    public SmeltingRecipe getSmeltingRecipe(ItemStack input) {
-        Iterator<SmeltingRecipe> var2 = this.recipes.iterator();
+    public TransmutationRecipe getSmeltingRecipe(ItemStack input, int spirits) {
+        Iterator<TransmutationRecipe> var2 = this.recipes.iterator();
 
-        SmeltingRecipe entry;
+        TransmutationRecipe entry;
         do {
             if(!var2.hasNext()) {
                 return null;
             }
 
             entry = var2.next();
-        } while(!entry.matchesInput(input));
+        } while(!entry.matchesInput(input, spirits));
 
         return entry;
     }
 
-    public ItemStack getSmeltingResult(ItemStack input) {
-        SmeltingRecipe entry = getSmeltingRecipe(input);
-        return entry != null ? entry.getOutput(input) : ItemStack.EMPTY;
-    }
-
-    public List<SmeltingRecipe> getRecipes() {
+    public List<TransmutationRecipe> getRecipes() {
         return this.recipes;
     }
 }

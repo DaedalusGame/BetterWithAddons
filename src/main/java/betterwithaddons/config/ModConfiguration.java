@@ -13,6 +13,7 @@ public class ModConfiguration {
     ConfigOptionBool BWM_ButcherBlocks = new ConfigOptionBool("interaction.BetterWithMods", "ButcherBlocks", InteractionBWM.BUTCHER_BLOCKS, "Striking an enemy on chopping blocks will bloody them and bestow a short strenth buff.");
     ConfigOptionBool BWM_CauldronsExplode = new ConfigOptionBool("interaction.BetterWithMods", "CauldronsExplode", InteractionBWM.CAULDRONS_EXPLODE, "Cooking hellfire or any other explosive in a stoked cauldron or crucible will result in a violent explosion.");
     ConfigOptionBool BWM_HardcoreShearing = new ConfigOptionBool("interaction.BetterWithMods", "HardcoreShearing", InteractionBWM.HARDCORE_SHEARING, "Sheep will only be sheared into wool items, which must be crafted into wool blocks. This does not work with machines that use onSheared, but should work with Fake Players.");
+    ConfigOptionInteger BWM_WoolMultiplier = new ConfigOptionInteger("interaction.BetterWithMods", "WoolMultiplier", InteractionBWM.WOOL_MULTIPLIER, "Adjusts how much wool a sheep drops if Hardcore Shearing is enabled.");
     ConfigOptionBool BWM_DyeInCauldron = new ConfigOptionBool("interaction.BetterWithMods", "DyeInCauldron", InteractionBWM.DYE_IN_CAULDRON, "Wool can be dyed in batches of 8 in a cauldron and bleached with potash.");
 
     ConfigOptionBool Quark_Enabled = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.ENABLED);
@@ -92,6 +93,8 @@ public class ModConfiguration {
     ConfigOptionBool BTWTweak_EggIncubation = new ConfigOptionBool("addons.BTWTweak", "EggIncubation", InteractionBTWTweak.EGG_INCUBATION, "Allows eggs to be incubated into chicken by placing them on a Block of Padding with a lit Light Block above.");
     ConfigOptionBool BTWTweak_SlipperyWhenWet = new ConfigOptionBool("addons.BTWTweak", "SlipperyWhenWet", InteractionBTWTweak.SLIPPERY_WHEN_WET, "Water running over blocks of soap will make them slippery.");
     ConfigOptionBool BTWTweak_AshFertilizer = new ConfigOptionBool("addons.BTWTweak", "AshFertilizer", InteractionBTWTweak.ASH_FERTILIZER, "Potash is a valid fertilizer.");
+    ConfigOptionBool BTWTweak_LogsSmeltToAsh = new ConfigOptionBool("addons.BTWTweak", "LogsSmeltToAsh", InteractionBTWTweak.LOGS_SMELT_TO_ASH, "Logs burn into ash in a furnace. This only works if they wouldn't burn into anything else.");
+    ConfigOptionBool BTWTweak_ReplaceWritableBookRecipe = new ConfigOptionBool("addons.BTWTweak", "ReplaceWritableBookRecipe", InteractionBTWTweak.REPLACE_WRITABLE_BOOK_RECIPE, "Changes writable books to require the Ink and Quill item.");
     ConfigOptionBool BTWTweak_WoolRecycling = new ConfigOptionBool("addons.BTWTweak", "WoolRecycling", InteractionBTWTweak.WOOL_RECYCLING, "Wool can be rendered back into it's components. You might want to disable this if you use mods that violate Hardcore Shearing.");
 
 
@@ -108,6 +111,7 @@ public class ModConfiguration {
         InteractionBWM.BUTCHER_BLOCKS = BWM_ButcherBlocks.init(configuration);
         InteractionBWM.CAULDRONS_EXPLODE = BWM_CauldronsExplode.init(configuration);
         InteractionBWM.HARDCORE_SHEARING = BWM_HardcoreShearing.init(configuration);
+        InteractionBWM.WOOL_MULTIPLIER = BWM_WoolMultiplier.init(configuration);
         InteractionBWM.DYE_IN_CAULDRON = BWM_DyeInCauldron.init(configuration);
         InteractionQuark.ENABLED = Quark_Enabled.init(configuration);
         InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS = Quark_MidoriBlocksNeedChunks.init(configuration);
@@ -163,6 +167,8 @@ public class ModConfiguration {
         InteractionBTWTweak.EGG_INCUBATION = BTWTweak_EggIncubation.init(configuration);
         InteractionBTWTweak.SLIPPERY_WHEN_WET = BTWTweak_SlipperyWhenWet.init(configuration);
         InteractionBTWTweak.ASH_FERTILIZER = BTWTweak_AshFertilizer.init(configuration);
+        InteractionBTWTweak.LOGS_SMELT_TO_ASH = BTWTweak_LogsSmeltToAsh.init(configuration);
+        InteractionBTWTweak.REPLACE_WRITABLE_BOOK_RECIPE = BTWTweak_ReplaceWritableBookRecipe.init(configuration);
         InteractionBTWTweak.WOOL_RECYCLING = BTWTweak_WoolRecycling.init(configuration);
 
         InteractionBWR.ENABLED = BWR_Enabled.init(configuration);

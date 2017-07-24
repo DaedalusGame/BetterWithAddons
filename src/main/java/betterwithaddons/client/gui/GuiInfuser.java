@@ -1,7 +1,7 @@
 package betterwithaddons.client.gui;
 
-import betterwithaddons.container.ContainerCherryBox;
 import betterwithaddons.container.ContainerInfuser;
+import betterwithaddons.interaction.InteractionEriottoMod;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityInfuser;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -12,18 +12,43 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.awt.*;
+
 public class GuiInfuser extends GuiContainer {
     private final ResourceLocation guiLocation = new ResourceLocation(Reference.MOD_ID,"textures/gui/infuser.png");
     private TileEntityInfuser tileInfuser;
+    private ContainerInfuser container;
+    private float currSouls, souls;
 
     public GuiInfuser(EntityPlayer player, World world, int x, int y, int z) {
         super(new ContainerInfuser(player, world, x, y, z));
         tileInfuser = (TileEntityInfuser) world.getTileEntity(new BlockPos(x,y,z));
+        container = (ContainerInfuser) inventorySlots;
+        souls = currSouls = tileInfuser.getSpirits();
+    }
+
+    public float quartEase(float currentTime, float start, float delta, float duration)
+    {
+        currentTime = currentTime / duration - 1;
+        return -delta * (currentTime*currentTime*currentTime*currentTime - 1) + start;
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(int p_drawGuiContainerForegroundLayer_1_, int p_drawGuiContainerForegroundLayer_2_) {
-        //fontRendererObj.drawString(I18n.format("tile.ancestry_infuser.name", new Object[0]), 8, 6, 4210752);
+        int foregroundcolor = new Color(255,0,0).getRGB();
+        int backgroundcolor = new Color(128,0,0).getRGB();
+
+        String costString = I18n.format("inv.infuser.cost.name",container.requiredSpirit);
+
+        if(container.requiredSpirit > 0) {
+            int drawoffsetX = 102 - this.fontRendererObj.getStringWidth(costString) / 2;
+            int drawoffsetY = 38;
+
+            fontRendererObj.drawString(costString, drawoffsetX, drawoffsetY+1, backgroundcolor);
+            fontRendererObj.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
+            fontRendererObj.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
+            fontRendererObj.drawString(costString, drawoffsetX, drawoffsetY, foregroundcolor);
+        }
     }
 
     @Override
@@ -34,10 +59,13 @@ public class GuiInfuser extends GuiContainer {
         int offsetTop = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(offsetLeft, offsetTop, 0, 0, this.xSize, this.ySize);
 
-        int spirits = tileInfuser != null ? tileInfuser.getSpirits() : 0;
-        if(spirits < 8) {
-            GlStateManager.color(1.0F, 1.0F, 1.0F, spirits / 8.0F);
-            this.drawTexturedModalRect(offsetLeft+21, offsetTop+8, 176, 0, 70, 70);
-        }
+        souls = tileInfuser != null ? tileInfuser.getSpirits() : 0;
+        if(currSouls < souls)
+            currSouls = Math.min(souls,currSouls+0.1f);
+        else if(currSouls > souls)
+            currSouls = Math.max(souls,currSouls-0.1f);
+
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0f-quartEase(currSouls,0f,1f,InteractionEriottoMod.MAX_SPIRITS));
+        this.drawTexturedModalRect(offsetLeft+21, offsetTop+8, 176, 0, 70, 70);
     }
 }

@@ -55,6 +55,7 @@ public class InteractionBWM extends Interaction {
     public static boolean FALLING_PLATFORMS = false;
     public static boolean CAULDRONS_EXPLODE = true;
     public static boolean HARDCORE_SHEARING = true;
+    public static int WOOL_MULTIPLIER = 1;
     public static boolean DYE_IN_CAULDRON = true;
 
     @Override
@@ -141,7 +142,7 @@ public class InteractionBWM extends Interaction {
         for(ItemStack stack : sheared)
         {
             if(stack.getItem() == Item.getItemFromBlock(Blocks.WOOL))
-                returnList.add(new ItemStack(ModItems.wool,stack.getCount(),stack.getMetadata()));
+                returnList.add(new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,stack.getMetadata()));
             else
                 returnList.add(stack);
         }
@@ -152,7 +153,7 @@ public class InteractionBWM extends Interaction {
         for (EntityItem item : sheared) {
             ItemStack stack = item.getEntityItem();
             if(stack.getItem() == Item.getItemFromBlock(Blocks.WOOL))
-                item.setEntityItemStack(new ItemStack(ModItems.wool,stack.getCount(),stack.getMetadata()));
+                item.setEntityItemStack(new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,stack.getMetadata()));
         }
     }
 

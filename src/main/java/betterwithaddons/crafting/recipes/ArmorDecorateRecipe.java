@@ -1,5 +1,6 @@
 package betterwithaddons.crafting.recipes;
 
+import betterwithaddons.crafting.recipes.infuser.ShapedInfuserRecipe;
 import betterwithaddons.item.ItemSamuraiArmor;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.inventory.InventoryCrafting;
@@ -10,12 +11,12 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import javax.annotation.Nonnull;
 
-public class ArmorDecorateRecipe extends ShapedOreRecipe
+public class ArmorDecorateRecipe extends ShapedInfuserRecipe
 {
     ItemStack outputItem;
 
-    public ArmorDecorateRecipe(@Nonnull ItemStack result, Object... recipe) {
-        super(result,recipe);
+    public ArmorDecorateRecipe(@Nonnull ItemStack result, int requiredSpirit, Object... recipe) {
+        super(result, requiredSpirit, recipe);
         outputItem = result;
     }
 

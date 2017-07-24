@@ -2,7 +2,9 @@ package betterwithaddons.tileentity;
 
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.manager.CraftingManagerInfuserTransmutation;
+import betterwithaddons.crafting.recipes.IInfuserRecipe;
 import betterwithaddons.crafting.recipes.SmeltingRecipe;
+import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -72,16 +74,19 @@ public class TileEntityInfuser extends TileEntityBase implements ITickable {
 
         List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class,aabb);
 
-        if(getSpirits() > 0)
+        int spirits = getSpirits();
+
+        if(spirits > 0)
         for (EntityItem item : items) {
             if(item.cannotPickup())
                 continue;
 
             ItemStack stack = item.getEntityItem();
-            SmeltingRecipe recipe = CraftingManagerInfuserTransmutation.instance().getSmeltingRecipe(stack);
+            TransmutationRecipe recipe = CraftingManagerInfuserTransmutation.instance().getSmeltingRecipe(stack,spirits);
 
             if(recipe != null)
             {
+                int consumed = recipe.getRequiredSpirit(stack);
                 ItemStack output = recipe.getOutput(stack);
                 if(output.isEmpty())
                     continue;
@@ -98,7 +103,7 @@ public class TileEntityInfuser extends TileEntityBase implements ITickable {
                 item.setEntityItemStack(stack);
                 if(stack.isEmpty())
                     item.setDead();
-                consumeSpirits(1);
+                consumeSpirits(consumed);
                 break;
             }
         }

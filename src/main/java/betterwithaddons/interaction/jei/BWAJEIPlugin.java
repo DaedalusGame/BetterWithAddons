@@ -7,11 +7,11 @@ import betterwithaddons.client.gui.GuiSoakingBox;
 import betterwithaddons.client.gui.GuiTatara;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.crafting.recipes.*;
+import betterwithaddons.crafting.recipes.infuser.ShapedInfuserRecipe;
+import betterwithaddons.crafting.recipes.infuser.ShapelessInfuserRecipe;
+import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.interaction.jei.category.*;
-import betterwithaddons.interaction.jei.wrapper.CherryBoxRecipeWrapper;
-import betterwithaddons.interaction.jei.wrapper.NetRecipeWrapper;
-import betterwithaddons.interaction.jei.wrapper.SpindleRecipeWrapper;
-import betterwithaddons.interaction.jei.wrapper.SmeltingRecipeWrapper;
+import betterwithaddons.interaction.jei.wrapper.*;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
@@ -56,12 +56,10 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, SoakingBoxRecipeCategory.UID);
         reg.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, DryingBoxRecipeCategory.UID);
         reg.handleRecipes(SmeltingRecipe.class, SmeltingRecipeWrapper::new, TataraRecipeCategory.UID);
-        reg.handleRecipes(SmeltingRecipe.class, SmeltingRecipeWrapper::new, TransmutationRecipeCategory.UID);
+        reg.handleRecipes(TransmutationRecipe.class, TransmutationRecipeWrapper::new, TransmutationRecipeCategory.UID);
 
-        reg.handleRecipes(ShapedOreRecipe.class, recipe -> new ShapedOreRecipeWrapper(helper, recipe), InfuserRecipeCategory.UID);
-        reg.handleRecipes(ShapedRecipes.class, ShapedRecipesWrapper::new, InfuserRecipeCategory.UID);
-        reg.handleRecipes(ShapelessOreRecipe.class, recipe -> new ShapelessOreRecipeWrapper(helper, recipe), InfuserRecipeCategory.UID);
-        reg.handleRecipes(ShapelessRecipes.class, ShapelessRecipesWrapper::new, InfuserRecipeCategory.UID);
+        reg.handleRecipes(ShapedInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapedOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
+        reg.handleRecipes(ShapelessInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapelessOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
 
         reg.addRecipes(CraftingManagerSandNet.getInstance().getRecipes(),SandNetRecipeCategory.UID);
         reg.addRecipes(CraftingManagerWaterNet.getInstance().getRecipes(),WaterNetRecipeCategory.UID);

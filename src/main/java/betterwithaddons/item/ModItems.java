@@ -103,6 +103,7 @@ public class ModItems {
     public static ItemMaterial materialBag;
     public static ItemMaterial materialBundle;
     public static ItemMaterial materialDeco;
+    public static ItemMaterial materialTweak;
     public static ItemKatana katana;
     public static ItemWakizashi wakizashi;
     public static ItemTanto tanto;
@@ -404,6 +405,10 @@ public class ModItems {
 
         materialDeco = (ItemMaterial) registerItem("decomat", new ItemMaterial(
                 new String[]{"hemp_oil", "wood_bleach", "wood_stain", "glass_chunk"}
+        ));
+
+        materialTweak = (ItemMaterial) registerItem("tweakmat", new ItemMaterial(
+                new String[]{"ash", "ink_and_quill"}
         ));
 
         explosion = registerItem("explosion", new Item() {

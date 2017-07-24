@@ -30,7 +30,7 @@ public class OreStack
     public boolean matches(ItemStack stack)
     {
         for (ItemStack ore: getOres()) {
-            if(stack.isItemEqual(ore) && stack.getCount() >= stackSize)
+            if((stack.isItemEqual(ore) || (ore.getItemDamage() == OreDictionary.WILDCARD_VALUE && ore.getItem() == stack.getItem())) && stack.getCount() >= stackSize)
                 return true;
         }
 
