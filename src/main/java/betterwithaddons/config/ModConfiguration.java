@@ -31,6 +31,7 @@ public class ModConfiguration {
     ConfigOptionInteger BWA_MaxAqueductLength = new ConfigOptionInteger("addons.BetterWithAddons", "MaxAqueductLength", InteractionBWA.AQUEDUCT_MAX_LENGTH, "How long aqueducts can be.");
     ConfigOptionStringList BWA_AqueductBiomes = new ConfigOptionStringList("addons.BetterWithAddons", "AqueductBiomes", InteractionBWA.AQUEDUCT_BIOME_STRINGS, "Aqueducts can only draw water from sources in specific biomes.");
     ConfigOptionBool BWA_AqueductBiomeWhitelist = new ConfigOptionBool("addons.BetterWithAddons", "AqueductBiomesIsWhitelist", InteractionBWA.AQUEDUCT_BIOMES_IS_WHITELIST, "Whether aqueduct biomes should be whitelisted or blacklisted.");
+    ConfigOptionBool BWA_ConvenientIronTools = new ConfigOptionBool("addons.BetterWithAddons", "ConvenientIronTools", InteractionBWA.CONVENIENT_TOOLS_PRE_END, "Convenient tools can be made from iron, gold and diamond pre-soulsteel.");
 
     ConfigOptionBool BWA_ArmorShardRender = new ConfigOptionBool("addons.BetterWithAddons", "ArmorShardRender", InteractionBWA.ARMOR_SHARD_RENDER, "Enables or disables the custom armor shard renderer, for when it causes crashes.");
     ConfigOptionDouble BWA_LegendariumMinDamage = new ConfigOptionDouble("addons.BetterWithAddons", "LegendariumDamageMin", InteractionBWA.LEGENDARIUM_MIN_DAMAGE, "How much durability the artifact you're turning in can have at max. (As a factor of max durability; 0.1 means 1/10 of max durability)");
@@ -136,6 +137,7 @@ public class ModConfiguration {
         InteractionBWA.LEGENDARIUM_POSTER_RANGE = BWA_LegendariumPosterRange.init(configuration);
         InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE = BWA_LegendariumMinQueueSize.init(configuration);
         InteractionBWA.LEGENDARIUM_TURN_IN_DELAY = BWA_LegendariumTurnInDelay.init(configuration);
+        InteractionBWA.CONVENIENT_TOOLS_PRE_END = BWA_ConvenientIronTools.init(configuration);
 
         InteractionEriottoMod.ENABLED = EriottoMod_Enabled.init(configuration);
         //InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);

@@ -55,6 +55,8 @@ public class InteractionBWA extends Interaction {
     public static int MAXCHARGE = 600;
     public static int MAXFOOD = 5000;
 
+    public static boolean CONVENIENT_TOOLS_PRE_END = true;
+
     @Override
     public boolean isActive() {
         return true;
@@ -117,26 +119,28 @@ public class InteractionBWA extends Interaction {
         if(ModuleLoader.isFeatureEnabled(HCDiamond.class))
             diamondMaterial = "ingotDiamond";
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironSpade),"m","t","s",'m',"ingotIron",'t',new ItemStack(Items.IRON_SHOVEL),'s',"stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMatchPick),"ftc"," s "," s ",'f',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE),'t',new ItemStack(Items.IRON_PICKAXE),'s',"stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMachete),"  m"," m ","t  ",'m',"ingotIron",'t',new ItemStack(Items.IRON_SWORD)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironKukri),"  m"," m ","t  ",'m',"ingotIron",'t',new ItemStack(Items.IRON_AXE)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironCarpenterSaw),"mmt",'m',"ingotIron",'t',new ItemStack(Items.IRON_AXE),'s',"stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMasonPick),"mt"," s"," s",'m',"ingotIron",'t',new ItemStack(Items.IRON_PICKAXE),'s',"stickWood"));
+        if(CONVENIENT_TOOLS_PRE_END) {
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironSpade), "m", "t", "s", 'm', "ingotIron", 't', new ItemStack(Items.IRON_SHOVEL), 's', "stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMatchPick), "ftc", " s ", " s ", 'f', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL), 'c', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE), 't', new ItemStack(Items.IRON_PICKAXE), 's', "stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMachete), "  m", " m ", "t  ", 'm', "ingotIron", 't', new ItemStack(Items.IRON_SWORD)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironKukri), "  m", " m ", "t  ", 'm', "ingotIron", 't', new ItemStack(Items.IRON_AXE)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironCarpenterSaw), "mmt", 'm', "ingotIron", 't', new ItemStack(Items.IRON_AXE), 's', "stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMasonPick), "mt", " s", " s", 'm', "ingotIron", 't', new ItemStack(Items.IRON_PICKAXE), 's', "stickWood"));
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldSpade),"m","t","s",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_SHOVEL),'s',"stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMatchPick),"ftc"," s "," s ",'f',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE),'t',new ItemStack(Items.GOLDEN_PICKAXE),'s',"stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMachete),"  m"," m ","t  ",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_SWORD)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldKukri),"  m"," m ","t  ",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_AXE)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldCarpenterSaw),"mmt",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_AXE),'s',"stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMasonPick),"mt"," s"," s",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_PICKAXE),'s',"stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldSpade), "m", "t", "s", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_SHOVEL), 's', "stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMatchPick), "ftc", " s ", " s ", 'f', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL), 'c', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE), 't', new ItemStack(Items.GOLDEN_PICKAXE), 's', "stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMachete), "  m", " m ", "t  ", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_SWORD)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldKukri), "  m", " m ", "t  ", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_AXE)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldCarpenterSaw), "mmt", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_AXE), 's', "stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMasonPick), "mt", " s", " s", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_PICKAXE), 's', "stickWood"));
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondSpade),"m","t","s",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_SHOVEL),'s',"stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMatchPick),"ftc"," s "," s ",'f',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE),'t',new ItemStack(Items.DIAMOND_PICKAXE),'s',"stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMachete),"  m"," m ","t  ",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_SWORD)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondKukri),"  m"," m ","t  ",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_AXE)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondCarpenterSaw),"mmt",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_AXE),'s',"stickWood"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMasonPick),"mt"," s"," s",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_PICKAXE),'s',"stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondSpade), "m", "t", "s", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_SHOVEL), 's', "stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMatchPick), "ftc", " s ", " s ", 'f', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL), 'c', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE), 't', new ItemStack(Items.DIAMOND_PICKAXE), 's', "stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMachete), "  m", " m ", "t  ", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_SWORD)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondKukri), "  m", " m ", "t  ", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_AXE)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondCarpenterSaw), "mmt", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_AXE), 's', "stickWood"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMasonPick), "mt", " s", " s", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_PICKAXE), 's', "stickWood"));
+        }
 
         SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.steelSpade),"x","x","i","i",'x',"ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
         SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.steelMatchPick),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT),'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");
@@ -240,6 +244,8 @@ public class InteractionBWA extends Interaction {
     {
         int ingots = nuggets / 9;
         nuggets = nuggets % 9;
+
+        input = new ItemStack(input.getItem(),input.getCount(),OreDictionary.WILDCARD_VALUE);
 
         ItemStack ingotStack = ingot.copy();
         ingotStack.setCount(ingots);
