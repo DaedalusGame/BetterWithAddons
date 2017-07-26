@@ -99,7 +99,7 @@ public class InteractionBTWTweak extends Interaction {
         if(REPLACE_WRITABLE_BOOK_RECIPE)
         {
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.WRITABLE_BOOK));
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.WRITABLE_BOOK),"book",ModItems.materialTweak.getMaterial("ink_and_quill")));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.WRITABLE_BOOK),new ItemStack(Items.BOOK),ModItems.materialTweak.getMaterial("ink_and_quill")));
         }
 
         if(WOOL_RECYCLING && InteractionBWM.HARDCORE_SHEARING)
