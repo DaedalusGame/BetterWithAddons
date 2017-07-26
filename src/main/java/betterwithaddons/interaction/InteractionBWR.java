@@ -20,6 +20,8 @@ import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
+import betterwithmods.module.ModuleLoader;
+import betterwithmods.module.hardcore.HCDiamond;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -104,10 +106,15 @@ public class InteractionBWR extends Interaction {
         AnimalCrossbreedHandler.initialize();
 
         OreDictionary.registerOre("listAllBlazeFoods",Items.COAL);
+        OreDictionary.registerOre("listAllBlazeFoods",new ItemStack(Items.COAL,1,1)); //Charcoal
         OreDictionary.registerOre("listAllBlazeFoods",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.COAL_DUST));
         OreDictionary.registerOre("listAllBlazeFoods",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CHARCOAL_DUST));
         OreDictionary.registerOre("listAllBlazeFoods",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL));
         OreDictionary.registerOre("listAllBlazeFoods",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BLASTING_OIL));
+
+        OreDictionary.registerOre("pileSand",BWMItems.SAND_PILE);
+        OreDictionary.registerOre("pileSand",BWMItems.RED_SAND_PILE);
+        OreDictionary.registerOre("pileSand",ModItems.soulSandPile);
 
         //Tanning Leather with dung blocks
         //TODO: This is hacky.
@@ -160,8 +167,9 @@ public class InteractionBWR extends Interaction {
             CauldronManager.getInstance().addRecipe(new ItemStack(Blocks.WEB),new Object[]{new OreStack("string",3),new OreStack("slimeball",1)});
 
         if(DIAMOND_RECOVERY) {
-            addDiamondRecovery(new OreStack("ingotDiamond",1),1);
-            /*addDiamondRecovery(new ItemStack(Items.DIAMOND_SWORD),2);
+            if(ModuleLoader.isFeatureEnabled(HCDiamond.class))
+                addDiamondRecovery(new OreStack("ingotDiamond",1),1);
+            addDiamondRecovery(new ItemStack(Items.DIAMOND_SWORD),2);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_PICKAXE),3);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_AXE),3);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_SHOVEL),1);
@@ -169,7 +177,13 @@ public class InteractionBWR extends Interaction {
             addDiamondRecovery(new ItemStack(Items.DIAMOND_HELMET),5);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_CHESTPLATE),8);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_LEGGINGS),7);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_BOOTS),4);*/
+            addDiamondRecovery(new ItemStack(Items.DIAMOND_BOOTS),4);
+            addDiamondRecovery(new ItemStack(ModItems.diamondSpade),2);
+            addDiamondRecovery(new ItemStack(ModItems.diamondMatchPick),3);
+            addDiamondRecovery(new ItemStack(ModItems.diamondMachete),4);
+            addDiamondRecovery(new ItemStack(ModItems.diamondKukri),5);
+            addDiamondRecovery(new ItemStack(ModItems.diamondCarpenterSaw),5);
+            addDiamondRecovery(new ItemStack(ModItems.diamondMasonPick),4);
         }
 
         if(LAPIS_FROM_WOOL)
@@ -212,14 +226,17 @@ public class InteractionBWR extends Interaction {
             StokedCrucibleManager.getInstance().addRecipe(new ItemStack(Items.DIAMOND), hellfireDust.copy(),new Object[]{new ItemStack(Items.GHAST_TEAR),new ItemStack(Items.DYE, 1, EnumDyeColor.CYAN.getDyeDamage()),new OreStack("dustNetherrack", 1)});
 
         if(QUARTZ_GROWING) {
-            CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ), ItemStack.EMPTY, new Object[]{new ItemStack(BWMItems.SAND_PILE)}));
-            CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ), ItemStack.EMPTY, new Object[]{new ItemStack(ModItems.soulSandPile)}));
+            CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ), ItemStack.EMPTY, new Object[]{new OreStack("pileSand",1)}));
         }
     }
 
     private void addDiamondRecovery(Object input, int output)
     {
-        StokedCauldronRecipe diamondRecipe = new StokedCauldronRecipe(new ItemStack(Items.DIAMOND,output),new ItemStack(Items.IRON_INGOT,output),new Object[]{input,new OreStack("ingotConcentratedHellfire", output),new OreStack("dustPotash", output*8)});
+        ItemStack ironReturn = ItemStack.EMPTY;
+        if(ModuleLoader.isFeatureEnabled(HCDiamond.class))
+            ironReturn = new ItemStack(Items.IRON_INGOT,output);
+
+        StokedCauldronRecipe diamondRecipe = new StokedCauldronRecipe(new ItemStack(Items.DIAMOND,output),ironReturn,new Object[]{input,new OreStack("ingotConcentratedHellfire", output),new OreStack("dustPotash", output*8)});
         diamondRecipe.setPriority(110);
         StokedCauldronManager.getInstance().addRecipe(diamondRecipe);
     }

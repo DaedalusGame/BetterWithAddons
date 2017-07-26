@@ -20,6 +20,7 @@ public class ModInteractions {
     public static InteractionBTWTweak btwTweak;
     public static InteractionMinetweaker minetweaker;
     public static InteractionBWR betterWithRenewables;
+    public static InteractionWheat betterWithWheat;
 
     public static void preInit(FMLPreInitializationEvent event) {
         bwa = (InteractionBWA) addInteraction(new InteractionBWA());
@@ -31,37 +32,32 @@ public class ModInteractions {
         decoAddon = (InteractionDecoAddon) addInteraction(new InteractionDecoAddon());
         btwTweak = (InteractionBTWTweak) addInteraction(new InteractionBTWTweak());
         betterWithRenewables = (InteractionBWR) addInteraction(new InteractionBWR());
+        betterWithWheat = (InteractionWheat) addInteraction(new InteractionWheat());
         minetweaker = (InteractionMinetweaker) addInteraction(new InteractionMinetweaker());
 
         validate();
 
-        for (Interaction interaction: LIST)
-            if(interaction.isActive())
-                interaction.preInit();
+        LIST.stream().filter(interaction -> interaction.isActive()).forEach(Interaction::preInit);
     }
 
-    public static void init(FMLInitializationEvent event)
-    {
-        for (Interaction interaction: LIST)
-            if(interaction.isActive())
-                interaction.init();
+    public static void preInitEnd(FMLPreInitializationEvent event) {
+        LIST.stream().filter(interaction -> interaction.isActive()).forEach(Interaction::preInitEnd);
     }
 
-    public static void postInit(FMLPostInitializationEvent event)
-    {
-        for (Interaction interaction: LIST)
-            if(interaction.isActive())
-                interaction.postInit();
+    public static void init(FMLInitializationEvent event) {
+        LIST.stream().filter(interaction -> interaction.isActive()).forEach(Interaction::init);
     }
 
-    private static Interaction addInteraction(Interaction interaction)
-    {
+    public static void postInit(FMLPostInitializationEvent event) {
+        LIST.stream().filter(interaction -> interaction.isActive()).forEach(Interaction::postInit);
+    }
+
+    private static Interaction addInteraction(Interaction interaction) {
         LIST.add(interaction);
         return interaction;
     }
 
-    private static void validate()
-    {
+    private static void validate() {
         for (Interaction interaction: LIST) {
             if(interaction.getDependencies() != null)
             for(Interaction dependency: interaction.getDependencies())

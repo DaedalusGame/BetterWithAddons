@@ -13,12 +13,14 @@ import net.minecraft.block.BlockBanner;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,6 +29,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.BossInfo.Overlay;
 import net.minecraft.world.BossInfoServer;
@@ -34,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -62,6 +66,18 @@ public class AssortedHandler {
 
     public static boolean doScaleQuarriesExist() {
         return ScaleQuarryAmt > 0 && ScaleQuarries[0] != null;
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onToolTip(ItemTooltipEvent event)
+    {
+        ItemStack stack = event.getItemStack();
+
+        if(stack.getItem() == Items.ENCHANTED_BOOK)
+        {
+            event.getToolTip().clear();
+            event.getToolTip().add(TextFormatting.WHITE+I18n.format("item.ancient_manuscript.name"));
+        }
     }
 
     @SubscribeEvent

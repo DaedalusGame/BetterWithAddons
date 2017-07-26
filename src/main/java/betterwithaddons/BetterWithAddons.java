@@ -69,6 +69,7 @@ public class BetterWithAddons
 		ModPotions.preInit(event);
 		ModInteractions.preInit(event);
 		proxy.preInit();
+		ModInteractions.preInitEnd(event);
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 	}

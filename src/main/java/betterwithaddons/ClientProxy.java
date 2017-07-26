@@ -82,6 +82,11 @@ public class ClientProxy implements IProxy
         Minecraft.getMinecraft().effectRenderer.addEffect(wisp);
     }
 
+    @Override
+    public void overrideItemModel(Item item, int meta, ModelResourceLocation location) {
+        ModelLoader.setCustomModelResourceLocation(item,meta,location);
+    }
+
     public void registerModels()
     {
         ItemModels.register();

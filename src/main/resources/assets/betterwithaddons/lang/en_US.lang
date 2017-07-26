@@ -177,6 +177,7 @@ item.steel_kukri.name=Soulforged Steel Kukri
 item.steel_carpentersaw.name=Soulforged Steel Carpenter Saw
 item.steel_masonpick.name=Soulforged Steel Mason Pick
 
+item.ancient_manuscript.name=Ancient Manuscript
 item.soulsand_pile.name=Pile of Soul Sand
 item.explosion.name=§eHIGHLY VOLATILE!
 
@@ -253,6 +254,9 @@ item.crate.enderpearl.name=Crated Enderpearls
 
 item.tweakmat.ash.name=Ash
 item.tweakmat.ink_and_quill.name=Ink and Quill
+
+item.seed_grain.name=Grain
+item.bag.grain.name=Bag of Grain
 
 item.decomat.hemp_oil.name=Hemp Oil
 item.decomat.wood_bleach.name=Wood Bleach

@@ -1,39 +1,26 @@
 package betterwithaddons.item;
 
 import betterwithaddons.BetterWithAddons;
-import betterwithaddons.item.rbdtools.ItemAxeConvenient;
-import betterwithaddons.item.rbdtools.ItemPickaxeConvenient;
-import betterwithaddons.item.rbdtools.ItemSpadeConvenient;
-import betterwithaddons.item.rbdtools.ItemSwordConvenient;
+import betterwithaddons.item.rbdtools.*;
+import betterwithaddons.item.rbdtools.ItemSpade;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.ItemUtil;
 import betterwithmods.common.BWMItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ModItems {
     public static ArrayList<Item> LIST = new ArrayList<Item>();
@@ -117,87 +104,35 @@ public class ModItems {
 
     public static ItemToolShard brokenArtifact;
 
-    public static ItemSpadeConvenient spade;
-    public static ItemSwordConvenient machete;
-    public static ItemPickaxeConvenient matchPick;
-    public static ItemAxeConvenient kukri;
-    public static ItemAxeConvenient carpenterSaw;
-    public static ItemPickaxeConvenient masonPick;
+    public static ItemSpade ironSpade;
+    public static ItemMachete ironMachete;
+    public static ItemMatchPick ironMatchPick;
+    public static ItemKukri ironKukri;
+    public static ItemCarpenterSaw ironCarpenterSaw;
+    public static ItemMasonPick ironMasonPick;
+
+    public static ItemSpade goldSpade;
+    public static ItemMachete goldMachete;
+    public static ItemMatchPick goldMatchPick;
+    public static ItemKukri goldKukri;
+    public static ItemCarpenterSaw goldCarpenterSaw;
+    public static ItemMasonPick goldMasonPick;
+
+    public static ItemSpade diamondSpade;
+    public static ItemMachete diamondMachete;
+    public static ItemMatchPick diamondMatchPick;
+    public static ItemKukri diamondKukri;
+    public static ItemCarpenterSaw diamondCarpenterSaw;
+    public static ItemMasonPick diamondMasonPick;
+
+    public static ItemSpade steelSpade;
+    public static ItemMachete steelMachete;
+    public static ItemMatchPick steelMatchPick;
+    public static ItemKukri steelKukri;
+    public static ItemCarpenterSaw steelCarpenterSaw;
+    public static ItemMasonPick steelMasonPick;
 
     public static Item explosion;
-
-    private static boolean isDirt(ItemStack tool, IBlockState state) {
-        Material material = state.getMaterial();
-        return material == Material.GROUND || material == Material.SAND || material == Material.GRASS || material == Material.CLAY;
-    }
-
-    private static boolean isItemDirt(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        Item item = stack.getItem();
-        if (item instanceof ItemBlock) {
-            Block block = ((ItemBlock) item).getBlock();
-            IBlockState state = block.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, stack.getMetadata(), player, hand);
-            return isDirt(stack, state);
-        }
-        return false;
-    }
-
-    private static boolean isItemMasonry(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        Item item = stack.getItem();
-        if (item instanceof ItemBlock) {
-            Block block = ((ItemBlock) item).getBlock();
-            IBlockState state = block.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, stack.getMetadata(), player, hand);
-            return isMasonry(stack, state);
-        }
-        return false;
-    }
-
-    private static boolean isItemCarpentry(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        Item item = stack.getItem();
-        if (item instanceof ItemBlock) {
-            Block block = ((ItemBlock) item).getBlock();
-            IBlockState state = block.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, stack.getMetadata(), player, hand);
-            return isCarpentry(stack, state);
-        }
-        return false;
-    }
-
-    private static boolean isMasonry(ItemStack tool, IBlockState state) {
-        return state.getMaterial() == Material.ROCK && (!state.isFullCube() || !isOre(tool, state));
-    }
-
-    private static boolean isOre(ItemStack tool, IBlockState state) {
-        Block block = state.getBlock();
-        ItemStack oreItem = new ItemStack(block.getItemDropped(state, new Random(), 0), 1, block.damageDropped(state));
-        return isItemOre(oreItem);
-    }
-
-    private static boolean isItemOre(ItemStack ore) {
-        if (ore.isEmpty()) return false;
-        if (ore.getItem() instanceof ItemBlock)
-            for (int oreid : OreDictionary.getOreIDs(ore))
-                if (OreDictionary.getOreName(oreid).startsWith("ore"))
-                    return true;
-        return false;
-    }
-
-    private static boolean isCarpentry(ItemStack tool, IBlockState state) {
-        return state.getMaterial() == Material.WOOD && !isTree(tool, state);
-    }
-
-    private static boolean isTree(ItemStack tool, IBlockState state) {
-        Block block = state.getBlock();
-
-        return block instanceof BlockLog || block instanceof BlockLeaves;
-    }
-
-    private static boolean isFoliage(ItemStack tool, IBlockState state) {
-        Material material = state.getMaterial();
-        return material == Material.VINE || material == Material.LEAVES || material == Material.PLANTS;
-    }
-
-    private static boolean isWeb(ItemStack tool, IBlockState state) {
-        return state.getMaterial() == Material.WEB;
-    }
 
     public static void load(FMLPreInitializationEvent event) {
         /*arrowhead = registerItem("arrowhead",new Item());
@@ -208,110 +143,61 @@ public class ModItems {
         ender_cream = registerItem("ender_cream",new Item());
         thornrose = registerItem("thornrose",new Item());*/
 
-        spade = (ItemSpadeConvenient) registerItem("steel_spade", new ItemSpadeConvenient(BWMItems.SOULFORGED_STEEL) {
-            @Override
-            public boolean canCollect(ItemStack stack, IBlockState state) {
-                return isDirt(stack, state);
-            }
+        ironSpade = (ItemSpade) registerItem("iron_spade", new ItemSpade(Item.ToolMaterial.IRON));
+        ironMatchPick = (ItemMatchPick) registerItem("iron_matchpick", new ItemMatchPick(Item.ToolMaterial.IRON));
+        ironMachete = (ItemMachete) registerItem("iron_machete", new ItemMachete(Item.ToolMaterial.IRON));
+        ironKukri = (ItemKukri) registerItem("iron_kukri", new ItemKukri(Item.ToolMaterial.IRON,8.0f,-3.1f));
+        ironCarpenterSaw = (ItemCarpenterSaw) registerItem("iron_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.IRON,8.0f,-3.1f));
+        ironMasonPick = (ItemMasonPick) registerItem("iron_masonpick", new ItemMasonPick(Item.ToolMaterial.IRON));
 
-            @Override
-            public boolean canPlace(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-                return isItemDirt(stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-            }
+        goldSpade = (ItemSpade) registerItem("gold_spade", new ItemSpade(Item.ToolMaterial.GOLD));
+        goldMatchPick = (ItemMatchPick) registerItem("gold_matchpick", new ItemMatchPick(Item.ToolMaterial.GOLD));
+        goldMachete = (ItemMachete) registerItem("gold_machete", new ItemMachete(Item.ToolMaterial.GOLD));
+        goldKukri = (ItemKukri) registerItem("gold_kukri", new ItemKukri(Item.ToolMaterial.GOLD,6.0f,-3.0f));
+        goldCarpenterSaw = (ItemCarpenterSaw) registerItem("gold_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.GOLD,6.0f,-3.0f));
+        goldMasonPick = (ItemMasonPick) registerItem("gold_masonpick", new ItemMasonPick(Item.ToolMaterial.GOLD));
 
-            @Override
-            public boolean canHarvestEfficiently(ItemStack stack, IBlockState state) {
-                return isDirt(stack, state);
-            }
+        diamondSpade = (ItemSpade) registerItem("diamond_spade", new ItemSpade(Item.ToolMaterial.DIAMOND));
+        diamondMatchPick = (ItemMatchPick) registerItem("diamond_matchpick", new ItemMatchPick(Item.ToolMaterial.DIAMOND));
+        diamondMachete = (ItemMachete) registerItem("diamond_machete", new ItemMachete(Item.ToolMaterial.DIAMOND));
+        diamondKukri = (ItemKukri) registerItem("diamond_kukri", new ItemKukri(Item.ToolMaterial.DIAMOND,8.0f,-3.0f));
+        diamondCarpenterSaw = (ItemCarpenterSaw) registerItem("diamond_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.DIAMOND,8.0f,-3.0f));
+        diamondMasonPick = (ItemMasonPick) registerItem("diamond_masonpick", new ItemMasonPick(Item.ToolMaterial.DIAMOND));
 
+        steelSpade = (ItemSpade) registerItem("steel_spade", new ItemSpade(BWMItems.SOULFORGED_STEEL) {
             @Override
-            public float getEfficiency(ItemStack stack, IBlockState state) {
-                return isDirt(stack, state) ? 1.5f : 1.0f;
+            public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        matchPick = (ItemPickaxeConvenient) registerItem("steel_matchpick", new ItemPickaxeConvenient(BWMItems.SOULFORGED_STEEL) {
+        steelMatchPick = (ItemMatchPick) registerItem("steel_matchpick", new ItemMatchPick(BWMItems.SOULFORGED_STEEL) {
             @Override
-            public boolean canPlace(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-                return ItemUtil.matchesOreDict(stack, "torch");
+            public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        machete = (ItemSwordConvenient) registerItem("steel_machete", new ItemSwordConvenient(BWMItems.SOULFORGED_STEEL) {
+        steelMachete = (ItemMachete) registerItem("steel_machete", new ItemMachete(BWMItems.SOULFORGED_STEEL) {
             @Override
-            public boolean canCollect(ItemStack stack, IBlockState state) {
-                return isFoliage(stack, state);
-            }
-
-            @Override
-            public boolean canShear(ItemStack stack, IBlockState state) {
-                return isFoliage(stack, state);
-            }
-
-            @Override
-            public boolean canPlace(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-                return ItemUtil.matchesOreDict(stack, "vine");
-            }
-
-            @Override
-            public boolean canHarvestEfficiently(ItemStack stack, IBlockState state) {
-                return isFoliage(stack, state) || isWeb(stack,state);
-            }
-
-            @Override
-            public float getEfficiency(ItemStack stack, IBlockState state) {
-                return isFoliage(stack, state) ? 15.0f : (isWeb(stack,state) ? 1.5f : 1.0f);
+            public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        kukri = (ItemAxeConvenient) registerItem("steel_kukri", new ItemAxeConvenient(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
+        steelKukri = (ItemKukri) registerItem("steel_kukri", new ItemKukri(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
             @Override
-            public boolean canCollect(ItemStack stack, IBlockState state) {
-                return isTree(stack, state);
-            }
-
-            @Override
-            public boolean canPlace(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-                return ItemUtil.matchesOreDict(stack, "treeSapling");
-            }
-
-            @Override
-            public boolean canHarvestEfficiently(ItemStack stack, IBlockState state) {
-                return isTree(stack, state);
-            }
-
-            @Override
-            public float getEfficiency(ItemStack stack, IBlockState state) {
-                return isTree(stack, state) ? 1.5f : 1.0f;
+            public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        carpenterSaw = (ItemAxeConvenient) registerItem("steel_carpentersaw", new ItemAxeConvenient(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
+        steelCarpenterSaw = (ItemCarpenterSaw) registerItem("steel_carpentersaw", new ItemCarpenterSaw(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
             @Override
-            public boolean canCollect(ItemStack stack, IBlockState state) {
-                return isCarpentry(stack, state);
-            }
-
-            @Override
-            public boolean canPlace(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-                return isItemCarpentry(stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-            }
-
-            @Override
-            public float getEfficiency(ItemStack stack, IBlockState state) {
-                return isCarpentry(stack, state) ? 1.5f : 0.25f;
+            public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        masonPick = (ItemPickaxeConvenient) registerItem("steel_masonpick", new ItemPickaxeConvenient(BWMItems.SOULFORGED_STEEL) {
+        steelMasonPick = (ItemMasonPick) registerItem("steel_masonpick", new ItemMasonPick(BWMItems.SOULFORGED_STEEL) {
             @Override
-            public boolean canCollect(ItemStack stack, IBlockState state) {
-                return isMasonry(stack, state);
-            }
-
-            @Override
-            public boolean canPlace(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-                return isItemMasonry(stack, player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-            }
-
-            @Override
-            public float getEfficiency(ItemStack stack, IBlockState state) {
-                return isMasonry(stack, state) ? 1.5f : 0.25f;
+            public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
 
@@ -332,9 +218,9 @@ public class ModItems {
         bakedCarrot = (ItemModFood) registerItem("food_carrot_baked", new ItemModFood(4, 0.5F, false));
         cookedPotato = (ItemModFood) registerItem("food_potato_cooked", new ItemModFood(4, 0.7F, false));
         cookedEgg = (ItemModFood) registerItem("food_egg_cooked", new ItemModFood(4, 0.3F, false));
-        meatballs = (ItemModFood) registerItem("food_meatballs", new ItemModFood(6, 0.6F, true));
+        meatballs = (ItemModFood) registerItem("food_meatballs", new ItemModFood(3, 0.6F, true));
 
-        groundMeat = (ItemModFood) registerItem("food_ground_meat", new ItemModFood(2, 0.1F, true));
+        groundMeat = (ItemModFood) registerItem("food_ground_meat", new ItemModFood(1, 0.1F, true));
 
         pieMushroom = (ItemModFood) registerItem("food_pie_mushroom", new ItemModFood(8, 0.3F, false));
         pieAmanita = (ItemModFood) registerItem("food_pie_amanita", new ItemModFood(8, 0.3F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));

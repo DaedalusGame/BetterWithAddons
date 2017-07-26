@@ -25,15 +25,11 @@ public abstract class Interaction {
         return null;
     }
 
-    void preInit() {
+    void preInit() {}
 
-    }
+    void preInitEnd() {}
 
-    void init() {
+    void init() {}
 
-    }
-
-    void postInit() {
-
-    }
+    void postInit() {}
 }

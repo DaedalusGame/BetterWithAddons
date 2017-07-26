@@ -11,16 +11,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ItemMaterial extends Item implements IHasVariants,IDisableable {
     String[] subItemNames;
+    public String[] subItemUnlocalizedNames;
     boolean[] subItemDisabled;
     ItemStack container = ItemStack.EMPTY;
     boolean disabled;
 
     public ItemMaterial(String[] subnames) {
         subItemNames = subnames;
+        subItemUnlocalizedNames = Arrays.copyOf(subnames,subnames.length);
         subItemDisabled = new boolean[subItemNames.length];
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
@@ -72,7 +75,7 @@ public class ItemMaterial extends Item implements IHasVariants,IDisableable {
         int i = stack.getMetadata();
         if(i >= subItemNames.length)
             return super.getUnlocalizedName();
-        return super.getUnlocalizedName() + "." + subItemNames[i];
+        return super.getUnlocalizedName() + "." + subItemUnlocalizedNames[i];
     }
 
     @Override

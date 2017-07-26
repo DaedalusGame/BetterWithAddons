@@ -21,6 +21,7 @@ import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
+import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
 import betterwithmods.module.hardcore.HCPiles;
@@ -230,12 +231,12 @@ public class InteractionBWM extends Interaction {
 
         CauldronManager.getInstance().addRecipe(ModItems.material.getMaterial("bone_ingot"), ItemStack.EMPTY, new Object[]{new ItemStack(Items.BONE, 2), new ItemStack(Items.DYE, 8, 15)});
         CauldronManager.getInstance().addRecipe(ModItems.material.getMaterial("midori_popped"), ItemStack.EMPTY, new Object[]{ModItems.material.getMaterial("midori")});
-        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.meatballs), ItemStack.EMPTY, new Object[]{new ItemStack(ModItems.groundMeat, 3)});
-        MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 3), ItemStack.EMPTY, new Object[]{new ItemStack(Items.BEEF)});
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.meatballs, 1), ItemStack.EMPTY, new Object[]{new ItemStack(ModItems.groundMeat, 1)});
+        /*MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 3), ItemStack.EMPTY, new Object[]{new ItemStack(Items.BEEF)});
         MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 2), ItemStack.EMPTY, new Object[]{new ItemStack(Items.MUTTON)});
         MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 1), ItemStack.EMPTY, new Object[]{new ItemStack(Items.CHICKEN)});
         MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 3), ItemStack.EMPTY, new Object[]{new ItemStack(Items.PORKCHOP)});
-        MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 1), ItemStack.EMPTY, new Object[]{new ItemStack(Items.RABBIT)});
+        MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 1), ItemStack.EMPTY, new Object[]{new ItemStack(Items.RABBIT)});*/
 
         MillManager.getInstance().addRecipe(0, new ItemStack(ModBlocks.worldScale, 1), ItemStack.EMPTY, new Object[]{new ItemStack(ModBlocks.worldScaleOre, 1, 1)});
 
@@ -300,6 +301,17 @@ public class InteractionBWM extends Interaction {
 
         if (CHORUS_IN_CAULDRON)
             BetterWithAddons.instance.removeSmeltingRecipe(new ItemStack(Items.CHORUS_FRUIT_POPPED));
+
+        for(ItemStack stack : OreDictionary.getOres("listAllmeat")) {
+            ItemStack groundMeat = new ItemStack(ModItems.groundMeat);
+            ItemStack meatStack = stack.copy();
+            meatStack.setCount(1);
+            if(meatStack.getItem() instanceof ItemFood) {
+                int amount = ((ItemFood) meatStack.getItem()).getHealAmount(meatStack) / ModItems.groundMeat.getHealAmount(groundMeat);
+                groundMeat.setCount(Math.max(amount,1));
+            }
+            MillManager.getInstance().addRecipe(new MillRecipe(0, groundMeat, ItemStack.EMPTY, new Object[]{meatStack}));
+        }
     }
 
     public void fixRecipes() {

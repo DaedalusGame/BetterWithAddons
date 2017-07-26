@@ -7,35 +7,26 @@ import betterwithaddons.handler.*;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithaddons.tileentity.TileEntityLureTree;
-import betterwithaddons.util.ItemUtil;
-import betterwithmods.common.BWMItems;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.bulk.manager.CrucibleManager;
+import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.common.registry.steelanvil.SteelCraftingManager;
-import betterwithmods.module.compat.minetweaker.SteelAnvil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockLog;
+import betterwithmods.module.ModuleLoader;
+import betterwithmods.module.gameplay.MetalReclaming;
+import betterwithmods.module.hardcore.HCDiamond;
+import betterwithmods.module.hardcore.HCOres;
 import net.minecraft.block.BlockQuartz;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.List;
-import java.util.Random;
 
 public class InteractionBWA extends Interaction {
     public static boolean GATED_AQUEDUCTS = true;
@@ -122,13 +113,81 @@ public class InteractionBWA extends Interaction {
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.worldScale,1)," i ","iai"," i ",'a',new ItemStack(ModBlocks.worldScaleOre,0,1),'i',new ItemStack(Items.IRON_INGOT));
         }
 
+        Object diamondMaterial = "gemDiamond";
+        if(ModuleLoader.isFeatureEnabled(HCDiamond.class))
+            diamondMaterial = "ingotDiamond";
 
-        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.spade),"x","x","i","i",'x',"ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
-        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.matchPick),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT),'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");
-        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.machete),"   x","  x "," x  ","i   ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
-        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.kukri),"xx","x ","xx"," i",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
-        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.carpenterSaw),"xxxi","x x ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
-        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.masonPick),"xxxx"," i  "," i  "," i  ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironSpade),"m","t","s",'m',"ingotIron",'t',new ItemStack(Items.IRON_SHOVEL),'s',"stickWood"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMatchPick),"ftc"," s "," s ",'f',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE),'t',new ItemStack(Items.IRON_PICKAXE),'s',"stickWood"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMachete),"  m"," m ","t  ",'m',"ingotIron",'t',new ItemStack(Items.IRON_SWORD)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironKukri),"  m"," m ","t  ",'m',"ingotIron",'t',new ItemStack(Items.IRON_AXE)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironCarpenterSaw),"mmt",'m',"ingotIron",'t',new ItemStack(Items.IRON_AXE),'s',"stickWood"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMasonPick),"mt"," s"," s",'m',"ingotIron",'t',new ItemStack(Items.IRON_PICKAXE),'s',"stickWood"));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldSpade),"m","t","s",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_SHOVEL),'s',"stickWood"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMatchPick),"ftc"," s "," s ",'f',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE),'t',new ItemStack(Items.GOLDEN_PICKAXE),'s',"stickWood"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMachete),"  m"," m ","t  ",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_SWORD)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldKukri),"  m"," m ","t  ",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_AXE)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldCarpenterSaw),"mmt",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_AXE),'s',"stickWood"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMasonPick),"mt"," s"," s",'m',"ingotGold",'t',new ItemStack(Items.GOLDEN_PICKAXE),'s',"stickWood"));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondSpade),"m","t","s",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_SHOVEL),'s',"stickWood"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMatchPick),"ftc"," s "," s ",'f',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE),'t',new ItemStack(Items.DIAMOND_PICKAXE),'s',"stickWood"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMachete),"  m"," m ","t  ",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_SWORD)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondKukri),"  m"," m ","t  ",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_AXE)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondCarpenterSaw),"mmt",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_AXE),'s',"stickWood"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMasonPick),"mt"," s"," s",'m',diamondMaterial,'t',new ItemStack(Items.DIAMOND_PICKAXE),'s',"stickWood"));
+
+        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.steelSpade),"x","x","i","i",'x',"ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
+        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.steelMatchPick),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT),'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");
+        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.steelMachete),"   x","  x "," x  ","i   ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
+        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.steelKukri),"xx","x ","xx"," i",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
+        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.steelCarpenterSaw),"xxxi","x x ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
+        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModItems.steelMasonPick),"xxxx"," i  "," i  "," i  ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
+
+        if(ModuleLoader.isFeatureEnabled(MetalReclaming.class) && MetalReclaming.reclaimCount > 0) {
+            int reclaimCount = MetalReclaming.reclaimCount;
+
+            ItemStack ingotIron = new ItemStack(Items.IRON_INGOT);
+            ItemStack nuggetIron = new ItemStack(Items.field_191525_da);
+            ItemStack ingotGold = new ItemStack(Items.GOLD_INGOT);
+            ItemStack nuggetGold = new ItemStack(Items.GOLD_NUGGET);
+            ItemStack ingotSteel = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.INGOT_STEEL);
+            ItemStack nuggetSteel = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NUGGET_STEEL);
+
+            addReclaimRecipe(new ItemStack(ModItems.ironSpade),ingotIron,nuggetIron,reclaimCount*2);
+            addReclaimRecipe(new ItemStack(ModItems.ironMatchPick),ingotIron,nuggetIron,reclaimCount*3);
+            addReclaimRecipe(new ItemStack(ModItems.ironMachete),ingotIron,nuggetIron,reclaimCount*4);
+            addReclaimRecipe(new ItemStack(ModItems.ironKukri),ingotIron,nuggetIron,reclaimCount*5);
+            addReclaimRecipe(new ItemStack(ModItems.ironCarpenterSaw),ingotIron,nuggetIron,reclaimCount*5);
+            addReclaimRecipe(new ItemStack(ModItems.ironMasonPick),ingotIron,nuggetIron,reclaimCount*4);
+
+            addReclaimRecipe(new ItemStack(ModItems.goldSpade),ingotGold,nuggetGold,reclaimCount*2);
+            addReclaimRecipe(new ItemStack(ModItems.goldMatchPick),ingotGold,nuggetGold,reclaimCount*3);
+            addReclaimRecipe(new ItemStack(ModItems.goldMachete),ingotGold,nuggetGold,reclaimCount*4);
+            addReclaimRecipe(new ItemStack(ModItems.goldKukri),ingotGold,nuggetGold,reclaimCount*5);
+            addReclaimRecipe(new ItemStack(ModItems.goldCarpenterSaw),ingotGold,nuggetGold,reclaimCount*5);
+            addReclaimRecipe(new ItemStack(ModItems.goldMasonPick),ingotGold,nuggetGold,reclaimCount*4);
+
+            addReclaimRecipe(new ItemStack(ModItems.steelSpade),ingotSteel,nuggetSteel,9*2);
+            addReclaimRecipe(new ItemStack(ModItems.steelMatchPick),ingotSteel,nuggetSteel,9*3);
+            addReclaimRecipe(new ItemStack(ModItems.steelMachete),ingotSteel,nuggetSteel,9*3);
+            addReclaimRecipe(new ItemStack(ModItems.steelKukri),ingotSteel,nuggetSteel,9*5);
+            addReclaimRecipe(new ItemStack(ModItems.steelCarpenterSaw),ingotSteel,nuggetSteel,9*5);
+            addReclaimRecipe(new ItemStack(ModItems.steelMasonPick),ingotSteel,nuggetSteel,9*4);
+
+            if(ModuleLoader.isFeatureEnabled(HCDiamond.class))
+            {
+                ItemStack ingotDiamond = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DIAMOND_INGOT);
+                ItemStack nuggetDiamond = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DIAMOND_NUGGET);
+                addReclaimRecipe(new ItemStack(ModItems.diamondSpade),ingotDiamond,nuggetDiamond,9*2);
+                addReclaimRecipe(new ItemStack(ModItems.diamondMatchPick),ingotDiamond,nuggetDiamond,9*3);
+                addReclaimRecipe(new ItemStack(ModItems.diamondMachete),ingotDiamond,nuggetDiamond,9*4);
+                addReclaimRecipe(new ItemStack(ModItems.diamondKukri),ingotDiamond,nuggetDiamond,9*5);
+                addReclaimRecipe(new ItemStack(ModItems.diamondCarpenterSaw),ingotDiamond,nuggetDiamond,9*5);
+                addReclaimRecipe(new ItemStack(ModItems.diamondMasonPick),ingotDiamond,nuggetDiamond,9*4);
+            }
+        }
 
         TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),450);
 
@@ -175,6 +234,19 @@ public class InteractionBWA extends Interaction {
             GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONEBRICK, 1), "aa", "aa", 'a', ModItems.material.getMaterial("stone_brick"));
             GameRegistry.addSmelting(Blocks.STONE, ModItems.material.getMaterial("stone_brick", 4), 0.1f);
         }
+    }
+
+    public void addReclaimRecipe(ItemStack input, ItemStack ingot, ItemStack nugget, int nuggets)
+    {
+        int ingots = nuggets / 9;
+        nuggets = nuggets % 9;
+
+        ItemStack ingotStack = ingot.copy();
+        ingotStack.setCount(ingots);
+        ItemStack nuggetStack = nugget.copy();
+        nuggetStack.setCount(nuggets);
+
+        StokedCrucibleManager.getInstance().addRecipe(ingotStack,nuggetStack,new Object[]{input});
     }
 
     @Override

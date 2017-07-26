@@ -1,6 +1,7 @@
 package betterwithaddons.crafting.recipes;
 
 import betterwithaddons.item.ModItems;
+import betterwithaddons.util.ItemUtil;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.blocks.tile.TileEntityCookingPot;
 import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
@@ -53,7 +54,7 @@ public class QuartzCrystalRecipe extends CauldronRecipe {
             if(stack.isEmpty())
                 continue;
 
-            if(stack.getItem() == BWMItems.SAND_PILE || stack.getItem() == ModItems.soulSandPile)
+            if(ItemUtil.matchesOreDict(stack,"pileSand"))
             {
                 boolean producesSouls = stack.getItem() == ModItems.soulSandPile;
                 NBTTagCompound compound = stack.getTagCompound();
