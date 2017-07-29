@@ -20,11 +20,4 @@ public class EffectImmovable extends PotionBase {
     public boolean shouldRender(PotionEffect effect) {
         return false;
     }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void renderInventoryEffect(int x, int y, PotionEffect effect, Minecraft mc)
-    {
-        super.renderInventoryEffect(x, y, effect, mc);
-    }
 }

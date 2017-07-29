@@ -11,7 +11,14 @@
 			"stone_bricks": { "textures": { "bottom": "blocks/stonebrick" }},
 			"bricks": { "textures": { "bottom": "blocks/brick" }},
 			"quartz": { "textures": { "bottom": "blocks/quartz_block_side" }},
-			"whitestone_bricks": { "textures": { "bottom": "betterwithaddons:blocks/whitestone_brick" }}
+			"whitestone_bricks": { "textures": { "bottom": "betterwithaddons:blocks/whitestone_brick" }},
+			"sandstone": { "textures": { "bottom": "blocks/sandstone_top" }},
+			"red_sandstone": { "textures": { "bottom": "blocks/red_sandstone_top" }},
+			"andesite": { "textures": { "bottom": "blocks/stone_andesite_smooth" }},
+			"granite": { "textures": { "bottom": "blocks/stone_granite_smooth" }},
+			"diorite": { "textures": { "bottom": "blocks/stone_diorite_smooth" }},
+			"prismarine": { "textures": { "bottom": "blocks/prismarine_bricks" }},
+			"dark_prismarine": { "textures": { "bottom": "blocks/prismarine_dark" }}
 		}
     }
 }

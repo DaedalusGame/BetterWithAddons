@@ -8,18 +8,17 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithaddons.tileentity.TileEntityLureTree;
 import betterwithmods.common.items.ItemMaterial;
-import betterwithmods.common.registry.bulk.manager.CrucibleManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.common.registry.steelanvil.SteelCraftingManager;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.HCDiamond;
-import betterwithmods.module.hardcore.HCOres;
+import net.minecraft.block.BlockPrismarine;
 import net.minecraft.block.BlockQuartz;
+import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -206,16 +205,18 @@ public class InteractionBWA extends Interaction {
         {
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 3, BlockAqueduct.EnumType.WHITESTONE_BRICKS.getMetadata()), "ccc", "bbb", 'c', new ItemStack(Blocks.CLAY), 'b', new ItemStack(ModBlocks.whiteBrick));
         }
-        else {
-            GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 3, BlockAqueduct.EnumType.STONE_BRICKS.getMetadata()), "ccc", "bbb", 'c', new ItemStack(Blocks.CLAY), 'b', new ItemStack(Blocks.STONEBRICK));
-            GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 3, BlockAqueduct.EnumType.BRICKS.getMetadata()), "ccc", "bbb", 'c', new ItemStack(Blocks.CLAY), 'b', new ItemStack(Blocks.BRICK_BLOCK));
-            GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 3, BlockAqueduct.EnumType.QUARTZ.getMetadata()), "ccc", "bbb", 'c', new ItemStack(Blocks.CLAY), 'b', new ItemStack(Blocks.QUARTZ_BLOCK));
-            GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 3, BlockAqueduct.EnumType.WHITESTONE_BRICKS.getMetadata()), "ccc", "bbb", 'c', new ItemStack(Blocks.CLAY), 'b', new ItemStack(ModBlocks.whiteBrick));
-        }
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 1, BlockAqueduct.EnumType.STONE_BRICKS.getMetadata()), "a", "b", 'a', new ItemStack(ModBlocks.aqueduct,1,OreDictionary.WILDCARD_VALUE), 'b', new ItemStack(Blocks.STONEBRICK));
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 1, BlockAqueduct.EnumType.BRICKS.getMetadata()), "a", "b", 'a', new ItemStack(ModBlocks.aqueduct,1,OreDictionary.WILDCARD_VALUE), 'b', new ItemStack(Blocks.BRICK_BLOCK));
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 1, BlockAqueduct.EnumType.QUARTZ.getMetadata()), "a", "b", 'a', new ItemStack(ModBlocks.aqueduct,1,OreDictionary.WILDCARD_VALUE), 'b', new ItemStack(Blocks.QUARTZ_BLOCK));
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 1, BlockAqueduct.EnumType.WHITESTONE_BRICKS.getMetadata()), "a", "b", 'a', new ItemStack(ModBlocks.aqueduct,1,OreDictionary.WILDCARD_VALUE), 'b', new ItemStack(ModBlocks.whiteBrick));
+
+        addAqueductRecipe(BlockAqueduct.EnumType.STONE_BRICKS, new ItemStack(Blocks.STONEBRICK));
+        addAqueductRecipe(BlockAqueduct.EnumType.BRICKS, new ItemStack(Blocks.BRICK_BLOCK));
+        addAqueductRecipe(BlockAqueduct.EnumType.QUARTZ, new ItemStack(Blocks.QUARTZ_BLOCK));
+        addAqueductRecipe(BlockAqueduct.EnumType.WHITESTONE_BRICKS, new ItemStack(ModBlocks.whiteBrick));
+        addAqueductRecipe(BlockAqueduct.EnumType.SANDSTONE, new ItemStack(Blocks.SANDSTONE,1,OreDictionary.WILDCARD_VALUE));
+        addAqueductRecipe(BlockAqueduct.EnumType.RED_SANDSTONE, new ItemStack(Blocks.RED_SANDSTONE,1,OreDictionary.WILDCARD_VALUE));
+        addAqueductRecipe(BlockAqueduct.EnumType.ANDESITE, new ItemStack(Blocks.STONE,1, BlockStone.EnumType.ANDESITE_SMOOTH.getMetadata()));
+        addAqueductRecipe(BlockAqueduct.EnumType.GRANITE, new ItemStack(Blocks.STONE,1, BlockStone.EnumType.GRANITE_SMOOTH.getMetadata()));
+        addAqueductRecipe(BlockAqueduct.EnumType.DIORITE, new ItemStack(Blocks.STONE,1, BlockStone.EnumType.DIORITE_SMOOTH.getMetadata()));
+        addAqueductRecipe(BlockAqueduct.EnumType.PRISMARINE, new ItemStack(Blocks.PRISMARINE,1, BlockPrismarine.BRICKS_META));
+        addAqueductRecipe(BlockAqueduct.EnumType.DARK_PRISMARINE, new ItemStack(Blocks.PRISMARINE,1, BlockPrismarine.DARK_META));
 
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.worldScaleOre,1,1) ,"aa ","aaa"," aa",'a',new ItemStack(ModItems.worldShard));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.worldScaleActive,1)," d ","iae"," d ",'a',new ItemStack(ModBlocks.worldScale),'i',new ItemStack(Items.IRON_PICKAXE),'e',new ItemStack(Items.IRON_AXE),'d',new ItemStack(Items.DIAMOND));
@@ -253,6 +254,14 @@ public class InteractionBWA extends Interaction {
         nuggetStack.setCount(nuggets);
 
         StokedCrucibleManager.getInstance().addRecipe(ingotStack,nuggetStack,new Object[]{input});
+    }
+
+    public void addAqueductRecipe(BlockAqueduct.EnumType type, ItemStack material)
+    {
+        if(!GATED_AQUEDUCTS)
+            GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 3,  type.getMetadata()), "ccc", "bbb", 'c', new ItemStack(Blocks.CLAY), 'b', material.copy());
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 1, type.getMetadata()), "a", "b", 'a', new ItemStack(ModBlocks.aqueduct,1,OreDictionary.WILDCARD_VALUE), 'b', material.copy());
+
     }
 
     @Override

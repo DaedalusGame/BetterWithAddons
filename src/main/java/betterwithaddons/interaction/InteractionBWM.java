@@ -270,6 +270,9 @@ public class InteractionBWM extends Interaction {
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 3), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.JUNGLE.getMetadata()), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 4), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.ACACIA.getMetadata()), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 5), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata()), soulUrn);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 6), new ItemStack(ModBlocks.sakuraSapling), soulUrn);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 7), new ItemStack(ModBlocks.mulberrySapling), soulUrn);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 8), new ItemStack(ModBlocks.luretreeSapling), soulUrn);
 
 
         if (MILL_CLAY) {

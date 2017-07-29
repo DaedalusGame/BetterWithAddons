@@ -113,16 +113,6 @@ public class ModBlocks {
 
         spindle = (BlockSpindle)addBlock(new BlockSpindle());
         loom = (BlockLoom)addBlock(new BlockLoom());
-
-        IBlockState[] leaves1 = new IBlockState[]{
-                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.DECAYABLE,false),
-                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.BIRCH).withProperty(BlockLeaves.DECAYABLE,false),
-                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLeaves.DECAYABLE,false),
-                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.DECAYABLE,false),
-                Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.ACACIA).withProperty(BlockLeaves.DECAYABLE,false),
-                Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.DECAYABLE,false),
-        };
-        ecksieSapling = (BlockEcksieSapling) addBlock(new BlockEcksieSapling("ecksie_sapling",leaves1));
         //alchDragon = (BlockAlchDragon) addBlock(new BlockAlchDragon());
 
         luretreeLeaves = (BlockModLeaves) addBlock(new BlockModLeaves(ModWoods.LURETREE));
@@ -175,6 +165,19 @@ public class ModBlocks {
         whiteBrick = (BlockWhiteBrick) addBlock(new BlockWhiteBrick());
 
         coloredBrick = (BlockColoredBrick) addBlock(new BlockColoredBrick(),ItemCloth.class,true);
+
+        IBlockState[] leaves1 = new IBlockState[]{
+                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.BIRCH).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.ACACIA).withProperty(BlockLeaves.DECAYABLE,false),
+                Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.DECAYABLE,false),
+                ModBlocks.sakuraLeaves.getDefaultState().withProperty(BlockLeaves.DECAYABLE,false),
+                ModBlocks.mulberryLeaves.getDefaultState().withProperty(BlockLeaves.DECAYABLE,false),
+                ModBlocks.luretreeLeaves.getDefaultState().withProperty(BlockLeaves.DECAYABLE,false),
+        };
+        ecksieSapling = (BlockEcksieSapling) addBlock(new BlockEcksieSapling("ecksie_sapling",leaves1));
     }
 
     protected static Block register(Block block)

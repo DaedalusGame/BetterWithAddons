@@ -4,10 +4,13 @@ import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -24,10 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantable, IHasVariants {
+public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantable, IHasVariants, IColorable {
     IBlockState[] treeLeaves;
 
     public static PropertyInteger TYPE = PropertyInteger.create("type",0,15);
+    public static PropertyBool INVENTORY = PropertyBool.create("inventory");
 
     protected BlockEcksieSapling(String name,IBlockState[] leaves) {
         super(name, Material.WOOD);
@@ -38,13 +42,13 @@ public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantab
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, TYPE);
+        return new BlockStateContainer(this, TYPE, INVENTORY);
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
 
-        return getDefaultState().withProperty(TYPE,meta);
+        return getDefaultState().withProperty(TYPE,meta).withProperty(INVENTORY,false);
     }
 
     @Override
@@ -189,7 +193,7 @@ public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantab
 
         for(int i = 0; i < 16; ++i) {
             if(i < treeLeaves.length && treeLeaves[i] != null)
-                rlist.add(new ModelResourceLocation(getRegistryName(), "type="+i));
+                rlist.add(new ModelResourceLocation(getRegistryName(), "inventory=true,type="+i));
         }
 
         return rlist;
@@ -198,5 +202,15 @@ public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantab
     @Override
     public String getVariantName(int meta) {
         return null;
+    }
+
+    @Override
+    public IBlockColor getBlockColor() {
+        return null;
+    }
+
+    @Override
+    public IItemColor getItemColor() {
+        return ColorHandlers.ECKSIE_COLORING;
     }
 }

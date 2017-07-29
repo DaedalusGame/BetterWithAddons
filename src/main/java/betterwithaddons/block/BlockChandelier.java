@@ -46,15 +46,27 @@ public class BlockChandelier extends BlockBase {
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
-        double x = (double)pos.getX();
-        double y = (double)pos.getY() + (1.0D / 16.0D) * 14.0D;
-        double z = (double)pos.getZ();
+        double x = (double)pos.getX() + 0.5;
+        double y = (double)pos.getY() + (1.0D / 16.0D) * 8.0D;
+        double z = (double)pos.getZ() + 0.5;
 
-        double x1 = (1.0D / 16.0D) * 2.0D;
-        double z1 = (1.0D / 16.0D) * 8.0D;
-        double x2 = (1.0D / 16.0D) * 14.0D;
+        //double x1 = (1.0D / 16.0D) * 2.0D;
+       // double z1 = (1.0D / 16.0D) * 8.0D;
+        //double x2 = (1.0D / 16.0D) * 14.0D;
 
-        worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + x1, y, z + z1, 0.0D, 0.0D, 0.0D, new int[0]);
+        for(int x1 = -1; x1 <= 1; x1 += 2)
+            for(int z1 = -1; z1 <= 1; z1 += 2) {
+                double offset1 = x1 * (7.0 / 16.0);
+                double offset2 = z1 * (3.0 / 16.0);
+
+                worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + offset1, y, z + offset2, 0.0D, 0.0D, 0.0D, new int[0]);
+                worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + offset2, y, z + offset1, 0.0D, 0.0D, 0.0D, new int[0]);
+                worldIn.spawnParticle(EnumParticleTypes.FLAME, x + offset1, y, z + offset2, 0.0D, 0.0D, 0.0D, new int[0]);
+                worldIn.spawnParticle(EnumParticleTypes.FLAME, x + offset2, y, z + offset1, 0.0D, 0.0D, 0.0D, new int[0]);
+            }
+
+
+        /*worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + x1, y, z + z1, 0.0D, 0.0D, 0.0D, new int[0]);
         worldIn.spawnParticle(EnumParticleTypes.FLAME, x + x1, y, z + z1, 0.0D, 0.0D, 0.0D, new int[0]);
         worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + x2, y, z + z1, 0.0D, 0.0D, 0.0D, new int[0]);
         worldIn.spawnParticle(EnumParticleTypes.FLAME, x + x2, y, z + z1, 0.0D, 0.0D, 0.0D, new int[0]);
@@ -62,7 +74,7 @@ public class BlockChandelier extends BlockBase {
         worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + z1, y, z + x1, 0.0D, 0.0D, 0.0D, new int[0]);
         worldIn.spawnParticle(EnumParticleTypes.FLAME, x + z1, y, z + x1, 0.0D, 0.0D, 0.0D, new int[0]);
         worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + z1, y, z + x2, 0.0D, 0.0D, 0.0D, new int[0]);
-        worldIn.spawnParticle(EnumParticleTypes.FLAME, x + z1, y, z + x2, 0.0D, 0.0D, 0.0D, new int[0]);
+        worldIn.spawnParticle(EnumParticleTypes.FLAME, x + z1, y, z + x2, 0.0D, 0.0D, 0.0D, new int[0]);*/
     }
 
     @Override

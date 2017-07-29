@@ -53,6 +53,7 @@ public class ClientProxy implements IProxy
 
     @Override
     public void init() {
+        registerColorable(ModBlocks.ecksieSapling);
         registerColorable(ModBlocks.grass);
         registerColorable(ModBlocks.pcbwire);
         registerColorable(ModItems.samuraiBoots);

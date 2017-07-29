@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -105,14 +106,13 @@ public class BlockAqueduct extends BlockBase implements IHasVariants {
 
     @Override
     public List<ModelResourceLocation> getVariantModels() {
-        ArrayList<ModelResourceLocation> rlist = new ArrayList<ModelResourceLocation>();
+        EnumType[] values = EnumType.values();
+        ModelResourceLocation[] rlist = new ModelResourceLocation[values.length];
 
-        rlist.add(new ModelResourceLocation(getRegistryName(), "variant="+EnumType.STONE_BRICKS.getName()));
-        rlist.add(new ModelResourceLocation(getRegistryName(), "variant="+EnumType.BRICKS.getName()));
-        rlist.add(new ModelResourceLocation(getRegistryName(), "variant="+EnumType.QUARTZ.getName()));
-        rlist.add(new ModelResourceLocation(getRegistryName(), "variant="+EnumType.WHITESTONE_BRICKS.getName()));
+        for(EnumType type : values)
+            rlist[type.getMetadata()] = new ModelResourceLocation(getRegistryName(), "variant="+type.getName());
 
-        return rlist;
+        return Arrays.asList(rlist);
     }
 
     @Override
@@ -125,7 +125,14 @@ public class BlockAqueduct extends BlockBase implements IHasVariants {
         STONE_BRICKS(0, "stone_bricks"),
         BRICKS(1, "bricks"),
         QUARTZ(2, "quartz"),
-        WHITESTONE_BRICKS(3, "whitestone_bricks");
+        WHITESTONE_BRICKS(3, "whitestone_bricks"),
+        SANDSTONE(4,"sandstone"),
+        RED_SANDSTONE(5,"red_sandstone"),
+        ANDESITE(6,"andesite"),
+        GRANITE(7,"granite"),
+        DIORITE(8,"diorite"),
+        PRISMARINE(9,"prismarine"),
+        DARK_PRISMARINE(10,"dark_prismarine");
 
         private static final EnumType[] META_LOOKUP = new EnumType[values().length];
         private final int meta;

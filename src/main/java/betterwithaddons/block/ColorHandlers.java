@@ -55,6 +55,12 @@ public class ColorHandlers {
         return blockColor == null ? 0xFFFFFF : blockColor.colorMultiplier(state, null, null, tintIndex);
     };
 
+    public static final IItemColor ECKSIE_COLORING = (stack, tintIndex) -> {
+        BlockEcksieSapling block = (BlockEcksieSapling) ((ItemBlock)stack.getItem()).getBlock();
+        IBlockState state = block.treeLeaves[stack.getMetadata()];
+        return Minecraft.getMinecraft().getBlockColors().colorMultiplier(state,null,null,tintIndex);
+    };
+
     public static final IItemColor MIMIC_COLORING = (stack,tintindex) -> {
         if(stack.hasCapability(ModItems.brokenArtifact.DATA_CAP,null)) {
             ItemStack innerstack = stack.getCapability(ModItems.brokenArtifact.DATA_CAP,null).inner;

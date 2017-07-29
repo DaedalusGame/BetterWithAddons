@@ -11,19 +11,20 @@
   },
   "variants": {
     "normal": [{}],
-	"inventory": [{
-		"model": "betterwithaddons:ecksie_sapling"
-	}],
+	"inventory": {
+		"true": { "model": "betterwithaddons:ecksie_sapling" },
+		"false": {}
+	},
 	"type": {
-		"0" : { "textures": { "wood": "blocks/log_oak"} },
-		"1" : { "textures": { "wood": "blocks/log_birch"} },
-		"2" : { "textures": { "wood": "blocks/log_spruce"} },
-		"3" : { "textures": { "wood": "blocks/log_jungle"} },
-		"4" : { "textures": { "wood": "blocks/log_acacia"} },
-		"5" : { "textures": { "wood": "blocks/log_big_oak"} },
-		"6" : {},
-		"7" : {},
-		"8" : {},
+		"0" : { "textures": { "wood": "blocks/log_oak", "leaf": "blocks/leaves_oak" } },
+		"1" : { "textures": { "wood": "blocks/log_birch", "leaf": "blocks/leaves_birch" } },
+		"2" : { "textures": { "wood": "blocks/log_spruce", "leaf": "blocks/leaves_spruce" } },
+		"3" : { "textures": { "wood": "blocks/log_jungle", "leaf": "blocks/leaves_jungle" } },
+		"4" : { "textures": { "wood": "blocks/log_acacia", "leaf": "blocks/leaves_acacia" } },
+		"5" : { "textures": { "wood": "blocks/log_big_oak", "leaf": "blocks/leaves_big_oak" } },
+		"6" : { "textures": { "wood": "betterwithaddons:blocks/log_sakura", "leaf": "betterwithaddons:blocks/leaves_sakura" } },
+		"7" : { "textures": { "wood": "betterwithaddons:blocks/log_mulberry", "leaf": "betterwithaddons:blocks/leaves_mulberry" } },
+		"8" : { "textures": { "wood": "betterwithaddons:blocks/log_luretree", "leaf": "betterwithaddons:blocks/leaves_luretree" } },
 		"9" : {},
 		"10" : {},
 		"11" : {},

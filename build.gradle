@@ -15,7 +15,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "0.19"
+version = "0.20"
 group= "betterwithaddons" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Better With Addons"
 

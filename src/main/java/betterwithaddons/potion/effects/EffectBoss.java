@@ -13,24 +13,13 @@ import java.awt.*;
 
 public class EffectBoss extends PotionBase
 {
-	ResourceLocation icon = new ResourceLocation("bordthings:textures/gui/effects/boss.png");
+	ResourceLocation icon = new ResourceLocation("betterwithaddons:textures/gui/effects/boss.png");
 	
 	public EffectBoss()
 	{
 		super("boss", false, Color.BLACK.getRGB());
 		
 		this.setPotionName("Boss");
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void renderInventoryEffect(int x, int y, PotionEffect effect, Minecraft mc)
-	{
-		super.renderInventoryEffect(x, y, effect, mc);
-
-		mc.renderEngine.bindTexture(icon);
-
-		GlStateManager.enableBlend();
-		Gui.drawModalRectWithCustomSizedTexture(x + 6, y + 7, 0, 0, 18, 18, 18, 18);
+		this.setIconIndex(1,0);
 	}
 }
