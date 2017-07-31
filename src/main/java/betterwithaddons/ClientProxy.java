@@ -35,20 +35,22 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Map;
 
 public class ClientProxy implements IProxy
 {
-    public ModelResourceLocation aqueductWaterLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "aqueduct_water"), "normal");
+    public static ModelResourceLocation aqueductWaterLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "aqueduct_water"), "normal");
 
     @Override
     public void preInit() {
-        registerModels();
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
@@ -73,7 +75,7 @@ public class ClientProxy implements IProxy
 
     @Override
     public void postInit() {
-        registerRenderers();
+
     }
 
     @Override
@@ -88,10 +90,10 @@ public class ClientProxy implements IProxy
         ModelLoader.setCustomModelResourceLocation(item,meta,location);
     }
 
-    public void registerModels()
+    @SubscribeEvent
+    public void registerModels(ModelRegistryEvent event)
     {
         ItemModels.register();
-        //BlockModels.register();
 
         ModelLoader.setCustomStateMapper(ModBlocks.thorns,new StateMap.Builder().ignore(BlockThorns.FACING).build());
         ModelLoader.setCustomStateMapper(ModBlocks.brine, new BrineStateMapper());
@@ -124,9 +126,5 @@ public class ClientProxy implements IProxy
             if (colorable.getItemColor() != null)
                 Minecraft.getMinecraft().getItemColors().registerItemColorHandler(colorable.getItemColor(), block);
         }
-    }
-
-    public void registerRenderers() {
-        //ModelLoader.setCustomModelResourceLocation(ModItems.greatbow, 0, new ModelResourceLocation(ModItems.greatbow.getRegistryName(), "inventory"));
     }
 }

@@ -10,16 +10,8 @@ import java.util.List;
 public class CherryBox {
     public static class Add extends BaseListAddition<CherryBoxRecipe>
     {
-        private String jeicategory;
-
-        public Add(String name, String jeicategory, CraftingManagerCherryBox manager, List<CherryBoxRecipe> recipes) {
+        public Add(String name, CraftingManagerCherryBox manager, List<CherryBoxRecipe> recipes) {
             super(name, manager.getRecipes(), recipes);
-            this.jeicategory = jeicategory;
-        }
-
-        @Override
-        public String getJEICategory(CherryBoxRecipe recipe) {
-            return jeicategory;
         }
 
         @Override
@@ -30,16 +22,8 @@ public class CherryBox {
 
     public static class Remove extends BaseListRemoval<CherryBoxRecipe>
     {
-        private String jeicategory;
-
-        protected Remove(String name, String jeicategory, CraftingManagerCherryBox manager, List<CherryBoxRecipe> recipes) {
+        protected Remove(String name, CraftingManagerCherryBox manager, List<CherryBoxRecipe> recipes) {
             super(name, manager.getRecipes(), recipes);
-            this.jeicategory = jeicategory;
-        }
-
-        @Override
-        public String getJEICategory(CherryBoxRecipe recipe) {
-            return jeicategory;
         }
 
         @Override

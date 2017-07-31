@@ -8,7 +8,7 @@ import betterwithaddons.handler.StumpingHandler;
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAesthetic;
-import betterwithmods.common.blocks.BlockMechMachines;
+import betterwithmods.common.blocks.mechanical.BlockMechMachines;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
@@ -65,7 +65,7 @@ public class InteractionBTWTweak extends Interaction {
     @Override
     public void preInit() {
         if(SLIPPERY_WHEN_WET)
-            MinecraftForge.EVENT_BUS.register(new SoapHandler(BWMBlocks.AESTHETIC.getDefaultState().withProperty(BlockAesthetic.blockType, BlockAesthetic.EnumType.SOAP)));
+            MinecraftForge.EVENT_BUS.register(new SoapHandler(BWMBlocks.AESTHETIC.getDefaultState().withProperty(BlockAesthetic.TYPE, BlockAesthetic.EnumType.SOAP)));
         if(EGG_INCUBATION)
             MinecraftForge.EVENT_BUS.register(new EggIncubationHandler());
         if(HARD_STUMPS || SOFT_WOODS)
@@ -86,20 +86,12 @@ public class InteractionBTWTweak extends Interaction {
             HCBonemeal.registerFertilzier(ModItems.materialTweak.getMaterial("ash"));
         }
 
-        if(LOGS_SMELT_TO_ASH) {
-            for (ItemStack log : OreDictionary.getOres("logWood")) {
-                ItemStack result = FurnaceRecipes.instance().getSmeltingResult(log);
-                if(result.isEmpty())
-                    GameRegistry.addSmelting(log,ModItems.materialTweak.getMaterial("ash"),0.1f);
-            }
-        }
-
-        GameRegistry.addRecipe(new ShapelessOreRecipe(ModItems.materialTweak.getMaterial("ink_and_quill"),new ItemStack(Items.GLASS_BOTTLE),new ItemStack(Items.DYE,1,EnumDyeColor.BLACK.getDyeDamage()),"feather"));
+        //GameRegistry.addRecipe(new ShapelessOreRecipe(ModItems.materialTweak.getMaterial("ink_and_quill"),new ItemStack(Items.GLASS_BOTTLE),new ItemStack(Items.DYE,1,EnumDyeColor.BLACK.getDyeDamage()),"feather"));
 
         if(REPLACE_WRITABLE_BOOK_RECIPE)
         {
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.WRITABLE_BOOK));
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.WRITABLE_BOOK),new ItemStack(Items.BOOK),ModItems.materialTweak.getMaterial("ink_and_quill")));
+            //GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.WRITABLE_BOOK),new ItemStack(Items.BOOK),ModItems.materialTweak.getMaterial("ink_and_quill")));
         }
 
         if(WOOL_RECYCLING && InteractionBWM.HARDCORE_SHEARING)
@@ -117,11 +109,11 @@ public class InteractionBTWTweak extends Interaction {
             SawManager.INSTANCE.addRecipe(Blocks.LADDER,0,new ItemStack(Items.STICK,2));
             SawManager.INSTANCE.addRecipe(Blocks.NOTEBLOCK,0,new ItemStack(BWMBlocks.WOOD_SIDING, 6, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.REDSTONE,1));
             SawManager.INSTANCE.addRecipe(Blocks.TRAPDOOR,0,new ItemStack(BWMBlocks.WOOD_SIDING, 2, BlockPlanks.EnumType.OAK.getMetadata()));
-            SawManager.INSTANCE.addRecipe(BWMBlocks.AXLE,0,new ItemStack(BWMBlocks.WOOD_CORNER, 2, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(BWMBlocks.ROPE,1));
+            SawManager.INSTANCE.addRecipe(BWMBlocks.WOODEN_AXLE,0,new ItemStack(BWMBlocks.WOOD_CORNER, 2, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(BWMBlocks.ROPE,1));
             SawManager.INSTANCE.addRecipe(BWMBlocks.BELLOWS,0,new ItemStack(BWMBlocks.WOOD_SIDING, 2, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER_CUT,3));
-            SawManager.INSTANCE.addRecipe(BWMBlocks.GEARBOX,0,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH));
+            SawManager.INSTANCE.addRecipe(BWMBlocks.WOODEN_GEARBOX,0,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH));
             SawManager.INSTANCE.addRecipe(BWMBlocks.SINGLE_MACHINES, BlockMechMachines.EnumType.HOPPER.getMeta() << 1,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,1), new ItemStack(Blocks.WOODEN_PRESSURE_PLATE,1));
-            SawManager.INSTANCE.addRecipe(BWMBlocks.PLATFORM,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(BWMBlocks.PANE,2,2));
+            SawManager.INSTANCE.addRecipe(BWMBlocks.PLATFORM,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(BWMBlocks.WICKER,2));
             SawManager.INSTANCE.addRecipe(BWMBlocks.SINGLE_MACHINES, BlockMechMachines.EnumType.PULLEY.getMeta() << 1,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.IRON_INGOT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH));
             SawManager.INSTANCE.addRecipe(BWMBlocks.SAW,0,new ItemStack(BWMBlocks.WOOD_SIDING, 1, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), new ItemStack(Items.IRON_INGOT, 2));
             SawManager.INSTANCE.addRecipe(BWMBlocks.PUMP,0,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCREW), new ItemStack(BWMBlocks.GRATE, 1, BlockPlanks.EnumType.OAK.getMetadata()));
@@ -154,6 +146,13 @@ public class InteractionBTWTweak extends Interaction {
 
     @Override
     public void postInit() {
+        if(LOGS_SMELT_TO_ASH) {
+            for (ItemStack log : OreDictionary.getOres("logWood")) {
+                ItemStack result = FurnaceRecipes.instance().getSmeltingResult(log);
+                if(result.isEmpty())
+                    GameRegistry.addSmelting(log,ModItems.materialTweak.getMaterial("ash"),0.1f);
+            }
+        }
 
         /*if(KILN_DOUBLING && ModuleLoader.isFeatureEnabled(KilnSmelting.class))
         {

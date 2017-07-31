@@ -93,7 +93,7 @@ public class ItemUtil
 		int remainder = stack.getCount();
 
 		for (EntityItem ent: inv) {
-			ItemStack item = ent.getEntityItem();
+			ItemStack item = ent.getItem();
 			if(stack.isItemEqual(item) || (stack.getMetadata() == OreDictionary.WILDCARD_VALUE && stack.getItem() == item.getItem()))
 			{
 				remainder -= consumeItem(ent,remainder);
@@ -108,7 +108,7 @@ public class ItemUtil
 		int remainder = stack.getStackSize();
 
 		for (EntityItem ent: inv) {
-			ItemStack item = ent.getEntityItem();
+			ItemStack item = ent.getItem();
 			if(stack.matches(item))
 			{
 				remainder -= consumeItem(ent,remainder);
@@ -120,14 +120,14 @@ public class ItemUtil
 
 	public static int consumeItem(EntityItem item, int n)
 	{
-		ItemStack entstack = item.getEntityItem().copy();
+		ItemStack entstack = item.getItem().copy();
 
 		int removed = Math.min(n,entstack.getCount());
 		entstack.shrink(removed);
 		if(entstack.getCount() <= 0)
 			item.setDead();
 		else
-			item.setEntityItemStack(entstack);
+			item.setItem(entstack);
 
 		return removed;
 	}

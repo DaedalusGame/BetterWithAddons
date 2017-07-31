@@ -2,8 +2,6 @@ package betterwithaddons.crafting.recipes;
 
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.ItemUtil;
-import betterwithmods.common.BWMItems;
-import betterwithmods.common.blocks.tile.TileEntityCookingPot;
 import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTrapDoor;

@@ -1,16 +1,12 @@
 package betterwithaddons.item;
 
 import betterwithaddons.handler.AssortedHandler;
-import betterwithaddons.util.IDisableable;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class ItemWorldScale extends Item implements IDisableable {
+public class ItemWorldScale extends Item {
 
     private boolean disabled;
 
@@ -92,16 +88,5 @@ public class ItemWorldScale extends Item implements IDisableable {
     public boolean hasEffect(ItemStack stack) {
         //TODO: Set this up so it has an enchantment glint if we're closer than x blocks (is this possible????)
         return false;
-    }
-
-    @Override
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
-        if(!disabled)
-            super.getSubItems(itemIn, tab, subItems);
     }
 }

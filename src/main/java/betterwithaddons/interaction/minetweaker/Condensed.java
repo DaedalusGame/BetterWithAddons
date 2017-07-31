@@ -3,8 +3,8 @@ package betterwithaddons.interaction.minetweaker;
 import betterwithaddons.item.ItemMaterial;
 import com.blamejared.mtlib.helpers.InputHelper;
 import com.blamejared.mtlib.utils.BaseUndoable;
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.NotNull;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -23,7 +23,7 @@ public class Condensed {
         ItemStack item = InputHelper.toStack(condensed);
         ItemStack container = InputHelper.toStack(input);
         if(item.getItem() instanceof ItemMaterial)
-            MineTweakerAPI.apply(new SetContainer((ItemMaterial) item.getItem(),container));
+            CraftTweakerAPI.apply(new SetContainer((ItemMaterial) item.getItem(),container));
     }
 
     public static class SetContainer extends BaseUndoable
@@ -45,24 +45,10 @@ public class Condensed {
         }
 
         @Override
-        public String describeUndo() {
-            return String.format("Reverting to original container of %s", condensed);
-        }
-
-
-        @Override
         public void apply() {
             if(!replacedContainers.contains(condensed)) {
                 condensed.setContainer(container);
                 replacedContainers.add(condensed);
-            }
-        }
-
-        @Override
-        public void undo() {
-            if(replacedContainers.contains(condensed)) {
-                condensed.setContainer(prevContainer);
-                replacedContainers.remove(condensed);
             }
         }
     }

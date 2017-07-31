@@ -44,7 +44,7 @@ public class TerratorialHandler {
                 
             }
 
-            chunk.setChunkModified();
+            chunk.markDirty();
         }
     }
 

@@ -144,7 +144,7 @@ public class StormHandler {
                 boolean aboveground = false;
                 if (isDesert(world, probepos) && (aboveground = world.canSeeSky(probepos))) {
                     Biome biome = world.getBiome(probepos);
-                    MapColor mapcolor = biome.topBlock.getMapColor();
+                    MapColor mapcolor = biome.topBlock.getMapColor(world,probepos);
                     Color color = new Color(mapcolor.colorValue);
                     red += 2 * (color.getRed() / 255.0f);
                     green += 2 * (color.getGreen() / 255.0f);

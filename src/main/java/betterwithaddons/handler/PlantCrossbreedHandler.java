@@ -37,8 +37,8 @@ public class PlantCrossbreedHandler {
 
         if (block == BWMBlocks.FERTILE_FARMLAND)
             world.setBlockState(pos.down(), Blocks.FARMLAND.getDefaultState(), 3);
-        else if (block == BWMBlocks.PLANTER && soil.getValue(BlockPlanter.TYPE) == BlockPlanter.EnumPlanterType.FERTILE)
-            world.setBlockState(pos.down(), BWMBlocks.PLANTER.getDefaultState().withProperty(BlockPlanter.TYPE, BlockPlanter.EnumPlanterType.DIRT), 3);
+        else if (block == BWMBlocks.PLANTER && soil.getValue(BlockPlanter.TYPE) == BlockPlanter.EnumType.FERTILE)
+            world.setBlockState(pos.down(), BWMBlocks.PLANTER.getDefaultState().withProperty(BlockPlanter.TYPE, BlockPlanter.EnumType.DIRT), 3);
     }
 
     public static void placeGrass(World world, BlockPos pos) {
@@ -47,8 +47,8 @@ public class PlantCrossbreedHandler {
 
         if (block == BWMBlocks.FERTILE_FARMLAND || block == Blocks.DIRT || block == Blocks.FARMLAND)
             world.setBlockState(pos.down(), Blocks.GRASS.getDefaultState(), 3);
-        else if (block == BWMBlocks.PLANTER && (soil.getValue(BlockPlanter.TYPE) == BlockPlanter.EnumPlanterType.FERTILE || soil.getValue(BlockPlanter.TYPE) == BlockPlanter.EnumPlanterType.DIRT))
-            world.setBlockState(pos.down(), BWMBlocks.PLANTER.getDefaultState().withProperty(BlockPlanter.TYPE, BlockPlanter.EnumPlanterType.GRASS), 3);
+        else if (block == BWMBlocks.PLANTER && (soil.getValue(BlockPlanter.TYPE) == BlockPlanter.EnumType.FERTILE || soil.getValue(BlockPlanter.TYPE) == BlockPlanter.EnumType.DIRT))
+            world.setBlockState(pos.down(), BWMBlocks.PLANTER.getDefaultState().withProperty(BlockPlanter.TYPE, BlockPlanter.EnumType.GRASS), 3);
     }
 
     public static void placeMycelium(World world, BlockPos pos) {
@@ -65,8 +65,8 @@ public class PlantCrossbreedHandler {
 
         if (block == BWMBlocks.FERTILE_FARMLAND)
             world.setBlockState(pos.down(), Blocks.FARMLAND.getDefaultState(), 3);
-        else if (block == BWMBlocks.PLANTER && (soil.getValue(BlockPlanter.TYPE) == BlockPlanter.EnumPlanterType.FERTILE))
-            world.setBlockState(pos.down(), BWMBlocks.PLANTER.getDefaultState().withProperty(BlockPlanter.TYPE, BlockPlanter.EnumPlanterType.DIRT), 3);
+        else if (block == BWMBlocks.PLANTER && (soil.getValue(BlockPlanter.TYPE) == BlockPlanter.EnumType.FERTILE))
+            world.setBlockState(pos.down(), BWMBlocks.PLANTER.getDefaultState().withProperty(BlockPlanter.TYPE, BlockPlanter.EnumType.DIRT), 3);
     }
 
     public static boolean placePlant(World world, BlockPos pos, Block block) {

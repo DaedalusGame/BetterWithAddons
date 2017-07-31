@@ -1,18 +1,14 @@
 package betterwithaddons.item;
 
-import betterwithaddons.util.IDisableable;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.NonNullList;
 
-public class ItemShinai extends ItemSword implements IDisableable {
+public class ItemShinai extends ItemSword {
     private boolean disabled;
 
     public ItemShinai()
@@ -49,16 +45,5 @@ public class ItemShinai extends ItemSword implements IDisableable {
         }
 
         return true;
-    }
-
-    @Override
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
-        if(!disabled)
-            super.getSubItems(itemIn, tab, subItems);
     }
 }

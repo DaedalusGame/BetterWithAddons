@@ -6,8 +6,8 @@ import betterwithaddons.crafting.recipes.CherryBoxRecipe;
 import betterwithaddons.interaction.jei.category.SoakingBoxRecipeCategory;
 import com.blamejared.mtlib.helpers.InputHelper;
 import com.google.common.collect.Lists;
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -20,13 +20,13 @@ public class SoakingBox extends CherryBox {
     @ZenMethod
     public static void add(IItemStack output, IItemStack input) {
         CherryBoxRecipe recipe = new CherryBoxRecipe(BlockCherryBox.CherryBoxType.SOAKING,InputHelper.toObject(input),InputHelper.toStack(output));
-        MineTweakerAPI.apply(new Add("SoakingBox", SoakingBoxRecipeCategory.UID, CraftingManagerSoakingBox.instance(), Lists.newArrayList(recipe)));
+        CraftTweakerAPI.apply(new Add("SoakingBox", CraftingManagerSoakingBox.instance(), Lists.newArrayList(recipe)));
     }
 
     @ZenMethod
     public static void remove(IItemStack input)
     {
         List<CherryBoxRecipe> recipes = CraftingManagerSoakingBox.instance().findRecipeForRemoval(InputHelper.toStack(input));
-        MineTweakerAPI.apply(new Remove("SoakingBox", SoakingBoxRecipeCategory.UID, CraftingManagerSoakingBox.instance(), recipes));
+        CraftTweakerAPI.apply(new Remove("SoakingBox", CraftingManagerSoakingBox.instance(), recipes));
     }
 }

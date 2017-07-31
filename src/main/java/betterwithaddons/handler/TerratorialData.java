@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,8 +75,8 @@ public class TerratorialData extends WorldSavedData
             NBTTagCompound chunkcompound = new NBTTagCompound();
             ChunkPos chunkpos = entry.getKey();
             MobTerritory territory = entry.getValue();
-            chunkcompound.setInteger("chunkX",chunkpos.chunkXPos);
-            chunkcompound.setInteger("chunkZ",chunkpos.chunkZPos);
+            chunkcompound.setInteger("chunkX",chunkpos.x);
+            chunkcompound.setInteger("chunkZ",chunkpos.z);
             chunkcompound.setInteger("territoryid",territory.getId());
             territorylist.appendTag(chunkcompound);
             if(hasNoTerritory.contains(territory))

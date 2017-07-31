@@ -2,7 +2,6 @@ package betterwithaddons.client.models;
 
 import betterwithaddons.client.ToolShardOverrideHandler;
 import betterwithaddons.lib.Reference;
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -19,7 +18,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
+import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
@@ -49,7 +48,7 @@ public class ModelToolShard implements IModel {
     }
 
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+    public IBakedModel bake(IModelState state, VertexFormat format, java.util.function.Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
         return new BakedToolShard();
     }
 
@@ -81,7 +80,7 @@ public class ModelToolShard implements IModel {
         }
     }
 
-    private static final class BakedToolShard implements IPerspectiveAwareModel
+    private static final class BakedToolShard implements IBakedModel
     {
         private final ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transforms;
         //private ImmutableList<BakedQuad> quads;
@@ -108,7 +107,7 @@ public class ModelToolShard implements IModel {
         @Override
         public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType)
         {
-            return IPerspectiveAwareModel.MapWrapper.handlePerspective(this, transforms, cameraTransformType);
+            return PerspectiveMapWrapper.handlePerspective(this, transforms, cameraTransformType);
         }
 
         @Override

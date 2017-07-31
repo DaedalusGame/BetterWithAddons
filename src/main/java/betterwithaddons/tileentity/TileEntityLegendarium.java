@@ -3,23 +3,16 @@ package betterwithaddons.tileentity;
 import betterwithaddons.entity.EntityArtifactFrame;
 import betterwithaddons.interaction.InteractionBWA;
 import betterwithaddons.item.ModItems;
-import betterwithaddons.lib.Reference;
-import betterwithaddons.util.InventoryUtil;
 import betterwithaddons.util.ItemUtil;
-import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
-import net.minecraft.world.chunk.IChunkGenerator;
-import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraft.world.storage.WorldSavedData;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityLegendarium extends TileEntityBase {

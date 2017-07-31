@@ -11,14 +11,13 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ModelManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.entity.RenderItemFrame;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.RenderItemFrame;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
@@ -77,7 +76,7 @@ public class RenderArtifactFrame extends RenderItemFrame {
         if (!itemstack.isEmpty())
         {
             EntityItem entityitem = new EntityItem(itemFrame.world, 0.0D, 0.0D, 0.0D, itemstack);
-            entityitem.getEntityItem().setCount(1);
+            entityitem.getItem().setCount(1);
             entityitem.hoverStart = 0.0F;
             GlStateManager.pushMatrix();
             GlStateManager.disableLighting();
@@ -92,7 +91,7 @@ public class RenderArtifactFrame extends RenderItemFrame {
                 GlStateManager.scale(0.5F, 0.5F, 0.5F);
                 GlStateManager.pushAttrib();
                 RenderHelper.enableStandardItemLighting();
-                this.itemRenderer.renderItem(entityitem.getEntityItem(), ItemCameraTransforms.TransformType.FIXED);
+                this.itemRenderer.renderItem(entityitem.getItem(), ItemCameraTransforms.TransformType.FIXED);
                 RenderHelper.disableStandardItemLighting();
                 GlStateManager.popAttrib();
             }

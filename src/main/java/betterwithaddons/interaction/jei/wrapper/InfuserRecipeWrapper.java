@@ -41,13 +41,13 @@ public class InfuserRecipeWrapper extends BlankRecipeWrapper {
         String costString = I18n.format("inv.infuser.cost.name",requiredSpirits);
 
         if(requiredSpirits > 0) {
-            int drawoffsetX = 87 - minecraft.fontRendererObj.getStringWidth(costString) / 2;
+            int drawoffsetX = 87 - minecraft.fontRenderer.getStringWidth(costString) / 2;
             int drawoffsetY = 33;
 
-            minecraft.fontRendererObj.drawString(costString, drawoffsetX, drawoffsetY+1, backgroundcolor);
-            minecraft.fontRendererObj.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
-            minecraft.fontRendererObj.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
-            minecraft.fontRendererObj.drawString(costString, drawoffsetX, drawoffsetY, foregroundcolor);
+            minecraft.fontRenderer.drawString(costString, drawoffsetX, drawoffsetY+1, backgroundcolor);
+            minecraft.fontRenderer.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
+            minecraft.fontRenderer.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
+            minecraft.fontRenderer.drawString(costString, drawoffsetX, drawoffsetY, foregroundcolor);
         }
 
         super.drawInfo(minecraft, recipeWidth, recipeHeight, mouseX, mouseY);

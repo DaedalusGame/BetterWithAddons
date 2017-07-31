@@ -28,14 +28,11 @@ import java.util.List;
 import java.util.Random;
 
 public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantable, IHasVariants, IColorable {
-    IBlockState[] treeLeaves;
-
     public static PropertyInteger TYPE = PropertyInteger.create("type",0,15);
     public static PropertyBool INVENTORY = PropertyBool.create("inventory");
 
-    protected BlockEcksieSapling(String name,IBlockState[] leaves) {
+    protected BlockEcksieSapling(String name) {
         super(name, Material.WOOD);
-        treeLeaves = leaves;
         this.setTickRandomly(true);
         this.setHardness(0.5f);
     }
@@ -129,7 +126,17 @@ public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantab
 
     private IBlockState getLeaf(IBlockState state)
     {
-        return treeLeaves[state.getValue(TYPE)];
+        return getLeafBlock(state.getValue(TYPE));
+    }
+
+    public int getTypes()
+    {
+        return 0;
+    }
+
+    public IBlockState getLeafBlock(int type)
+    {
+        return Blocks.AIR.getDefaultState();
     }
 
     @Override
@@ -179,12 +186,12 @@ public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantab
     }
 
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
         if(!disabled)
-        for(int i = 0; i < 16; ++i) {
-            if(i < treeLeaves.length && treeLeaves[i] != null)
-                list.add(new ItemStack(this,1,i));
-        }
+            for(int i = 0; i < 16; ++i) {
+                if(i < getTypes() && getLeafBlock(i) != null)
+                    items.add(new ItemStack(this,1,i));
+            }
     }
 
     @Override
@@ -192,7 +199,7 @@ public class BlockEcksieSapling extends BlockBase implements IGrowable, IPlantab
         ArrayList<ModelResourceLocation> rlist = new ArrayList<ModelResourceLocation>();
 
         for(int i = 0; i < 16; ++i) {
-            if(i < treeLeaves.length && treeLeaves[i] != null)
+            if(i < getTypes() && getLeafBlock(i) != null)
                 rlist.add(new ModelResourceLocation(getRegistryName(), "inventory=true,type="+i));
         }
 

@@ -1,7 +1,7 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.interaction.minetweaker.*;
-import minetweaker.MineTweakerAPI;
+import crafttweaker.CraftTweakerAPI;
 import net.minecraftforge.fml.common.Loader;
 
 import java.util.List;
@@ -33,16 +33,16 @@ public class InteractionMinetweaker extends Interaction {
 
     @Override
     public void init() {
-        MineTweakerAPI.registerClass(DryingBox.class);
-        MineTweakerAPI.registerClass(SoakingBox.class);
-        MineTweakerAPI.registerClass(SandNet.class);
-        MineTweakerAPI.registerClass(WaterNet.class);
-        MineTweakerAPI.registerClass(FireNet.class);
-        MineTweakerAPI.registerClass(Spindle.class);
-        MineTweakerAPI.registerClass(Tatara.class);
-        MineTweakerAPI.registerClass(SoftWoods.class);
-        MineTweakerAPI.registerClass(LureTree.class);
-        MineTweakerAPI.registerClass(Condensed.class);
+        CraftTweakerAPI.registerClass(DryingBox.class);
+        CraftTweakerAPI.registerClass(SoakingBox.class);
+        CraftTweakerAPI.registerClass(SandNet.class);
+        CraftTweakerAPI.registerClass(WaterNet.class);
+        CraftTweakerAPI.registerClass(FireNet.class);
+        CraftTweakerAPI.registerClass(Spindle.class);
+        CraftTweakerAPI.registerClass(Tatara.class);
+        CraftTweakerAPI.registerClass(SoftWoods.class);
+        CraftTweakerAPI.registerClass(LureTree.class);
+        CraftTweakerAPI.registerClass(Condensed.class);
     }
 
     @Override

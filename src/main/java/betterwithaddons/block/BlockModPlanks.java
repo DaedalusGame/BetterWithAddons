@@ -2,21 +2,16 @@ package betterwithaddons.block;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
-import betterwithaddons.util.IDisableable;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockModPlanks extends Block implements IDisableable {
+public class BlockModPlanks extends Block {
     ModWoods woodVariant;
     private boolean disabled;
 
@@ -45,16 +40,5 @@ public class BlockModPlanks extends Block implements IDisableable {
     public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face)
     {
         return Blocks.PLANKS.getFireSpreadSpeed(world, pos, face);
-    }
-
-    @Override
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-        if(!disabled)
-            super.getSubBlocks(itemIn, tab, list);
     }
 }

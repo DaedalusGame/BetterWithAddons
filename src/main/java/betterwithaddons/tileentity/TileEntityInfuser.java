@@ -81,7 +81,7 @@ public class TileEntityInfuser extends TileEntityBase implements ITickable {
             if(item.cannotPickup())
                 continue;
 
-            ItemStack stack = item.getEntityItem();
+            ItemStack stack = item.getItem();
             TransmutationRecipe recipe = CraftingManagerInfuserTransmutation.instance().getSmeltingRecipe(stack,spirits);
 
             if(recipe != null)
@@ -100,7 +100,7 @@ public class TileEntityInfuser extends TileEntityBase implements ITickable {
                     stack.shrink(recipe.getInputCount());
                 }
 
-                item.setEntityItemStack(stack);
+                item.setItem(stack);
                 if(stack.isEmpty())
                     item.setDead();
                 consumeSpirits(consumed);

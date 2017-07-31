@@ -73,9 +73,9 @@ public class EntityGreatarrow extends EntityArrow {
                 }
             }
 
-            this.posX -= (float)((this.posX + this.motionX) - raytraceResultIn.hitVec.xCoord);
-            this.posY -= (float)((this.posY + this.motionY) - raytraceResultIn.hitVec.yCoord);
-            this.posZ -= (float)((this.posZ + this.motionZ) - raytraceResultIn.hitVec.zCoord);
+            this.posX -= (float)((this.posX + this.motionX) - raytraceResultIn.hitVec.x);
+            this.posY -= (float)((this.posY + this.motionY) - raytraceResultIn.hitVec.y);
+            this.posZ -= (float)((this.posZ + this.motionZ) - raytraceResultIn.hitVec.z);
             if(!impactSoundPlayed) {
                 this.playSound(SoundEvents.ENTITY_IRONGOLEM_DEATH, 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
                 impactSoundPlayed = true;

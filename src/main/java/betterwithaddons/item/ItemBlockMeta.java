@@ -1,4 +1,4 @@
-package betterwithaddons.block;
+package betterwithaddons.item;
 
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;

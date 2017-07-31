@@ -24,7 +24,7 @@ public class GuiChute extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int p_drawGuiContainerForegroundLayer_1_, int p_drawGuiContainerForegroundLayer_2_) {
-        fontRendererObj.drawString(I18n.format("tile.chute.name", new Object[0]), 8, 6, 4210752);
+        fontRenderer.drawString(I18n.format("tile.chute.name", new Object[0]), 8, 6, 4210752);
     }
 
     @Override

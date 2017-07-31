@@ -22,10 +22,10 @@ public class RenderAlchDragon extends TileEntitySpecialRenderer<TileEntityAlchDr
     }
 
     @Override
-    public void renderTileEntityAt(TileEntityAlchDragon te, double x, double y, double z, float p_renderTileEntityAt_8_, int destroystage) {
+    public void render(TileEntityAlchDragon te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         EnumFacing facing = EnumFacing.getFront(te.getBlockMetadata() & 7);
-        float animation = te.getAnimationProgress(p_renderTileEntityAt_8_);
-        this.renderSkull((float)x, (float)y, (float)z, facing, (float)(te.getSkullRotation() * 360) / 16.0F, destroystage, animation);
+        float animation = te.getAnimationProgress(partialTicks);
+        this.renderSkull((float)x, (float)y, (float)z, facing, (float)(te.getSkullRotation() * 360) / 16.0F, destroyStage, animation);
     }
 
     @Override

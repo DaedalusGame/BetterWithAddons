@@ -1,10 +1,8 @@
 package betterwithaddons.interaction;
 
-import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.OreStack;
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
 import betterwithaddons.item.ModItems;
-import betterwithaddons.util.IDisableable;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.blocks.BlockAesthetic;
@@ -15,12 +13,8 @@ import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,9 +31,6 @@ public class InteractionCondensedOutputs extends Interaction {
 
     public InteractionCondensedOutputs()
     {
-        associatedItems = new IDisableable[] {
-            ModItems.materialBundle, ModItems.materialBolt, ModItems.materialCongealed, ModItems.materialBag, ModItems.materialCrate
-        };
     }
 
     @Override
@@ -82,9 +73,9 @@ public class InteractionCondensedOutputs extends Interaction {
 
     @Override
     public void init() {
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "plankWood", 'i', "nuggetIron"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "sidingWood", 'i', "nuggetIron"));
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.spindle,3),"s","s","s",'s',new ItemStack(BWMBlocks.WOOD_MOULDING,1));
+        //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "plankWood", 'i', "nuggetIron"));
+        //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "sidingWood", 'i', "nuggetIron"));
+        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.spindle,3),"s","s","s",'s',new ItemStack(BWMBlocks.WOOD_MOULDING,1));
 
         OreDictionary.registerOre("listAllExplosives",ModItems.materialBag.getMaterial("gunpowder"));
         OreDictionary.registerOre("listAllExplosives",ModItems.materialBag.getMaterial("hellfire"));
@@ -203,8 +194,8 @@ public class InteractionCondensedOutputs extends Interaction {
     {
         ItemStack outmaterial = material.copy();
         outmaterial.setCount(8);
-        GameRegistry.addShapedRecipe(output,"aaa","aba","aaa",'a',material,'b',frame);
-        GameRegistry.addShapelessRecipe(outmaterial,output);
+        //GameRegistry.addShapedRecipe(output,"aaa","aba","aaa",'a',material,'b',frame);
+        //GameRegistry.addShapelessRecipe(outmaterial,output);
     }
 
 
@@ -217,7 +208,7 @@ public class InteractionCondensedOutputs extends Interaction {
             outmaterial = orestacks.get(0).copy();
             outmaterial.setCount(8);
         }
-        GameRegistry.addRecipe(new ShapedOreRecipe(output,"aaa","aba","aaa",'a',material.getOreName(),'b',frame));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(outmaterial, output));
+        //GameRegistry.addRecipe(new ShapedOreRecipe(output,"aaa","aba","aaa",'a',material.getOreName(),'b',frame));
+        //GameRegistry.addRecipe(new ShapelessOreRecipe(outmaterial, output));
     }
 }

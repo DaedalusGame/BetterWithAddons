@@ -34,7 +34,7 @@ public class EggIncubationHandler {
 
         if(entity instanceof EntityItem)
         {
-            ItemStack stack = ((EntityItem) entity).getEntityItem();
+            ItemStack stack = ((EntityItem) entity).getItem();
             if(!stack.isEmpty() && stack.getItem() == Items.EGG)
             {
                 TrackedItemsAdd.add((EntityItem)entity);
@@ -58,7 +58,7 @@ public class EggIncubationHandler {
 
     private boolean hasPadding(World world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
-        return state.getBlock() == BWMBlocks.AESTHETIC && state.getValue(BlockAesthetic.blockType).equals(BlockAesthetic.EnumType.PADDING);
+        return state.getBlock() == BWMBlocks.AESTHETIC && state.getValue(BlockAesthetic.TYPE).equals(BlockAesthetic.EnumType.PADDING);
     }
 
 
@@ -74,7 +74,7 @@ public class EggIncubationHandler {
         {
             EntityItem entity = TrackedItemsIterator.next();
             World world = entity.world;
-            ItemStack stack = entity.getEntityItem();
+            ItemStack stack = entity.getItem();
             BlockPos pos = entity.getPosition();
             boolean remove = false;
             if(entity.isDead || stack.isEmpty() || stack.getItem() != Items.EGG || stack.getCount() > 1)

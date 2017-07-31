@@ -4,30 +4,22 @@ import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockWhiteBrick;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.item.ModItems;
-import betterwithaddons.util.IDisableable;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
-import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
-import betterwithmods.common.registry.steelanvil.SteelCraftingManager;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class InteractionDecoAddon extends Interaction {
@@ -44,9 +36,6 @@ public class InteractionDecoAddon extends Interaction {
 
     public InteractionDecoAddon()
     {
-        associatedItems = new IDisableable[] {
-                ModItems.materialDeco, ModBlocks.wroughtBars, ModBlocks.wroughtLantern, ModBlocks.paperLantern, ModBlocks.chandelier, ModBlocks.pavement, ModBlocks.whiteBrick
-        };
     }
 
     @Override
@@ -81,37 +70,37 @@ public class InteractionDecoAddon extends Interaction {
         CauldronManager.getInstance().addRecipe(ModItems.materialDeco.getMaterial("wood_bleach",4),new Object[]{ModItems.materialDeco.getMaterial("hemp_oil",4),new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage())});
         CauldronManager.getInstance().addRecipe(ModItems.materialDeco.getMaterial("wood_stain",4),new Object[]{ModItems.materialDeco.getMaterial("hemp_oil",4),new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage())});
 
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.paperWall),"pwp","ppp","pwp",'p',new ItemStack(Items.PAPER),'w',new ItemStack(BWMBlocks.WOOD_MOULDING,1, OreDictionary.WILDCARD_VALUE));
+        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.paperWall),"pwp","ppp","pwp",'p',new ItemStack(Items.PAPER),'w',new ItemStack(BWMBlocks.WOOD_MOULDING,1, OreDictionary.WILDCARD_VALUE));
 
         ItemStack chandelierLight = new ItemStack(Blocks.TORCH); //TODO: candles
         ItemStack ironLanternLight = ModItems.materialDeco.getMaterial("hemp_oil");
         ItemStack woodLanternLight = ModItems.materialDeco.getMaterial("hemp_oil"); //TODO: fireflies, candles
 
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.paperLantern),"pwp","wtw","pwp",'p',new ItemStack(Items.PAPER),'w',new ItemStack(BWMBlocks.WOOD_MOULDING,1, OreDictionary.WILDCARD_VALUE),'t',woodLanternLight);
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.wroughtLantern)," w ","wtw"," w ",'w',new ItemStack(ModBlocks.wroughtBars),'t',ironLanternLight);
-        if(ALTERNATE_WROUGHT_BARS)
-            SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars, 8), "bbbb", "bbbb", 'b', new ItemStack(Blocks.IRON_BARS));
-        else
-            SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars,10), "b b ", "bbbb", "b b ", "b b ", 'b', new ItemStack(Items.IRON_INGOT));
+        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.paperLantern),"pwp","wtw","pwp",'p',new ItemStack(Items.PAPER),'w',new ItemStack(BWMBlocks.WOOD_MOULDING,1, OreDictionary.WILDCARD_VALUE),'t',woodLanternLight);
+        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.wroughtLantern)," w ","wtw"," w ",'w',new ItemStack(ModBlocks.wroughtBars),'t',ironLanternLight);
+        //if(ALTERNATE_WROUGHT_BARS)
+        //    SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars, 8), "bbbb", "bbbb", 'b', new ItemStack(Blocks.IRON_BARS));
+        //else
+        //    SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars,10), "b b ", "bbbb", "b b ", "b b ", 'b', new ItemStack(Items.IRON_INGOT));
         //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chandelier)," b ","tbt","tbt",'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight);
-        SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.chandelier), " ss ", " bb ", "tbbt", "tbbt", 's', new ItemStack(Blocks.STONE),'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight);
+        //SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.chandelier), " ss ", " bb ", "tbbt", "tbbt", 's', new ItemStack(Blocks.STONE),'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight);
 
         ItemStack whiteBrick = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata());
         ItemStack whiteBrick_mossy = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.MOSSY.getMetadata());
         ItemStack whiteBrick_cracked = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.CRACKED.getMetadata());
 
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.whiteBrick, 4, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()),"bb","bb",'b',new ItemStack(BWMBlocks.AESTHETIC, 1, BlockAesthetic.EnumType.WHITESTONE.getMeta()));
+        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.whiteBrick, 4, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()),"bb","bb",'b',new ItemStack(BWMBlocks.AESTHETIC, 1, BlockAesthetic.EnumType.WHITESTONE.getMeta()));
         if(CHISEL_BRICKS_IN_ANVIL) {
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.CHISELED.getMetadata()));
-            SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(Blocks.STONEBRICK, 3, BlockStoneBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.DEFAULT.getMetadata()));
-            SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.whiteBrick, 3, BlockWhiteBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()));
+            //SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(Blocks.STONEBRICK, 3, BlockStoneBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.DEFAULT.getMetadata()));
+            //SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.whiteBrick, 3, BlockWhiteBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()));
         }
         else
         {
-            GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.whiteBrick, 2, BlockWhiteBrick.EnumType.CHISELED.getMetadata()),"b","b",'b',new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()));
+            //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.whiteBrick, 2, BlockWhiteBrick.EnumType.CHISELED.getMetadata()),"b","b",'b',new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()));
         }
         FurnaceRecipes.instance().addSmeltingRecipe(whiteBrick,whiteBrick_cracked,0.1f);
-        GameRegistry.addShapelessRecipe(whiteBrick_mossy,whiteBrick,new ItemStack(Blocks.VINE,1));
+        //GameRegistry.addShapelessRecipe(whiteBrick_mossy,whiteBrick,new ItemStack(Blocks.VINE,1));
 
         StokedCrucibleManager.getInstance().addRecipe(new ItemStack(ModBlocks.pavement),new ItemStack[]{new ItemStack(Blocks.GRAVEL), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHER_SLUDGE)});
 
@@ -130,10 +119,10 @@ public class InteractionDecoAddon extends Interaction {
             GameRegistry.addSmelting(new ItemStack(BWMItems.SAND_PILE,1),ModItems.materialDeco.getMaterial("glass_chunk"),0.02f);
             GameRegistry.addSmelting(ModItems.materialDeco.getMaterial("glass_chunk",4),new ItemStack(Blocks.GLASS,1),0.05f);
         }
-        GameRegistry.addShapelessRecipe(ModItems.materialDeco.getMaterial("glass_chunk",4),new ItemStack(Blocks.GLASS,1));
+        //GameRegistry.addShapelessRecipe(ModItems.materialDeco.getMaterial("glass_chunk",4),new ItemStack(Blocks.GLASS,1));
         if(CHEAPER_BOTTLES) {
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.GLASS_BOTTLE,3));
-            GameRegistry.addShapedRecipe(new ItemStack(Items.GLASS_BOTTLE,3)," # ","# #","###",'#',ModItems.materialDeco.getMaterial("glass_chunk",1));
+            //GameRegistry.addShapedRecipe(new ItemStack(Items.GLASS_BOTTLE,3)," # ","# #","###",'#',ModItems.materialDeco.getMaterial("glass_chunk",1));
         }
 
         if(RECYCLE_BOTTLES)
@@ -172,7 +161,7 @@ public class InteractionDecoAddon extends Interaction {
 
     public void modifyPaneRecipe()
     {
-        List<IRecipe> craftingList = CraftingManager.getInstance().getRecipeList();
+        /*List<IRecipe> craftingList = CraftingManager.getInstance().getRecipeList();
         for(Iterator<IRecipe> craftingIterator = craftingList.iterator(); craftingIterator.hasNext(); ) {
             IRecipe recipe = craftingIterator.next();
             ItemStack output = recipe.getRecipeOutput();
@@ -180,7 +169,7 @@ public class InteractionDecoAddon extends Interaction {
             if(block == Blocks.GLASS_PANE || block == Blocks.STAINED_GLASS_PANE) {
                 output.setCount((output.getCount() * 3) / 4);
             }
-        }
+        }*/
     }
 
     public void addStainingRecipe(ItemStack lighter, ItemStack darker)

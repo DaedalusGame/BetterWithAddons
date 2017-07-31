@@ -7,6 +7,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import javax.annotation.Nonnull;
@@ -15,8 +16,8 @@ public class ArmorDecorateRecipe extends ShapedInfuserRecipe
 {
     ItemStack outputItem;
 
-    public ArmorDecorateRecipe(@Nonnull ItemStack result, int requiredSpirit, Object... recipe) {
-        super(result, requiredSpirit, recipe);
+    public ArmorDecorateRecipe(ResourceLocation group, @Nonnull ItemStack result, int requiredSpirit, Object... recipe) {
+        super(group,result, requiredSpirit, recipe);
         outputItem = result;
     }
 

@@ -1,8 +1,8 @@
 package betterwithaddons.handler;
 
 import betterwithmods.common.BWMBlocks;
-import betterwithmods.common.blocks.BlockAnchor;
-import betterwithmods.common.blocks.tile.TileEntityPulley;
+import betterwithmods.common.blocks.mechanical.tile.TileEntityPulley;
+import betterwithmods.common.registry.PulleyStructureManager;
 import betterwithmods.module.GlobalConfig;
 import betterwithmods.util.DirUtils;
 import net.minecraft.block.Block;
@@ -51,7 +51,7 @@ public class FallingPlatformHandler {
         EnumFacing facing = state.getValue(DirUtils.FACING).getOpposite();
         IBlockState sidingblock = world.getBlockState(pos.offset(facing));
 
-        return topblock == BWMBlocks.ROPE || (sidingblock.isSideSolid(world,pos,facing.getOpposite()) && !TileEntityPulley.isValidPlatform(sidingblock.getBlock()));
+        return topblock == BWMBlocks.ROPE || (sidingblock.isSideSolid(world,pos,facing.getOpposite()) && !PulleyStructureManager.isPulleyBlock(sidingblock));
     }
 
     private boolean findPlatformPart(World world, BlockPos pos, HashSet<BlockPos> set) {
@@ -90,6 +90,6 @@ public class FallingPlatformHandler {
     {
         Block block = state.getBlock();
 
-        return TileEntityPulley.isValidPlatform(block) || (block == BWMBlocks.ANCHOR && !isAnchorSupported(world,pos));
+        return PulleyStructureManager.isPulleyBlock(state) || (block == BWMBlocks.ANCHOR && !isAnchorSupported(world,pos));
     }
 }

@@ -4,14 +4,15 @@ import betterwithaddons.block.ColorHandlers;
 import betterwithaddons.block.IColorable;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.*;
 
 import javax.annotation.Nonnull;
@@ -80,7 +81,7 @@ public class ItemToolShard extends Item implements IColorable {
     }
 
     @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         return;
     }
 
@@ -106,13 +107,13 @@ public class ItemToolShard extends Item implements IColorable {
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         if(stack.hasCapability(DATA_CAP,null))
         {
             ItemStack inner = stack.getCapability(DATA_CAP,null).inner;
-            inner.getItem().addInformation(inner,playerIn,tooltip,advanced);
+            inner.getItem().addInformation(inner,worldIn,tooltip,flagIn);
         }
-        super.addInformation(stack, playerIn, tooltip, advanced);
+        super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
     @Override

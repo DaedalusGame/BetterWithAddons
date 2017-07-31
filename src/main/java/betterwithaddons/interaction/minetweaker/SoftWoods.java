@@ -6,8 +6,8 @@ import com.blamejared.mtlib.helpers.InputHelper;
 import com.blamejared.mtlib.utils.BaseListAddition;
 import com.blamejared.mtlib.utils.BaseListRemoval;
 import com.google.common.collect.Lists;
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.NotNull;
@@ -22,12 +22,12 @@ public class SoftWoods {
     public static void add(@NotNull IItemStack input, float hardness) {
         if(!InputHelper.isABlock(input))
         {
-            MineTweakerAPI.logError("Could not add soft wood "+input.toString()+"; not recognized as a block.");
+            CraftTweakerAPI.logError("Could not add soft wood "+input.toString()+"; not recognized as a block.");
             return;
         }
         ItemStack stack = InputHelper.toStack(input);
         WoodHardness r = new WoodHardness(Block.getBlockFromItem(stack.getItem()),stack.getMetadata(),hardness);
-        MineTweakerAPI.apply(new Add(r));
+        CraftTweakerAPI.apply(new Add(r));
     }
 
     @ZenMethod
@@ -35,11 +35,11 @@ public class SoftWoods {
     {
         if(!InputHelper.isABlock(input))
         {
-            MineTweakerAPI.logError("Could not remove soft wood "+input.toString()+"; not recognized as a block.");
+            CraftTweakerAPI.logError("Could not remove soft wood "+input.toString()+"; not recognized as a block.");
             return;
         }
         ItemStack stack = InputHelper.toStack(input);
-        MineTweakerAPI.apply(new Remove(Block.getBlockFromItem(stack.getItem()),stack.getMetadata()));
+        CraftTweakerAPI.apply(new Remove(Block.getBlockFromItem(stack.getItem()),stack.getMetadata()));
     }
 
     public static class Add extends BaseListAddition<WoodHardness>

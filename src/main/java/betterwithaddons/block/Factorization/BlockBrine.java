@@ -204,8 +204,8 @@ public class BlockBrine extends BlockFluidClassic {
     }
 
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-        //NOOP;
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+        return;
     }
 
     @Override

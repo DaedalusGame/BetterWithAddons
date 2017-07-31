@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -105,12 +106,12 @@ public class BetterWithAddons
 
 	public static void removeCraftingRecipe(ItemStack withoutput)
 	{
-		List<IRecipe> craftingList = CraftingManager.getInstance().getRecipeList();
+		/*List<IRecipe> craftingList = CraftingManager.getInstance().getRecipeList();
 		for(Iterator<IRecipe> craftingIterator = craftingList.iterator(); craftingIterator.hasNext(); ) {
 			IRecipe recipe = craftingIterator.next();
 			if(withoutput.isEmpty() || !ItemStack.areItemStacksEqual(withoutput, recipe.getRecipeOutput())) continue;
 				craftingIterator.remove();
-		}
+		}*/
 	}
 
 	public ASMDataTable getASMData()

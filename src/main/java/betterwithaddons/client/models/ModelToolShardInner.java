@@ -1,8 +1,6 @@
 package betterwithaddons.client.models;
 
 import betterwithaddons.lib.Reference;
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.state.IBlockState;
@@ -17,9 +15,7 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
-import net.minecraftforge.client.model.IRetexturableModel;
-import net.minecraftforge.client.model.ItemTextureQuadConverter;
+import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 import net.minecraftforge.common.model.IModelPart;
 import net.minecraftforge.common.model.IModelState;
@@ -29,12 +25,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector4f;
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
-public class ModelToolShardInner implements IRetexturableModel {
+public class ModelToolShardInner implements IModel {
     private final ImmutableList<ResourceLocation> textures;
 
     private static final float NORTH_Z = 7.496f / 16f;
@@ -87,15 +83,10 @@ public class ModelToolShardInner implements IRetexturableModel {
         return textures;
     }
 
-    public IModelState getDefaultState()
-    {
-        return TRSRTransformation.identity();
-    }
-
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+    public IBakedModel bake(IModelState state, VertexFormat format, java.util.function.Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
-        Optional<TRSRTransformation> transform = state.apply(Optional.<IModelPart>absent());
+        Optional<TRSRTransformation> transform = state.apply(Optional.empty());
         for(int i = 0; i < textures.size(); i++)
         {
             ResourceLocation tex = textures.get(i);
@@ -108,11 +99,16 @@ public class ModelToolShardInner implements IRetexturableModel {
 
             builder.addAll(getQuadsForSprite(i, breakTemplate, sprite, format, transform));
             //builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, breakTemplate, sprite, NORTH_Z + Z_OFFSET * i, EnumFacing.NORTH, 0xffffffff));
-           // builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, breakTemplate, sprite, SOUTH_Z - Z_OFFSET * i, EnumFacing.SOUTH, 0xffffffff));
+            // builder.addAll(ItemTextureQuadConverter.convertTexture(format, transform, breakTemplate, sprite, SOUTH_Z - Z_OFFSET * i, EnumFacing.SOUTH, 0xffffffff));
         }
         TextureAtlasSprite particle = bakedTextureGetter.apply(textures.isEmpty() ? new ResourceLocation("missingno") : textures.get(0));
-        ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> map = IPerspectiveAwareModel.MapWrapper.getTransforms(state);
+        ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> map = PerspectiveMapWrapper.getTransforms(state);
         return new BakedItemModel(builder.build(), particle, map, null);
+    }
+
+    public IModelState getDefaultState()
+    {
+        return TRSRTransformation.identity();
     }
 
     public static ImmutableList<BakedQuad> getQuadsForSprite(int tint, TextureAtlasSprite template, TextureAtlasSprite sprite, VertexFormat format, Optional<TRSRTransformation> transform)
@@ -424,7 +420,7 @@ public class ModelToolShardInner implements IRetexturableModel {
         }
     }
 
-    private static final class BakedItemModel implements IPerspectiveAwareModel {
+    private static final class BakedItemModel implements IBakedModel {
         private final ImmutableList<BakedQuad> quads;
         private final TextureAtlasSprite particle;
         private final ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transforms;
@@ -457,7 +453,7 @@ public class ModelToolShardInner implements IRetexturableModel {
 
         @Override
         public Pair<? extends IBakedModel, Matrix4f> handlePerspective(TransformType type) {
-            Pair<? extends IBakedModel, Matrix4f> pair = IPerspectiveAwareModel.MapWrapper.handlePerspective(this, transforms, type);
+            Pair<? extends IBakedModel, Matrix4f> pair = PerspectiveMapWrapper.handlePerspective(this, transforms, type);
             if(type == TransformType.GUI && !isCulled && pair.getRight() == null)
             {
                 return Pair.of(otherModel, null);

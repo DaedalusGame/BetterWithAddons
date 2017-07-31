@@ -2,9 +2,6 @@ package betterwithaddons.block.EriottoMod;
 
 import betterwithaddons.block.BlockContainerBase;
 import betterwithaddons.tileentity.TileEntityAncestrySand;
-import betterwithmods.api.block.IMechanicalBlock;
-import betterwithmods.util.MechanicalUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -24,28 +21,11 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class BlockAncestrySand extends BlockContainerBase implements IMechanicalBlock {
-    public static final PropertyBool ISACTIVE = PropertyBool.create("ison");
-
+public class BlockAncestrySand extends BlockContainerBase {
     public BlockAncestrySand() {
         super("ancestry_sand", Material.SAND);
         this.setSoundType(SoundType.SAND);
         this.setHardness(0.5F);
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, ISACTIVE);
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(ISACTIVE,(meta & 1) == 1);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(ISACTIVE) ? 1 : 0;
     }
 
     @Override
@@ -68,7 +48,7 @@ public class BlockAncestrySand extends BlockContainerBase implements IMechanical
     }
 
     @Override
-    public MapColor getMapColor(IBlockState state) {
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         return MapColor.NETHERRACK;
     }
 
@@ -77,76 +57,7 @@ public class BlockAncestrySand extends BlockContainerBase implements IMechanical
         return new TileEntityAncestrySand();
     }
 
-    @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        boolean gettingPower = this.isInputtingMechPower(world, pos);
-        boolean isOn = isMechanicalOn(world, pos);
-
-        if (isOn != gettingPower)
-            setMechanicalOn(world, pos, gettingPower);
-    }
-
-    @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos other) {
-        if (!isCurrentStateValid(world, pos)) {
-            world.scheduleBlockUpdate(pos, this, tickRate(world), 5);
-        }
-    }
-
     public int tickRate(World world) {
         return 10;
-    }
-
-    public boolean isCurrentStateValid(World world, BlockPos pos) {
-        boolean gettingPower = isInputtingMechPower(world, pos);
-        boolean isOn = isMechanicalOn(world, pos);
-        return isOn == gettingPower;
-    }
-
-    @Override
-    public boolean canOutputMechanicalPower() {
-        return false;
-    }
-
-    @Override
-    public boolean canInputMechanicalPower() {
-        return true;
-    }
-
-    @Override
-    public boolean isInputtingMechPower(World world, BlockPos blockPos) {
-        return MechanicalUtil.isBlockPoweredByAxle(world, blockPos, this);
-    }
-
-    @Override
-    public boolean isOutputtingMechPower(World world, BlockPos blockPos) {
-        return false;
-    }
-
-    @Override
-    public boolean canInputPowerToSide(IBlockAccess iBlockAccess, BlockPos blockPos, EnumFacing enumFacing) {
-        return true;
-    }
-
-    @Override
-    public void overpower(World world, BlockPos blockPos) {
-        world.destroyBlock(blockPos,false);
-    }
-
-    @Override
-    public boolean isMechanicalOn(IBlockAccess world, BlockPos pos) {
-        return isMechanicalOnFromState(world.getBlockState(pos));
-    }
-
-    @Override
-    public void setMechanicalOn(World world, BlockPos pos, boolean isOn) {
-        if (isOn != world.getBlockState(pos).getValue(ISACTIVE)) {
-            world.setBlockState(pos, world.getBlockState(pos).withProperty(ISACTIVE, isOn));
-        }
-    }
-
-    @Override
-    public boolean isMechanicalOnFromState(IBlockState state) {
-        return state.getValue(ISACTIVE);
     }
 }

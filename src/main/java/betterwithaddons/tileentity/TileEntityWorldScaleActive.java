@@ -52,7 +52,7 @@ public class TileEntityWorldScaleActive extends TileEntityBase implements ITicka
                     if(!world.isBlockLoaded(newpos))
                         continue;
                     IBlockState blockstate = world.getBlockState(newpos);
-                    ChunkPos newchunk = new ChunkPos(chunkpos.chunkXPos+x,chunkpos.chunkZPos+z);
+                    ChunkPos newchunk = new ChunkPos(chunkpos.x+x,chunkpos.z+z);
                     Block block = blockstate.getBlock();
                     if(block instanceof BlockWorldScale)
                     {
@@ -123,8 +123,8 @@ public class TileEntityWorldScaleActive extends TileEntityBase implements ITicka
 
         for(ChunkPos chunkpos : claimedChunks) {
             NBTTagCompound shardcompound = new NBTTagCompound();
-            shardcompound.setInteger("chunkX",chunkpos.chunkXPos);
-            shardcompound.setInteger("chunkZ",chunkpos.chunkZPos);
+            shardcompound.setInteger("chunkX",chunkpos.x);
+            shardcompound.setInteger("chunkZ",chunkpos.z);
             shardlist.appendTag(shardcompound);
         }
 

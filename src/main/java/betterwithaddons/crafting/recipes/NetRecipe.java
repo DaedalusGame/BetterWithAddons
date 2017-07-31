@@ -93,7 +93,7 @@ public class NetRecipe
     }
     public boolean matchesInput(EntityItem ent)
     {
-        return matchesInput(ent.getEntityItem());
+        return matchesInput(ent.getItem());
     }
 
     public boolean matchesInput(ItemStack item)

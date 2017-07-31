@@ -7,9 +7,9 @@ import com.blamejared.mtlib.helpers.InputHelper;
 import com.blamejared.mtlib.utils.BaseListAddition;
 import com.blamejared.mtlib.utils.BaseListRemoval;
 import com.google.common.collect.Lists;
-import minetweaker.MineTweakerAPI;
-import minetweaker.api.item.IIngredient;
-import minetweaker.api.item.IItemStack;
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.NotNull;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -22,13 +22,13 @@ public class Spindle {
     @ZenMethod
     public static void add(IItemStack[] outputs, @NotNull IIngredient input, boolean consumesSpindle) {
         SpindleRecipe r = new SpindleRecipe(consumesSpindle, InputHelper.toObject(input), InputHelper.toStacks(outputs));
-        MineTweakerAPI.apply(new Add(r));
+        CraftTweakerAPI.apply(new Add(r));
     }
 
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        MineTweakerAPI.apply(new Remove(InputHelper.toStack(input)));
+        CraftTweakerAPI.apply(new Remove(InputHelper.toStack(input)));
     }
 
     public static class Add extends BaseListAddition<SpindleRecipe>
@@ -41,11 +41,6 @@ public class Spindle {
         protected String getRecipeInfo(SpindleRecipe recipe) {
             return recipe.getInput().toString();
         }
-
-        @Override
-        public String getJEICategory(SpindleRecipe recipe) {
-            return SpindleRecipeCategory.UID;
-        }
     }
 
     public static class Remove extends BaseListRemoval<SpindleRecipe>
@@ -57,11 +52,6 @@ public class Spindle {
         @Override
         protected String getRecipeInfo(SpindleRecipe recipe) {
             return recipe.getInput().toString();
-        }
-
-        @Override
-        public String getJEICategory(SpindleRecipe recipe) {
-            return SpindleRecipeCategory.UID;
         }
     }
 }

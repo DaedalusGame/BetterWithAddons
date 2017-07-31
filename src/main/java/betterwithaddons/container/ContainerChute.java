@@ -81,7 +81,7 @@ public class ContainerChute extends Container {
     @Override
     public void addListener(IContainerListener listener) {
         super.addListener(listener);
-        listener.sendProgressBarUpdate(this, 0, this.tileChute.power);
+        listener.sendWindowProperty(this, 0, this.tileChute.power);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class ContainerChute extends Container {
 
         for (IContainerListener craft : this.listeners) {
             if (this.lastMechPower != this.tileChute.power)
-                craft.sendProgressBarUpdate(this, 0, this.tileChute.power);
+                craft.sendWindowProperty(this, 0, this.tileChute.power);
         }
         this.lastMechPower = this.tileChute.power;
     }

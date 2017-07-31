@@ -59,19 +59,19 @@ public class ContainerTatara extends Container {
         {
             IContainerListener craft = it.next();
             if (this.furnaceBurnTime != tileTatara.furnaceBurnTime) {
-                craft.sendProgressBarUpdate(this, 0, tileTatara.furnaceBurnTime);
+                craft.sendWindowProperty(this, 0, tileTatara.furnaceBurnTime);
             }
 
             if (this.currentItemBurnTime != tileTatara.currentItemBurnTime) {
-                craft.sendProgressBarUpdate(this, 1, tileTatara.currentItemBurnTime);
+                craft.sendWindowProperty(this, 1, tileTatara.currentItemBurnTime);
             }
 
             if (this.cookTime != tileTatara.cookTime) {
-                craft.sendProgressBarUpdate(this, 2, tileTatara.cookTime);
+                craft.sendWindowProperty(this, 2, tileTatara.cookTime);
             }
 
             if (this.totalCookTime != tileTatara.totalCookTime) {
-                craft.sendProgressBarUpdate(this, 3, tileTatara.totalCookTime);
+                craft.sendWindowProperty(this, 3, tileTatara.totalCookTime);
             }
         }
         this.furnaceBurnTime = tileTatara.furnaceBurnTime;
@@ -101,7 +101,7 @@ public class ContainerTatara extends Container {
     public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack stack = ItemStack.EMPTY;
-        Slot slot = (Slot)this.inventorySlots.get(index);
+        Slot slot = this.inventorySlots.get(index);
 
         if(slot != null && slot.getHasStack())
         {

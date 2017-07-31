@@ -152,9 +152,9 @@ public class InteractionBWM extends Interaction {
 
     public static void convertShearedWoolEntities(List<EntityItem> sheared) {
         for (EntityItem item : sheared) {
-            ItemStack stack = item.getEntityItem();
+            ItemStack stack = item.getItem();
             if(stack.getItem() == Item.getItemFromBlock(Blocks.WOOL))
-                item.setEntityItemStack(new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,stack.getMetadata()));
+                item.setItem(new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,stack.getMetadata()));
         }
     }
 
@@ -177,7 +177,7 @@ public class InteractionBWM extends Interaction {
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.WOOL));
             for (EnumDyeColor color : EnumDyeColor.values()) {
                 ItemStack wool = ModItems.wool.getByColor(color);
-                GameRegistry.addShapedRecipe(new ItemStack(Blocks.WOOL,1,color.getMetadata())," o ","oxo"," o ",'o',wool,'x',new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()));
+                //GameRegistry.addShapedRecipe(new ItemStack(Blocks.WOOL,1,color.getMetadata())," o ","oxo"," o ",'o',wool,'x',new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()));
             }
         }
         if(DYE_IN_CAULDRON) {
@@ -195,8 +195,8 @@ public class InteractionBWM extends Interaction {
 
         //Temporary until we PR soulsand piles
         HCPiles.registerPile(Blocks.SOUL_SAND,new ItemStack(ModItems.soulSandPile,3));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.soulSandPile,4),new ItemStack(Blocks.SOUL_SAND));
-        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.SOUL_SAND),new ItemStack(ModItems.soulSandPile),new ItemStack(ModItems.soulSandPile),new ItemStack(ModItems.soulSandPile),new ItemStack(ModItems.soulSandPile));
+        //GameRegistry.addShapelessRecipe(new ItemStack(ModItems.soulSandPile,4),new ItemStack(Blocks.SOUL_SAND));
+        //GameRegistry.addShapelessRecipe(new ItemStack(Blocks.SOUL_SAND),new ItemStack(ModItems.soulSandPile),new ItemStack(ModItems.soulSandPile),new ItemStack(ModItems.soulSandPile),new ItemStack(ModItems.soulSandPile));
 
         OreDictionary.registerOre("listAllExplosives", new ItemStack(Blocks.TNT));
         OreDictionary.registerOre("listAllExplosives", new ItemStack(Items.GUNPOWDER));
@@ -218,9 +218,9 @@ public class InteractionBWM extends Interaction {
         ItemStack string = new ItemStack(BWMBlocks.ROPE);
         ItemStack feather = new ItemStack(Items.FEATHER);
         String oreIronIngot = "ingotIron";
-        GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.material.getMaterial("arrowhead"), " o ", "ooo", "o o", 'o', "nuggetSoulforgedSteel"));
-        GameRegistry.addShapedRecipe(new ItemStack(ModItems.greatarrow, 1), "a", "b", "c", 'a', arrowhead, 'b', haft, 'c', feather);
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.greatbow, 1), " bc", "b c", " bc", 'b', haft, 'c', string));
+        //GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.material.getMaterial("arrowhead"), " o ", "ooo", "o o", 'o', "nuggetSoulforgedSteel"));
+        //GameRegistry.addShapedRecipe(new ItemStack(ModItems.greatarrow, 1), "a", "b", "c", 'a', arrowhead, 'b', haft, 'c', feather);
+        //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.greatbow, 1), " bc", "b c", " bc", 'b', haft, 'c', string));
         StokedCauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.pcbblock), ItemStack.EMPTY, new Object[]{new ItemStack(Items.FERMENTED_SPIDER_EYE), new ItemStack(Blocks.STONEBRICK), "dustPotash"});
         CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.cookedBeetroot), ItemStack.EMPTY, new Object[]{new ItemStack(Items.BEETROOT)});
         CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.cookedCarrot), ItemStack.EMPTY, new Object[]{new ItemStack(Items.CARROT)});
@@ -247,7 +247,7 @@ public class InteractionBWM extends Interaction {
         //Thorn Vines
         ItemStack rosebush = new ItemStack(Blocks.DOUBLE_PLANT, 4, BlockDoublePlant.EnumPlantType.ROSE.getMeta());
         ItemStack thornrose = ModItems.material.getMaterial("thornrose", 2);
-        ItemStack soulUrn = new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta());
+        ItemStack soulUrn = new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumType.FULL.getMeta());
         ItemStack cactus = new ItemStack(Blocks.CACTUS, 1);
         ItemStack dung = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG, 1);
         ItemStack midori = ModItems.material.getMaterial("midori",8);
@@ -262,9 +262,9 @@ public class InteractionBWM extends Interaction {
         ItemStack tree = new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata());
         CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.luretreeSapling), ItemStack.EMPTY, new Object[]{tree, wheat, red, flesh});
 
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chute, 1), "s s", " p ", "mgm", 's', new ItemStack(BWMBlocks.WOOD_SIDING), 'm', new ItemStack(BWMBlocks.WOOD_MOULDING), 'g', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), 'p', new ItemStack(Blocks.WOODEN_PRESSURE_PLATE));
+        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chute, 1), "s s", " p ", "mgm", 's', new ItemStack(BWMBlocks.WOOD_SIDING), 'm', new ItemStack(BWMBlocks.WOOD_MOULDING), 'g', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), 'p', new ItemStack(Blocks.WOODEN_PRESSURE_PLATE));
 
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 0), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), soulUrn);
+        /*GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 0), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 1), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 2), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.SPRUCE.getMetadata()), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 3), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.JUNGLE.getMetadata()), soulUrn);
@@ -272,7 +272,7 @@ public class InteractionBWM extends Interaction {
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 5), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.DARK_OAK.getMetadata()), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 6), new ItemStack(ModBlocks.sakuraSapling), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 7), new ItemStack(ModBlocks.mulberrySapling), soulUrn);
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 8), new ItemStack(ModBlocks.luretreeSapling), soulUrn);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 8), new ItemStack(ModBlocks.luretreeSapling), soulUrn);*/
 
 
         if (MILL_CLAY) {
@@ -285,7 +285,7 @@ public class InteractionBWM extends Interaction {
                 EnumDyeColor dye = dyes[i];
                 ItemStack brick = new ItemStack(ModItems.stainedBrick, 1, dye.getMetadata());
                 MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.stainedBrick, 4, dye.getMetadata()), ItemStack.EMPTY, new Object[]{new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata())});
-                GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.coloredBrick, 1, dye.getMetadata()), "bb", "bb", 'b', brick);
+                //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.coloredBrick, 1, dye.getMetadata()), "bb", "bb", 'b', brick);
             }
         }
 
@@ -328,11 +328,11 @@ public class InteractionBWM extends Interaction {
 
     private static void registerCompressRecipe(ItemStack small, ItemStack big, String oreSmall, String oreBig) {
         // ingot -> block
-        GameRegistry.addRecipe(new ShapedOreRecipe(big, "###", "###", "###", '#', oreSmall));
+        //GameRegistry.addRecipe(new ShapedOreRecipe(big, "###", "###", "###", '#', oreSmall));
         // block -> 9 ingot
         small = small.copy();
         small.setCount(9);
-        GameRegistry.addRecipe(new ShapelessOreRecipe(small, oreBig));
+        //GameRegistry.addRecipe(new ShapelessOreRecipe(small, oreBig));
     }
 
     private static void removeCauldronRecipe(ItemStack output) {

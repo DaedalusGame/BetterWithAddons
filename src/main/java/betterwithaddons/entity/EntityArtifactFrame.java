@@ -50,7 +50,7 @@ public class EntityArtifactFrame extends EntityItemFrame implements IEntityAddit
             {
                 this.setDead();
                 this.setBeenAttacked();
-                this.onBroken(source.getEntity());
+                this.onBroken(source.getImmediateSource());
             }
 
             return true;

@@ -67,7 +67,7 @@ public class RenewablesHandler {
         BlockPos pos = event.getPos();
         Random random = event.getRandom();
 
-        if (world.isRemote || !InteractionBWR.DUNG_TO_DIRT || state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.blockType) != BlockAesthetic.EnumType.DUNG)
+        if (world.isRemote || !InteractionBWR.DUNG_TO_DIRT || state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.TYPE) != BlockAesthetic.EnumType.DUNG)
             return;
 
         IBlockState water = world.getBlockState(pos.up());
@@ -127,7 +127,7 @@ public class RenewablesHandler {
         BlockPos pos = event.getPos();
         Random rand = event.getRandom();
 
-        if(world.isRemote || !InteractionBWR.MELT_HELLFIRE || state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.blockType) != BlockAesthetic.EnumType.HELLFIRE)
+        if(world.isRemote || !InteractionBWR.MELT_HELLFIRE || state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.TYPE) != BlockAesthetic.EnumType.HELLFIRE)
             return;
 
         int sources = 0;
@@ -244,7 +244,7 @@ public class RenewablesHandler {
 
         for(EntityItem item : items)
         {
-            ItemStack stack = item.getEntityItem();
+            ItemStack stack = item.getItem();
             if(isBlazeFood(stack) && !item.isDead && !item.cannotPickup())
             {
                 stack.shrink(1);

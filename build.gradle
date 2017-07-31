@@ -9,7 +9,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -23,20 +23,22 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 minecraft {
-    version = "1.11.2-13.20.0.2296"
+    version = "1.12-14.21.1.2426"
     runDir = "run"
-    mappings = "snapshot_20161220"
+    mappings = "snapshot_20170627"
     useDepAts = true
 }
 
 repositories {
     maven { url 'http://dvs1.progwml6.com/files/maven' }
     maven { url "http://blamejared.com/maven" }
+	maven { url "http://www.ryanliptak.com/maven/" }
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_1.11.2:+"
-    deobfCompile "com.blamejared:MTLib:2.+"
+	deobfCompile "betterwithmods:BetterWithMods:1.12-2.0.0-41"
+	deobfCompile "mezz.jei:jei_1.12:4.7.2.77"
+    deobfCompile "com.blamejared:MTLib:3.+"
 	compile files('libs/')
 }
 

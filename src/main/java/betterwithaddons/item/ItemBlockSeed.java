@@ -8,7 +8,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 
-public class ItemBlockSeed extends ItemBlock implements IPlantable {
+public class ItemBlockSeed extends ItemBlockMeta implements IPlantable {
     EnumPlantType type = EnumPlantType.Crop;
 
     public ItemBlockSeed(Block block) {

@@ -79,7 +79,7 @@ public class RedstoneBoilHandler {
     public boolean willRedstoneBoil(World world,BlockPos pos)
     {
         IBlockState lens = world.getBlockState(pos.up());
-        return !world.provider.hasNoSky() && lens.getBlock() == BWMBlocks.LENS && lens.getValue(DirUtils.FACING) == EnumFacing.DOWN && world.isDaytime() && !world.isRaining() && world.canSeeSky(pos.up(2));
+        return world.provider.hasSkyLight() && lens.getBlock() == BWMBlocks.LENS && lens.getValue(DirUtils.FACING) == EnumFacing.DOWN && world.isDaytime() && !world.isRaining() && world.canSeeSky(pos.up(2));
     }
 
     private void boilRedstone(World world, BlockPos pos) {

@@ -48,7 +48,7 @@ public class InteractionQuark extends Interaction {
 
         if(MIDORI_BLOCKS_NEED_CHUNKS) {
             BetterWithAddons.removeCraftingRecipe(midori);
-            GameRegistry.addShapedRecipe(midori, "mm", "mm", 'm', ModItems.material.getMaterial("midori_popped"));
+            //GameRegistry.addShapedRecipe(midori, "mm", "mm", 'm', ModItems.material.getMaterial("midori_popped"));
         }
     }
 

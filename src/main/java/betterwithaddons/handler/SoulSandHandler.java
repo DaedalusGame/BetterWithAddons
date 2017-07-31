@@ -70,7 +70,7 @@ public class SoulSandHandler {
             {
                 IBlockState state = world.getBlockState(pos);
 
-                if(state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.blockType) != BlockAesthetic.EnumType.DUNG)
+                if(state.getBlock() != BWMBlocks.AESTHETIC || state.getValue(BlockAesthetic.TYPE) != BlockAesthetic.EnumType.DUNG)
                     return;
 
                 if(!isValidInfusionWall(world,pos.up(), EnumFacing.DOWN) ||

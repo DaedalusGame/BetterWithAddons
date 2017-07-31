@@ -41,13 +41,13 @@ public class GuiInfuser extends GuiContainer {
         String costString = I18n.format("inv.infuser.cost.name",container.requiredSpirit);
 
         if(container.requiredSpirit > 0) {
-            int drawoffsetX = 102 - this.fontRendererObj.getStringWidth(costString) / 2;
+            int drawoffsetX = 102 - this.fontRenderer.getStringWidth(costString) / 2;
             int drawoffsetY = 38;
 
-            fontRendererObj.drawString(costString, drawoffsetX, drawoffsetY+1, backgroundcolor);
-            fontRendererObj.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
-            fontRendererObj.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
-            fontRendererObj.drawString(costString, drawoffsetX, drawoffsetY, foregroundcolor);
+            fontRenderer.drawString(costString, drawoffsetX, drawoffsetY+1, backgroundcolor);
+            fontRenderer.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
+            fontRenderer.drawString(costString, drawoffsetX+1, drawoffsetY+1, backgroundcolor);
+            fontRenderer.drawString(costString, drawoffsetX, drawoffsetY, foregroundcolor);
         }
     }
 

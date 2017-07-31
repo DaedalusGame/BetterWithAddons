@@ -4,10 +4,12 @@ import betterwithaddons.block.EriottoMod.BlockAncestrySand;
 import betterwithaddons.entity.EntitySpirit;
 import betterwithaddons.interaction.InteractionEriottoMod;
 import betterwithaddons.item.ModItems;
+import betterwithmods.api.tile.IMechanicalPower;
 import betterwithmods.common.BWMBlocks;
-import betterwithmods.common.blocks.BlockMechMachines;
-import betterwithmods.common.blocks.tile.TileEntityFilteredHopper;
+import betterwithmods.common.blocks.mechanical.BlockMechMachines;
+import betterwithmods.common.blocks.mechanical.tile.TileEntityFilteredHopper;
 import betterwithmods.util.InvUtils;
+import betterwithmods.util.MechanicalUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -27,7 +29,7 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityAncestrySand extends TileEntityBase implements ITickable {
+public class TileEntityAncestrySand extends TileEntityBase implements ITickable, IMechanicalPower {
     private int spirits = 0;
     private int nextCheck = 0;
     private List<EntitySpirit> attractedSpirits = new ArrayList<>();
@@ -75,14 +77,12 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable 
         if(spirits <= InteractionEriottoMod.SPIRIT_PER_BOTTLE)
             return;
 
-        if(hopper.getBlock() != BWMBlocks.SINGLE_MACHINES || hopper.getValue(BlockMechMachines.MACHINETYPE) != BlockMechMachines.EnumType.HOPPER)
+        if(hopper.getBlock() != BWMBlocks.SINGLE_MACHINES || hopper.getValue(BlockMechMachines.TYPE) != BlockMechMachines.EnumType.HOPPER)
             return;
 
         boolean isOn = false;
         IBlockState state = world.getBlockState(pos);
-        if (state.getBlock() instanceof BlockAncestrySand) {
-            isOn = ((BlockAncestrySand) state.getBlock()).isMechanicalOn(world, pos);
-        }
+        isOn = calculateInput() > 0;
 
         if(isOn) {
             TileEntity te = world.getTileEntity(pos.down());
@@ -111,7 +111,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable 
 
         if(nextCheck-- < 0)
         {
-            attractedSpirits = world.getEntitiesWithinAABB(EntitySpirit.class,aabb.expandXyz(maxdist - 0.5));
+            attractedSpirits = world.getEntitiesWithinAABB(EntitySpirit.class,aabb.grow(maxdist - 0.5));
             nextCheck = 50;
         }
 
@@ -121,7 +121,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable 
         if(spirits < InteractionEriottoMod.MAX_SPIRITS)
         for(EntitySpirit spirit : attractedSpirits)
         {
-            double spiritdist = spirit.getDistanceSq(middleOfBlock.xCoord,middleOfBlock.yCoord,middleOfBlock.zCoord);
+            double spiritdist = spirit.getDistanceSq(middleOfBlock.x,middleOfBlock.y,middleOfBlock.z);
 
             if(spiritdist < 1.2f)
             {
@@ -138,9 +138,9 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable 
             if(spiritdist > maxdist * maxdist)
                 continue;
 
-            double dx = (middleOfBlock.xCoord - spirit.posX) / 8.0D;
-            double dy = (middleOfBlock.yCoord - spirit.posY) / 8.0D;
-            double dz = (middleOfBlock.zCoord - spirit.posZ) / 8.0D;
+            double dx = (middleOfBlock.x - spirit.posX) / 8.0D;
+            double dy = (middleOfBlock.y - spirit.posY) / 8.0D;
+            double dz = (middleOfBlock.z - spirit.posZ) / 8.0D;
             double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
             double d5 = 1.0D - dist;
 
@@ -160,5 +160,25 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable 
             syncTE();
             shouldSync = false;
         }
+    }
+
+    @Override
+    public int getMechanicalOutput(EnumFacing facing) {
+        return -1;
+    }
+
+    @Override
+    public int getMechanicalInput(EnumFacing facing) {
+        return MechanicalUtil.getPowerOutput(world, pos.offset(facing), facing.getOpposite());
+    }
+
+    @Override
+    public int getMaximumInput(EnumFacing facing) {
+        return 1;
+    }
+
+    @Override
+    public int getMinimumInput(EnumFacing facing) {
+        return 0;
     }
 }

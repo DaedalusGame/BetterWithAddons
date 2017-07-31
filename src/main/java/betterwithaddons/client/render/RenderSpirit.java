@@ -1,14 +1,10 @@
 package betterwithaddons.client.render;
 
 import betterwithaddons.entity.EntitySpirit;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -45,7 +41,7 @@ public class RenderSpirit extends Render<EntitySpirit>
             float f4 = 1.0F;
             float f5 = 0.5F;
             float f6 = 0.25F;
-            int j = entity.getBrightnessForRender(partialTicks);
+            int j = entity.getBrightnessForRender();
             int k = j % 65536;
             int l = j / 65536;
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)k, (float)l);
@@ -61,7 +57,7 @@ public class RenderSpirit extends Render<EntitySpirit>
             float f7 = 0.3F;
             GlStateManager.scale(0.3F, 0.3F, 0.3F);
             Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer vertexbuffer = tessellator.getBuffer();
+            BufferBuilder vertexbuffer = tessellator.getBuffer();
             vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
             vertexbuffer.pos(-0.5D, -0.25D, 0.0D).tex((double)f, (double)f3).color(l, 0, 0, 128).normal(0.0F, 1.0F, 0.0F).endVertex();
             vertexbuffer.pos(0.5D, -0.25D, 0.0D).tex((double)f1, (double)f3).color(l, 0, 0, 128).normal(0.0F, 1.0F, 0.0F).endVertex();

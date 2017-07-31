@@ -113,11 +113,6 @@ public class BlockModPane extends BlockBase {
         return !(block instanceof BlockPane) && block == this || state.isOpaqueCube() || block.isSideSolid(state, world, pos, facing.getOpposite()) || compatiblePanes.contains(block);
     }
 
-    @Override
-    public boolean isBlockSolid(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-        return false;
-    }
-
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {

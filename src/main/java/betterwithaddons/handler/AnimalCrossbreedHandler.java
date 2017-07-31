@@ -1,11 +1,9 @@
 package betterwithaddons.handler;
 
-import minetweaker.api.block.IBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntitySilverfish;
@@ -35,13 +33,13 @@ public class AnimalCrossbreedHandler {
 
     public static void spawnEntityAt(World world, Vec3d pos, Entity entity)
     {
-        entity.setPosition(pos.xCoord,pos.yCoord,pos.zCoord);
+        entity.setPosition(pos.x,pos.y,pos.z);
         world.spawnEntity(entity);
     }
 
     public static void spawnBabyAt(World world, Vec3d pos, EntityAgeable entity)
     {
-        entity.setPosition(pos.xCoord,pos.yCoord,pos.zCoord);
+        entity.setPosition(pos.x,pos.y,pos.z);
         entity.setGrowingAge(-24000);
         world.spawnEntity(entity);
     }

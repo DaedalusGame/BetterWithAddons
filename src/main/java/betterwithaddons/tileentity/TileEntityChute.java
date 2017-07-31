@@ -2,6 +2,9 @@ package betterwithaddons.tileentity;
 
 import betterwithaddons.block.BlockChute;
 import betterwithaddons.util.InventoryUtil;
+import betterwithmods.api.tile.IMechanicalPower;
+import betterwithmods.common.blocks.mechanical.IBlockActive;
+import betterwithmods.util.MechanicalUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class TileEntityChute extends TileEntityBase implements ITickable {
+public class TileEntityChute extends TileEntityBase implements ITickable, IMechanicalPower {
     public SimpleItemStackHandler inventory = createItemStackHandler();
 
 
@@ -78,10 +81,10 @@ public class TileEntityChute extends TileEntityBase implements ITickable {
         if (entityItem == null) {
             return false;
         } else {
-            ItemStack itemstack = entityItem.getEntityItem().copy();
+            ItemStack itemstack = entityItem.getItem().copy();
             ItemStack leftovers = attemptToInsert(inv, itemstack);
             if (!leftovers.isEmpty() && leftovers.getCount() != 0) {
-                entityItem.setEntityItemStack(leftovers);
+                entityItem.setItem(leftovers);
             } else {
                 putAll = true;
                 entityItem.setDead();
@@ -116,10 +119,7 @@ public class TileEntityChute extends TileEntityBase implements ITickable {
             return;
 
         entityCollision();
-        boolean isOn = false;
-        if (state.getBlock() instanceof BlockChute) {
-            isOn = ((BlockChute) state.getBlock()).isMechanicalOn(world, pos);
-        }
+        boolean isOn = calculateInput() > 0;
         power = (byte) (isOn ? 1 : 0);
 
         if (!areAllOutputsBlocked()) {
@@ -229,7 +229,7 @@ public class TileEntityChute extends TileEntityBase implements ITickable {
                 else {
                     Block block = this.getWorld().getBlockState(ejectpos).getBlock();
 
-                    if (block == null || (!block.isBlockSolid(this.getWorld(), ejectpos, ejectDir.getOpposite()) && (this.getWorld().getTileEntity(ejectpos) == null || !(this.getWorld().getTileEntity(ejectpos).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, ejectDir.getOpposite())))))
+                    if (block == null || (!world.isSideSolid(ejectpos,ejectDir.getOpposite())) && (this.getWorld().getTileEntity(ejectpos) == null || !(this.getWorld().getTileEntity(ejectpos).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, ejectDir.getOpposite()))))
                         ejectIntoWorld = true;
                     else if (powered) {
                         TileEntity tile = this.getWorld().getTileEntity(ejectpos);
@@ -300,5 +300,27 @@ public class TileEntityChute extends TileEntityBase implements ITickable {
         }
 
         return true;
+    }
+
+    @Override
+    public int getMechanicalOutput(EnumFacing facing) {
+        return -1;
+    }
+
+    @Override
+    public int getMechanicalInput(EnumFacing facing) {
+        if(facing == EnumFacing.DOWN)
+            return MechanicalUtil.getPowerOutput(world, pos.offset(facing), facing.getOpposite());
+        return 0;
+    }
+
+    @Override
+    public int getMaximumInput(EnumFacing facing) {
+        return 1;
+    }
+
+    @Override
+    public int getMinimumInput(EnumFacing facing) {
+        return 0;
     }
 }

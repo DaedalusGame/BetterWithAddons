@@ -2,7 +2,6 @@ package betterwithaddons.block;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
-import betterwithaddons.util.IDisableable;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -35,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVariants, IDisableable {
+public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVariants {
     private boolean disabled;
 
     @Override
@@ -46,11 +45,6 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
     @Override
     public IItemColor getItemColor() {
         return ColorHandlers.BLOCK_ITEM_COLORING;
-    }
-
-    @Override
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
     }
 
     // add properties (note we also inherit the SNOWY property from BlockGrass)
@@ -105,13 +99,11 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
     }
 
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tabs, NonNullList<ItemStack> stacks) {
-        if(!disabled) {
-            stacks.add(new ItemStack(item, 1, 0));
-            stacks.add(new ItemStack(item, 1, 1));
-            stacks.add(new ItemStack(item, 1, 2));
-            stacks.add(new ItemStack(item, 1, 3));
-        }
+    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+        items.add(new ItemStack(this, 1, 0));
+        items.add(new ItemStack(this, 1, 1));
+        items.add(new ItemStack(this, 1, 2));
+        items.add(new ItemStack(this, 1, 3));
     }
 
     @Override

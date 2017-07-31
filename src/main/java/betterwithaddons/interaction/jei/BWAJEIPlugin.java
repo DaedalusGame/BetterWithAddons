@@ -16,17 +16,8 @@ import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
-import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import mezz.jei.plugins.vanilla.crafting.ShapedOreRecipeWrapper;
-import mezz.jei.plugins.vanilla.crafting.ShapedRecipesWrapper;
-import mezz.jei.plugins.vanilla.crafting.ShapelessOreRecipeWrapper;
-import mezz.jei.plugins.vanilla.crafting.ShapelessRecipesWrapper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import javax.annotation.Nonnull;
 
@@ -59,7 +50,7 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.handleRecipes(TransmutationRecipe.class, TransmutationRecipeWrapper::new, TransmutationRecipeCategory.UID);
 
         reg.handleRecipes(ShapedInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapedOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
-        reg.handleRecipes(ShapelessInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapelessOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
+        //reg.handleRecipes(ShapelessInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapelessOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
 
         reg.addRecipes(CraftingManagerSandNet.getInstance().getRecipes(),SandNetRecipeCategory.UID);
         reg.addRecipes(CraftingManagerWaterNet.getInstance().getRecipes(),WaterNetRecipeCategory.UID);

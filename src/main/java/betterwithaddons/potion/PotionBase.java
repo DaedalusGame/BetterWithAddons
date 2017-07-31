@@ -4,7 +4,6 @@ import betterwithaddons.lib.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,7 +16,6 @@ public class PotionBase extends Potion
 		super(isBadEffectIn, liquidColorIn);
 
 		this.setRegistryName(new ResourceLocation(Reference.MOD_ID,name));
-		GameData.getPotionRegistry().register(this);
 	}
 
 	@Override

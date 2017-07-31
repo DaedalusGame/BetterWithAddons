@@ -57,7 +57,7 @@ public class ColorHandlers {
 
     public static final IItemColor ECKSIE_COLORING = (stack, tintIndex) -> {
         BlockEcksieSapling block = (BlockEcksieSapling) ((ItemBlock)stack.getItem()).getBlock();
-        IBlockState state = block.treeLeaves[stack.getMetadata()];
+        IBlockState state = block.getLeafBlock(stack.getMetadata());
         return Minecraft.getMinecraft().getBlockColors().colorMultiplier(state,null,null,tintIndex);
     };
 

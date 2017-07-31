@@ -210,7 +210,7 @@ public class InteractionBWR extends Interaction {
 
         if(NETHERRACK_SYNTHESIS)
         {
-            ItemStack soulUrn = new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumUrnType.FULL.getMeta());
+            ItemStack soulUrn = new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumType.FULL.getMeta());
             CauldronManager.getInstance().addRecipe(new ItemStack(Blocks.NETHERRACK,8),new Object[]{new ItemStack(Blocks.COBBLESTONE,8),new ItemStack(Items.NETHER_WART,8),soulUrn});
             CauldronManager.getInstance().addRecipe(
                     new ItemStack(Blocks.NETHERRACK),

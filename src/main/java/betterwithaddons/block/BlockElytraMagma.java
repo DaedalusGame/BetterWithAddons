@@ -25,7 +25,7 @@ public class BlockElytraMagma extends BlockBase {
     }
 
     @Override
-    public MapColor getMapColor(IBlockState iBlockState) {
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         return MapColor.PURPLE;
     }
 

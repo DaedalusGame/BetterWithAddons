@@ -1,7 +1,5 @@
 package betterwithaddons.block;
 
-import betterwithmods.api.block.IMechanicalBlock;
-import betterwithmods.util.MechanicalUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -22,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BlockLoom extends BlockBase implements IMechanicalBlock {
+public class BlockLoom extends BlockBase {
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
     public static final  PropertyBool ISACTIVE = PropertyBool.create("ison");
 
@@ -103,69 +101,11 @@ public class BlockLoom extends BlockBase implements IMechanicalBlock {
     }
 
     @Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-        boolean powered = isInputtingMechPower(world, pos);
-        boolean isOn = isBlockOn(world, pos);
-
-        if (isOn != powered) {
-            setMechanicalOn(world, pos, powered);
-        } else if (powered) {
-            world.scheduleBlockUpdate(pos, this, tickRate(world), 5);
-        }
-    }
-
-    @Override
     public int tickRate(World world) {
         return 5;
     }
 
     public boolean isBlockOn(IBlockAccess world, BlockPos pos) {
         return world.getBlockState(pos).getValue(ISACTIVE);
-    }
-
-    @Override
-    public boolean canOutputMechanicalPower() {
-        return false;
-    }
-
-    @Override
-    public boolean canInputMechanicalPower() {
-        return true;
-    }
-
-    @Override
-    public boolean isInputtingMechPower(World world, BlockPos pos) {
-        return MechanicalUtil.isBlockPoweredByAxle(world, pos, this) || MechanicalUtil.isPoweredByCrank(world, pos);
-    }
-
-    @Override
-    public boolean isOutputtingMechPower(World world, BlockPos blockPos) {
-        return false;
-    }
-
-    @Override
-    public boolean canInputPowerToSide(IBlockAccess world, BlockPos pos, EnumFacing facing) {
-        return world.getBlockState(pos).getValue(FACING) != facing;
-    }
-
-    @Override
-    public void overpower(World world, BlockPos blockPos) {
-        //TODO: break it
-    }
-
-    @Override
-    public boolean isMechanicalOn(IBlockAccess world, BlockPos pos) {
-        return isBlockOn(world,pos);
-    }
-
-    @Override
-    public void setMechanicalOn(World world, BlockPos pos, boolean b) {
-        if(isMechanicalOn(world,pos) != b)
-            world.setBlockState(pos,world.getBlockState(pos).withProperty(ISACTIVE,b));
-    }
-
-    @Override
-    public boolean isMechanicalOnFromState(IBlockState iBlockState) {
-        return iBlockState.getValue(ISACTIVE);
     }
 }

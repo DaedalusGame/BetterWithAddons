@@ -1,6 +1,5 @@
 package betterwithaddons.block;
 
-import betterwithaddons.util.IDisableable;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;

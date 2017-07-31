@@ -2,16 +2,14 @@ package betterwithaddons.block;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
-import betterwithaddons.util.IDisableable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
-public abstract class BlockBase extends Block implements IDisableable {
+public abstract class BlockBase extends Block {
     protected boolean disabled;
 
     protected BlockBase(String name, Material materialIn) {
@@ -23,13 +21,7 @@ public abstract class BlockBase extends Block implements IDisableable {
     }
 
     @Override
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-        if(!disabled)
-            super.getSubBlocks(itemIn, tab, list);
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+        super.getSubBlocks(tab, items);
     }
 }

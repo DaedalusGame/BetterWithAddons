@@ -49,7 +49,7 @@ public class PatientiaHandler {
     }
 
     private void customRandomTick(WorldServer world) {
-        if (world.getWorldInfo().getTerrainType() == WorldType.DEBUG_WORLD) {
+        if (world.getWorldInfo().getTerrainType() == WorldType.DEBUG_ALL_BLOCK_STATES) {
             return;
         }
 
@@ -60,11 +60,11 @@ public class PatientiaHandler {
 
             while (iterator.hasNext()) {
                 Chunk chunk = iterator.next();
-                int j = chunk.xPosition * 16;
-                int k = chunk.zPosition * 16;
+                int j = chunk.x * 16;
+                int k = chunk.z * 16;
 
                 for (ExtendedBlockStorage extendedblockstorage : chunk.getBlockStorageArray()) {
-                    if (extendedblockstorage != Chunk.NULL_BLOCK_STORAGE && extendedblockstorage.getNeedsRandomTick()) {
+                    if (extendedblockstorage != Chunk.NULL_BLOCK_STORAGE && extendedblockstorage.needsRandomTick()) {
                         for (int i1 = 0; i1 < i; ++i1) {
                             this.updateLCG = this.updateLCG * 3 + 1013904223;
                             int j1 = this.updateLCG >> 2;

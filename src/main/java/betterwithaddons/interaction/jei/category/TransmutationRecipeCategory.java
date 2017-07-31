@@ -53,8 +53,8 @@ public class TransmutationRecipeCategory extends BlankRecipeCategory<SmeltingRec
         super.drawExtras(minecraft);
 
         String text = Translator.translateToLocal("inv.infuser.throw.name");
-        int x = 41 - minecraft.fontRendererObj.getStringWidth(text)/2;
-        minecraft.fontRendererObj.drawString(text,x,20, new Color(64,0,0).getRGB());
+        int x = 41 - minecraft.fontRenderer.getStringWidth(text)/2;
+        minecraft.fontRenderer.drawString(text,x,20, new Color(64,0,0).getRGB());
     }
 
     @Override

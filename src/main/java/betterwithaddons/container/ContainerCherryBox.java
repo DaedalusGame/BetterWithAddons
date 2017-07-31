@@ -57,11 +57,11 @@ public class ContainerCherryBox extends Container {
             IContainerListener craft = it.next();
 
             if (this.workTime != tileCherryBox.workTime) {
-                craft.sendProgressBarUpdate(this, 0, tileCherryBox.workTime);
+                craft.sendWindowProperty(this, 0, tileCherryBox.workTime);
             }
 
             if (this.totalWorkTime != tileCherryBox.totalWorkTime) {
-                craft.sendProgressBarUpdate(this, 1, tileCherryBox.totalWorkTime);
+                craft.sendWindowProperty(this, 1, tileCherryBox.totalWorkTime);
             }
         }
 

@@ -67,9 +67,9 @@ public class TileEntityNettedScreen extends TileEntityBase implements ITickable
     }
 
     private void handleSandCase(EntityItem item) {
-        ItemStack sandstack = item.getEntityItem().copy();
+        ItemStack sandstack = item.getItem().copy();
         sandstack.shrink(this.increaseSandCount(sandstack.getCount()));
-        item.setEntityItemStack(sandstack);
+        item.setItem(sandstack);
         if(sandstack.getCount() < 0)
             item.setDead();
     }
@@ -103,7 +103,7 @@ public class TileEntityNettedScreen extends TileEntityBase implements ITickable
         List<EntityItem> items = this.getCaptureItems(world, pos);
         if (items.size() > 0) {
             for (EntityItem item : items) {
-                ItemStack stack = item.getEntityItem();
+                ItemStack stack = item.getItem();
                 if (stack.getItem() == Item.getItemFromBlock(Blocks.SAND))
                     handleSandCase(item);
             }

@@ -1,8 +1,6 @@
 package betterwithaddons.item;
 
 import betterwithaddons.entity.EntityGreatarrow;
-import betterwithaddons.util.IDisableable;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,7 +10,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.*;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -22,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class ItemGreatbow extends ItemBow implements IDisableable {
+public class ItemGreatbow extends ItemBow {
     private boolean disabled;
 
     public ItemGreatbow() {
@@ -139,16 +136,5 @@ public class ItemGreatbow extends ItemBow implements IDisableable {
     @Override
     public int getItemEnchantability() {
         return 1;
-    }
-
-    @Override
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
-        if(!disabled)
-            super.getSubItems(itemIn, tab, subItems);
     }
 }

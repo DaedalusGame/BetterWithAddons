@@ -1,30 +1,25 @@
 package betterwithaddons.item;
 
-import betterwithaddons.util.IDisableable;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemMaterial extends Item implements IHasVariants,IDisableable {
+public class ItemMaterial extends Item implements IHasVariants {
     String[] subItemNames;
     public String[] subItemUnlocalizedNames;
-    boolean[] subItemDisabled;
     ItemStack container = ItemStack.EMPTY;
     boolean disabled;
 
     public ItemMaterial(String[] subnames) {
         subItemNames = subnames;
         subItemUnlocalizedNames = Arrays.copyOf(subnames,subnames.length);
-        subItemDisabled = new boolean[subItemNames.length];
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
     }
@@ -38,11 +33,6 @@ public class ItemMaterial extends Item implements IHasVariants,IDisableable {
     public ItemStack getContainer()
     {
         return container;
-    }
-
-    @Override
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
     }
 
     @Override
@@ -94,13 +84,10 @@ public class ItemMaterial extends Item implements IHasVariants,IDisableable {
         return null;
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
-    public void getSubItems(Item item, CreativeTabs tabs, NonNullList<ItemStack> subitems) {
-        if(!disabled)
-        for(int i = 0; i < subItemNames.length; ++i) {
-            if(!subItemDisabled[i])
-                subitems.add(new ItemStack(item, 1, i));
-        }
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+            for(int i = 0; i < subItemNames.length; ++i) {
+                items.add(new ItemStack(this, 1, i));
+            }
     }
 }

@@ -1,9 +1,9 @@
 package betterwithaddons.client.render;
 
 import betterwithaddons.lib.Reference;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderArrow;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -43,7 +43,7 @@ public class RenderGreatarrow extends RenderArrow {
         GlStateManager.rotate(t.prevRotationYaw + (t.rotationYaw - t.prevRotationYaw) * f2 - 90.0f, 0.0f, 1.0f, 0.0f);
         GlStateManager.rotate(t.prevRotationPitch + (t.rotationPitch - t.prevRotationPitch) * f2, 0.0f, 0.0f, 1.0f);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexBuffer = tessellator.getBuffer();
+        BufferBuilder vertexBuffer = tessellator.getBuffer();
         boolean bl = false;
         float f3 = 0.0f;
         float f4 = 0.5f;

@@ -102,13 +102,10 @@ public class BlockCherryBox extends BlockContainerBase implements IHasVariants {
     }
 
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tabs, NonNullList<ItemStack> stacks) {
-        if(!disabled) {
-            stacks.add(new ItemStack(item, 1, 0));
-            stacks.add(new ItemStack(item, 1, 1));
-        }
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+        items.add(new ItemStack(this, 1, 0));
+        items.add(new ItemStack(this, 1, 1));
     }
-
 
     @Override
     public TileEntity createTileEntity(World world, IBlockState state)

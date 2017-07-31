@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,8 +52,8 @@ public class WorldScaleData extends WorldSavedData
             NBTTagCompound shardcompound = new NBTTagCompound();
             ChunkPos chunkpos = entry.getKey();
             BlockPos shardpos = entry.getValue();
-            shardcompound.setInteger("chunkX",chunkpos.chunkXPos);
-            shardcompound.setInteger("chunkZ",chunkpos.chunkZPos);
+            shardcompound.setInteger("chunkX",chunkpos.x);
+            shardcompound.setInteger("chunkZ",chunkpos.z);
             shardcompound.setInteger("blockX",shardpos.getX());
             shardcompound.setInteger("blockY",shardpos.getY());
             shardcompound.setInteger("blockZ",shardpos.getZ());

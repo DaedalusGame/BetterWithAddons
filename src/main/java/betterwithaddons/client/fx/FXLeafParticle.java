@@ -3,8 +3,8 @@ package betterwithaddons.client.fx;
 import betterwithaddons.lib.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -109,7 +109,7 @@ public class FXLeafParticle extends Particle {
     }*/
 
     @Override
-    public void renderParticle(VertexBuffer wr, Entity entity, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+    public void renderParticle(BufferBuilder wr, Entity entity, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
         ParticleRenderDispatcher.wispFxCount++;
 
         Tessellator.getInstance().draw();

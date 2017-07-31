@@ -13,6 +13,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,6 +24,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -44,7 +46,7 @@ public class BlockPondBase extends BlockBase implements IHasVariants {
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
         switch(stack.getMetadata()) {
             case 0:
                 tooltip.add(I18n.format("tooltip.pond_creation.name"));
@@ -61,9 +63,9 @@ public class BlockPondBase extends BlockBase implements IHasVariants {
     }
 
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-        list.add(new ItemStack(itemIn,1,0));
-        list.add(new ItemStack(itemIn,1,1));
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+        items.add(new ItemStack(this,1,0));
+        items.add(new ItemStack(this,1,1));
     }
 
     @Override
@@ -87,7 +89,7 @@ public class BlockPondBase extends BlockBase implements IHasVariants {
     }
 
     @Override
-    public MapColor getMapColor(IBlockState state) {
+    public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         return isDried(state) ? MapColor.CLAY : MapColor.ADOBE;
     }
 
@@ -168,7 +170,7 @@ public class BlockPondBase extends BlockBase implements IHasVariants {
         BlockPos checkpos = pos.up();
         Biome biome = world.getBiome(checkpos);
 
-        return world.isDaytime() && !world.isRaining() && !world.isThundering() && !world.provider.hasNoSky() && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.COLD) && world.canSeeSky(checkpos); //TODO: configurable check for biome?
+        return world.isDaytime() && !world.isRaining() && !world.isThundering() && world.provider.hasSkyLight() && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.COLD) && world.canSeeSky(checkpos); //TODO: configurable check for biome?
     }
 
     @Override

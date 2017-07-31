@@ -52,7 +52,7 @@ public class ButcherHandler {
 
     private boolean isChopBlock(IBlockState state)
     {
-        return state.getBlock() == BWMBlocks.AESTHETIC && (state.getValue(BlockAesthetic.blockType) == BlockAesthetic.EnumType.CHOPBLOCK || state.getValue(BlockAesthetic.blockType) == BlockAesthetic.EnumType.CHOPBLOCKBLOOD);
+        return state.getBlock() == BWMBlocks.AESTHETIC && (state.getValue(BlockAesthetic.TYPE) == BlockAesthetic.EnumType.CHOPBLOCK || state.getValue(BlockAesthetic.TYPE) == BlockAesthetic.EnumType.CHOPBLOCKBLOOD);
     }
 
     private void splatter(World world, BlockPos pos, int radius)
@@ -64,7 +64,7 @@ public class ButcherHandler {
         {
             BlockPos splatterpos = pos.add(x,y,z);
             if(rand.nextInt(3) == 0 && isChopBlock(world.getBlockState(splatterpos)))
-                world.setBlockState(splatterpos,BWMBlocks.AESTHETIC.getDefaultState().withProperty(BlockAesthetic.blockType, BlockAesthetic.EnumType.CHOPBLOCKBLOOD));
+                world.setBlockState(splatterpos,BWMBlocks.AESTHETIC.getDefaultState().withProperty(BlockAesthetic.TYPE, BlockAesthetic.EnumType.CHOPBLOCKBLOOD));
         }
     }
 }

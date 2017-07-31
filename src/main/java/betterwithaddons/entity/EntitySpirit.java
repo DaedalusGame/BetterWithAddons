@@ -150,7 +150,7 @@ public class EntitySpirit extends EntityXPOrb {
             {
                 player.xpCooldown = 2;
 
-                List<EntitySpirit> spirits = world.getEntitiesWithinAABB(EntitySpirit.class, new AxisAlignedBB(this.getPosition()).expandXyz(0.5));
+                List<EntitySpirit> spirits = world.getEntitiesWithinAABB(EntitySpirit.class, new AxisAlignedBB(this.getPosition()).grow(0.5));
                 int totalSpirit = 0;
 
                 for(EntitySpirit spirit : spirits)

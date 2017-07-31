@@ -6,6 +6,7 @@ import betterwithaddons.item.rbdtools.ItemSpade;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.ItemUtil;
 import betterwithmods.common.BWMItems;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -15,13 +16,19 @@ import net.minecraft.item.*;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.IRegistry;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.ArrayList;
 
+@Mod.EventBusSubscriber
 public class ModItems {
     public static ArrayList<Item> LIST = new ArrayList<Item>();
 
@@ -46,158 +53,227 @@ public class ModItems {
     public static ItemArmor.ArmorMaterial samuraiArmorMaterial = EnumHelper.addArmorMaterial("SAMURAI", "samurai", 16,
             new int[]{2, 6, 5, 2}, 18, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0);
 
+    @GameRegistry.ObjectHolder("betterwithaddons:greatbow")
     public static ItemGreatbow greatbow;
+    @GameRegistry.ObjectHolder("betterwithaddons:greatarrow")
     public static ItemGreatarrow greatarrow;
+    @GameRegistry.ObjectHolder("betterwithaddons:monument")
     public static ItemMonument monument;
+    @GameRegistry.ObjectHolder("betterwithaddons:artifact_frame")
     public static ItemArtifactFrame artifactFrame;
-    public static ItemModFood bakedMushroom;
-    public static ItemModFood bakedAmanita;
-    public static ItemModFood cookedBeetroot;
-    public static ItemModFood bakedBeetroot;
-    public static ItemModFood cookedCarrot;
-    public static ItemModFood bakedCarrot;
-    public static ItemModFood cookedPotato;
-    public static ItemModFood pieMelon;
-    public static ItemModFood pieMeat;
-    public static ItemModFood pieMushroom;
-    public static ItemModFood pieAmanita;
-    public static ItemModFood meatballs;
-    public static ItemModFood cookedEgg;
-    public static ItemModFood groundMeat;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_mushroom_baked")
+    public static ItemFood bakedMushroom;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_amanita_baked")
+    public static ItemFood bakedAmanita;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_beetroot_cooked")
+    public static ItemFood cookedBeetroot;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_beetroot_baked")
+    public static ItemFood bakedBeetroot;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_carrot_cooked")
+    public static ItemFood cookedCarrot;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_carrot_baked")
+    public static ItemFood bakedCarrot;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_potato_cooked")
+    public static ItemFood cookedPotato;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_pie_melon")
+    public static ItemFood pieMelon;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_pie_meat")
+    public static ItemFood pieMeat;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_pie_mushroom")
+    public static ItemFood pieMushroom;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_pie_amanita")
+    public static ItemFood pieAmanita;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_meatballs")
+    public static ItemFood meatballs;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_egg_cooked")
+    public static ItemFood cookedEgg;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_ground_meat")
+    public static ItemFood groundMeat;
 
+    @GameRegistry.ObjectHolder("betterwithaddons:soulsand_pile")
     public static Item soulSandPile;
+    @GameRegistry.ObjectHolder("betterwithaddons:wool")
     public static ItemColored wool;
 
+    @GameRegistry.ObjectHolder("betterwithaddons:bowl")
     public static ItemMaterial bowls;
 
-    public static ItemModFood cookedClownfish;
-    public static ItemModFood cookedPuffer;
-    public static ItemModFood preparedPuffer;
-    public static ItemModFood preparedCookedPuffer;
-    public static ItemModFood fuguSac;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_clownfish_cooked")
+    public static ItemFood cookedClownfish;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_pufferfish_baked")
+    public static ItemFood cookedPuffer;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_pufferfish_prepared")
+    public static ItemFood preparedPuffer;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_pufferfish_cooked")
+    public static ItemFood preparedCookedPuffer;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_fugu_sac")
+    public static ItemFood fuguSac;
+    @GameRegistry.ObjectHolder("betterwithaddons:worldshard")
     public static ItemWorldScale worldShard;
 
+    @GameRegistry.ObjectHolder("betterwithaddons:ancestry_bottle")
     public static ItemAncestryBottle ancestryBottle;
-    public static ItemModFood sashimi;
-    public static ItemModFood rice;
-    public static ItemModFood riceBowl;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_sashimi")
+    public static ItemFood sashimi;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_cooked_rice")
+    public static ItemFood rice;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_bowl_rice")
+    public static ItemFood riceBowl;
+    @GameRegistry.ObjectHolder("betterwithaddons:brick_stained")
     public static ItemStainedBrick stainedBrick;
+    @GameRegistry.ObjectHolder("betterwithaddons:material")
     public static ItemMaterial material;
+    @GameRegistry.ObjectHolder("betterwithaddons:japanmat")
     public static ItemMaterial materialJapan;
+    @GameRegistry.ObjectHolder("betterwithaddons:bolt")
     public static ItemMaterial materialBolt;
+    @GameRegistry.ObjectHolder("betterwithaddons:congealed")
     public static ItemMaterial materialCongealed;
+    @GameRegistry.ObjectHolder("betterwithaddons:crate")
     public static ItemMaterial materialCrate;
+    @GameRegistry.ObjectHolder("betterwithaddons:bag")
     public static ItemMaterial materialBag;
+    @GameRegistry.ObjectHolder("betterwithaddons:bundle")
     public static ItemMaterial materialBundle;
+    @GameRegistry.ObjectHolder("betterwithaddons:decomat")
     public static ItemMaterial materialDeco;
+    @GameRegistry.ObjectHolder("betterwithaddons:tweakmat")
     public static ItemMaterial materialTweak;
+    @GameRegistry.ObjectHolder("betterwithaddons:katana")
     public static ItemKatana katana;
+    @GameRegistry.ObjectHolder("betterwithaddons:wakizashi")
     public static ItemWakizashi wakizashi;
+    @GameRegistry.ObjectHolder("betterwithaddons:tanto")
     public static ItemTanto tanto;
+    @GameRegistry.ObjectHolder("betterwithaddons:shinai")
     public static ItemShinai shinai;
+    @GameRegistry.ObjectHolder("betterwithaddons:yumi")
     public static ItemYumi yumi;
+    @GameRegistry.ObjectHolder("betterwithaddons:ya")
     public static ItemYa ya;
+    @GameRegistry.ObjectHolder("betterwithaddons:helmet_samurai")
     public static ItemSamuraiArmor samuraiHelm;
+    @GameRegistry.ObjectHolder("betterwithaddons:chest_samurai")
     public static ItemSamuraiArmor samuraiChestplate;
+    @GameRegistry.ObjectHolder("betterwithaddons:legs_samurai")
     public static ItemSamuraiArmor samuraiLeggings;
+    @GameRegistry.ObjectHolder("betterwithaddons:boots_samurai")
     public static ItemSamuraiArmor samuraiBoots;
 
+    @GameRegistry.ObjectHolder("betterwithaddons:tool_shard")
     public static ItemToolShard brokenArtifact;
 
+    @GameRegistry.ObjectHolder("betterwithaddons:iron_spade")
     public static ItemSpade ironSpade;
+    @GameRegistry.ObjectHolder("betterwithaddons:iron_machete")
     public static ItemMachete ironMachete;
+    @GameRegistry.ObjectHolder("betterwithaddons:iron_matchpick")
     public static ItemMatchPick ironMatchPick;
+    @GameRegistry.ObjectHolder("betterwithaddons:iron_kukri")
     public static ItemKukri ironKukri;
+    @GameRegistry.ObjectHolder("betterwithaddons:iron_carpentersaw")
     public static ItemCarpenterSaw ironCarpenterSaw;
+    @GameRegistry.ObjectHolder("betterwithaddons:iron_masonpick")
     public static ItemMasonPick ironMasonPick;
 
+    @GameRegistry.ObjectHolder("betterwithaddons:gold_spade")
     public static ItemSpade goldSpade;
+    @GameRegistry.ObjectHolder("betterwithaddons:gold_machete")
     public static ItemMachete goldMachete;
+    @GameRegistry.ObjectHolder("betterwithaddons:gold_matchpick")
     public static ItemMatchPick goldMatchPick;
+    @GameRegistry.ObjectHolder("betterwithaddons:gold_kukri")
     public static ItemKukri goldKukri;
+    @GameRegistry.ObjectHolder("betterwithaddons:gold_carpentersaw")
     public static ItemCarpenterSaw goldCarpenterSaw;
+    @GameRegistry.ObjectHolder("betterwithaddons:gold_masonpick")
     public static ItemMasonPick goldMasonPick;
 
+    @GameRegistry.ObjectHolder("betterwithaddons:diamond_spade")
     public static ItemSpade diamondSpade;
+    @GameRegistry.ObjectHolder("betterwithaddons:diamond_machete")
     public static ItemMachete diamondMachete;
+    @GameRegistry.ObjectHolder("betterwithaddons:diamond_matchpick")
     public static ItemMatchPick diamondMatchPick;
+    @GameRegistry.ObjectHolder("betterwithaddons:diamond_kukri")
     public static ItemKukri diamondKukri;
+    @GameRegistry.ObjectHolder("betterwithaddons:diamond_carpentersaw")
     public static ItemCarpenterSaw diamondCarpenterSaw;
+    @GameRegistry.ObjectHolder("betterwithaddons:diamond_masonpick")
     public static ItemMasonPick diamondMasonPick;
 
+    @GameRegistry.ObjectHolder("betterwithaddons:steel_spade")
     public static ItemSpade steelSpade;
+    @GameRegistry.ObjectHolder("betterwithaddons:steel_machete")
     public static ItemMachete steelMachete;
+    @GameRegistry.ObjectHolder("betterwithaddons:steel_matchpick")
     public static ItemMatchPick steelMatchPick;
+    @GameRegistry.ObjectHolder("betterwithaddons:steel_kukri")
     public static ItemKukri steelKukri;
+    @GameRegistry.ObjectHolder("betterwithaddons:steel_carpentersaw")
     public static ItemCarpenterSaw steelCarpenterSaw;
+    @GameRegistry.ObjectHolder("betterwithaddons:steel_masonpick")
     public static ItemMasonPick steelMasonPick;
 
+    @GameRegistry.ObjectHolder("betterwithaddons:explosion")
     public static Item explosion;
 
     public static void load(FMLPreInitializationEvent event) {
-        /*arrowhead = registerItem("arrowhead",new Item());
-        midori = registerItem("midori",new Item());
-        midori_popped = registerItem("midori_popped",new Item());
-        stone_brick = registerItem("stone_brick",new Item());
-        bone_ingot = registerItem("bone_ingot",new Item());
-        ender_cream = registerItem("ender_cream",new Item());
-        thornrose = registerItem("thornrose",new Item());*/
-
         ironSpade = (ItemSpade) registerItem("iron_spade", new ItemSpade(Item.ToolMaterial.IRON));
         ironMatchPick = (ItemMatchPick) registerItem("iron_matchpick", new ItemMatchPick(Item.ToolMaterial.IRON));
         ironMachete = (ItemMachete) registerItem("iron_machete", new ItemMachete(Item.ToolMaterial.IRON));
-        ironKukri = (ItemKukri) registerItem("iron_kukri", new ItemKukri(Item.ToolMaterial.IRON,8.0f,-3.1f));
-        ironCarpenterSaw = (ItemCarpenterSaw) registerItem("iron_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.IRON,8.0f,-3.1f));
+        ironKukri = (ItemKukri) registerItem("iron_kukri", new ItemKukri(Item.ToolMaterial.IRON, 8.0f, -3.1f));
+        ironCarpenterSaw = (ItemCarpenterSaw) registerItem("iron_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.IRON, 8.0f, -3.1f));
         ironMasonPick = (ItemMasonPick) registerItem("iron_masonpick", new ItemMasonPick(Item.ToolMaterial.IRON));
 
         goldSpade = (ItemSpade) registerItem("gold_spade", new ItemSpade(Item.ToolMaterial.GOLD));
         goldMatchPick = (ItemMatchPick) registerItem("gold_matchpick", new ItemMatchPick(Item.ToolMaterial.GOLD));
         goldMachete = (ItemMachete) registerItem("gold_machete", new ItemMachete(Item.ToolMaterial.GOLD));
-        goldKukri = (ItemKukri) registerItem("gold_kukri", new ItemKukri(Item.ToolMaterial.GOLD,6.0f,-3.0f));
-        goldCarpenterSaw = (ItemCarpenterSaw) registerItem("gold_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.GOLD,6.0f,-3.0f));
+        goldKukri = (ItemKukri) registerItem("gold_kukri", new ItemKukri(Item.ToolMaterial.GOLD, 6.0f, -3.0f));
+        goldCarpenterSaw = (ItemCarpenterSaw) registerItem("gold_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.GOLD, 6.0f, -3.0f));
         goldMasonPick = (ItemMasonPick) registerItem("gold_masonpick", new ItemMasonPick(Item.ToolMaterial.GOLD));
 
         diamondSpade = (ItemSpade) registerItem("diamond_spade", new ItemSpade(Item.ToolMaterial.DIAMOND));
         diamondMatchPick = (ItemMatchPick) registerItem("diamond_matchpick", new ItemMatchPick(Item.ToolMaterial.DIAMOND));
         diamondMachete = (ItemMachete) registerItem("diamond_machete", new ItemMachete(Item.ToolMaterial.DIAMOND));
-        diamondKukri = (ItemKukri) registerItem("diamond_kukri", new ItemKukri(Item.ToolMaterial.DIAMOND,8.0f,-3.0f));
-        diamondCarpenterSaw = (ItemCarpenterSaw) registerItem("diamond_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.DIAMOND,8.0f,-3.0f));
+        diamondKukri = (ItemKukri) registerItem("diamond_kukri", new ItemKukri(Item.ToolMaterial.DIAMOND, 8.0f, -3.0f));
+        diamondCarpenterSaw = (ItemCarpenterSaw) registerItem("diamond_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.DIAMOND, 8.0f, -3.0f));
         diamondMasonPick = (ItemMasonPick) registerItem("diamond_masonpick", new ItemMasonPick(Item.ToolMaterial.DIAMOND));
 
         steelSpade = (ItemSpade) registerItem("steel_spade", new ItemSpade(BWMItems.SOULFORGED_STEEL) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
+                return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
         steelMatchPick = (ItemMatchPick) registerItem("steel_matchpick", new ItemMatchPick(BWMItems.SOULFORGED_STEEL) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
+                return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
         steelMachete = (ItemMachete) registerItem("steel_machete", new ItemMachete(BWMItems.SOULFORGED_STEEL) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
+                return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
         steelKukri = (ItemKukri) registerItem("steel_kukri", new ItemKukri(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
+                return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
         steelCarpenterSaw = (ItemCarpenterSaw) registerItem("steel_carpentersaw", new ItemCarpenterSaw(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
+                return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
         steelMasonPick = (ItemMasonPick) registerItem("steel_masonpick", new ItemMasonPick(BWMItems.SOULFORGED_STEEL) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-                return ItemUtil.matchesOreDict(repair,"ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
+                return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
 
@@ -210,35 +286,35 @@ public class ModItems {
         greatarrow = (ItemGreatarrow) registerItem("greatarrow", new ItemGreatarrow());
         monument = (ItemMonument) registerItem("monument", new ItemMonument());
         //Food
-        bakedMushroom = (ItemModFood) registerItem("food_mushroom_baked", new ItemModFood(3, 0.2F, false));
-        bakedAmanita = (ItemModFood) registerItem("food_amanita_baked", new ItemModFood(3, 0.2F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
-        cookedBeetroot = (ItemModFood) registerItem("food_beetroot_cooked", new ItemModFood(4, 0.5F, false));
-        bakedBeetroot = (ItemModFood) registerItem("food_beetroot_baked", new ItemModFood(5, 0.4F, false));
-        cookedCarrot = (ItemModFood) registerItem("food_carrot_cooked", new ItemModFood(3, 0.6F, false));
-        bakedCarrot = (ItemModFood) registerItem("food_carrot_baked", new ItemModFood(4, 0.5F, false));
-        cookedPotato = (ItemModFood) registerItem("food_potato_cooked", new ItemModFood(4, 0.7F, false));
-        cookedEgg = (ItemModFood) registerItem("food_egg_cooked", new ItemModFood(4, 0.3F, false));
-        meatballs = (ItemModFood) registerItem("food_meatballs", new ItemModFood(3, 0.6F, true));
+        bakedMushroom = (ItemFood) registerItem("food_mushroom_baked", new ItemFood(3, 0.2F, false));
+        bakedAmanita = (ItemFood) registerItem("food_amanita_baked", new ItemFood(3, 0.2F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
+        cookedBeetroot = (ItemFood) registerItem("food_beetroot_cooked", new ItemFood(4, 0.5F, false));
+        bakedBeetroot = (ItemFood) registerItem("food_beetroot_baked", new ItemFood(5, 0.4F, false));
+        cookedCarrot = (ItemFood) registerItem("food_carrot_cooked", new ItemFood(3, 0.6F, false));
+        bakedCarrot = (ItemFood) registerItem("food_carrot_baked", new ItemFood(4, 0.5F, false));
+        cookedPotato = (ItemFood) registerItem("food_potato_cooked", new ItemFood(4, 0.7F, false));
+        cookedEgg = (ItemFood) registerItem("food_egg_cooked", new ItemFood(4, 0.3F, false));
+        meatballs = (ItemFood) registerItem("food_meatballs", new ItemFood(3, 0.6F, true));
 
-        groundMeat = (ItemModFood) registerItem("food_ground_meat", new ItemModFood(1, 0.1F, true));
+        groundMeat = (ItemFood) registerItem("food_ground_meat", new ItemFood(1, 0.1F, true));
 
-        pieMushroom = (ItemModFood) registerItem("food_pie_mushroom", new ItemModFood(8, 0.3F, false));
-        pieAmanita = (ItemModFood) registerItem("food_pie_amanita", new ItemModFood(8, 0.3F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
-        pieMeat = (ItemModFood) registerItem("food_pie_meat", new ItemModFood(9, 0.5F, true));
-        pieMelon = (ItemModFood) registerItem("food_pie_melon", new ItemModFood(8, 0.4F, false));
+        pieMushroom = (ItemFood) registerItem("food_pie_mushroom", new ItemFood(8, 0.3F, false));
+        pieAmanita = (ItemFood) registerItem("food_pie_amanita", new ItemFood(8, 0.3F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
+        pieMeat = (ItemFood) registerItem("food_pie_meat", new ItemFood(9, 0.5F, true));
+        pieMelon = (ItemFood) registerItem("food_pie_melon", new ItemFood(8, 0.4F, false));
 
-        cookedClownfish = (ItemModFood) registerItem("food_clownfish_cooked", new ItemModFood(6, 0.5F, false));
-        cookedPuffer = (ItemModFood) registerItem("food_pufferfish_baked", new ItemModFood(6, 0.6F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 500, 1), 0.1F));
-        preparedPuffer = (ItemModFood) registerItem("food_pufferfish_prepared", new ItemModFood(2, 0.1F, false));
-        preparedCookedPuffer = (ItemModFood) registerItem("food_pufferfish_cooked", new ItemModFood(4, 0.5F, false));
-        fuguSac = (ItemModFood) registerItem("food_fugu_sac", new ItemModFood(2, 0.1F, false).setPotionEffect(new PotionEffect(MobEffects.WITHER, 2000, 1), 1.0F));
+        cookedClownfish = (ItemFood) registerItem("food_clownfish_cooked", new ItemFood(6, 0.5F, false));
+        cookedPuffer = (ItemFood) registerItem("food_pufferfish_baked", new ItemFood(6, 0.6F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 500, 1), 0.1F));
+        preparedPuffer = (ItemFood) registerItem("food_pufferfish_prepared", new ItemFood(2, 0.1F, false));
+        preparedCookedPuffer = (ItemFood) registerItem("food_pufferfish_cooked", new ItemFood(4, 0.5F, false));
+        fuguSac = (ItemFood) registerItem("food_fugu_sac", new ItemFood(2, 0.1F, false).setPotionEffect(new PotionEffect(MobEffects.WITHER, 2000, 1), 1.0F));
 
-        sashimi = (ItemModFood) registerItem("food_sashimi", new ItemModFood(2, 0.1F, false));
-        rice = (ItemModFood) registerItem("food_cooked_rice", new ItemModFood(2, 0.3F, false));
-        riceBowl = (ItemModFood) registerItem("food_bowl_rice", new ItemModFood(9, 0.6F, false).setMaxStackSize(1));
+        sashimi = (ItemFood) registerItem("food_sashimi", new ItemFood(2, 0.1F, false));
+        rice = (ItemFood) registerItem("food_cooked_rice", new ItemFood(2, 0.3F, false));
+        riceBowl = (ItemFood) registerItem("food_bowl_rice", new ItemFood(9, 0.6F, false).setMaxStackSize(1));
 
         soulSandPile = registerItem("soulsand_pile", new Item());
-        wool = (ItemColored)registerItem("wool",new ItemColored());
+        wool = (ItemColored) registerItem("wool", new ItemColored());
 
         bowls = (ItemMaterial) registerItem("bowl", new ItemMaterial(
                 new String[]{"salt"}
@@ -299,16 +375,25 @@ public class ModItems {
 
         explosion = registerItem("explosion", new Item() {
             @Override
-            public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
-                //NOOP
+            public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+                return;
             }
         });
     }
 
-    private static Item registerItem(String name, Item item) {
+    @SubscribeEvent
+    public static void registryEvent(RegistryEvent.Register<Item> event) {
+        for (Item item : LIST) {
+            event.getRegistry().register(item);
+
+        }
+    }
+
+    public static Item registerItem(String name, Item item) {
+        if(item.getRegistryName() == null)
+            item.setRegistryName(Reference.MOD_ID,name);
         item.setUnlocalizedName(name);
         item.setCreativeTab(BetterWithAddons.instance.creativeTab);
-        GameRegistry.register(item, new ResourceLocation(Reference.MOD_ID, name));
         LIST.add(item);
 
         return item;

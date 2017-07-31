@@ -2,7 +2,6 @@ package betterwithaddons.block;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
-import betterwithaddons.util.IDisableable;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.IProperty;
@@ -32,7 +31,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class BlockModLeaves extends BlockLeaves implements IDisableable {
+public class BlockModLeaves extends BlockLeaves {
     protected ItemStack sapling;
 
     public ModWoods woodVariant;
@@ -174,16 +173,5 @@ public class BlockModLeaves extends BlockLeaves implements IDisableable {
     @Override
     public BlockPlanks.EnumType getWoodType(int meta) {
         return null;
-    }
-
-    @Override
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-        if(!disabled)
-            super.getSubBlocks(itemIn, tab, list);
     }
 }

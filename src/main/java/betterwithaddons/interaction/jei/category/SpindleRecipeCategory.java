@@ -60,8 +60,8 @@ public class SpindleRecipeCategory extends BlankRecipeCategory<SpindleRecipeWrap
         super.drawExtras(minecraft);
 
         String text = Translator.translateToLocal("inv.spindle.throw.name");
-        int x = 41 - minecraft.fontRendererObj.getStringWidth(text)/2;
-        minecraft.fontRendererObj.drawString(text,x,0, Color.gray.getRGB());
+        int x = 41 - minecraft.fontRenderer.getStringWidth(text)/2;
+        minecraft.fontRenderer.drawString(text,x,0, Color.gray.getRGB());
     }
 
     @Override
