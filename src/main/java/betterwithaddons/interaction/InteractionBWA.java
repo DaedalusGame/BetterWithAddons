@@ -175,7 +175,7 @@ public class InteractionBWA extends Interaction {
 
             if(ModuleLoader.isFeatureEnabled(HCDiamond.class))
             {
-                ItemStack ingotDiamond = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.INGOT_DIAMOND);
+                ItemStack ingotDiamond = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DIAMOND_INGOT);
                 ItemStack nuggetDiamond = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DIAMOND_NUGGET);
                 addReclaimRecipe(new ItemStack(ModItems.diamondSpade),ingotDiamond,nuggetDiamond,9*2);
                 addReclaimRecipe(new ItemStack(ModItems.diamondMatchPick),ingotDiamond,nuggetDiamond,9*3);
