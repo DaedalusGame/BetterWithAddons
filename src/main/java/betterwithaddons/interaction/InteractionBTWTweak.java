@@ -86,14 +86,6 @@ public class InteractionBTWTweak extends Interaction {
             HCBonemeal.registerFertilzier(ModItems.materialTweak.getMaterial("ash"));
         }
 
-        if(LOGS_SMELT_TO_ASH) {
-            for (ItemStack log : OreDictionary.getOres("logWood")) {
-                ItemStack result = FurnaceRecipes.instance().getSmeltingResult(log);
-                if(result.isEmpty())
-                    GameRegistry.addSmelting(log,ModItems.materialTweak.getMaterial("ash"),0.1f);
-            }
-        }
-
         GameRegistry.addRecipe(new ShapelessOreRecipe(ModItems.materialTweak.getMaterial("ink_and_quill"),new ItemStack(Items.GLASS_BOTTLE),new ItemStack(Items.DYE,1,EnumDyeColor.BLACK.getDyeDamage()),"feather"));
 
         if(REPLACE_WRITABLE_BOOK_RECIPE)
@@ -154,6 +146,13 @@ public class InteractionBTWTweak extends Interaction {
 
     @Override
     public void postInit() {
+        if(LOGS_SMELT_TO_ASH) {
+            for (ItemStack log : OreDictionary.getOres("logWood")) {
+                ItemStack result = FurnaceRecipes.instance().getSmeltingResult(log);
+                if(result.isEmpty())
+                    GameRegistry.addSmelting(log,ModItems.materialTweak.getMaterial("ash"),0.1f);
+            }
+        }
 
         /*if(KILN_DOUBLING && ModuleLoader.isFeatureEnabled(KilnSmelting.class))
         {

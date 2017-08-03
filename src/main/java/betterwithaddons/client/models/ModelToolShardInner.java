@@ -262,7 +262,7 @@ public class ModelToolShardInner implements IRetexturableModel {
         int uMod = uMax / uMin;
         int vMod = vMax / vMin;
 
-        return getPixelIndex(u / uMod, v / vMod, uMin, vMin);
+        return getPixelIndex((u / uMod) % uMin, (v / vMod) % uMin, uMin, vMin);
     }
 
     private static boolean isTransparent(int[] pixels, int[] maskpixels, int index, int maskindex)
