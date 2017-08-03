@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "betterwithaddons:soulsand_pile",
+	"data": 0,
+	"count": 4
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+	{
+	  "item": "minecraft:soul_sand",
+      "data": 0
+	}
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "betterwithaddons:lattice",
+	"data": 0,
+	"count": 2
+  },
+  "pattern": [
+    " S ",
+	"SSS",
+	" S "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:iron_bars",
+	  "data": 0
+    }
+  }
+}

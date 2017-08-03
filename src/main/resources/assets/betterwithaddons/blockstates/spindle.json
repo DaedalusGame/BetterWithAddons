@@ -2,9 +2,9 @@
   "forge_marker": 1,
   "defaults": {
 	"textures": {
-		"top": "betterwithmods:blocks/axle_end",
+		"top": "betterwithmods:blocks/wooden_axle_end",
 		"side": "betterwithaddons:blocks/spindle_off",
-		"bottom": "betterwithmods:blocks/axle_end",
+		"bottom": "betterwithmods:blocks/wooden_axle_end",
 		"particle": "betterwithaddons:blocks/spindle_off"
     },
 	"model": "betterwithmods:axle",

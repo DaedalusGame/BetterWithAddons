@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "betterwithaddons:tatami",
+	"data": 0,
+	"count": 2
+  },
+  "pattern": [
+    "RRR",
+	"HHH"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "R": {
+	  "type": "forge:ore_dict",
+	  "ore": "cropRush"
+    },
+	"H": {
+      "item": "betterwithaddons:japanmat",
+	  "data": 3
+    }
+  }
+}

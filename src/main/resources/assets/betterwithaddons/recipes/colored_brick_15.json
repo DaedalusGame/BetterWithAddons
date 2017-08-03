@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "betterwithaddons:bricks_stained",
+	"data": 15
+  },
+  "pattern": [
+    "SS",
+	"SS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:brick_stained",
+	  "data": 15
+    }
+  }
+}

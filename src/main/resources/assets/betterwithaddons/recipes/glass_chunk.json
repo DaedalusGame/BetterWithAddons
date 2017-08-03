@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "betterwithaddons:decomat",
+	"data": 3,
+	"count": 4
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+	{
+	  "type": "forge:ore_dict",
+	  "ore": "blockGlassColorless"
+	}
+  ]
+}

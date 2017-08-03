@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "betterwithaddons:world_scale_ore",
+	"data": 1
+  },
+  "pattern": [
+    " SS",
+	"SSS",
+	"SS "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:worldshard",
+	  "data": 0
+    }
+  }
+}

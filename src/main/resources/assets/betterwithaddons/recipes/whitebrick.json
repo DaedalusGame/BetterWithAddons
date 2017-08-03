@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "betterwithaddons:whitebrick",
+	"data": 0,
+	"count": 4
+  },
+  "pattern": [
+    "SS",
+	"SS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithmods:aesthetic",
+	  "data": 6
+    }
+  }
+}

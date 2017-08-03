@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "betterwithaddons:planks_sakura",
+	"data": 0,
+	"count": 4
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+	{
+	  "item": "betterwithaddons:log_sakura",
+	  "data": 0
+	}
+  ]
+}

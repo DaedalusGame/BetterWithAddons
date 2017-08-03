@@ -1,0 +1,36 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "AlternateInfuser"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:ancestry_infuser",
+	"data": 0
+  },
+  "pattern": [
+    " A ",
+	"WAW",
+	"DOD"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "A": {
+      "item": "betterwithaddons:ancestry_bottle",
+	  "data": 0
+    },
+	"D": {
+      "type": "forge:ore_dict",
+	  "ore": "gemDiamond"
+    },
+	"W": {
+      "item": "minecraft:wool",
+	  "data": 4
+    },
+	"O": {
+      "type": "forge:ore_dict",
+	  "ore": "obsidian"
+    }
+  }
+}

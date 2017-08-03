@@ -99,11 +99,13 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
     }
 
     @Override
-    public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(this, 1, 0));
-        items.add(new ItemStack(this, 1, 1));
-        items.add(new ItemStack(this, 1, 2));
-        items.add(new ItemStack(this, 1, 3));
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if(tab.equals(BetterWithAddons.instance.creativeTab)) {
+            items.add(new ItemStack(this, 1, 0));
+            items.add(new ItemStack(this, 1, 1));
+            items.add(new ItemStack(this, 1, 2));
+            items.add(new ItemStack(this, 1, 3));
+        }
     }
 
     @Override

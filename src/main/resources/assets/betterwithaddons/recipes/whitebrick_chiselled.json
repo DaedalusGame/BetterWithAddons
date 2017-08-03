@@ -1,0 +1,24 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "!ChiselBricksInAnvil"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:whitebrick",
+	"data": 3,
+	"count": 2
+  },
+  "pattern": [
+    "S",
+	"S"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:whitebrick",
+	  "data": 0
+    }
+  }
+}

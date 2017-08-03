@@ -86,6 +86,7 @@ public class ItemMaterial extends Item implements IHasVariants {
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if(isInCreativeTab(tab))
             for(int i = 0; i < subItemNames.length; ++i) {
                 items.add(new ItemStack(this, 1, i));
             }

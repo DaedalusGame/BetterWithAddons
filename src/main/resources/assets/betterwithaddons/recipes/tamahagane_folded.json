@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "betterwithaddons:japanmat",
+	"data": 22
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+	{
+	  "item": "betterwithaddons:japanmat",
+	  "data": 21
+	},
+	{
+	  "type": "forge:ore_dict",
+	  "ore": "stickWood"
+	}
+  ]
+}

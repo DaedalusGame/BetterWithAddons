@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "betterwithaddons:artifact_frame",
+	"data": 0
+  },
+  "pattern": [
+    "GSG",
+	"GWG",
+	"GGG"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "G": {
+      "type": "forge:ore_dict",
+	  "ore": "nuggetGold"
+    },
+	"W": {
+      "item": "minecraft:wool",
+	  "data": 10
+	},
+	"S": {
+      "item": "minecraft:sign",
+	  "data": 0
+	}
+  }
+}

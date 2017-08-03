@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "betterwithaddons:whitebrick",
+	"data": 1
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "betterwithaddons:whitebrick",
+	  "data": 0
+    },
+	{
+	  "type": "forge:ore_dict",
+	  "ore": "vine"
+	}
+  ]
+}

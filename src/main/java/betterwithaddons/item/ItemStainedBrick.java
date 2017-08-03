@@ -46,12 +46,11 @@ public class ItemStainedBrick extends Item implements IHasVariants {
         return null;
     }
 
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item p_getSubItems_1_, CreativeTabs p_getSubItems_2_, NonNullList<ItemStack> p_getSubItems_3_) {
-        if(!disabled)
-        for(int i = 0; i < 16; ++i) {
-            p_getSubItems_3_.add(new ItemStack(p_getSubItems_1_, 1, i));
-        }
-
+    @Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if(this.isInCreativeTab(tab))
+            for(int i = 0; i < 16; ++i) {
+                items.add(new ItemStack(this, 1, i));
+            }
     }
 }

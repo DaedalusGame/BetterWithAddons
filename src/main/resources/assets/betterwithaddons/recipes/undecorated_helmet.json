@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "betterwithaddons:japanmat",
+	"data": 31
+  },
+  "pattern": [
+    "LLL",
+	"L L"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+	"L": {
+	  "item": "betterwithaddons:japanmat",
+	  "data": 13
+	}
+  }
+}

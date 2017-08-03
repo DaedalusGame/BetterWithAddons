@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "betterwithaddons:aqueduct",
+	"data": 10,
+	"count": 3
+  },
+  "pattern": [
+    "CCC",
+	"SSS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:prismarine",
+	  "data": 2
+    },
+    "C": {
+      "item": "#AQUEDUCTFILLER"
+    }
+  }
+}

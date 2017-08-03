@@ -1,0 +1,32 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "ConvenientToolsPreEnd"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:gold_spade",
+	"data": 0
+  },
+  "pattern": [
+    "M",
+	"T",
+	"I"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "M": {
+      "type": "forge:ore_dict",
+	  "ore": "ingotGold"
+    },
+	"T": {
+	  "item": "minecraft:golden_shovel",
+	  "data": 0
+	},
+	"I": {
+	  "type": "forge:ore_dict",
+	  "ore": "stickWood"
+	}
+  }
+}

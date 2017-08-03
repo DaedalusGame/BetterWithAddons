@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "betterwithaddons:aqueduct",
+	"data": 5,
+	"count": 3
+  },
+  "pattern": [
+    "CCC",
+	"SSS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:red_sandstone",
+	  "data": 32767
+    },
+    "C": {
+      "item": "#AQUEDUCTFILLER"
+    }
+  }
+}

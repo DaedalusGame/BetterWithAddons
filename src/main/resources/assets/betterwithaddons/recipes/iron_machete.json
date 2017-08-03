@@ -1,0 +1,27 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "ConvenientToolsPreEnd"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:iron_machete",
+	"data": 0
+  },
+  "pattern": [
+    "  M",
+	" M ",
+	"I  "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "M": {
+      "type": "forge:ore_dict",
+	  "ore": "ingotIron"
+    },
+	"I": {
+	  "item": "minecraft:iron_sword"
+	}
+  }
+}

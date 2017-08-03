@@ -170,12 +170,12 @@ item.diamond_kukri.name=Diamond Kukri
 item.diamond_carpentersaw.name=Diamond Carpenter Saw
 item.diamond_masonpick.name=Diamond Mason Pick
 
-item.steel_spade.name=Soulforged Steel Spade
-item.steel_matchpick.name=Soulforged Steel Matchpick
-item.steel_machete.name=Soulforged Steel Machete
-item.steel_kukri.name=Soulforged Steel Kukri
-item.steel_carpentersaw.name=Soulforged Steel Carpenter Saw
-item.steel_masonpick.name=Soulforged Steel Mason Pick
+item.steel_spade.name=Refined Spade
+item.steel_matchpick.name=Refined Matchpick
+item.steel_machete.name=Refined Machete
+item.steel_kukri.name=Refined Kukri
+item.steel_carpentersaw.name=Refined Carpenter Saw
+item.steel_masonpick.name=Refined Mason Pick
 
 item.ancient_manuscript.name=Ancient Manuscript
 item.soulsand_pile.name=Pile of Soul Sand

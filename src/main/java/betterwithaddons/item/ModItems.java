@@ -319,8 +319,6 @@ public class ModItems {
         bowls = (ItemMaterial) registerItem("bowl", new ItemMaterial(
                 new String[]{"salt"}
         ));
-        bowls.setContainer(new ItemStack(Items.BOWL));
-        OreDictionary.registerOre("foodSalt", bowls.getMaterial("salt"));
 
         artifactFrame = (ItemArtifactFrame) registerItem("artifact_frame", new ItemArtifactFrame());
         brokenArtifact = (ItemToolShard) registerItem("tool_shard", new ItemToolShard().setMaxStackSize(1));

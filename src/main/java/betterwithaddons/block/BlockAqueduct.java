@@ -1,5 +1,6 @@
 package betterwithaddons.block;
 
+import betterwithaddons.BetterWithAddons;
 import betterwithaddons.interaction.InteractionBWA;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithaddons.util.IHasVariants;
@@ -79,14 +80,13 @@ public class BlockAqueduct extends BlockBase implements IHasVariants {
         return (state.getValue(VARIANT)).getMetadata();
     }
 
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
-    {
-        if(!disabled)
-            for (EnumType type : EnumType.values())
-            {
-                list.add(new ItemStack(itemIn, 1, type.getMetadata()));
-            }
+    @Override
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if(tab.equals(BetterWithAddons.instance.creativeTab))
+        for (EnumType type : EnumType.values())
+        {
+            items.add(new ItemStack(this, 1, type.getMetadata()));
+        }
     }
 
     public IBlockState getStateFromMeta(int meta)

@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "betterwithaddons:food_pie_mushroom",
+	"data": 0
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:brown_mushroom",
+	  "data": 0
+    },
+	{
+      "item": "minecraft:brown_mushroom",
+	  "data": 0
+    },
+	{
+      "item": "minecraft:sugar",
+	  "data": 0
+    },
+	{
+	  "type": "forge:ore_dict",
+	  "ore": "egg"
+	}
+  ]
+}

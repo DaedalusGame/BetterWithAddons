@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "betterwithaddons:food_bowl_rice",
+	"data": 0,
+	"count": 1
+  },
+  "pattern": [
+	"R",
+	"R",
+	"B"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "R": {
+      "item": "betterwithaddons:food_cooked_rice",
+	  "data": 0
+    },
+	"B": {
+      "item": "minecraft:bowl",
+	  "data": 0
+    }
+  }
+}

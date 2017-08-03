@@ -1,0 +1,26 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "ConvenientToolsPreEnd"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:gold_carpentersaw",
+	"data": 0
+  },
+  "pattern": [
+    "MMT"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "M": {
+      "type": "forge:ore_dict",
+	  "ore": "ingotGold"
+    },
+	"T": {
+	  "item": "minecraft:golden_axe",
+	  "data": 0
+	}
+  }
+}

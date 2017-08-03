@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "betterwithaddons:food_pie_amanita",
+	"data": 0
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:red_mushroom",
+	  "data": 0
+    },
+	{
+      "item": "minecraft:red_mushroom",
+	  "data": 0
+    },
+	{
+      "item": "minecraft:sugar",
+	  "data": 0
+    },
+	{
+	  "type": "forge:ore_dict",
+	  "ore": "egg"
+	}
+  ]
+}

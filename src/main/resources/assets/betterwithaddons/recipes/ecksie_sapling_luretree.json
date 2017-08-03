@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "betterwithaddons:ecksie_sapling",
+	"data": 8
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+	  "item": "betterwithmods:urn",
+	  "data": 8
+    },
+	{
+	  "item": "betterwithaddons:sapling_luretree",
+	  "data": 0
+	}
+  ]
+}

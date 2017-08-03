@@ -1,0 +1,80 @@
+[
+  {
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "betterwithmods"
+      }
+    ],
+    "name": "HE_PLANKS",
+    "ingredient": [
+      {
+        "type": "forge:ore_dict",
+        "ore": "plankWood"
+      },
+      {
+        "type": "forge:ore_dict",
+        "ore": "sidingWood"
+      }
+    ]
+  },
+  {
+    "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "!GatedAqueducts"
+      }
+    ],
+    "name": "AQUEDUCTFILLER",
+    "ingredient": [
+      {
+        "item": "minecraft:clay"
+      }
+    ]
+  },
+  {
+    "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "GatedAqueducts"
+      }
+    ],
+    "name": "AQUEDUCTFILLER",
+    "ingredient": [
+      {
+        "item": "betterwithaddons:aqueduct",
+		"data": 3
+      }
+    ]
+  },
+  {
+    "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "!HardcoreDiamond"
+      }
+    ],
+    "name": "DIAMONDMAT",
+    "ingredient": [
+      {
+		"type": "forge:ore_dict",
+		"ore": "gemDiamond"
+      }
+    ]
+  },
+  {
+    "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "HardcoreDiamond"
+      }
+    ],
+    "name": "DIAMONDMAT",
+    "ingredient": [
+      {
+		"type": "forge:ore_dict",
+		"ore": "ingotDiamond"
+      }
+    ]
+  }
+]

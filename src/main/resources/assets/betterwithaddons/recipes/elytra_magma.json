@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "betterwithaddons:elytra_magma",
+	"data": 0
+  },
+  "pattern": [
+    "SS",
+	"SS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:material",
+	  "data": 6
+    }
+  }
+}

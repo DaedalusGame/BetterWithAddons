@@ -1,0 +1,23 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "StoneBricksNeedSmelting"
+      }
+  ],
+  "result": {
+    "item": "minecraft:stonebrick",
+	"data": 0
+  },
+  "pattern": [
+    "SS",
+	"SS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:material",
+	  "data": 4
+    }
+  }
+}

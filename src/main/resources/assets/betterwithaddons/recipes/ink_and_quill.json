@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "betterwithaddons:tweakmat",
+	"data": 1
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle",
+	  "data": 0
+    },
+	{
+      "item": "minecraft:dye",
+	  "data": 0
+    },
+	{
+	  "type": "forge:ore_dict",
+	  "ore": "feather"
+	}
+  ]
+}

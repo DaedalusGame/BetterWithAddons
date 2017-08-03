@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "betterwithaddons:aqueduct",
+	"data": 6,
+	"count": 3
+  },
+  "pattern": [
+    "CCC",
+	"SSS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stone",
+	  "data": 6
+    },
+    "C": {
+      "item": "#AQUEDUCTFILLER"
+    }
+  }
+}

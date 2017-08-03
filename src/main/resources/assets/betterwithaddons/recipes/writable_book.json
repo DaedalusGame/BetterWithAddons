@@ -1,0 +1,23 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "ReplaceWritableBookRecipe"
+      }
+  ],
+  "result": {
+    "item": "minecraft:writable_book",
+	"data": 0
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+	  "type": "forge:ore_dict",
+	  "ore": "book"
+	},
+    {
+      "item": "betterwithaddons:tweakmat",
+	  "data": 1
+    }
+  ]
+}

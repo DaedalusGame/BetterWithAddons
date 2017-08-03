@@ -1,5 +1,6 @@
 package betterwithaddons.block.Factorization;
 
+import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockBase;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.util.IHasVariants;
@@ -64,8 +65,10 @@ public class BlockPondBase extends BlockBase implements IHasVariants {
 
     @Override
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(this,1,0));
-        items.add(new ItemStack(this,1,1));
+        if(tab.equals(BetterWithAddons.instance.creativeTab)) {
+            items.add(new ItemStack(this, 1, 0));
+            items.add(new ItemStack(this, 1, 1));
+        }
     }
 
     @Override

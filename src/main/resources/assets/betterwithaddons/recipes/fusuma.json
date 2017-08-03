@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "betterwithaddons:fusuma",
+	"data": 0,
+	"count": 4
+  },
+  "pattern": [
+    "SWS",
+	"WPW",
+	"SWS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:japanmat",
+	  "data": 7
+    },
+	"W": {
+      "item": "betterwithaddons:japanmat",
+	  "data": 11
+    },
+	"P": {
+      "item": "betterwithaddons:planks_sakura",
+	  "data": 0
+    }
+  }
+}

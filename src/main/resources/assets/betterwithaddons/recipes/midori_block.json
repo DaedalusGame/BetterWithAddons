@@ -1,0 +1,24 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "MidoriNeedsChunks"
+      }
+  ],
+  "result": {
+    "item": "quark:midori_block",
+	"data": 0,
+	"count": 4
+  },
+  "pattern": [
+    "SS",
+	"SS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:material",
+	  "data": 1
+    }
+  }
+}

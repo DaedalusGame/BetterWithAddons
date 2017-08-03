@@ -47,10 +47,11 @@ public class ItemColored extends Item implements IHasVariants
         return rlist;
     }
 
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item p_getSubItems_1_, CreativeTabs p_getSubItems_2_, NonNullList<ItemStack> p_getSubItems_3_) {
+    @Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if(this.isInCreativeTab(tab))
         for(int i = 0; i < EnumDyeColor.values().length; ++i) {
-            p_getSubItems_3_.add(new ItemStack(p_getSubItems_1_, 1, i));
+            items.add(new ItemStack(this, 1, i));
         }
     }
 

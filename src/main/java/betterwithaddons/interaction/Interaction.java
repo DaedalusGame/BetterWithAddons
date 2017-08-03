@@ -1,5 +1,11 @@
 package betterwithaddons.interaction;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.registries.ForgeRegistry;
+
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class Interaction {
@@ -24,4 +30,16 @@ public abstract class Interaction {
     void init() {}
 
     void postInit() {}
+
+    void modifyRecipes(RegistryEvent.Register<IRecipe> event) {}
+
+    protected void removeRecipeByOutput(ForgeRegistry<IRecipe> reg, ItemStack outputToRemove) {
+        for (Iterator<IRecipe> iter = reg.iterator(); iter.hasNext(); ) {
+            IRecipe recipe = iter.next();
+            if (ItemStack.areItemStacksEqual(recipe.getRecipeOutput(),outputToRemove)) {
+                reg.remove(reg.getKey(recipe));
+                break;
+            }
+        }
+    }
 }

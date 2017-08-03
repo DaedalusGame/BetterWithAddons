@@ -1,12 +1,16 @@
 package betterwithaddons.interaction;
 
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 
+@Mod.EventBusSubscriber
 public class ModInteractions {
     public static ArrayList<Interaction> LIST = new ArrayList<>();
 
@@ -21,6 +25,12 @@ public class ModInteractions {
     public static InteractionMinetweaker minetweaker;
     public static InteractionBWR betterWithRenewables;
     public static InteractionWheat betterWithWheat;
+
+    @SubscribeEvent
+    public static void registerRecipes(RegistryEvent.Register<IRecipe> event)
+    {
+        LIST.stream().filter(Interaction::isActive).forEach(interaction -> interaction.modifyRecipes(event));
+    }
 
     public static void preInit(FMLPreInitializationEvent event) {
         bwa = (InteractionBWA) addInteraction(new InteractionBWA());
@@ -37,19 +47,19 @@ public class ModInteractions {
 
         validate();
 
-        LIST.stream().filter(interaction -> interaction.isActive()).forEach(Interaction::preInit);
+        LIST.stream().filter(Interaction::isActive).forEach(Interaction::preInit);
     }
 
     public static void preInitEnd(FMLPreInitializationEvent event) {
-        LIST.stream().filter(interaction -> interaction.isActive()).forEach(Interaction::preInitEnd);
+        LIST.stream().filter(Interaction::isActive).forEach(Interaction::preInitEnd);
     }
 
     public static void init(FMLInitializationEvent event) {
-        LIST.stream().filter(interaction -> interaction.isActive()).forEach(Interaction::init);
+        LIST.stream().filter(Interaction::isActive).forEach(Interaction::init);
     }
 
     public static void postInit(FMLPostInitializationEvent event) {
-        LIST.stream().filter(interaction -> interaction.isActive()).forEach(Interaction::postInit);
+        LIST.stream().filter(Interaction::isActive).forEach(Interaction::postInit);
     }
 
     private static Interaction addInteraction(Interaction interaction) {

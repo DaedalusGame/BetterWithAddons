@@ -1,6 +1,7 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
+import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.recipes.DisplaySawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.SoapHandler;
@@ -70,6 +71,10 @@ public class InteractionBTWTweak extends Interaction {
             MinecraftForge.EVENT_BUS.register(new EggIncubationHandler());
         if(HARD_STUMPS || SOFT_WOODS)
             MinecraftForge.EVENT_BUS.register(new StumpingHandler());
+        if(REPLACE_WRITABLE_BOOK_RECIPE)
+            BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.WRITABLE_BOOK));
+
+        ConditionModule.MODULES.put("ReplaceWritableBookRecipe",() -> REPLACE_WRITABLE_BOOK_RECIPE);
     }
 
     @Override
@@ -90,7 +95,6 @@ public class InteractionBTWTweak extends Interaction {
 
         if(REPLACE_WRITABLE_BOOK_RECIPE)
         {
-            BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.WRITABLE_BOOK));
             //GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.WRITABLE_BOOK),new ItemStack(Items.BOOK),ModItems.materialTweak.getMaterial("ink_and_quill")));
         }
 

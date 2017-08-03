@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "betterwithaddons:wrought_lamp",
+	"data": 0
+  },
+  "pattern": [
+    " M ",
+	"MHM",
+	" M "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "M": {
+      "item": "betterwithaddons:wrought_bars",
+	  "data": 0
+    },
+    "H": {
+      "item": "betterwithaddons:decomat",
+	  "data": 0
+    }
+  }
+}

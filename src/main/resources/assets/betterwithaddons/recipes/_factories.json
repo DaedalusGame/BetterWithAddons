@@ -1,0 +1,5 @@
+{
+  "conditions": {
+    "module": "betterwithaddons.crafting.conditions.ConditionModule"
+  }
+}

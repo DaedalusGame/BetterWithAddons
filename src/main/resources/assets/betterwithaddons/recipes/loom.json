@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "betterwithaddons:loom",
+	"data": 0
+  },
+  "pattern": [
+    " O ",
+	"PIP",
+	"PPP"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "#HE_PLANKS"
+    },
+	"I": {
+	  "type": "forge:ore_dict",
+	  "ore": "nuggetIron"
+	},
+    "O": {
+      "type": "forge:ore_dict",
+	  "ore": "gearWood"
+    }
+  }
+}

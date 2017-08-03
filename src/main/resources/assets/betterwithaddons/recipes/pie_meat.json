@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "betterwithaddons:food_pie_meat",
+	"data": 0
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "betterwithaddons:food_ground_meat",
+	  "data": 0
+    },
+	{
+      "item": "betterwithaddons:food_ground_meat",
+	  "data": 0
+    },
+	{
+      "item": "minecraft:sugar",
+	  "data": 0
+    },
+	{
+	  "type": "forge:ore_dict",
+	  "ore": "egg"
+	}
+  ]
+}

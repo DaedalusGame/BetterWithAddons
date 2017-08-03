@@ -1,0 +1,25 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "CheaperBottles"
+      }
+  ],
+  "result": {
+    "item": "minecraft:glass_bottle",
+	"data": 0,
+	"count": 2
+  },
+  "pattern": [
+    "S S",
+	"SSS",
+	" S "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:decomat",
+	  "data": 3
+    }
+  }
+}

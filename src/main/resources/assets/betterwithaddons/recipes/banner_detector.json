@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "betterwithaddons:banner_detector",
+	"data": 0
+  },
+  "pattern": [
+    "SSS",
+	"O R",
+	"SSS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "type": "forge:ore_dict",
+	  "ore": "cobblestone"
+    },
+	"O": {
+      "item": "minecraft:ender_eye",
+	  "data": 0
+    },
+	"R": {
+      "type": "forge:ore_dict",
+	  "ore": "dustRedstone"
+    }
+  }
+}

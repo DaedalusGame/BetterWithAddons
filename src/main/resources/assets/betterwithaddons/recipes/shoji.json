@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "betterwithaddons:shoji",
+	"data": 0,
+	"count": 4
+  },
+  "pattern": [
+    "SWS",
+	"WSW",
+	"SWS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:japanmat",
+	  "data": 7
+    },
+	"W": {
+      "item": "betterwithaddons:japanmat",
+	  "data": 11
+    }
+  }
+}

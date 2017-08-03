@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "betterwithaddons:japanmat",
+	"data": 14
+  },
+  "pattern": [
+    "PWP",
+	"SWS",
+	"PWP"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+	"S": {
+      "type": "forge:ore_dict",
+	  "ore": "string"
+    },
+	"P": {
+	  "type": "forge:ore_dict",
+	  "ore": "paper"
+	},
+	"W": {
+	  "item": "betterwithaddons:japanmat",
+	  "data": 11
+	}
+  }
+}

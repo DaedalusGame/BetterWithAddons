@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "betterwithaddons:legendarium",
+	"data": 0
+  },
+  "pattern": [
+    "GSG",
+	"QQQ",
+	"GQG"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "G": {
+      "type": "forge:ore_dict",
+	  "ore": "ingotGold"
+    },
+	"Q": {
+      "item": "minecraft:quartz_block",
+	  "data": 1
+	},
+	"S": {
+      "type": "forge:ore_dict",
+	  "ore": "netherStar"
+	}
+  }
+}

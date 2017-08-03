@@ -1,0 +1,36 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "ConvenientToolsPreEnd"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:diamond_matchpick",
+	"data": 0
+  },
+  "pattern": [
+    "CTF",
+	" I ",
+	" I "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+	"T": {
+	  "item": "minecraft:diamond_pickaxe",
+	  "data": 0
+	},
+	"I": {
+	  "type": "forge:ore_dict",
+	  "ore": "stickWood"
+	},
+	"C": {
+	  "item": "betterwithmods:material",
+	  "data": 1
+	},
+	"F": {
+	  "type": "forge:ore_dict",
+	  "ore": "ingotConcentratedHellfire"
+	}
+  }
+}

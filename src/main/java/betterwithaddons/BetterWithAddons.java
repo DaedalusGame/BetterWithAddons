@@ -9,6 +9,7 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.tileentity.ModTileEntities;
+import betterwithmods.common.BWMRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -106,6 +107,8 @@ public class BetterWithAddons
 
 	public static void removeCraftingRecipe(ItemStack withoutput)
 	{
+		BWMRecipes.removeRecipe(withoutput);
+
 		/*List<IRecipe> craftingList = CraftingManager.getInstance().getRecipeList();
 		for(Iterator<IRecipe> craftingIterator = craftingList.iterator(); craftingIterator.hasNext(); ) {
 			IRecipe recipe = craftingIterator.next();

@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "betterwithaddons:greatarrow",
+	"data": 0
+  },
+  "pattern": [
+    "A",
+	"I",
+	"F"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "A": {
+      "item": "betterwithaddons:material",
+	  "data": 0
+    },
+	"I": {
+	  "item": "betterwithmods:material",
+	  "data": 36
+    },
+	"F": {
+	  "type": "forge:ore_dict",
+	  "ore": "feather"
+    }
+  }
+}

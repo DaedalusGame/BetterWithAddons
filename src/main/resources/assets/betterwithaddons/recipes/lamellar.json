@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "betterwithaddons:japanmat",
+	"data": 13
+  },
+  "pattern": [
+    "III",
+	"SLS",
+	"III"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+	"S": {
+      "type": "forge:ore_dict",
+	  "ore": "string"
+    },
+	"L": {
+	  "type": "forge:ore_dict",
+	  "ore": "leather"
+	},
+	"I": {
+	  "item": "betterwithaddons:japanmat",
+	  "data": 12
+	}
+  }
+}

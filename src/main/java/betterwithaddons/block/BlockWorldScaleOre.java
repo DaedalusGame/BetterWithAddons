@@ -1,5 +1,6 @@
 package betterwithaddons.block;
 
+import betterwithaddons.BetterWithAddons;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.Block;
@@ -110,8 +111,10 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
 
     @Override
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(this, 1, 0));
-        items.add(new ItemStack(this, 1, 1));
+        if(tab.equals(BetterWithAddons.instance.creativeTab)) {
+            items.add(new ItemStack(this, 1, 0));
+            items.add(new ItemStack(this, 1, 1));
+        }
     }
 
     @Override

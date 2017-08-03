@@ -2,6 +2,7 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.handler.ButcherHandler;
 import betterwithaddons.handler.FallingPlatformHandler;
 import betterwithaddons.handler.HardcoreWoolHandler;
@@ -24,6 +25,8 @@ import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
+import betterwithmods.module.ModuleLoader;
+import betterwithmods.module.hardcore.HCDiamond;
 import betterwithmods.module.hardcore.HCPiles;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPlanks;
@@ -86,8 +89,13 @@ public class InteractionBWM extends Interaction {
             MinecraftForge.EVENT_BUS.register(new ButcherHandler());
         if (FALLING_PLATFORMS)
             MinecraftForge.EVENT_BUS.register(new FallingPlatformHandler());
-        if (HARDCORE_SHEARING)
+        if (HARDCORE_SHEARING) {
             MinecraftForge.EVENT_BUS.register(new HardcoreWoolHandler());
+            BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.WOOL));
+        }
+
+        ConditionModule.MODULES.put("HardcoreDiamond", () -> ModuleLoader.isFeatureEnabled(HCDiamond.class));
+        ConditionModule.MODULES.put("HardcoreShearing", () -> HARDCORE_SHEARING);
     }
 
     public void addCauldronExplosion() {
@@ -174,7 +182,6 @@ public class InteractionBWM extends Interaction {
                 }
                 return NonNullList.create();});
 
-            BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.WOOL));
             for (EnumDyeColor color : EnumDyeColor.values()) {
                 ItemStack wool = ModItems.wool.getByColor(color);
                 //GameRegistry.addShapedRecipe(new ItemStack(Blocks.WOOL,1,color.getMetadata())," o ","oxo"," o ",'o',wool,'x',new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()));
@@ -206,6 +213,13 @@ public class InteractionBWM extends Interaction {
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BLASTING_OIL));
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HELLFIRE_DUST));
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE));
+        OreDictionary.registerOre("listAllExplosives", ModItems.materialBag.getMaterial("gunpowder"));
+        OreDictionary.registerOre("listAllExplosives", ModItems.materialBag.getMaterial("hellfire"));
+
+        OreDictionary.registerOre("listAllmeat", Items.RABBIT);
+
+        OreDictionary.registerOre("book", Items.WRITTEN_BOOK);
+        OreDictionary.registerOre("book", Items.BOOK);
 
         if(CAULDRONS_EXPLODE)
             addCauldronExplosion();
@@ -232,12 +246,6 @@ public class InteractionBWM extends Interaction {
         CauldronManager.getInstance().addRecipe(ModItems.material.getMaterial("bone_ingot"), ItemStack.EMPTY, new Object[]{new ItemStack(Items.BONE, 2), new ItemStack(Items.DYE, 8, 15)});
         CauldronManager.getInstance().addRecipe(ModItems.material.getMaterial("midori_popped"), ItemStack.EMPTY, new Object[]{ModItems.material.getMaterial("midori")});
         CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.meatballs, 1), ItemStack.EMPTY, new Object[]{new ItemStack(ModItems.groundMeat, 1)});
-        /*MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 3), ItemStack.EMPTY, new Object[]{new ItemStack(Items.BEEF)});
-        MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 2), ItemStack.EMPTY, new Object[]{new ItemStack(Items.MUTTON)});
-        MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 1), ItemStack.EMPTY, new Object[]{new ItemStack(Items.CHICKEN)});
-        MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 3), ItemStack.EMPTY, new Object[]{new ItemStack(Items.PORKCHOP)});
-        MillManager.getInstance().addRecipe(0, new ItemStack(ModItems.groundMeat, 1), ItemStack.EMPTY, new Object[]{new ItemStack(Items.RABBIT)});*/
-
         MillManager.getInstance().addRecipe(0, new ItemStack(ModBlocks.worldScale, 1), ItemStack.EMPTY, new Object[]{new ItemStack(ModBlocks.worldScaleOre, 1, 1)});
 
         //Bark
@@ -291,8 +299,6 @@ public class InteractionBWM extends Interaction {
 
         if (!CHORUS_IN_CAULDRON)
             GameRegistry.addSmelting(ModItems.material.getMaterial("midori"), ModItems.material.getMaterial("midori_popped"), 0.1f);
-
-        fixRecipes();
     }
 
     @Override
@@ -315,15 +321,6 @@ public class InteractionBWM extends Interaction {
             }
             MillManager.getInstance().addRecipe(new MillRecipe(0, groundMeat, ItemStack.EMPTY, new Object[]{meatStack}));
         }
-    }
-
-    public void fixRecipes() {
-        /*ItemStack ingotSoulforgedSteel = InteractionHelper.findItem(modid,"material",1,14);
-        ItemStack ingotIron = new ItemStack(Items.IRON_INGOT,1);
-        ItemStack nuggedSoulforgedSteel = InteractionHelper.findItem(modid,"material",9,31);
-        ItemStack nuggetIron = InteractionHelper.findItem(modid,"material",9,30);
-        registerCompressRecipe(nuggedSoulforgedSteel,ingotSoulforgedSteel,"nuggetSoulforgedSteel","ingotSoulforgedSteel");
-        registerCompressRecipe(nuggetIron,ingotIron,"nuggetIron","ingotIron");*/
     }
 
     private static void registerCompressRecipe(ItemStack small, ItemStack big, String oreSmall, String oreBig) {

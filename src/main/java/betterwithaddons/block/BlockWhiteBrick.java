@@ -1,5 +1,6 @@
 package betterwithaddons.block;
 
+import betterwithaddons.BetterWithAddons;
 import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -33,13 +34,12 @@ public class BlockWhiteBrick extends BlockBase implements IHasVariants {
         return (state.getValue(VARIANT)).getMetadata();
     }
 
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
-    {
-        if(!disabled)
+    @Override
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if(tab.equals(BetterWithAddons.instance.creativeTab))
         for (EnumType type : EnumType.values())
         {
-            list.add(new ItemStack(itemIn, 1, type.getMetadata()));
+            items.add(new ItemStack(this, 1, type.getMetadata()));
         }
     }
 

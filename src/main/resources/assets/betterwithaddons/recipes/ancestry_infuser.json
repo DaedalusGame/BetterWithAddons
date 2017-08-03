@@ -1,0 +1,32 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "!AlternateInfuser"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:ancestry_infuser",
+	"data": 0
+  },
+  "pattern": [
+    " A ",
+	" A ",
+	"WTW"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "A": {
+      "item": "betterwithaddons:ancestry_bottle",
+	  "data": 0
+    },
+	"T": {
+      "item": "minecraft:enchanting_table",
+	  "data": 0
+    },
+	"W": {
+      "item": "minecraft:wool",
+	  "data": 4
+    }
+  }
+}

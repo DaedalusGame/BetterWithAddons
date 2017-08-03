@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "betterwithaddons:wood_lamp",
+	"data": 0
+  },
+  "pattern": [
+    "PMP",
+	"MHM",
+	"PMP"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "M": {
+      "type": "forge:ore_dict",
+	  "ore": "mouldingWood"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "H": {
+      "item": "betterwithaddons:decomat",
+	  "data": 0
+    }
+  }
+}

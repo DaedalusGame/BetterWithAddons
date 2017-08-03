@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "betterwithaddons:japanmat",
+	"data": 16
+  },
+  "pattern": [
+    "T",
+	"H",
+	"T"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+	"T": {
+	  "type": "forge:ore_dict",
+	  "ore": "ingotTamahagane"
+	},
+	"H": {
+	  "type": "forge:ore_dict",
+	  "ore": "ingotHochoTetsu"
+	}
+  }
+}

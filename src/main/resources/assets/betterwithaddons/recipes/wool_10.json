@@ -1,0 +1,28 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "HardcoreShearing"
+      }
+  ],
+  "result": {
+    "item": "minecraft:wool",
+	"data": 10
+  },
+  "pattern": [
+    " W ",
+	"WXW",
+	" W "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "W": {
+      "item": "betterwithaddons:wool",
+	  "data": 10
+    },
+	"X": {
+      "item": "betterwithmods:aesthetic",
+	  "data": 12
+    }
+  }
+}

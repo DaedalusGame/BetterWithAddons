@@ -3,23 +3,31 @@ package betterwithaddons.interaction;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockWhiteBrick;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
+import betterwithmods.module.gameplay.AnvilRecipes;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class InteractionDecoAddon extends Interaction {
@@ -61,7 +69,13 @@ public class InteractionDecoAddon extends Interaction {
 
     @Override
     public void preInit() {
-
+        ConditionModule.MODULES.put("DecoAddon", this::isActive);
+        ConditionModule.MODULES.put("ChiselBricksInAnvil", () -> CHISEL_BRICKS_IN_ANVIL);
+        ConditionModule.MODULES.put("CheaperBottles", () -> CHEAPER_BOTTLES);
+        if(CHEAPER_BOTTLES)
+            BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.GLASS_BOTTLE,3));
+        if(CHISEL_BRICKS_IN_ANVIL)
+            BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.CHISELED.getMetadata()));
     }
 
     @Override
@@ -78,12 +92,11 @@ public class InteractionDecoAddon extends Interaction {
 
         //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.paperLantern),"pwp","wtw","pwp",'p',new ItemStack(Items.PAPER),'w',new ItemStack(BWMBlocks.WOOD_MOULDING,1, OreDictionary.WILDCARD_VALUE),'t',woodLanternLight);
         //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.wroughtLantern)," w ","wtw"," w ",'w',new ItemStack(ModBlocks.wroughtBars),'t',ironLanternLight);
-        //if(ALTERNATE_WROUGHT_BARS)
-        //    SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars, 8), "bbbb", "bbbb", 'b', new ItemStack(Blocks.IRON_BARS));
-        //else
-        //    SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.wroughtBars,10), "b b ", "bbbb", "b b ", "b b ", 'b', new ItemStack(Items.IRON_INGOT));
-        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.chandelier)," b ","tbt","tbt",'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight);
-        //SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.chandelier), " ss ", " bb ", "tbbt", "tbbt", 's', new ItemStack(Blocks.STONE),'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight);
+        if(ALTERNATE_WROUGHT_BARS)
+            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"wrought_bars"),new ItemStack(ModBlocks.wroughtBars, 8), "bbbb", "bbbb", 'b', new ItemStack(Blocks.IRON_BARS));
+        else
+            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"wrought_bars"),new ItemStack(ModBlocks.wroughtBars,10), "b b ", "bbbb", "b b ", "b b ", 'b', new ItemStack(Items.IRON_INGOT));
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"chandelier"),new ItemStack(ModBlocks.chandelier), " ss ", " bb ", "tbbt", "tbbt", 's', new ItemStack(Blocks.STONE),'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight);
 
         ItemStack whiteBrick = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata());
         ItemStack whiteBrick_mossy = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.MOSSY.getMetadata());
@@ -91,9 +104,8 @@ public class InteractionDecoAddon extends Interaction {
 
         //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.whiteBrick, 4, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()),"bb","bb",'b',new ItemStack(BWMBlocks.AESTHETIC, 1, BlockAesthetic.EnumType.WHITESTONE.getMeta()));
         if(CHISEL_BRICKS_IN_ANVIL) {
-            BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.CHISELED.getMetadata()));
-            //SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(Blocks.STONEBRICK, 3, BlockStoneBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.DEFAULT.getMetadata()));
-            //SteelCraftingManager.getInstance().addSteelShapedOreRecipe(new ItemStack(ModBlocks.whiteBrick, 3, BlockWhiteBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()));
+            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"stone_brick_chiseled"),new ItemStack(Blocks.STONEBRICK, 3, BlockStoneBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.DEFAULT.getMetadata()));
+            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"white_brick_chiseled"),new ItemStack(ModBlocks.whiteBrick, 3, BlockWhiteBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()));
         }
         else
         {
@@ -120,10 +132,10 @@ public class InteractionDecoAddon extends Interaction {
             GameRegistry.addSmelting(ModItems.materialDeco.getMaterial("glass_chunk",4),new ItemStack(Blocks.GLASS,1),0.05f);
         }
         //GameRegistry.addShapelessRecipe(ModItems.materialDeco.getMaterial("glass_chunk",4),new ItemStack(Blocks.GLASS,1));
-        if(CHEAPER_BOTTLES) {
-            BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.GLASS_BOTTLE,3));
+        //if(CHEAPER_BOTTLES) {
+            //BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.GLASS_BOTTLE,3));
             //GameRegistry.addShapedRecipe(new ItemStack(Items.GLASS_BOTTLE,3)," # ","# #","###",'#',ModItems.materialDeco.getMaterial("glass_chunk",1));
-        }
+        //}
 
         if(RECYCLE_BOTTLES)
             StokedCrucibleManager.getInstance().addRecipe(ModItems.materialDeco.getMaterial("glass_chunk",CHEAPER_BOTTLES ? 2 : 4),new ItemStack[]{new ItemStack(Items.GLASS_BOTTLE,1)});
@@ -161,15 +173,14 @@ public class InteractionDecoAddon extends Interaction {
 
     public void modifyPaneRecipe()
     {
-        /*List<IRecipe> craftingList = CraftingManager.getInstance().getRecipeList();
-        for(Iterator<IRecipe> craftingIterator = craftingList.iterator(); craftingIterator.hasNext(); ) {
+        for(Iterator<IRecipe> craftingIterator = CraftingManager.REGISTRY.iterator(); craftingIterator.hasNext(); ) {
             IRecipe recipe = craftingIterator.next();
             ItemStack output = recipe.getRecipeOutput();
             Block block = Block.getBlockFromItem(output.getItem());
             if(block == Blocks.GLASS_PANE || block == Blocks.STAINED_GLASS_PANE) {
                 output.setCount((output.getCount() * 3) / 4);
             }
-        }*/
+        }
     }
 
     public void addStainingRecipe(ItemStack lighter, ItemStack darker)

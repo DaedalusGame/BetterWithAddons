@@ -1,0 +1,30 @@
+{
+  "result": {
+    "item": "betterwithaddons:chute",
+	"data": 0
+  },
+  "pattern": [
+    "S S",
+	" P ",
+	"MGM"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+	  "type": "forge:ore_dict",
+	  "ore": "sidingWood"
+    },
+	"M": {
+	  "type": "forge:ore_dict",
+	  "ore": "mouldingWood"
+	},
+	"P": {
+	  "item": "minecraft:wooden_pressure_plate",
+	  "data": 0
+	},
+    "G": {
+      "type": "forge:ore_dict",
+	  "ore": "gearWood"
+    }
+  }
+}

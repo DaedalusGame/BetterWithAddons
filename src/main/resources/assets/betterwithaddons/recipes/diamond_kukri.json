@@ -1,0 +1,27 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "ConvenientToolsPreEnd"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:diamond_kukri",
+	"data": 0
+  },
+  "pattern": [
+    "  M",
+	" M ",
+	"T  "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "M": {
+      "item": "#DIAMONDMAT"
+    },
+	"T": {
+	  "item": "minecraft:diamond_axe",
+	  "data": 0
+	}
+  }
+}

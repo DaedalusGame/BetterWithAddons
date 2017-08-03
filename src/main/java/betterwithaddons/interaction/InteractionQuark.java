@@ -1,17 +1,30 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
+import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.item.ModItems;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.registry.IRegistry;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ForgeRegistry;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class InteractionQuark extends Interaction {
-    final String modid = "Quark";
+    final String modid = "quark";
     public static boolean ENABLED = true;
     public static boolean MIDORI_BLOCKS_NEED_CHUNKS = true;
+
+    @GameRegistry.ObjectHolder("quark:midori_block")
+    Block midoriBlock;
 
     @Override
     public boolean isActive() {
@@ -36,23 +49,22 @@ public class InteractionQuark extends Interaction {
 
     @Override
     public void preInit() {
-
+        ConditionModule.MODULES.put("MidoriNeedsChunks", () -> MIDORI_BLOCKS_NEED_CHUNKS);
     }
 
     @Override
     public void init() {
-        if(!isActive())
-            return;
-
-        ItemStack midori = InteractionHelper.findBlock(modid,"midori_block",4,0);
-
-        if(MIDORI_BLOCKS_NEED_CHUNKS) {
-            BetterWithAddons.removeCraftingRecipe(midori);
-            //GameRegistry.addShapedRecipe(midori, "mm", "mm", 'm', ModItems.material.getMaterial("midori_popped"));
-        }
     }
 
     @Override
     public void postInit() {
+    }
+
+    @Override
+    public void modifyRecipes(RegistryEvent.Register<IRecipe> event) {
+        ForgeRegistry<IRecipe> reg = (ForgeRegistry<IRecipe>) event.getRegistry();
+
+        if(MIDORI_BLOCKS_NEED_CHUNKS)
+            removeRecipeByOutput(reg, new ItemStack(midoriBlock,4));
     }
 }

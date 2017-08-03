@@ -1,0 +1,27 @@
+{
+  "conditions": [
+      {
+        "type": "betterwithaddons:module",
+        "module": "ConvenientToolsPreEnd"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:gold_machete",
+	"data": 0
+  },
+  "pattern": [
+    "  M",
+	" M ",
+	"I  "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "M": {
+      "type": "forge:ore_dict",
+	  "ore": "ingotGold"
+    },
+	"I": {
+	  "item": "minecraft:golden_sword"
+	}
+  }
+}

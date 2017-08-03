@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "betterwithaddons:planks_mulberry",
+	"data": 0,
+	"count": 1
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+	{
+	  "item": "betterwithaddons:log_mulberry",
+	  "data": 0
+	}
+  ]
+}

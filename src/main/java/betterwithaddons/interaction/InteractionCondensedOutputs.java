@@ -1,8 +1,10 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.crafting.OreStack;
+import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.blocks.BlockAesthetic;
@@ -14,7 +16,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.registries.ForgeRegistry;
+import org.apache.http.config.Registry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,12 +65,11 @@ public class InteractionCondensedOutputs extends Interaction {
 
     @Override
     public void preInit() {
-        bagStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH,1);
-        crateStack = new ItemStack(Blocks.PLANKS,1);
-        congealedStack = new ItemStack(Items.SLIME_BALL,1);
-        boltStack = new ItemStack(BWMBlocks.WOOD_MOULDING,1);
-        bundleStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_FIBERS,1);
+        ConditionModule.MODULES.put("DecoAddon", this::isActive);
+    }
 
+    @Override
+    public void init() {
         if(!LOSE_BINDER) {
             ModItems.materialBag.setContainer(bagStack);
             ModItems.materialCrate.setContainer(crateStack);
@@ -69,74 +77,10 @@ public class InteractionCondensedOutputs extends Interaction {
             ModItems.materialBolt.setContainer(boltStack);
             ModItems.materialBundle.setContainer(bundleStack);
         }
-    }
 
-    @Override
-    public void init() {
         //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "plankWood", 'i', "nuggetIron"));
         //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "sidingWood", 'i', "nuggetIron"));
         //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.spindle,3),"s","s","s",'s',new ItemStack(BWMBlocks.WOOD_MOULDING,1));
-
-        OreDictionary.registerOre("listAllExplosives",ModItems.materialBag.getMaterial("gunpowder"));
-        OreDictionary.registerOre("listAllExplosives",ModItems.materialBag.getMaterial("hellfire"));
-
-        addBaggingRecipe(ModItems.materialBag.getMaterial("seed"),new ItemStack(Items.WHEAT_SEEDS));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("seed_hemp"),new ItemStack(BWMBlocks.HEMP));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("seed_melon"),new ItemStack(Items.MELON_SEEDS));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("seed_pumpkin"),new ItemStack(Items.PUMPKIN_SEEDS));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("seed_beets"),new ItemStack(Items.BEETROOT_SEEDS));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("cocoa"),new ItemStack(Items.DYE,1,EnumDyeColor.BROWN.getDyeDamage()));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("redstone"),new ItemStack(Items.REDSTONE));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("glowstone"),new ItemStack(Items.GLOWSTONE_DUST));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("sugar"),new ItemStack(Items.SUGAR));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("gunpowder"),new ItemStack(Items.GUNPOWDER));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("flour"),new ItemStack(BWMBlocks.RAW_PASTRY,1, BlockRawPastry.EnumType.BREAD.getMetadata()));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("sulfur"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BRIMSTONE));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("nitre"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NITER));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("sawdust"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("sawdust_soul"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOUL_DUST));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("potash"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("hellfire"),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HELLFIRE_DUST));
-        addBaggingRecipe(ModItems.materialBag.getMaterial("kibble"), new ItemStack(BWMItems.KIBBLE));
-
-        addCratingRecipe(ModItems.materialCrate.getMaterial("pork"),new ItemStack(Items.COOKED_PORKCHOP));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("pork_raw"),new ItemStack(Items.PORKCHOP));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("steak"),new ItemStack(Items.COOKED_BEEF));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("steak_raw"),new ItemStack(Items.BEEF));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("chicken"),new ItemStack(Items.COOKED_CHICKEN));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("chicken_raw"),new ItemStack(Items.CHICKEN));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("mutton"),new ItemStack(Items.COOKED_MUTTON));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("mutton_raw"),new ItemStack(Items.MUTTON));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("rabbit"),new ItemStack(Items.COOKED_RABBIT));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("rabbit_raw"),new ItemStack(Items.RABBIT));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("egg"),new ItemStack(Items.EGG));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("slime"),new ItemStack(Items.SLIME_BALL));
-        addCratingRecipe(ModItems.materialCrate.getMaterial("enderpearl"),new ItemStack(Items.ENDER_PEARL));
-
-        addCongealingRecipe(ModItems.materialCongealed.getMaterial("mushroom"),new ItemStack(Blocks.BROWN_MUSHROOM));
-        addCongealingRecipe(ModItems.materialCongealed.getMaterial("amanita"),new ItemStack(Blocks.RED_MUSHROOM));
-        addCongealingRecipe(ModItems.materialCongealed.getMaterial("bone"),new ItemStack(Items.BONE));
-        addCongealingRecipe(ModItems.materialCongealed.getMaterial("flesh"),new ItemStack(Items.ROTTEN_FLESH));
-        addCongealingRecipe(ModItems.materialCongealed.getMaterial("eye"),new ItemStack(Items.SPIDER_EYE));
-        addCongealingRecipe(ModItems.materialCongealed.getMaterial("wart"),new ItemStack(Items.NETHER_WART));
-
-        addRollupRecipe(ModItems.materialBolt.getMaterial("fabric"),new OreStack("fabricHemp",8));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("vine"),new ItemStack(Blocks.VINE));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("paper"),new OreStack("paper",8));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("leather"),new OreStack("leather",8));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("scoured_leather"),new OreStack("hideScoured",8));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("tanned_leather"),new OreStack("hideTanned",8));
-        addRollupRecipe(ModItems.materialBolt.getMaterial("string"),new OreStack("string",8));
-
-        addBundlingRecipe(ModItems.materialBundle.getMaterial("feather"),new ItemStack(Items.FEATHER));
-        addBundlingRecipe(ModItems.materialBundle.getMaterial("blazerods"),new ItemStack(Items.BLAZE_ROD));
-        addBundlingRecipe(ModItems.materialBundle.getMaterial("arrows"),new ItemStack(Items.ARROW));
-        addBundlingRecipe(ModItems.materialBundle.getMaterial("oak"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.OAK.getMetadata()));
-        addBundlingRecipe(ModItems.materialBundle.getMaterial("birch"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.BIRCH.getMetadata()));
-        addBundlingRecipe(ModItems.materialBundle.getMaterial("spruce"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.SPRUCE.getMetadata()));
-        addBundlingRecipe(ModItems.materialBundle.getMaterial("jungle"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.JUNGLE.getMetadata()));
-        addBundlingRecipe(ModItems.materialBundle.getMaterial("acacia"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.ACACIA.getMetadata()));
-        addBundlingRecipe(ModItems.materialBundle.getMaterial("darkoak"),new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
 
         CauldronManager.getInstance().addRecipe(new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.DUNG.getMeta()),new Object[]{new betterwithmods.common.registry.OreStack("dung",9)});
 
@@ -149,57 +93,142 @@ public class InteractionCondensedOutputs extends Interaction {
 
     }
 
-    private void addBaggingRecipe(ItemStack output, ItemStack material)
-    {
-        addCondensingRecipe(output, material, bagStack);
+    @Override
+    void modifyRecipes(RegistryEvent.Register<IRecipe> event) {
+        ForgeRegistry<IRecipe> registry = (ForgeRegistry<IRecipe>) event.getRegistry();
+
+        bagStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH,1);
+        crateStack = new ItemStack(Blocks.PLANKS,1);
+        congealedStack = new ItemStack(Items.SLIME_BALL,1);
+        boltStack = new ItemStack(BWMBlocks.WOOD_MOULDING,1);
+        bundleStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_FIBERS,1);
+
+        addBaggingRecipe(registry,"seed",new ItemStack(Items.WHEAT_SEEDS));
+        addBaggingRecipe(registry,"seed_hemp",new ItemStack(BWMBlocks.HEMP));
+        addBaggingRecipe(registry,"seed_melon",new ItemStack(Items.MELON_SEEDS));
+        addBaggingRecipe(registry,"seed_pumpkin",new ItemStack(Items.PUMPKIN_SEEDS));
+        addBaggingRecipe(registry,"seed_beets",new ItemStack(Items.BEETROOT_SEEDS));
+        addBaggingRecipe(registry,"cocoa",new ItemStack(Items.DYE,1,EnumDyeColor.BROWN.getDyeDamage()));
+        addBaggingRecipe(registry,"redstone",new ItemStack(Items.REDSTONE));
+        addBaggingRecipe(registry,"glowstone",new ItemStack(Items.GLOWSTONE_DUST));
+        addBaggingRecipe(registry,"sugar",new ItemStack(Items.SUGAR));
+        addBaggingRecipe(registry,"gunpowder",new ItemStack(Items.GUNPOWDER));
+        addBaggingRecipe(registry,"flour",new ItemStack(BWMBlocks.RAW_PASTRY,1, BlockRawPastry.EnumType.BREAD.getMetadata()));
+        addBaggingRecipe(registry,"sulfur",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BRIMSTONE));
+        addBaggingRecipe(registry,"nitre",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NITER));
+        addBaggingRecipe(registry,"sawdust",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST));
+        addBaggingRecipe(registry,"sawdust_soul",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOUL_DUST));
+        addBaggingRecipe(registry,"potash",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
+        addBaggingRecipe(registry,"hellfire",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HELLFIRE_DUST));
+        addBaggingRecipe(registry,"kibble", new ItemStack(BWMItems.KIBBLE));
+
+        addCratingRecipe(registry,"pork",new ItemStack(Items.COOKED_PORKCHOP));
+        addCratingRecipe(registry,"pork_raw",new ItemStack(Items.PORKCHOP));
+        addCratingRecipe(registry,"steak",new ItemStack(Items.COOKED_BEEF));
+        addCratingRecipe(registry,"steak_raw",new ItemStack(Items.BEEF));
+        addCratingRecipe(registry,"chicken",new ItemStack(Items.COOKED_CHICKEN));
+        addCratingRecipe(registry,"chicken_raw",new ItemStack(Items.CHICKEN));
+        addCratingRecipe(registry,"mutton",new ItemStack(Items.COOKED_MUTTON));
+        addCratingRecipe(registry,"mutton_raw",new ItemStack(Items.MUTTON));
+        addCratingRecipe(registry,"rabbit",new ItemStack(Items.COOKED_RABBIT));
+        addCratingRecipe(registry,"rabbit_raw",new ItemStack(Items.RABBIT));
+        addCratingRecipe(registry,"egg",new ItemStack(Items.EGG));
+        addCratingRecipe(registry,"slime",new ItemStack(Items.SLIME_BALL));
+        addCratingRecipe(registry,"enderpearl",new ItemStack(Items.ENDER_PEARL));
+
+        addCongealingRecipe(registry,"mushroom",new ItemStack(Blocks.BROWN_MUSHROOM));
+        addCongealingRecipe(registry,"amanita",new ItemStack(Blocks.RED_MUSHROOM));
+        addCongealingRecipe(registry,"bone",new ItemStack(Items.BONE));
+        addCongealingRecipe(registry,"flesh",new ItemStack(Items.ROTTEN_FLESH));
+        addCongealingRecipe(registry,"eye",new ItemStack(Items.SPIDER_EYE));
+        addCongealingRecipe(registry,"wart",new ItemStack(Items.NETHER_WART));
+
+        addRollupRecipe(registry,"fabric",new OreStack("fabricHemp",8));
+        addRollupRecipe(registry,"vine",new ItemStack(Blocks.VINE));
+        addRollupRecipe(registry,"paper",new OreStack("paper",8));
+        addRollupRecipe(registry,"leather",new OreStack("leather",8));
+        addRollupRecipe(registry,"scoured_leather",new OreStack("hideScoured",8));
+        addRollupRecipe(registry,"tanned_leather",new OreStack("hideTanned",8));
+        addRollupRecipe(registry,"string",new OreStack("string",8));
+
+        addBundlingRecipe(registry,"feather",new ItemStack(Items.FEATHER));
+        addBundlingRecipe(registry,"blazerods",new ItemStack(Items.BLAZE_ROD));
+        addBundlingRecipe(registry,"arrows",new ItemStack(Items.ARROW));
+        addBundlingRecipe(registry,"oak",new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.OAK.getMetadata()));
+        addBundlingRecipe(registry,"birch",new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.BIRCH.getMetadata()));
+        addBundlingRecipe(registry,"spruce",new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.SPRUCE.getMetadata()));
+        addBundlingRecipe(registry,"jungle",new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.JUNGLE.getMetadata()));
+        addBundlingRecipe(registry,"acacia",new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.ACACIA.getMetadata()));
+        addBundlingRecipe(registry,"darkoak",new ItemStack(Blocks.SAPLING,1, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
+
     }
 
-    private void addCratingRecipe(ItemStack output, ItemStack material)
+    private void addBaggingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)
     {
-        addCondensingRecipe(output, material, crateStack);
+        ItemStack output = ModItems.materialBag.getMaterial(id);
+
+        addCondensingRecipe(registry,id,output, material, bagStack);
     }
 
-    private void addCongealingRecipe(ItemStack output, ItemStack material)
+    private void addCratingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)
     {
-        addCondensingRecipe(output, material, congealedStack);
+        ItemStack output = ModItems.materialCrate.getMaterial(id);
+
+        addCondensingRecipe(registry,id,output, material, crateStack);
+    }
+
+    private void addCongealingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)
+    {
+        ItemStack output = ModItems.materialCongealed.getMaterial(id);
+
+        addCondensingRecipe(registry,id,output, material, congealedStack);
 
         ItemStack material8 = material.copy();
         material8.setCount(8);
         CauldronManager.getInstance().addRecipe(output,new Object[]{material8,congealedStack.copy()});
     }
 
-    private void addRollupRecipe(ItemStack output, ItemStack material)
+    private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)
     {
-        addCondensingRecipe(output, material, boltStack);
+        ItemStack output = ModItems.materialBolt.getMaterial(id);
+
+        addCondensingRecipe(registry,id,output, material, boltStack);
 
         ItemStack material8 = material.copy();
         material8.setCount(8);
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material8,true);
     }
 
-    private void addRollupRecipe(ItemStack output, OreStack material)
+    private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, OreStack material)
     {
-        addCondensingRecipe(output, material, boltStack);
+        ItemStack output = ModItems.materialBolt.getMaterial(id);
+
+        addCondensingRecipe(registry,id,output, material, boltStack);
         OreStack material8 = material.copy();
         material8.setCount(8);
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material8,true);
     }
 
-    private void addBundlingRecipe(ItemStack output, ItemStack material)
+    private void addBundlingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)
     {
-        addCondensingRecipe(output, material, bundleStack);
+        ItemStack output = ModItems.materialBundle.getMaterial(id);
+
+        addCondensingRecipe(registry,id,output, material, bundleStack);
     }
 
-    private void addCondensingRecipe(ItemStack output, ItemStack material, ItemStack frame)
+    private void addCondensingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack output, ItemStack material, ItemStack frame)
     {
         ItemStack outmaterial = material.copy();
         outmaterial.setCount(8);
-        //GameRegistry.addShapedRecipe(output,"aaa","aba","aaa",'a',material,'b',frame);
-        //GameRegistry.addShapelessRecipe(outmaterial,output);
+        ResourceLocation compressLoc = new ResourceLocation(Reference.MOD_ID,"compress_"+id);
+        ResourceLocation uncompressLoc = new ResourceLocation(Reference.MOD_ID,"uncompress_"+id);
+
+        registry.register(new ShapedOreRecipe(compressLoc,output,"aaa","aba","aaa",'a',material,'b',frame).setRegistryName(compressLoc));
+        registry.register(new ShapelessOreRecipe(uncompressLoc,outmaterial,output).setRegistryName(uncompressLoc));
     }
 
 
-    private void addCondensingRecipe(ItemStack output, OreStack material, ItemStack frame)
+    private void addCondensingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack output, OreStack material, ItemStack frame)
     {
         ItemStack outmaterial = ItemStack.EMPTY;
         List<ItemStack> orestacks = material.getOres();
@@ -208,7 +237,10 @@ public class InteractionCondensedOutputs extends Interaction {
             outmaterial = orestacks.get(0).copy();
             outmaterial.setCount(8);
         }
-        //GameRegistry.addRecipe(new ShapedOreRecipe(output,"aaa","aba","aaa",'a',material.getOreName(),'b',frame));
-        //GameRegistry.addRecipe(new ShapelessOreRecipe(outmaterial, output));
+        ResourceLocation compressLoc = new ResourceLocation(Reference.MOD_ID,"compress_"+id);
+        ResourceLocation uncompressLoc = new ResourceLocation(Reference.MOD_ID,"uncompress_"+id);
+
+        registry.register(new ShapedOreRecipe(compressLoc,output,"aaa","aba","aaa",'a',material.getOreName(),'b',frame).setRegistryName(compressLoc));
+        registry.register(new ShapelessOreRecipe(uncompressLoc,outmaterial, output).setRegistryName(uncompressLoc));
     }
 }

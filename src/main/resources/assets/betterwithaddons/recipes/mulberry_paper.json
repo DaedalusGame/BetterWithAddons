@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "minecraft:paper",
+	"data": 0,
+	"count": 1
+  },
+  "pattern": [
+	"SSS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:log_mulberry",
+	  "data": 0
+    }
+  }
+}
