@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import java.util.List;
 
 public class InteractionQuark extends Interaction {
-    final String modid = "Quark";
+    final String modid = "quark";
     public static boolean ENABLED = true;
     public static boolean MIDORI_BLOCKS_NEED_CHUNKS = true;
 
