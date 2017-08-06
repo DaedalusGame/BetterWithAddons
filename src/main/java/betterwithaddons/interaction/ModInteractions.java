@@ -49,6 +49,11 @@ public class ModInteractions {
         LIST.stream().filter(Interaction::isActive).forEach(Interaction::preInit);
     }
 
+    public static void preInitClient()
+    {
+        LIST.stream().filter(Interaction::isActive).forEach(Interaction::preInitClient);
+    }
+
     public static void preInitEnd(FMLPreInitializationEvent event) {
         LIST.stream().filter(Interaction::isActive).forEach(Interaction::preInitEnd);
     }

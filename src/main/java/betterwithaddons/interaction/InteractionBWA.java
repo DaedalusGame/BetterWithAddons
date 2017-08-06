@@ -90,14 +90,18 @@ public class InteractionBWA extends Interaction {
         //MinecraftForge.EVENT_BUS.register(new TerratorialHandler()); //TODO: Make this do something
         MinecraftForge.EVENT_BUS.register(new ElytraUpdriftHandler());
         MinecraftForge.EVENT_BUS.register(new HarvestHandler());
-        if(OBVIOUS_SAND_STORMS || OBVIOUS_STORMS)
-            MinecraftForge.EVENT_BUS.register(new StormHandler());
         if(GRASS_TO_CLAY || GRASS_TO_SAND) {
             PatientiaHandler.addCustomBlock(Blocks.GRASS);
             MinecraftForge.EVENT_BUS.register(new GrassHandler());
         }
         if(STONEBRICKS_NEED_SMELTING)
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 4));
+    }
+
+    @Override
+    void preInitClient() {
+        if(OBVIOUS_SAND_STORMS || OBVIOUS_STORMS)
+            MinecraftForge.EVENT_BUS.register(new StormHandler());
     }
 
     @Override

@@ -10,6 +10,7 @@ import betterwithaddons.client.handler.ParticleHandler;
 import betterwithaddons.client.models.ItemModels;
 import betterwithaddons.client.render.*;
 import betterwithaddons.entity.*;
+import betterwithaddons.interaction.ModInteractions;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityAlchDragon;
@@ -51,6 +52,7 @@ public class ClientProxy implements IProxy
     @Override
     public void preInit() {
         MinecraftForge.EVENT_BUS.register(this);
+        ModInteractions.preInitClient();
     }
 
     @Override

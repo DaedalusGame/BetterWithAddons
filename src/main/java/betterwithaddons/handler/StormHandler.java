@@ -33,7 +33,6 @@ public class StormHandler {
     float desiredDistance, desiredDistanceScale;
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void playerTick(TickEvent.PlayerTickEvent tickEvent) {
         EntityPlayer entity = tickEvent.player;
         if (entity == null)
@@ -82,7 +81,6 @@ public class StormHandler {
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void fogDistance(EntityViewRenderEvent.RenderFogEvent fogEvent) {
         if (!InteractionBWA.OBVIOUS_SAND_STORMS)
             return;
@@ -121,7 +119,6 @@ public class StormHandler {
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void fogColor(EntityViewRenderEvent.FogColors fogEvent) {
         if (!InteractionBWA.OBVIOUS_SAND_STORMS)
             return;

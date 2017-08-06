@@ -1,36 +1,26 @@
 package betterwithaddons.client;
 
-import betterwithaddons.BetterWithAddons;
 import betterwithaddons.client.models.ModelToolShardInner;
 import betterwithaddons.interaction.InteractionBWA;
-import betterwithaddons.interaction.InteractionBWM;
-import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.ItemUtil;
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.IModel;
-import net.minecraftforge.client.model.ItemLayerModel;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -40,13 +30,11 @@ public class ToolShardModelHandler {
     Method getVariantNames;
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void textureStitch(TextureStitchEvent.Pre event) {
         event.getMap().registerSprite(new ResourceLocation(Reference.MOD_ID, "items/breakmask"));
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    @SideOnly(Side.CLIENT)
     public void onModelBake(ModelBakeEvent event)
     {
         if(!InteractionBWA.ARMOR_SHARD_RENDER)
@@ -74,8 +62,6 @@ public class ToolShardModelHandler {
             }
         }
     }
-
-
 
     protected List<String> getVariantNames(ModelLoader loader, Item item)
     {

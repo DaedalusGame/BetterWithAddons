@@ -24,6 +24,8 @@ public abstract class Interaction {
         return null;
     }
 
+    void preInitClient() {}
+
     void preInit() {}
 
     void preInitEnd() {}
