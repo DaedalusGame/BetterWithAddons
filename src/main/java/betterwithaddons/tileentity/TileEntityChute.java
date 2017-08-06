@@ -1,6 +1,7 @@
 package betterwithaddons.tileentity;
 
 import betterwithaddons.block.BlockChute;
+import betterwithaddons.block.ModBlocks;
 import betterwithaddons.util.InventoryUtil;
 import betterwithmods.api.tile.IMechanicalPower;
 import betterwithmods.common.blocks.mechanical.IBlockActive;
@@ -322,5 +323,20 @@ public class TileEntityChute extends TileEntityBase implements ITickable, IMecha
     @Override
     public int getMinimumInput(EnumFacing facing) {
         return 0;
+    }
+
+    @Override
+    public Block getBlock() {
+        return ModBlocks.chute;
+    }
+
+    @Override
+    public World getBlockWorld() {
+        return getWorld();
+    }
+
+    @Override
+    public BlockPos getBlockPos() {
+        return getPos();
     }
 }

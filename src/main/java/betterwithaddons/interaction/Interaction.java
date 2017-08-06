@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistry;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Interaction {
     boolean isActive() {
@@ -34,9 +35,13 @@ public abstract class Interaction {
     void modifyRecipes(RegistryEvent.Register<IRecipe> event) {}
 
     protected void removeRecipeByOutput(ForgeRegistry<IRecipe> reg, ItemStack outputToRemove) {
+        removeRecipeByOutput(reg,outputToRemove,null);
+    }
+
+    protected void removeRecipeByOutput(ForgeRegistry<IRecipe> reg, ItemStack outputToRemove, String modid) {
         for (Iterator<IRecipe> iter = reg.iterator(); iter.hasNext(); ) {
             IRecipe recipe = iter.next();
-            if (ItemStack.areItemStacksEqual(recipe.getRecipeOutput(),outputToRemove)) {
+            if ((modid == null || modid.equals(recipe.getRegistryName().getResourceDomain())) && ItemStack.areItemStacksEqual(recipe.getRecipeOutput(),outputToRemove)) {
                 reg.remove(reg.getKey(recipe));
                 break;
             }

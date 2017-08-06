@@ -46,7 +46,7 @@ public class EggIncubationHandler {
     public void worldTick(TickEvent.WorldTickEvent tickEvent)
     {
         World world = tickEvent.world;
-        if(!world.isRemote) {
+        if(!world.isRemote && tickEvent.phase == TickEvent.Phase.START) {
             handleEggs();
         }
     }

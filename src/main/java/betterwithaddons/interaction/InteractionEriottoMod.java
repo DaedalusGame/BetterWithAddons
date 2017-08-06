@@ -122,6 +122,16 @@ public class InteractionEriottoMod extends Interaction {
         OreDictionary.registerOre("ingotTamahagane", ModItems.materialJapan.getMaterial("tamahagane_finished"));
         OreDictionary.registerOre("ingotHochoTetsu", ModItems.materialJapan.getMaterial("hocho_tetsu_finished"));
 
+        BWOreDictionary.woods.add(new BWOreDictionary.Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
+        BWOreDictionary.woods.add(new BWOreDictionary.Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")){
+            @Override
+            public ItemStack getPlank(int count) {
+                ItemStack copy = plank.copy();
+                copy.setCount((int)Math.ceil(count / 4.0));
+                return copy;
+            }
+        });
+
         //GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraPlanks, 4), new ItemStack(ModBlocks.sakuraLog));
         //GameRegistry.addShapedRecipe(new ItemStack(Items.PAPER), "aaa", 'a', new ItemStack(ModBlocks.mulberryLog));
         //GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberryPlanks), new ItemStack(ModBlocks.mulberryLog));

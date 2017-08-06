@@ -32,7 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, dependencies = "after:betterwithmods")
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, dependencies = "required-after:betterwithmods")
 public class BetterWithAddons
 {
 	@Instance(Reference.MOD_ID)
@@ -46,8 +46,6 @@ public class BetterWithAddons
 
 	public Logger logger;
 
-	ASMDataTable asmDataTable;
-
 	static
 	{
 		FluidRegistry.enableUniversalBucket();
@@ -56,8 +54,6 @@ public class BetterWithAddons
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		asmDataTable = event.getAsmData();
-
 		creativeTab = new BWACreativeTab();
 		config = new ModConfiguration();
 
@@ -115,10 +111,5 @@ public class BetterWithAddons
 			if(withoutput.isEmpty() || !ItemStack.areItemStacksEqual(withoutput, recipe.getRecipeOutput())) continue;
 				craftingIterator.remove();
 		}*/
-	}
-
-	public ASMDataTable getASMData()
-	{
-		return asmDataTable;
 	}
 }

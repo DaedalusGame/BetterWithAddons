@@ -31,6 +31,7 @@ import java.util.List;
 public class InteractionCondensedOutputs extends Interaction {
     public static boolean ENABLED = true;
     public static boolean LOSE_BINDER = false;
+    public static int SPINUP_TIME = 40;
 
     public ItemStack bagStack;
     public ItemStack crateStack;

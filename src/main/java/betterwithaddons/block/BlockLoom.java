@@ -1,5 +1,7 @@
 package betterwithaddons.block;
 
+import betterwithaddons.tileentity.TileEntityLoom;
+import betterwithmods.common.blocks.mechanical.IBlockActive;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -8,6 +10,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -20,9 +23,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class BlockLoom extends BlockBase {
+public class BlockLoom extends BlockContainerBase implements IBlockActive {
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
-    public static final  PropertyBool ISACTIVE = PropertyBool.create("ison");
 
     public BlockLoom() {
         super("loom", Material.WOOD);
@@ -56,17 +58,17 @@ public class BlockLoom extends BlockBase {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(ISACTIVE,(meta & 1) > 0).withProperty(FACING,EnumFacing.getFront((meta >> 1) & 7));
+        return getDefaultState().withProperty(ACTIVE,(meta & 1) > 0).withProperty(FACING,EnumFacing.getFront((meta >> 1) & 7));
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return (state.getValue(ISACTIVE) ? 1 : 0) | (state.getValue(FACING).getIndex() << 1);
+        return (state.getValue(ACTIVE) ? 1 : 0) | (state.getValue(FACING).getIndex() << 1);
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, ISACTIVE, FACING);
+        return new BlockStateContainer(this, ACTIVE, FACING);
     }
 
     @Override
@@ -90,6 +92,11 @@ public class BlockLoom extends BlockBase {
     }
 
     @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileEntityLoom();
+    }
+
+    @Override
     public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
         super.onBlockAdded(world, pos, state);
         world.scheduleBlockUpdate(pos, this, 5, 5);
@@ -105,7 +112,18 @@ public class BlockLoom extends BlockBase {
         return 5;
     }
 
-    public boolean isBlockOn(IBlockAccess world, BlockPos pos) {
-        return world.getBlockState(pos).getValue(ISACTIVE);
+    public void spinUpAllAttached(World world, BlockPos pos, IBlockState state)
+    {
+        if(world.isRemote) return;
+
+        for (EnumFacing facing : EnumFacing.VALUES)
+        {
+            if(facing == state.getValue(FACING)) continue;
+
+            BlockPos spinPos = pos.offset(facing);
+            IBlockState spinState = world.getBlockState(spinPos);
+            if(spinState.getBlock() instanceof ISpindle)
+                ((ISpindle) spinState.getBlock()).spinUp(world,spinPos,spinState,facing);
+        }
     }
 }

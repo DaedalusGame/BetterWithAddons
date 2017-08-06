@@ -7,12 +7,14 @@ import betterwithaddons.interaction.jei.category.SoakingBoxRecipeCategory;
 import com.blamejared.mtlib.helpers.InputHelper;
 import com.google.common.collect.Lists;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.List;
 
+@ZenRegister
 @ZenClass(SoakingBox.clazz)
 public class SoakingBox extends CherryBox {
     public static final String clazz = "mods.betterwithaddons.SoakingBox";

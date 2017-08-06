@@ -1,6 +1,7 @@
 package betterwithaddons.tileentity;
 
 import betterwithaddons.block.EriottoMod.BlockAncestrySand;
+import betterwithaddons.block.ModBlocks;
 import betterwithaddons.entity.EntitySpirit;
 import betterwithaddons.interaction.InteractionEriottoMod;
 import betterwithaddons.item.ModItems;
@@ -10,6 +11,7 @@ import betterwithmods.common.blocks.mechanical.BlockMechMachines;
 import betterwithmods.common.blocks.mechanical.tile.TileEntityFilteredHopper;
 import betterwithmods.util.InvUtils;
 import betterwithmods.util.MechanicalUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -180,5 +182,20 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
     @Override
     public int getMinimumInput(EnumFacing facing) {
         return 0;
+    }
+
+    @Override
+    public Block getBlock() {
+        return ModBlocks.ancestrySand;
+    }
+
+    @Override
+    public World getBlockWorld() {
+        return getWorld();
+    }
+
+    @Override
+    public BlockPos getBlockPos() {
+        return getPos();
     }
 }

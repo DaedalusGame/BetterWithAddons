@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockSpindle extends BlockBase {
+public class BlockSpindle extends BlockBase implements ISpindle {
     public static final PropertyBool ISACTIVE = PropertyBool.create("ison");
     public static final PropertyEnum<EnumFacing.Axis> AXIS = PropertyEnum.create("axis",EnumFacing.Axis.class);
 
@@ -109,10 +109,6 @@ public class BlockSpindle extends BlockBase {
         if (isOn != powered) {
             setBlockOn(world, pos, powered);
             world.scheduleBlockUpdate(pos, this, 5, 5);
-        } else if (powered) {
-            if(!world.isRemote)
-                spinUpBolt(world, pos, state);
-            world.scheduleBlockUpdate(pos, this, tickRate(world), 5);
         }
     }
 
@@ -130,7 +126,7 @@ public class BlockSpindle extends BlockBase {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        return block instanceof BlockLoom && ((BlockLoom) block).isBlockOn(world,pos) && ((BlockLoom) block).getFacing(world,pos) != facing;
+        return block instanceof BlockLoom && ((BlockLoom) block).isActive(state) && ((BlockLoom) block).getFacing(world,pos) != facing;
     }
 
     public void setBlockOn(World world, BlockPos pos, boolean powered)
@@ -142,7 +138,8 @@ public class BlockSpindle extends BlockBase {
         return world.getBlockState(pos).getValue(ISACTIVE);
     }
 
-    private void spinUpBolt(World world, BlockPos pos, IBlockState state) {
+    @Override
+    public void spinUp(World world, BlockPos pos, IBlockState state, EnumFacing dir) {
         List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos,pos.add(1,1,1)), EntitySelectors.IS_ALIVE);
         EnumFacing.Axis axis = state.getValue(AXIS);
 
@@ -197,28 +194,6 @@ public class BlockSpindle extends BlockBase {
         return 40;
     }
 
-    /*@Override
-    public boolean canOutputMechanicalPower() {
-        return false;
-    }
-
-    @Override
-    public boolean canInputMechanicalPower() {
-        return true;
-    }
-
-    @Override
-    public boolean isInputtingMechPower(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        EnumFacing facing = getFacingFromAxis(state.getValue(AXIS));
-        return MechanicalUtil.isBlockPoweredOnSide(world, pos, facing) || MechanicalUtil.isBlockPoweredOnSide(world, pos, facing.getOpposite());
-    }
-
-    @Override
-    public boolean isOutputtingMechPower(World world, BlockPos pos) {
-        return false;
-    }*/
-
     //This may break in the n-dimensional update
     public EnumFacing getFacingFromAxis(EnumFacing.Axis axis)
     {
@@ -234,50 +209,4 @@ public class BlockSpindle extends BlockBase {
 
         return null;
     }
-
-    /*@Override
-    public boolean canInputPowerToSide(IBlockAccess world, BlockPos pos, EnumFacing dir) {
-        IBlockState state = world.getBlockState(pos);
-        return state.getValue(AXIS).apply(dir);
-    }
-
-    @Override
-    public void overpower(World world, BlockPos pos) {
-        //You can't overpower from the bottom
-    }
-
-    @Override
-    public boolean isMechanicalOn(IBlockAccess world, BlockPos pos) {
-        return isBlockOn(world,pos);
-    }
-
-    @Override
-    public void setMechanicalOn(World world, BlockPos pos, boolean isOn) {
-        boolean active = world.getBlockState(pos).getValue(ISACTIVE);
-        if (isOn != active)
-            world.setBlockState(pos, world.getBlockState(pos).withProperty(ISACTIVE, isOn));
-    }
-
-    @Override
-    public boolean isMechanicalOnFromState(IBlockState state) {
-        return state.getValue(ISACTIVE);
-    }
-
-    //Pretend to be an axle so we can look proper on a gearbox.
-    @Override
-    public int getAxisAlignment(IBlockAccess world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        return DirUtils.getLegacyAxis(state.getValue(AXIS));
-    }
-
-    @Override
-    public boolean isAxleOrientedToFacing(IBlockAccess world, BlockPos pos, EnumFacing facing) {
-        IBlockState state = world.getBlockState(pos);
-        return facing.getAxis() == state.getValue(AXIS);
-    }
-
-    @Override
-    public int getPowerLevel(IBlockAccess iBlockAccess, BlockPos blockPos) {
-        return 0;
-    }*/
 }

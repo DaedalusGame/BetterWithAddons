@@ -7,7 +7,7 @@
   "variants": {
     "normal": [{}],
 	"inventory": [{}],
-	"ison": {
+	"active": {
 		"true":{
 			"textures": {
 				"wheel_inside": "betterwithaddons:blocks/loom_inside_on"

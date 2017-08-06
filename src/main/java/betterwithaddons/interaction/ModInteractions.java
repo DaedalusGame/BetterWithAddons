@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -22,11 +23,10 @@ public class ModInteractions {
     public static InteractionCondensedOutputs condensedOutputs;
     public static InteractionDecoAddon decoAddon;
     public static InteractionBTWTweak btwTweak;
-    public static InteractionMinetweaker minetweaker;
     public static InteractionBWR betterWithRenewables;
     public static InteractionWheat betterWithWheat;
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event)
     {
         LIST.stream().filter(Interaction::isActive).forEach(interaction -> interaction.modifyRecipes(event));
@@ -43,7 +43,6 @@ public class ModInteractions {
         btwTweak = (InteractionBTWTweak) addInteraction(new InteractionBTWTweak());
         betterWithRenewables = (InteractionBWR) addInteraction(new InteractionBWR());
         betterWithWheat = (InteractionWheat) addInteraction(new InteractionWheat());
-        minetweaker = (InteractionMinetweaker) addInteraction(new InteractionMinetweaker());
 
         validate();
 

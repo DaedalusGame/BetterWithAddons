@@ -6,12 +6,14 @@ import betterwithaddons.crafting.recipes.NetRecipe;
 import betterwithaddons.interaction.jei.category.WaterNetRecipeCategory;
 import com.blamejared.mtlib.helpers.InputHelper;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import stanhebben.zenscript.annotations.NotNull;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
+@ZenRegister
 @ZenClass(WaterNet.clazz)
 public class WaterNet extends Net {
     public static final String clazz = "mods.betterwithaddons.WaterNet";

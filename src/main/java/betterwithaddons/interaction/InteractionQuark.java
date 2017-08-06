@@ -9,6 +9,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.IRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
@@ -22,9 +23,6 @@ public class InteractionQuark extends Interaction {
     final String modid = "quark";
     public static boolean ENABLED = true;
     public static boolean MIDORI_BLOCKS_NEED_CHUNKS = true;
-
-    @GameRegistry.ObjectHolder("quark:midori_block")
-    Block midoriBlock;
 
     @Override
     public boolean isActive() {
@@ -63,8 +61,9 @@ public class InteractionQuark extends Interaction {
     @Override
     public void modifyRecipes(RegistryEvent.Register<IRecipe> event) {
         ForgeRegistry<IRecipe> reg = (ForgeRegistry<IRecipe>) event.getRegistry();
+        Block midoriBlock = Block.REGISTRY.getObject(new ResourceLocation(modid,"midori_block"));
 
         if(MIDORI_BLOCKS_NEED_CHUNKS)
-            removeRecipeByOutput(reg, new ItemStack(midoriBlock,4));
+            removeRecipeByOutput(reg, new ItemStack(midoriBlock,4),modid);
     }
 }

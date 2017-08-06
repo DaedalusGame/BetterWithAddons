@@ -4,6 +4,7 @@ import betterwithaddons.item.ItemMaterial;
 import com.blamejared.mtlib.helpers.InputHelper;
 import com.blamejared.mtlib.utils.BaseUndoable;
 import crafttweaker.CraftTweakerAPI;
+import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.NotNull;
@@ -12,6 +13,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 
 import java.util.HashSet;
 
+@ZenRegister
 @ZenClass(Condensed.clazz)
 public class Condensed {
     public static final String clazz = "mods.betterwithaddons.Condensed";
