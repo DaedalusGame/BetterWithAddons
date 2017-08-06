@@ -15,6 +15,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -46,7 +47,7 @@ public class EggIncubationHandler {
     public void worldTick(TickEvent.WorldTickEvent tickEvent)
     {
         World world = tickEvent.world;
-        if(!world.isRemote) {
+        if(!world.isRemote && tickEvent.phase == TickEvent.Phase.START) {
             handleEggs();
         }
     }
