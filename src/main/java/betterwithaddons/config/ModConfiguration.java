@@ -66,6 +66,7 @@ public class ModConfiguration {
 
     ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED);
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
+    ConfigOptionInteger CondensedOutputs_SpindleTime = new ConfigOptionInteger("addons.CondensedOutputs", "SpindleTime", InteractionCondensedOutputs.SPINUP_TIME, "The amount of time in ticks it takes for the spindle to spin up once.");
 
     ConfigOptionBool EriottoMod_Enabled = new ConfigOptionBool("addons.EriottoMod", "Enabled", InteractionEriottoMod.ENABLED);
     //ConfigOptionBool EriottoMod_GrassDropsSeeds = new ConfigOptionBool("addons.EriottoMod", "GrassDropsSeeds", InteractionEriottoMod.GRASS_DROPS_SEEDS, "Rice and Rush seeds can be gotten from breaking grass.");
@@ -159,6 +160,7 @@ public class ModConfiguration {
 
         InteractionCondensedOutputs.ENABLED = CondensedOutputs_Enabled.init(configuration);
         InteractionCondensedOutputs.LOSE_BINDER = CondensedOutputs_LoseBinder.init(configuration);
+        InteractionCondensedOutputs.SPINUP_TIME = CondensedOutputs_SpindleTime.init(configuration);
 
         InteractionBTWTweak.ENABLED = BTWTweak_Enabled.init(configuration);
         //InteractionBTWTweak.KILN_DOUBLING = BTWTweak_KilnDoubling.init(configuration);
