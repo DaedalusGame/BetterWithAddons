@@ -1,13 +1,7 @@
 {
-  "conditions": [
-      {
-        "type": "betterwithaddons:module",
-        "module": "!HardcoreHunger"
-      }
-  ],
   "result": {
-    "item": "betterwithaddons:food_pie_mushroom",
-	"data": 0
+    "item": "betterwithaddons:unbaked",
+	"data": 2
   },
   "type": "forge:ore_shapeless",
   "ingredients": [
@@ -22,10 +16,14 @@
 	{
 	  "type": "forge:ore_dict",
 	  "ore": "foodSalt"
-    },
+	},
 	{
+      "item": "betterwithmods:raw_egg",
+	  "data": 0
+    },
+    {
 	  "type": "forge:ore_dict",
-	  "ore": "egg"
+	  "ore": "foodFlour"
 	}
   ]
 }

@@ -33,6 +33,9 @@ public class ModConfiguration {
     ConfigOptionBool BWA_AqueductBiomeWhitelist = new ConfigOptionBool("addons.BetterWithAddons", "AqueductBiomesIsWhitelist", InteractionBWA.AQUEDUCT_BIOMES_IS_WHITELIST, "Whether aqueduct biomes should be whitelisted or blacklisted.");
     ConfigOptionBool BWA_ConvenientIronTools = new ConfigOptionBool("addons.BetterWithAddons", "ConvenientIronTools", InteractionBWA.CONVENIENT_TOOLS_PRE_END, "Convenient tools can be made from iron, gold and diamond pre-soulsteel.");
 
+    ConfigOptionBool BWA_RottenFood = new ConfigOptionBool("addons.BetterWithAddons", "RottenFood", InteractionBWA.ROTTEN_FOOD, "Whether food will rot after a certain number of days has passed.");
+    ConfigOptionStringList BWA_RottenFoodBlacklist = new ConfigOptionStringList("addons.BetterWithAddons", "RottenFoodBlacklist", InteractionBWA.ROTTEN_FOOD_BLACKLIST, "These foods are excluded from rotting.");
+
     ConfigOptionBool BWA_ArmorShardRender = new ConfigOptionBool("addons.BetterWithAddons", "ArmorShardRender", InteractionBWA.ARMOR_SHARD_RENDER, "Enables or disables the custom armor shard renderer, for when it causes crashes.");
     ConfigOptionDouble BWA_LegendariumMinDamage = new ConfigOptionDouble("addons.BetterWithAddons", "LegendariumDamageMin", InteractionBWA.LEGENDARIUM_MIN_DAMAGE, "How much durability the artifact you're turning in can have at max. (As a factor of max durability; 0.1 means 1/10 of max durability)");
     ConfigOptionInteger BWA_LegendariumDamagePad = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumDamagePad", InteractionBWA.LEGENDARIUM_DAMAGE_PAD, "How much durability more than the minimum the artifact can have to still be considered broken. (As a static value)");

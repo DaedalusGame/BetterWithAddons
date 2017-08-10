@@ -117,8 +117,8 @@ public class InteractionEriottoMod extends Interaction {
         OreDictionary.registerOre("plankWood", ModBlocks.sakuraPlanks);
         OreDictionary.registerOre("plankWood", ModBlocks.mulberryPlanks);
 
-        OreDictionary.registerOre("bark", ModItems.materialJapan.getMaterial("bark_mulberry"));
-        OreDictionary.registerOre("bark", ModItems.materialJapan.getMaterial("bark_sakura"));
+        OreDictionary.registerOre("barkWood", ModItems.materialJapan.getMaterial("bark_mulberry"));
+        OreDictionary.registerOre("barkWood", ModItems.materialJapan.getMaterial("bark_sakura"));
 
         OreDictionary.registerOre("ingotTamahagane", ModItems.materialJapan.getMaterial("tamahagane_finished"));
         OreDictionary.registerOre("ingotHochoTetsu", ModItems.materialJapan.getMaterial("hocho_tetsu_finished"));

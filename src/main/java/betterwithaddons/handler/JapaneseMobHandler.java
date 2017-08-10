@@ -113,7 +113,7 @@ public class JapaneseMobHandler {
             JapaneseMob japaneseMob = living.getCapability(JAPANESE_MOB_CAP,null);
             if(InteractionEriottoMod.JAPANESE_RANDOM_SPAWN && world.rand.nextDouble() < InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_CHANCE)
             {
-                japaneseMob.spirits = world.rand.nextInt(4)+3;
+                japaneseMob.spirits = world.rand.nextInt(4)+6;
             }
         }
     }

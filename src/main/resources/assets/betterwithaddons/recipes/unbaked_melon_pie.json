@@ -1,12 +1,6 @@
 {
-  "conditions": [
-      {
-        "type": "betterwithaddons:module",
-        "module": "!HardcoreHunger"
-      }
-  ],
   "result": {
-    "item": "betterwithaddons:food_pie_melon",
+    "item": "betterwithaddons:unbaked",
 	"data": 0
   },
   "type": "forge:ore_shapeless",
@@ -24,8 +18,12 @@
 	  "data": 0
     },
 	{
+      "item": "betterwithmods:raw_egg",
+	  "data": 0
+    },
+    {
 	  "type": "forge:ore_dict",
-	  "ore": "egg"
+	  "ore": "foodFlour"
 	}
   ]
 }

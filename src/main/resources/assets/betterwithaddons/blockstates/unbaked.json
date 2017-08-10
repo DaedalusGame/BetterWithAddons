@@ -1,0 +1,55 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "betterwithmods:blocks/cake_side",
+      "side": "betterwithmods:blocks/cake_side",
+      "top": "betterwithmods:blocks/cake_top",
+      "bottom": "betterwithmods:blocks/cake_bottom"
+    },
+    "model": "betterwithmods:raw_pastry_large",
+    "uvlock": false
+  },
+  "variants": {
+    "type": {
+      "raw_melon_pie": {
+        "textures": {
+          "top": "betterwithaddons:blocks/unbaked_melon"
+        }
+      },
+	  "raw_meat_pie": {
+        "textures": {
+          "top": "betterwithaddons:blocks/unbaked_meat"
+        }
+      },
+	  "raw_mushroom_pie": {
+        "textures": {
+          "top": "betterwithaddons:blocks/unbaked_mushroom"
+        }
+      },
+	  "raw_amanita_pie": {
+        "textures": {
+          "top": "betterwithaddons:blocks/unbaked_amanita"
+        }
+      },
+      "raw_brick": {
+        "model": "betterwithmods:raw_flour",
+		"textures": {
+          "particle": "minecraft:blocks/clay",
+		  "side": "minecraft:blocks/clay",
+		  "top": "minecraft:blocks/clay",
+		  "bottom": "minecraft:blocks/clay"
+        }
+      },
+      "raw_nether_brick": {
+        "model": "betterwithmods:raw_flour",
+		"textures": {
+          "particle": "betterwithaddons:blocks/nether_sludge",
+		  "side": "betterwithaddons:blocks/nether_sludge",
+		  "top": "betterwithaddons:blocks/nether_sludge",
+		  "bottom": "betterwithaddons:blocks/nether_sludge"
+        }
+      }
+    }
+  }
+}

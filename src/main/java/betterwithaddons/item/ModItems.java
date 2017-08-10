@@ -94,6 +94,8 @@ public class ModItems {
     public static Item soulSandPile;
     @GameRegistry.ObjectHolder("betterwithaddons:wool")
     public static ItemColored wool;
+    @GameRegistry.ObjectHolder("betterwithaddons:rotten_food")
+    public static ItemFood rottenFood;
 
     @GameRegistry.ObjectHolder("betterwithaddons:bowl")
     public static ItemMaterial bowls;
@@ -314,7 +316,8 @@ public class ModItems {
         riceBowl = (ItemFood) registerItem("food_bowl_rice", new ItemFood(9, 0.6F, false).setMaxStackSize(1));
 
         soulSandPile = registerItem("soulsand_pile", new Item());
-        wool = (ItemColored) registerItem("wool", new ItemColored());
+        rottenFood = (ItemFood)registerItem("rotten_food", new ItemFood(1,0.1f,false).setPotionEffect(new PotionEffect(MobEffects.HUNGER, 2000, 1), 1.0F));
+        wool = (ItemColored)registerItem("wool",new ItemColored());
 
         bowls = (ItemMaterial) registerItem("bowl", new ItemMaterial(
                 new String[]{"salt"}

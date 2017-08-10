@@ -87,6 +87,11 @@ fluid.salinated_brine=Saturated Brine
 tile.dung.name=Block of Dung
 tile.wet_soap.name=Block of Wet Soap
 
+tile.unbaked.raw_melon_pie.name=Oven Ready Melon Pie
+tile.unbaked.raw_meat_pie.name=Oven Ready Meat Pie
+tile.unbaked.raw_mushroom_pie.name=Oven Ready Mushroom Pie
+tile.unbaked.raw_amanita_pie.name=Oven Ready Mushroom Pie
+
 tile.whitebrick.default.name=White Stone Bricks
 tile.whitebrick.mossy.name=Mossy White Stone Bricks
 tile.whitebrick.cracked.name=Cracked White Stone Bricks
@@ -129,6 +134,7 @@ item.greatarrow.name=Greatarrow
 item.monument.name=Monument
 item.warwall.name=Warwall
 
+item.tool_shard.name=Shards of %s
 item.artifact_frame.name=Artifact Display
 item.bowl.salt.name=Bowl of Salt
 
@@ -180,6 +186,7 @@ item.steel_masonpick.name=Refined Mason Pick
 item.ancient_manuscript.name=Ancient Manuscript
 item.soulsand_pile.name=Pile of Soul Sand
 item.explosion.name=§eHIGHLY VOLATILE!
+item.rotten_food.name=Rotten Food
 
 item.brick_stained.white.name=White Stained Brick
 item.brick_stained.orange.name=Orange Stained Brick
@@ -289,6 +296,8 @@ item.food_fugu_sac.name=Fugu Sac
 item.food_cooked_rice.name=Cooked Rice
 item.food_bowl_rice.name=Bowl of Rice
 item.food_sashimi.name=Sashimi
+item.food_mulberry.name=Mulberry
+item.laxative.name=Laxative
 
 item.ancestry_bottle.name=Bottle of Japanese Ancestry
 item.shinai.name=Shinai
@@ -360,9 +369,29 @@ tooltip.souls.three=Fidgeting wildly
 tooltip.souls.half=Screaming without a sound
 tooltip.souls.danger=§kWE RISE
 
+food.rot.0=Fresh
+food.rot.25=
+food.rot.50=Stale
+food.rot.75=Stale
+food.rot.100=Rotten
 
+meat.rot.0=Fresh
+meat.rot.25=
+meat.rot.50=Sour
+meat.rot.75=Sour
+meat.rot.100=Rotten
 
+fish.rot.0=Fresh
+fish.rot.25=
+fish.rot.50=Rank
+fish.rot.75=Rank
+fish.rot.100=Rotten
 
+fruit.rot.0=Fresh
+fruit.rot.25=
+fruit.rot.50=
+fruit.rot.75=Moldy
+fruit.rot.100=Rotten
 
 
 

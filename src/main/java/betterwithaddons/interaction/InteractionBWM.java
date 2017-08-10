@@ -1,6 +1,7 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
+import betterwithaddons.block.BlockModUnbaked;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.handler.ButcherHandler;
@@ -21,13 +22,14 @@ import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
-import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
+import betterwithmods.module.Module;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.hardcore.HCDiamond;
 import betterwithmods.module.hardcore.HCPiles;
+import betterwithmods.module.hardcore.hchunger.HCHunger;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.entity.item.EntityItem;
@@ -35,7 +37,6 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -45,8 +46,6 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.List;
 
@@ -96,6 +95,7 @@ public class InteractionBWM extends Interaction {
 
         ConditionModule.MODULES.put("HardcoreDiamond", () -> ModuleLoader.isFeatureEnabled(HCDiamond.class));
         ConditionModule.MODULES.put("HardcoreShearing", () -> HARDCORE_SHEARING);
+        ConditionModule.MODULES.put("HardcoreHunger", () -> ModuleLoader.isFeatureEnabled(HCHunger.class));
     }
 
     public void addCauldronExplosion() {
@@ -281,7 +281,6 @@ public class InteractionBWM extends Interaction {
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 6), new ItemStack(ModBlocks.sakuraSapling), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 7), new ItemStack(ModBlocks.mulberrySapling), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 8), new ItemStack(ModBlocks.luretreeSapling), soulUrn);*/
-
 
         if (MILL_CLAY) {
             MillManager.getInstance().addRecipe(0, new ItemStack(Items.BRICK, 4), ItemStack.EMPTY, new Object[]{new ItemStack(Blocks.HARDENED_CLAY, 1)});
