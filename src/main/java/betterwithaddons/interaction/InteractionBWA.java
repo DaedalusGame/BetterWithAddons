@@ -2,29 +2,43 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockAqueduct;
+import betterwithaddons.block.BlockModUnbaked;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.crafting.recipes.FoodCombiningRecipe;
 import betterwithaddons.handler.*;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithaddons.tileentity.TileEntityLureTree;
+import betterwithaddons.util.ItemUtil;
+import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.BWMItems;
+import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.blockmeta.managers.KilnManager;
+import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.common.registry.steelanvil.SteelCraftingManager;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.HCDiamond;
+import betterwithmods.module.hardcore.hchunger.HCHunger;
+import com.google.common.collect.Sets;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import net.minecraft.block.BlockPrismarine;
 import net.minecraft.block.BlockQuartz;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class InteractionBWA extends Interaction {
@@ -55,6 +69,26 @@ public class InteractionBWA extends Interaction {
     public static int MAXFOOD = 5000;
 
     public static boolean CONVENIENT_TOOLS_PRE_END = true;
+
+    public static boolean ROTTEN_FOOD = true;
+    public static long MEAT_ROT_TIME = RotHandler.ONE_DAY * 4;
+    public static long FISH_ROT_TIME = RotHandler.ONE_DAY * 2;
+    public static long FRUIT_ROT_TIME = RotHandler.ONE_DAY * 5;
+    public static long MISC_ROT_TIME = RotHandler.ONE_DAY * 3;
+    public static String[] ROTTEN_FOOD_BLACKLIST = new String[] {
+            "minecraft:golden_apple",
+            "minecraft:golden_carrot",
+            "minecraft:rotten_flesh",
+            "minecraft:spider_eye",
+            "minecraft:poisonous_potato",
+            "minecraft:chorus_fruit",
+            "betterwithmods:kibble",
+            "betterwithmods:creeper_oyster",
+            "betterwithaddons:food_mushroom_baked",
+            "betterwithaddons:food_amanita_baked",
+            "betterwithaddons:food_fugu_sac",
+            "betterwithaddons:rotten_food"
+    };
 
     @Override
     public boolean isActive() {
@@ -87,6 +121,10 @@ public class InteractionBWA extends Interaction {
         if(GRASS_TO_CLAY || GRASS_TO_SAND) {
             PatientiaHandler.addCustomBlock(Blocks.GRASS);
             MinecraftForge.EVENT_BUS.register(new GrassHandler());
+        }
+        if(ROTTEN_FOOD) {
+            MinecraftForge.EVENT_BUS.register(new RotHandler());
+            //RotHandler.registerCapability();
         }
     }
 
@@ -225,10 +263,23 @@ public class InteractionBWA extends Interaction {
         GameRegistry.addSmelting(Items.BEETROOT,new ItemStack(ModItems.bakedBeetroot),0.35f);
         GameRegistry.addSmelting(Blocks.BROWN_MUSHROOM,new ItemStack(ModItems.bakedMushroom),0.35f);
         GameRegistry.addSmelting(Blocks.RED_MUSHROOM,new ItemStack(ModItems.bakedAmanita),0.35f);
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.pieMelon),new ItemStack(Items.MELON),new ItemStack(Items.MELON),new ItemStack(Items.SUGAR),new ItemStack(Items.EGG));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.pieMushroom),new ItemStack(Blocks.BROWN_MUSHROOM),new ItemStack(Blocks.BROWN_MUSHROOM),new ItemStack(Items.SUGAR),new ItemStack(Items.EGG));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.pieAmanita),new ItemStack(Blocks.RED_MUSHROOM),new ItemStack(Blocks.RED_MUSHROOM),new ItemStack(Items.SUGAR),new ItemStack(Items.EGG));
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.pieMeat),new ItemStack(ModItems.groundMeat),new ItemStack(ModItems.groundMeat),new ItemStack(Items.SUGAR),new ItemStack(Items.EGG));
+        boolean hchunger = ModuleLoader.isFeatureEnabled(HCHunger.class);
+        if(!hchunger) {
+            GameRegistry.addShapelessRecipe(new ItemStack(ModItems.pieMelon), new ItemStack(Items.MELON), new ItemStack(Items.MELON), new ItemStack(Items.SUGAR), new ItemStack(Items.EGG));
+            GameRegistry.addShapelessRecipe(new ItemStack(ModItems.pieMushroom), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Items.SUGAR), new ItemStack(Items.EGG));
+            GameRegistry.addShapelessRecipe(new ItemStack(ModItems.pieAmanita), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Items.SUGAR), new ItemStack(Items.EGG));
+            GameRegistry.addShapelessRecipe(new ItemStack(ModItems.pieMeat), new ItemStack(ModItems.groundMeat), new ItemStack(ModItems.groundMeat), new ItemStack(Items.SUGAR), new ItemStack(Items.EGG));
+        }
+
+        GameRegistry.addShapelessRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MELON), new ItemStack(Items.MELON), new ItemStack(Items.MELON), new ItemStack(Items.SUGAR), new ItemStack(BWMItems.RAW_EGG), BlockRawPastry.getStack(BlockRawPastry.EnumType.BREAD));
+        GameRegistry.addShapelessRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MEAT), new ItemStack(ModItems.groundMeat), new ItemStack(ModItems.groundMeat), ModItems.bowls.getMaterial("salt"), new ItemStack(BWMItems.RAW_EGG), BlockRawPastry.getStack(BlockRawPastry.EnumType.BREAD));
+        GameRegistry.addShapelessRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM), ModItems.bowls.getMaterial("salt"), new ItemStack(BWMItems.RAW_EGG), BlockRawPastry.getStack(BlockRawPastry.EnumType.BREAD));
+        GameRegistry.addShapelessRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.AMANITA), new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.RED_MUSHROOM), ModItems.bowls.getMaterial("salt"), new ItemStack(BWMItems.RAW_EGG), BlockRawPastry.getStack(BlockRawPastry.EnumType.BREAD));
+
+        KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.MELON.getMetadata(), new ItemStack(ModItems.pieMelon,hchunger ? 1 : 2));
+        KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.MEAT.getMetadata(), new ItemStack(ModItems.pieMeat,hchunger ? 1 : 2));
+        KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.MUSHROOM.getMetadata(), new ItemStack(ModItems.pieMushroom,hchunger ? 1 : 2));
+        KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.AMANITA.getMetadata(), new ItemStack(ModItems.pieAmanita,hchunger ? 1 : 2));
 
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.lattice,2)," a ","aaa"," a ",'a',new ItemStack(Blocks.IRON_BARS));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.elytraMagma,1),"aa","aa",'a',ModItems.material.getMaterial("ender_cream"));
@@ -238,6 +289,12 @@ public class InteractionBWA extends Interaction {
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 4));
             GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONEBRICK, 1), "aa", "aa", 'a', ModItems.material.getMaterial("stone_brick"));
             GameRegistry.addSmelting(Blocks.STONE, ModItems.material.getMaterial("stone_brick", 4), 0.1f);
+        }
+
+        CauldronManager.getInstance().addRecipe(new ItemStack(BWMItems.FERTILIZER), ItemStack.EMPTY, new Object[]{new ItemStack(ModItems.rottenFood)});
+        if(ROTTEN_FOOD)
+        {
+            GameRegistry.addRecipe(new FoodCombiningRecipe());
         }
     }
 
@@ -266,6 +323,42 @@ public class InteractionBWA extends Interaction {
 
     @Override
     public void postInit() {
+        HashSet<ResourceLocation> rotBlackList = new HashSet<>();
+        for (String resname : ROTTEN_FOOD_BLACKLIST) {
+            rotBlackList.add(new ResourceLocation(resname));
+        }
 
+        for (Item item : Item.REGISTRY) {
+            if(!(item instanceof ItemFood)|| rotBlackList.contains(item.getRegistryName()))
+                continue;
+
+            ItemStack stack = new ItemStack(item);
+
+            if(stack.isEmpty())
+                continue;
+
+            if(item instanceof ItemFishFood || ItemUtil.matchesOreDict(stack,"listAllfish"))
+                RotHandler.addRottingItem(stack,FISH_ROT_TIME,"fish",new ItemStack(Items.ROTTEN_FLESH));
+            else if(ItemUtil.matchesOreDict(stack,"listAllmeat") || ItemUtil.matchesOreDict(stack,"listAllmeatcooked"))
+                RotHandler.addRottingItem(stack,MEAT_ROT_TIME,"meat",new ItemStack(Items.ROTTEN_FLESH));
+            else if(isFruit(stack))
+                RotHandler.addRottingItem(stack,FRUIT_ROT_TIME,"fruit",new ItemStack(ModItems.rottenFood));
+            else
+                RotHandler.addRottingItem(stack,MISC_ROT_TIME);
+        }
+
+        RotHandler.addRottingItem(new ItemStack(Items.CAKE, 1, OreDictionary.WILDCARD_VALUE));
+        RotHandler.addRottingItem(new ItemStack(Items.FISH,1,ItemFishFood.FishType.SALMON.getMetadata()),FISH_ROT_TIME,"fish",new ItemStack(Items.ROTTEN_FLESH));
+        RotHandler.addRottingItem(new ItemStack(Items.FISH,1,ItemFishFood.FishType.CLOWNFISH.getMetadata()),FISH_ROT_TIME,"fish",new ItemStack(Items.ROTTEN_FLESH));
+        RotHandler.addRottingItem(new ItemStack(Items.FISH,1,ItemFishFood.FishType.PUFFERFISH.getMetadata()),FISH_ROT_TIME,"fish",new ItemStack(Items.ROTTEN_FLESH));
+    }
+
+    private boolean isFruit(ItemStack stack) {
+        int[] oreids = OreDictionary.getOreIDs(stack);
+        for (int oreid : oreids) {
+            if(OreDictionary.getOreName(oreid).startsWith("crop"))
+                return true;
+        }
+        return false;
     }
 }

@@ -86,6 +86,7 @@ public class ModBlocks {
     public static BlockLoom loom;
     public static BlockAncestrySand ancestrySand;
     public static BlockInfuser infuser;
+    public static BlockModUnbaked unbaked;
 
     public static void load(FMLPreInitializationEvent event) {
         FluidRegistry.registerFluid(new Fluid("brine",new ResourceLocation(Reference.MOD_ID,"blocks/brine_still"),new ResourceLocation(Reference.MOD_ID,"blocks/brine_flow")));
@@ -105,6 +106,7 @@ public class ModBlocks {
         chute = (BlockChute) addBlock(new BlockChute());
         aqueduct = (BlockAqueduct) addBlock(new BlockAqueduct());
         aqueductWater = (BlockAqueductWater) addBlock(new BlockAqueductWater(),null,false);
+        unbaked = (BlockModUnbaked)addBlock(new BlockModUnbaked());
 
         legendarium = (BlockLegendarium)addBlock(new BlockLegendarium());
         pondBase = (BlockPondBase)addBlock(new BlockPondBase());

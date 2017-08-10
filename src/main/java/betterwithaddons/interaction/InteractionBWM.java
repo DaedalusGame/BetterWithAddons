@@ -1,6 +1,7 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
+import betterwithaddons.block.BlockModUnbaked;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.handler.ButcherHandler;
 import betterwithaddons.handler.FallingPlatformHandler;
@@ -16,6 +17,8 @@ import betterwithmods.common.blocks.BlockBUD;
 import betterwithmods.common.blocks.BlockUrn;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.OreStack;
+import betterwithmods.common.registry.blockmeta.managers.KilnManager;
+import betterwithmods.common.registry.blockmeta.recipe.KilnRecipe;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
@@ -24,7 +27,10 @@ import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
+import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.hardcore.HCPiles;
+import betterwithmods.module.hardcore.hchunger.HCHunger;
+import com.google.common.collect.Lists;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.entity.item.EntityItem;
@@ -45,6 +51,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InteractionBWM extends Interaction {
@@ -273,7 +280,6 @@ public class InteractionBWM extends Interaction {
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 6), new ItemStack(ModBlocks.sakuraSapling), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 7), new ItemStack(ModBlocks.mulberrySapling), soulUrn);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ecksieSapling, 1, 8), new ItemStack(ModBlocks.luretreeSapling), soulUrn);
-
 
         if (MILL_CLAY) {
             MillManager.getInstance().addRecipe(0, new ItemStack(Items.BRICK, 4), ItemStack.EMPTY, new Object[]{new ItemStack(Blocks.HARDENED_CLAY, 1)});

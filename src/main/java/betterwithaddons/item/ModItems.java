@@ -67,6 +67,7 @@ public class ModItems {
 
     public static Item soulSandPile;
     public static ItemColored wool;
+    public static ItemFood rottenFood;
 
     public static ItemMaterial bowls;
 
@@ -238,6 +239,7 @@ public class ModItems {
         riceBowl = (ItemModFood) registerItem("food_bowl_rice", new ItemModFood(9, 0.6F, false).setMaxStackSize(1));
 
         soulSandPile = registerItem("soulsand_pile", new Item());
+        rottenFood = (ItemFood)registerItem("rotten_food", new ItemFood(1,0.1f,false).setPotionEffect(new PotionEffect(MobEffects.HUNGER, 2000, 1), 1.0F));
         wool = (ItemColored)registerItem("wool",new ItemColored());
 
         bowls = (ItemMaterial) registerItem("bowl", new ItemMaterial(

@@ -4,6 +4,7 @@ import betterwithaddons.block.ColorHandlers;
 import betterwithaddons.block.IColorable;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -19,7 +20,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemToolShard extends Item implements IColorable {
-    @CapabilityInject(ArtifactData.class)
+    public static final String INNER_TAG = "Inner";
+    /*@CapabilityInject(ArtifactData.class)
     public static Capability<ArtifactData> DATA_CAP;
 
     public static class ArtifactData implements ICapabilitySerializable<NBTTagCompound>
@@ -52,12 +54,12 @@ public class ItemToolShard extends Item implements IColorable {
         {
             inner = new ItemStack(nbt.getCompoundTag("Inner"));
         }
-    }
+    }*/
 
     public ItemToolShard()
     {
         //registry stuff
-        CapabilityManager.INSTANCE.register(ArtifactData.class, new Capability.IStorage<ArtifactData>()
+        /*CapabilityManager.INSTANCE.register(ArtifactData.class, new Capability.IStorage<ArtifactData>()
         {
             @Override
             public NBTBase writeNBT(Capability<ArtifactData> capability, ArtifactData instance, EnumFacing side)
@@ -70,36 +72,53 @@ public class ItemToolShard extends Item implements IColorable {
             {
                 instance.deserializeNBT((NBTTagCompound) nbt);
             }
-        }, ArtifactData::new);
+        }, ArtifactData::new);*/
     }
 
-    @Nullable
+    /*@Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
         return new ArtifactData();
-    }
+    }*/
 
     @Override
     public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
         return;
     }
 
+    public ItemStack getInnerStack(ItemStack stack)
+    {
+        if(stack.getItem() != this)
+            return ItemStack.EMPTY;
+
+        NBTTagCompound compound = stack.getTagCompound();
+        return compound != null && compound.hasKey(INNER_TAG) ? new ItemStack(compound.getCompoundTag(INNER_TAG)) : ItemStack.EMPTY;
+    }
+
+    public void setInnerStack(ItemStack stack, ItemStack inner)
+    {
+        if(inner.isEmpty() || stack.getItem() != this)
+            return;
+
+        stack.setTagInfo(INNER_TAG, inner.serializeNBT());
+    }
+
     public ItemStack makeFrom(ItemStack artifact)
     {
         ItemStack shard = new ItemStack(this);
-        ArtifactData cap = shard.getCapability(DATA_CAP,null);
-        cap.inner = artifact;
-        if(artifact.hasDisplayName())
-            shard.setStackDisplayName(artifact.getDisplayName());
+        setInnerStack(shard,artifact);
+        //if(artifact.hasDisplayName())
+        //    shard.setStackDisplayName(artifact.getDisplayName());
         return shard;
     }
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        if(stack.hasCapability(DATA_CAP,null))
+        ItemStack inner = getInnerStack(stack);
+
+        if(!inner.isEmpty())
         {
-            ItemStack inner = stack.getCapability(DATA_CAP,null).inner;
-            return inner.getItem().getItemStackDisplayName(inner);
+            return I18n.format(getUnlocalizedName(stack)+".name",inner.getDisplayName());
         }
 
         return super.getItemStackDisplayName(stack);
@@ -107,27 +126,27 @@ public class ItemToolShard extends Item implements IColorable {
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-        if(stack.hasCapability(DATA_CAP,null))
+        ItemStack inner = getInnerStack(stack);
+
+        if(!inner.isEmpty())
         {
-            ItemStack inner = stack.getCapability(DATA_CAP,null).inner;
-            inner.getItem().addInformation(inner,playerIn,tooltip,advanced);
+            List<String> innerTooltip = inner.getTooltip(playerIn,false);
+            innerTooltip.remove(0);
+            tooltip.addAll(innerTooltip);
+            //inner.getItem().addInformation(inner,playerIn,tooltip,advanced);
         }
         super.addInformation(stack, playerIn, tooltip, advanced);
     }
 
     @Override
     public boolean hasEffect(ItemStack stack) {
-        if(stack.hasCapability(DATA_CAP,null))
+        ItemStack inner = getInnerStack(stack);
+
+        if(!inner.isEmpty())
         {
-            ItemStack inner = stack.getCapability(DATA_CAP,null).inner;
             return inner.getItem().hasEffect(inner);
         }
         return false;
-    }
-
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack);
     }
 
     @Override
