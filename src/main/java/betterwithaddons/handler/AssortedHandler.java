@@ -4,6 +4,7 @@ import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BlockLattice;
 import betterwithaddons.block.BlockModUnbaked;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.interaction.InteractionBWM;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.item.rbdtools.IConvenientTool;
 import betterwithaddons.potion.ModPotions;
@@ -75,7 +76,7 @@ public class AssortedHandler {
     {
         ItemStack stack = event.getItemStack();
 
-        if(stack.getItem() == Items.ENCHANTED_BOOK)
+        if(stack.getItem() == Items.ENCHANTED_BOOK && InteractionBWM.HIDDEN_ENCHANTS)
         {
             event.getToolTip().clear();
             event.getToolTip().add(TextFormatting.WHITE+I18n.format("item.ancient_manuscript.name"));

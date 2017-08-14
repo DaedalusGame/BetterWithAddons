@@ -177,7 +177,9 @@ public class BlockSpindle extends BlockBase {
                             ejectdir = validDirections.get(world.rand.nextInt(validDirections.size()));
 
                         EntityItem result = new EntityItem(world, pos.getX() + 0.5f + ejectdir.getFrontOffsetX() * 0.2f, pos.getY() + 0.1f, pos.getZ() + 0.5f + ejectdir.getFrontOffsetZ() * 0.2f, item.copy());
-                        result.setVelocity(ejectdir.getFrontOffsetX()*0.2,0,ejectdir.getFrontOffsetZ()*0.2);
+                        result.motionX = ejectdir.getFrontOffsetX()*0.2;
+                        result.motionY = 0;
+                        result.motionZ = ejectdir.getFrontOffsetZ()*0.2;
                         result.setDefaultPickupDelay();
                         if (!world.isRemote) {
                             world.spawnEntity(result);

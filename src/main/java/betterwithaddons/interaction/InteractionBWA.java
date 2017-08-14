@@ -70,7 +70,7 @@ public class InteractionBWA extends Interaction {
 
     public static boolean CONVENIENT_TOOLS_PRE_END = true;
 
-    public static boolean ROTTEN_FOOD = true;
+    public static boolean ROTTEN_FOOD = false;
     public static long MEAT_ROT_TIME = RotHandler.ONE_DAY * 4;
     public static long FISH_ROT_TIME = RotHandler.ONE_DAY * 2;
     public static long FRUIT_ROT_TIME = RotHandler.ONE_DAY * 5;
@@ -89,6 +89,7 @@ public class InteractionBWA extends Interaction {
             "betterwithaddons:food_fugu_sac",
             "betterwithaddons:rotten_food"
     };
+    public static boolean ROTTEN_FOOD_COMBINING = true;
 
     @Override
     public boolean isActive() {
@@ -292,7 +293,7 @@ public class InteractionBWA extends Interaction {
         }
 
         CauldronManager.getInstance().addRecipe(new ItemStack(BWMItems.FERTILIZER), ItemStack.EMPTY, new Object[]{new ItemStack(ModItems.rottenFood)});
-        if(ROTTEN_FOOD)
+        if(ROTTEN_FOOD && ROTTEN_FOOD_COMBINING)
         {
             GameRegistry.addRecipe(new FoodCombiningRecipe());
         }
