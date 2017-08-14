@@ -60,6 +60,7 @@ public class InteractionBWM extends Interaction {
     public static boolean HARDCORE_SHEARING = true;
     public static int WOOL_MULTIPLIER = 1;
     public static boolean DYE_IN_CAULDRON = true;
+    public static boolean HIDDEN_ENCHANTS = false;
 
     @Override
     public boolean isActive() {

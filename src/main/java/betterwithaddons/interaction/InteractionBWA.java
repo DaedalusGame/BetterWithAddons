@@ -67,7 +67,7 @@ public class InteractionBWA extends Interaction {
 
     public static boolean CONVENIENT_TOOLS_PRE_END = true;
 
-    public static boolean ROTTEN_FOOD = true;
+    public static boolean ROTTEN_FOOD = false;
     public static long MEAT_ROT_TIME = RotHandler.ONE_DAY * 4;
     public static long FISH_ROT_TIME = RotHandler.ONE_DAY * 2;
     public static long FRUIT_ROT_TIME = RotHandler.ONE_DAY * 5;
@@ -86,6 +86,7 @@ public class InteractionBWA extends Interaction {
             "betterwithaddons:food_fugu_sac",
             "betterwithaddons:rotten_food"
     };
+    public static boolean ROTTEN_FOOD_COMBINING = true;
 
     @Override
     public boolean isActive() {
@@ -276,7 +277,10 @@ public class InteractionBWA extends Interaction {
 
     @Override
     void modifyRecipes(RegistryEvent.Register<IRecipe> event) {
-        event.getRegistry().register(new FoodCombiningRecipe().setRegistryName(new ResourceLocation(Reference.MOD_ID,"food_combining")));
+        if(ROTTEN_FOOD && ROTTEN_FOOD_COMBINING)
+        {
+            event.getRegistry().register(new FoodCombiningRecipe().setRegistryName(new ResourceLocation(Reference.MOD_ID,"food_combining")));
+        }
     }
 
     public void addReclaimRecipe(ItemStack input, ItemStack ingot, ItemStack nugget, int nuggets)

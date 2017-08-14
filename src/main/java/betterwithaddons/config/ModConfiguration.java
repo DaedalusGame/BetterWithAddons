@@ -15,6 +15,7 @@ public class ModConfiguration {
     ConfigOptionBool BWM_HardcoreShearing = new ConfigOptionBool("interaction.BetterWithMods", "HardcoreShearing", InteractionBWM.HARDCORE_SHEARING, "Sheep will only be sheared into wool items, which must be crafted into wool blocks. This does not work with machines that use onSheared, but should work with Fake Players.");
     ConfigOptionInteger BWM_WoolMultiplier = new ConfigOptionInteger("interaction.BetterWithMods", "WoolMultiplier", InteractionBWM.WOOL_MULTIPLIER, "Adjusts how much wool a sheep drops if Hardcore Shearing is enabled.");
     ConfigOptionBool BWM_DyeInCauldron = new ConfigOptionBool("interaction.BetterWithMods", "DyeInCauldron", InteractionBWM.DYE_IN_CAULDRON, "Wool can be dyed in batches of 8 in a cauldron and bleached with potash.");
+    //ConfigOptionBool BWM_HiddenEnchantments = new ConfigOptionBool("addons.BetterWithMods", "HiddenEnchantments", InteractionBWM.HIDDEN_ENCHANTS, "Enchantments on enchanted books are hidden. (They still function as usual)");
 
     ConfigOptionBool Quark_Enabled = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.ENABLED);
     ConfigOptionBool Quark_MidoriBlocksNeedChunks = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS, "Midori blocks require popped Midori chunks.");
@@ -34,7 +35,12 @@ public class ModConfiguration {
     ConfigOptionBool BWA_ConvenientIronTools = new ConfigOptionBool("addons.BetterWithAddons", "ConvenientIronTools", InteractionBWA.CONVENIENT_TOOLS_PRE_END, "Convenient tools can be made from iron, gold and diamond pre-soulsteel.");
 
     ConfigOptionBool BWA_RottenFood = new ConfigOptionBool("addons.BetterWithAddons", "RottenFood", InteractionBWA.ROTTEN_FOOD, "Whether food will rot after a certain number of days has passed.");
+    ConfigOptionBool BWA_RottenFoodCombining = new ConfigOptionBool("addons.BetterWithAddons", "RottenFoodCombining", InteractionBWA.ROTTEN_FOOD_COMBINING, "Whether food can be combined in the crafting grid to stack.");
     ConfigOptionStringList BWA_RottenFoodBlacklist = new ConfigOptionStringList("addons.BetterWithAddons", "RottenFoodBlacklist", InteractionBWA.ROTTEN_FOOD_BLACKLIST, "These foods are excluded from rotting.");
+    ConfigOptionInteger BWA_RottenMeatTime = new ConfigOptionInteger("addons.BetterWithAddons", "RottenMeatTime", (int)InteractionBWA.MEAT_ROT_TIME, "How long meat takes to rot. (In ticks)");
+    ConfigOptionInteger BWA_RottenFishTime = new ConfigOptionInteger("addons.BetterWithAddons", "RottenFishTime", (int)InteractionBWA.FISH_ROT_TIME, "How long fish takes to rot. (In ticks)");
+    ConfigOptionInteger BWA_RottenFruitTime = new ConfigOptionInteger("addons.BetterWithAddons", "RottenFruitTime", (int)InteractionBWA.FRUIT_ROT_TIME, "How long fruit takes to rot. (In ticks)");
+    ConfigOptionInteger BWA_RottenMiscTime = new ConfigOptionInteger("addons.BetterWithAddons", "RottenMiscTime", (int)InteractionBWA.MISC_ROT_TIME, "How long misc food takes to rot. (In ticks)");
 
     ConfigOptionBool BWA_ArmorShardRender = new ConfigOptionBool("addons.BetterWithAddons", "ArmorShardRender", InteractionBWA.ARMOR_SHARD_RENDER, "Enables or disables the custom armor shard renderer, for when it causes crashes.");
     ConfigOptionDouble BWA_LegendariumMinDamage = new ConfigOptionDouble("addons.BetterWithAddons", "LegendariumDamageMin", InteractionBWA.LEGENDARIUM_MIN_DAMAGE, "How much durability the artifact you're turning in can have at max. (As a factor of max durability; 0.1 means 1/10 of max durability)");
@@ -142,6 +148,14 @@ public class ModConfiguration {
         InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE = BWA_LegendariumMinQueueSize.init(configuration);
         InteractionBWA.LEGENDARIUM_TURN_IN_DELAY = BWA_LegendariumTurnInDelay.init(configuration);
         InteractionBWA.CONVENIENT_TOOLS_PRE_END = BWA_ConvenientIronTools.init(configuration);
+        InteractionBWA.ROTTEN_FOOD = BWA_RottenFood.init(configuration);
+        InteractionBWA.ROTTEN_FOOD_BLACKLIST = BWA_RottenFoodBlacklist.init(configuration);
+        InteractionBWA.ROTTEN_FOOD_COMBINING = BWA_RottenFoodCombining.init(configuration);
+        InteractionBWA.MEAT_ROT_TIME = BWA_RottenMeatTime.init(configuration);
+        InteractionBWA.FISH_ROT_TIME = BWA_RottenFishTime.init(configuration);
+        InteractionBWA.FRUIT_ROT_TIME = BWA_RottenFruitTime.init(configuration);
+        InteractionBWA.MISC_ROT_TIME = BWA_RottenMiscTime.init(configuration);
+
 
         InteractionEriottoMod.ENABLED = EriottoMod_Enabled.init(configuration);
         //InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);
