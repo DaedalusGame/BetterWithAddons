@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"textures": {
+		"end": "minecraft:blocks/dispenser_front_vertical",
+		"side": "minecraft:blocks/furnace_top"
+    },
+	"model": "cube_column",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{
+		"x": 90
+	}],
+    "axis": {
+		"x": { 
+			"x": 90,
+			"y": 90
+		},
+		"y": {},
+		"z": { 
+			"x": 90
+		},
+		"none": { 
+			"textures": {
+				"all": "minecraft:blocks/furnace_top"
+			}
+		}
+    },
+	"active": {
+		"true":{},
+		"false":{}
+	}
+  }
+}

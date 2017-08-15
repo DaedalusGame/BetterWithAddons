@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "betterwithaddons:block_matcher",
+	"data": 0
+  },
+  "pattern": [
+    "SSS",
+	"GEG",
+	"SSS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+	"S": {
+	  "type": "forge:ore_dict",
+	  "ore": "stone"
+	},
+	"E": {
+	  "item": "betterwithmods:material",
+	  "data": 20
+	},
+    "G": {
+      "type": "forge:ore_dict",
+	  "ore": "paneGlass"
+    }
+  }
+}

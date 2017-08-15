@@ -71,7 +71,7 @@ public class InventoryUtil
     public static boolean isFull(IItemHandler inv) {
         for (int slot = 0; slot < inv.getSlots(); slot++) {
             ItemStack stack = inv.getStackInSlot(slot);
-            if (stack.isEmpty() || stack.getCount() != stack.getMaxStackSize())
+            if (stack.isEmpty() || stack.getCount() < Math.min(inv.getSlotLimit(slot),stack.getMaxStackSize()))
                 return false;
         }
         return true;

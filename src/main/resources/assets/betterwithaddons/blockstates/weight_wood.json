@@ -1,0 +1,22 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"model": "betterwithaddons:weight_sensor",
+	"textures": {
+		"frame": "minecraft:blocks/log_oak",
+		"plate": "minecraft:blocks/planks_oak",
+		"weight": "minecraft:blocks/stone"
+    },
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+	"active": {
+		"true":{
+			"model": "betterwithaddons:weight_sensor_down"
+		},
+		"false":{}
+	}
+  }
+}

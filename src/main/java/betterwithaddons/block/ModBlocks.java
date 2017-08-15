@@ -3,10 +3,7 @@ package betterwithaddons.block;
 import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BetterRedstone.BlockWirePCB;
 import betterwithaddons.block.EriottoMod.*;
-import betterwithaddons.block.Factorization.BlockBrine;
-import betterwithaddons.block.Factorization.BlockLegendarium;
-import betterwithaddons.block.Factorization.BlockPondBase;
-import betterwithaddons.block.Factorization.BlockSaltLayer;
+import betterwithaddons.block.Factorization.*;
 import betterwithaddons.item.ItemBlockMeta;
 import betterwithaddons.item.ItemBlockSeed;
 import betterwithaddons.item.ModItems;
@@ -170,10 +167,24 @@ public class ModBlocks {
         registerBlock(new BlockAqueduct());
         registerBlock(new BlockAqueductWater(), null, false);
 
+        registerBlock(new BlockMatcher());
         registerBlock(new BlockLegendarium());
         registerBlock(new BlockPondBase());
         registerBlock(new BlockBrine(), null, false);
         registerBlock(new BlockSaltLayer());
+
+        registerBlock(new BlockWeight("weight_wood") {
+            @Override
+            public boolean decideActivity(boolean isEmpty, boolean isFull) {
+                return !isEmpty;
+            }
+        });
+        registerBlock(new BlockWeight("weight_stone") {
+            @Override
+            public boolean decideActivity(boolean isEmpty, boolean isFull) {
+                return isFull;
+            }
+        });
 
         registerBlock(new BlockSpindle());
         registerBlock(new BlockLoom());

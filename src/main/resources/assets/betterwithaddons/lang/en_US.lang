@@ -37,6 +37,9 @@ tile.planks_luretree.name=Alicio Wood Planks
 tile.pcb_wire.name=Redstone Wire
 tile.pcb_block.name=PCB
 
+tile.weight_wood.name=Weight Sensor
+tile.weight_stone.name=Stone Weight Sensor
+
 tile.spindle.name=Spindle
 tile.loom.name=Spinning Wheel
 
@@ -66,6 +69,7 @@ tile.shoji.name=Shoji
 tile.fusuma.name=Fusuma
 tile.tatami.name=Tatami Mat
 
+tile.block_matcher.name=Block Matcher
 tile.legendarium.name=Hall of Legends
 tile.legendarium.frames_populated=Frames populated.
 tile.legendarium.frames_cleared=Frames cleared.

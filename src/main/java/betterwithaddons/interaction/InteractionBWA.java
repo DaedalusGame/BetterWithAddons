@@ -3,6 +3,7 @@ package betterwithaddons.interaction;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockAqueduct;
 import betterwithaddons.block.BlockModUnbaked;
+import betterwithaddons.block.BlockWeight;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.recipes.FoodCombiningRecipe;
@@ -11,6 +12,7 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithaddons.tileentity.TileEntityLureTree;
+import betterwithaddons.util.ISpecialMeasuringBehavior;
 import betterwithaddons.util.ItemUtil;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.items.ItemMaterial;
@@ -22,6 +24,8 @@ import betterwithmods.module.gameplay.AnvilRecipes;
 import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.HCDiamond;
 import betterwithmods.module.hardcore.hchunger.HCHunger;
+import net.minecraft.block.BlockCauldron;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -30,6 +34,8 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -130,10 +136,8 @@ public class InteractionBWA extends Interaction {
     void preInitClient() {
         if(OBVIOUS_SAND_STORMS || OBVIOUS_STORMS)
             MinecraftForge.EVENT_BUS.register(new StormHandler());
-        if(ROTTEN_FOOD) {
+        if(ROTTEN_FOOD)
             MinecraftForge.EVENT_BUS.register(new RotHandler());
-            //RotHandler.registerCapability();
-        }
     }
 
     @Override
@@ -147,29 +151,6 @@ public class InteractionBWA extends Interaction {
         ModBlocks.luretreeLeaves.setSapling(new ItemStack(ModBlocks.luretreeSapling));
 
         OreDictionary.registerOre("foodSalt", ModItems.bowls.getMaterial("salt"));
-
-        if(CONVENIENT_TOOLS_PRE_END) {
-            /*GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironSpade), "m", "t", "s", 'm', "ingotIron", 't', new ItemStack(Items.IRON_SHOVEL), 's', "stickWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMatchPick), "ftc", " s ", " s ", 'f', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL), 'c', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE), 't', new ItemStack(Items.IRON_PICKAXE), 's', "stickWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMachete), "  m", " m ", "t  ", 'm', "ingotIron", 't', new ItemStack(Items.IRON_SWORD)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironKukri), "  m", " m ", "t  ", 'm', "ingotIron", 't', new ItemStack(Items.IRON_AXE)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironCarpenterSaw), "mmt", 'm', "ingotIron", 't', new ItemStack(Items.IRON_AXE), 's', "stickWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.ironMasonPick), "mt", " s", " s", 'm', "ingotIron", 't', new ItemStack(Items.IRON_PICKAXE), 's', "stickWood"));
-
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldSpade), "m", "t", "s", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_SHOVEL), 's', "stickWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMatchPick), "ftc", " s ", " s ", 'f', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL), 'c', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE), 't', new ItemStack(Items.GOLDEN_PICKAXE), 's', "stickWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMachete), "  m", " m ", "t  ", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_SWORD)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldKukri), "  m", " m ", "t  ", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_AXE)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldCarpenterSaw), "mmt", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_AXE), 's', "stickWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.goldMasonPick), "mt", " s", " s", 'm', "ingotGold", 't', new ItemStack(Items.GOLDEN_PICKAXE), 's', "stickWood"));
-
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondSpade), "m", "t", "s", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_SHOVEL), 's', "stickWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMatchPick), "ftc", " s ", " s ", 'f', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL), 'c', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE), 't', new ItemStack(Items.DIAMOND_PICKAXE), 's', "stickWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMachete), "  m", " m ", "t  ", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_SWORD)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondKukri), "  m", " m ", "t  ", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_AXE)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondCarpenterSaw), "mmt", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_AXE), 's', "stickWood"));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.diamondMasonPick), "mt", " s", " s", 'm', diamondMaterial, 't', new ItemStack(Items.DIAMOND_PICKAXE), 's', "stickWood"));*/
-        }
 
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_spade"),new ItemStack(ModItems.steelSpade),"x","x","i","i",'x',"ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_matchpick"),new ItemStack(ModItems.steelMatchPick),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT),'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");
@@ -222,34 +203,27 @@ public class InteractionBWA extends Interaction {
             }
         }
 
+        BlockWeight.addSpecialMeasuringBehavior(Blocks.CAULDRON, new ISpecialMeasuringBehavior() {
+            @Override
+            public boolean isFull(World world, BlockPos pos, IBlockState state) {
+                return state.getValue(BlockCauldron.LEVEL) == 3;
+            }
+
+            @Override
+            public boolean isEmpty(World world, BlockPos pos, IBlockState state) {
+                return state.getValue(BlockCauldron.LEVEL) == 0;
+            }
+
+            @Override
+            public int getDelay(World world, BlockPos pos, IBlockState state) {
+                return 1;
+            }
+        });
+
         TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),450);
 
         //TODO: Make this more sensible holy shit
         TileEntityAqueductWater.reloadBiomeList();
-
-        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.legendarium,1) ,"gsg","qqq","gqg",'g',new ItemStack(Items.GOLD_INGOT),'q',new ItemStack(Blocks.QUARTZ_BLOCK,1, BlockQuartz.EnumType.CHISELED.getMetadata()),'s', new ItemStack(Items.NETHER_STAR));
-        //GameRegistry.addShapedRecipe(new ItemStack(ModItems.artifactFrame,1) ,"gsg","gqg","ggg",'g',new ItemStack(Items.GOLD_NUGGET),'q',new ItemStack(Blocks.WOOL,1,EnumDyeColor.PURPLE.getMetadata()),'s', new ItemStack(Items.SIGN));
-        //GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.pondBase),new ItemStack(Blocks.SAND),new ItemStack(Items.CLAY_BALL));
-
-        if(GATED_AQUEDUCTS)
-        {
-            //GameRegistry.addShapedRecipe(new ResourceLocation("aqueduct_gated"),new ItemStack(ModBlocks.aqueduct, 3, BlockAqueduct.EnumType.WHITESTONE_BRICKS.getMetadata()), "ccc", "bbb", 'c', new ItemStack(Blocks.CLAY), 'b', new ItemStack(ModBlocks.whiteBrick));
-        }
-
-        //addAqueductRecipe(BlockAqueduct.EnumType.STONE_BRICKS, new ItemStack(Blocks.STONEBRICK));
-        //addAqueductRecipe(BlockAqueduct.EnumType.BRICKS, new ItemStack(Blocks.BRICK_BLOCK));
-        //addAqueductRecipe(BlockAqueduct.EnumType.QUARTZ, new ItemStack(Blocks.QUARTZ_BLOCK));
-        //addAqueductRecipe(BlockAqueduct.EnumType.WHITESTONE_BRICKS, new ItemStack(ModBlocks.whiteBrick));
-        //addAqueductRecipe(BlockAqueduct.EnumType.SANDSTONE, new ItemStack(Blocks.SANDSTONE,1,OreDictionary.WILDCARD_VALUE));
-        //addAqueductRecipe(BlockAqueduct.EnumType.RED_SANDSTONE, new ItemStack(Blocks.RED_SANDSTONE,1,OreDictionary.WILDCARD_VALUE));
-        //addAqueductRecipe(BlockAqueduct.EnumType.ANDESITE, new ItemStack(Blocks.STONE,1, BlockStone.EnumType.ANDESITE_SMOOTH.getMetadata()));
-        //addAqueductRecipe(BlockAqueduct.EnumType.GRANITE, new ItemStack(Blocks.STONE,1, BlockStone.EnumType.GRANITE_SMOOTH.getMetadata()));
-        //addAqueductRecipe(BlockAqueduct.EnumType.DIORITE, new ItemStack(Blocks.STONE,1, BlockStone.EnumType.DIORITE_SMOOTH.getMetadata()));
-        //addAqueductRecipe(BlockAqueduct.EnumType.PRISMARINE, new ItemStack(Blocks.PRISMARINE,1, BlockPrismarine.BRICKS_META));
-        //addAqueductRecipe(BlockAqueduct.EnumType.DARK_PRISMARINE, new ItemStack(Blocks.PRISMARINE,1, BlockPrismarine.DARK_META));
-
-        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.worldScaleOre,1,1) ,"aa ","aaa"," aa",'a',new ItemStack(ModItems.worldShard));
-        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.worldScaleActive,1)," d ","iae"," d ",'a',new ItemStack(ModBlocks.worldScale),'i',new ItemStack(Items.IRON_PICKAXE),'e',new ItemStack(Items.IRON_AXE),'d',new ItemStack(Items.DIAMOND));
 
         GameRegistry.addSmelting(Items.CARROT,new ItemStack(ModItems.bakedCarrot),0.35f);
         GameRegistry.addSmelting(Items.BEETROOT,new ItemStack(ModItems.bakedBeetroot),0.35f);
@@ -263,12 +237,7 @@ public class InteractionBWA extends Interaction {
         KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.MUSHROOM.getMetadata(), new ItemStack(ModItems.pieMushroom,hchunger ? 1 : 2));
         KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.AMANITA.getMetadata(), new ItemStack(ModItems.pieAmanita,hchunger ? 1 : 2));
 
-        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.lattice,2)," a ","aaa"," a ",'a',new ItemStack(Blocks.IRON_BARS));
-        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.elytraMagma,1),"aa","aa",'a',ModItems.material.getMaterial("ender_cream"));
-        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.bannerDetector,1),"aaa","o r","aaa",'a',new ItemStack(Blocks.COBBLESTONE),'o',new ItemStack(Items.ENDER_EYE),'r',new ItemStack(Items.REDSTONE));
-
         if(STONEBRICKS_NEED_SMELTING) {
-            //GameRegistry.addShapedRecipe(new ItemStack(Blocks.STONEBRICK, 1), "aa", "aa", 'a', ModItems.material.getMaterial("stone_brick"));
             GameRegistry.addSmelting(Blocks.STONE, ModItems.material.getMaterial("stone_brick", 4), 0.1f);
         }
 
@@ -296,14 +265,6 @@ public class InteractionBWA extends Interaction {
         nuggetStack.setCount(nuggets);
 
         StokedCrucibleManager.getInstance().addRecipe(ingotStack,nuggetStack,new Object[]{input});
-    }
-
-    public void addAqueductRecipe(BlockAqueduct.EnumType type, ItemStack material)
-    {
-        //if(!GATED_AQUEDUCTS)
-            //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 3,  type.getMetadata()), "ccc", "bbb", 'c', new ItemStack(Blocks.CLAY), 'b', material.copy());
-        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.aqueduct, 1, type.getMetadata()), "a", "b", 'a', new ItemStack(ModBlocks.aqueduct,1,OreDictionary.WILDCARD_VALUE), 'b', material.copy());
-
     }
 
     @Override

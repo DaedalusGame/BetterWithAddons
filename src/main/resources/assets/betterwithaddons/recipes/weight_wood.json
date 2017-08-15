@@ -1,0 +1,30 @@
+{
+  "result": {
+    "item": "betterwithaddons:weight_wood",
+	"data": 0
+  },
+  "pattern": [
+    "STS",
+	" W ",
+	"SPS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+	  "type": "forge:ore_dict",
+	  "ore": "stickWood"
+    },
+	"W": {
+	  "type": "forge:ore_dict",
+	  "ore": "stone"
+	},
+	"P": {
+	  "item": "minecraft:wooden_pressure_plate",
+	  "data": 0
+	},
+    "T": {
+      "type": "forge:ore_dict",
+	  "ore": "string"
+    }
+  }
+}

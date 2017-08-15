@@ -97,6 +97,18 @@
 				"up": { "texture": "#plate"},
 				"down": {"texture": "#plate"}
 			}
+		},
+		{
+			"from": [1, 1, 1],
+			"to": [15, 2, 15],
+			"faces": {
+				"north": { "texture": "#plate"},
+				"east": { "texture": "#plate"},
+				"south": { "texture": "#plate"},
+				"west": { "texture": "#plate"},
+				"up": { "texture": "#plate"},
+				"down": {"texture": "#plate"}
+			}
 		}
 	]
 }
