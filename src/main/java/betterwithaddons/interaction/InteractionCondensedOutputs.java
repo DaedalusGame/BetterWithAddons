@@ -79,10 +79,6 @@ public class InteractionCondensedOutputs extends Interaction {
             ModItems.materialBundle.setContainer(bundleStack);
         }
 
-        //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "plankWood", 'i', "nuggetIron"));
-        //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.loom)," g ","pip","ppp",'g',"gearWood", 'p', "sidingWood", 'i', "nuggetIron"));
-        //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.spindle,3),"s","s","s",'s',new ItemStack(BWMBlocks.WOOD_MOULDING,1));
-
         CauldronManager.getInstance().addRecipe(new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.DUNG.getMeta()),new Object[]{new betterwithmods.common.registry.OreStack("dung",9)});
 
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH)},new OreStack("fiberHemp",9),false);
@@ -144,13 +140,13 @@ public class InteractionCondensedOutputs extends Interaction {
         addCongealingRecipe(registry,"eye",new ItemStack(Items.SPIDER_EYE));
         addCongealingRecipe(registry,"wart",new ItemStack(Items.NETHER_WART));
 
-        addRollupRecipe(registry,"fabric",new OreStack("fabricHemp",8));
+        addRollupRecipe(registry,"fabric",new OreStack("fabricHemp",8),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH));
         addRollupRecipe(registry,"vine",new ItemStack(Blocks.VINE));
-        addRollupRecipe(registry,"paper",new OreStack("paper",8));
-        addRollupRecipe(registry,"leather",new OreStack("leather",8));
-        addRollupRecipe(registry,"scoured_leather",new OreStack("hideScoured",8));
-        addRollupRecipe(registry,"tanned_leather",new OreStack("hideTanned",8));
-        addRollupRecipe(registry,"string",new OreStack("string",8));
+        addRollupRecipe(registry,"paper",new OreStack("paper",8), new ItemStack(Items.PAPER));
+        addRollupRecipe(registry,"leather",new OreStack("leather",8), new ItemStack(Items.LEATHER));
+        addRollupRecipe(registry,"scoured_leather",new OreStack("hideScoured",8),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER));
+        addRollupRecipe(registry,"tanned_leather",new OreStack("hideTanned",8),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER));
+        addRollupRecipe(registry,"string",new OreStack("string",8), new ItemStack(Items.STRING));
 
         addBundlingRecipe(registry,"feather",new ItemStack(Items.FEATHER));
         addBundlingRecipe(registry,"blazerods",new ItemStack(Items.BLAZE_ROD));
@@ -169,6 +165,7 @@ public class InteractionCondensedOutputs extends Interaction {
         ItemStack output = ModItems.materialBag.getMaterial(id);
 
         addCondensingRecipe(registry,id,output, material, bagStack);
+        addUncondensingRecipe(registry,id,output,material);
     }
 
     private void addCratingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)
@@ -176,6 +173,7 @@ public class InteractionCondensedOutputs extends Interaction {
         ItemStack output = ModItems.materialCrate.getMaterial(id);
 
         addCondensingRecipe(registry,id,output, material, crateStack);
+        addUncondensingRecipe(registry,id,output,material);
     }
 
     private void addCongealingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)
@@ -183,6 +181,7 @@ public class InteractionCondensedOutputs extends Interaction {
         ItemStack output = ModItems.materialCongealed.getMaterial(id);
 
         addCondensingRecipe(registry,id,output, material, congealedStack);
+        addUncondensingRecipe(registry,id,output,material);
 
         ItemStack material8 = material.copy();
         material8.setCount(8);
@@ -194,17 +193,20 @@ public class InteractionCondensedOutputs extends Interaction {
         ItemStack output = ModItems.materialBolt.getMaterial(id);
 
         addCondensingRecipe(registry,id,output, material, boltStack);
+        addUncondensingRecipe(registry,id,output,material);
 
         ItemStack material8 = material.copy();
         material8.setCount(8);
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material8,true);
     }
 
-    private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, OreStack material)
+    private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, OreStack material, ItemStack materialStack)
     {
         ItemStack output = ModItems.materialBolt.getMaterial(id);
 
         addCondensingRecipe(registry,id,output, material, boltStack);
+        addUncondensingRecipe(registry,id,output,materialStack);
+
         OreStack material8 = material.copy();
         material8.setCount(8);
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material8,true);
@@ -215,6 +217,7 @@ public class InteractionCondensedOutputs extends Interaction {
         ItemStack output = ModItems.materialBundle.getMaterial(id);
 
         addCondensingRecipe(registry,id,output, material, bundleStack);
+        addUncondensingRecipe(registry,id,output,material);
     }
 
     private void addCondensingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack output, ItemStack material, ItemStack frame)
@@ -222,26 +225,24 @@ public class InteractionCondensedOutputs extends Interaction {
         ItemStack outmaterial = material.copy();
         outmaterial.setCount(8);
         ResourceLocation compressLoc = new ResourceLocation(Reference.MOD_ID,"compress_"+id);
-        ResourceLocation uncompressLoc = new ResourceLocation(Reference.MOD_ID,"uncompress_"+id);
 
         registry.register(new ShapedOreRecipe(compressLoc,output,"aaa","aba","aaa",'a',material,'b',frame).setRegistryName(compressLoc));
-        registry.register(new ShapelessOreRecipe(uncompressLoc,outmaterial,output).setRegistryName(uncompressLoc));
     }
 
-
-    private void addCondensingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack output, OreStack material, ItemStack frame)
+    private void addCondensingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack condensed, OreStack material, ItemStack frame)
     {
-        ItemStack outmaterial = ItemStack.EMPTY;
-        List<ItemStack> orestacks = material.getOres();
-        if(!orestacks.isEmpty())
-        {
-            outmaterial = orestacks.get(0).copy();
-            outmaterial.setCount(8);
-        }
         ResourceLocation compressLoc = new ResourceLocation(Reference.MOD_ID,"compress_"+id);
+
+        registry.register(new ShapedOreRecipe(compressLoc,condensed,"aaa","aba","aaa",'a',material.getOreName(),'b',frame).setRegistryName(compressLoc));
+    }
+
+    private void addUncondensingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack condensed, ItemStack material)
+    {
+        ItemStack outmaterial = material.copy();
+        outmaterial.setCount(8);
+
         ResourceLocation uncompressLoc = new ResourceLocation(Reference.MOD_ID,"uncompress_"+id);
 
-        registry.register(new ShapedOreRecipe(compressLoc,output,"aaa","aba","aaa",'a',material.getOreName(),'b',frame).setRegistryName(compressLoc));
-        registry.register(new ShapelessOreRecipe(uncompressLoc,outmaterial, output).setRegistryName(uncompressLoc));
+        registry.register(new ShapelessOreRecipe(uncompressLoc,outmaterial,condensed).setRegistryName(uncompressLoc));
     }
 }

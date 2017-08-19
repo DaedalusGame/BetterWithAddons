@@ -1,0 +1,43 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"transform": "forge:default-block",
+	"model": "betterwithaddons:rope_post_knot"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+	"north":{
+		"true":{
+			"submodel": {
+				"north": { "model": "betterwithaddons:rope_post", "y": 270 }
+			}
+		},
+		"false":{}
+	},
+	"east":{
+		"true":{
+			"submodel": {
+				"east": { "model": "betterwithaddons:rope_post", "y": 0 }
+			}
+		},
+		"false":{}
+	},
+	"south":{
+		"true":{
+			"submodel": {
+				"south": { "model": "betterwithaddons:rope_post", "y": 90 }
+			}
+		},
+		"false":{}
+	},
+	"west":{
+		"true":{
+			"submodel": {
+				"west": { "model": "betterwithaddons:rope_post", "y": 180 }
+			}
+		},
+		"false":{}
+	}
+  }
+}

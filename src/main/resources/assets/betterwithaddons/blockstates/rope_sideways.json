@@ -1,0 +1,19 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"model": "betterwithaddons:rope_horizontal",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+	"shape": {
+		"x": { "y": 90 },
+		"z": {},
+		"cross": { "model": "betterwithaddons:rope_cross" },
+		"planks_x": { "y": 90 },
+		"planks_z": {},
+		"planks_cross": { "model": "betterwithaddons:rope_cross" }
+	}
+  }
+}

@@ -1,5 +1,6 @@
 package betterwithaddons.interaction.minetweaker;
 
+import betterwithaddons.interaction.InteractionCraftTweaker;
 import betterwithaddons.item.ItemMaterial;
 import com.blamejared.mtlib.helpers.InputHelper;
 import com.blamejared.mtlib.utils.BaseUndoable;
@@ -21,11 +22,10 @@ public class Condensed {
 
     @ZenMethod
     public static void setContainer(@NotNull IItemStack condensed, @NotNull IItemStack input) {
-
         ItemStack item = InputHelper.toStack(condensed);
         ItemStack container = InputHelper.toStack(input);
         if(item.getItem() instanceof ItemMaterial)
-            CraftTweakerAPI.apply(new SetContainer((ItemMaterial) item.getItem(),container));
+            InteractionCraftTweaker.LATE_REMOVALS.add(new SetContainer((ItemMaterial) item.getItem(),container));
     }
 
     public static class SetContainer extends BaseUndoable

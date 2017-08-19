@@ -1,0 +1,44 @@
+{
+	"textures": {
+		"1": "betterwithmods:blocks/rope",
+		"particle": "betterwithmods:blocks/rope"
+	},
+	"elements": [
+		{
+			"from": [9, 12, 7],
+			"to": [16, 14, 9],
+			"faces": {
+				"north": {
+					"uv": [7, 9, 9, 16],
+					"texture": "#1",
+					"rotation": 90
+				},
+				"east": {
+					"uv": [7, 2, 9, 4],
+					"texture": "#1",
+					"rotation": 90
+				},
+				"south": {
+					"uv": [7, 9, 9, 16],
+					"texture": "#1",
+					"rotation": 90
+				},
+				"west": {
+					"uv": [7, 2, 9, 4],
+					"texture": "#1",
+					"rotation": 90
+				},
+				"up": {
+					"uv": [7, 9, 9, 16],
+					"texture": "#1",
+					"rotation": 90
+				},
+				"down": {
+					"uv": [7, 9, 9, 16],
+					"texture": "#1",
+					"rotation": 90
+				}
+			}
+		}
+	]
+}

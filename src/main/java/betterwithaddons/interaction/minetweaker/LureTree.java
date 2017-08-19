@@ -1,5 +1,6 @@
 package betterwithaddons.interaction.minetweaker;
 
+import betterwithaddons.interaction.InteractionCraftTweaker;
 import betterwithaddons.tileentity.TileEntityLureTree;
 import betterwithaddons.tileentity.TileEntityLureTree.TreeFood;
 import com.blamejared.mtlib.helpers.InputHelper;
@@ -23,14 +24,14 @@ public class LureTree {
     public static void add(@NotNull IItemStack input, int food) {
         ItemStack stack = InputHelper.toStack(input);
         TreeFood r = new TreeFood(stack,food);
-        CraftTweakerAPI.apply(new Add(r));
+        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add(r));
     }
 
     @ZenMethod
     public static void remove(@NotNull IItemStack input)
     {
         ItemStack stack = InputHelper.toStack(input);
-        CraftTweakerAPI.apply(new Remove(stack));
+        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove(stack));
     }
 
     public static class Add extends BaseListAddition<TreeFood>

@@ -77,6 +77,7 @@ public class AnimalCrossbreedHandler {
         mutationSet.add(new AnimalMutation((world, pos, mother, father) -> spawnBabyAt(world,pos,new EntitySheep(world)),100));
         mutationSet.add(new AnimalMutation((world, pos, mother, father) -> spawnBabyAt(world,pos,new EntityPig(world)),100));
         mutationSet.add(new AnimalMutation((world, pos, mother, father) -> spawnBabyAt(world,pos,new EntityChicken(world)),50)); //Lower chance for egg hatching animal
+        mutationSet.add(new AnimalMutation((world, pos, mother, father) -> spawnBabyAt(world,pos,new EntityRabbit(world)),75));
 
         //Parent species
         mutationSet.add(new AnimalMutation((world, pos, mother, father) -> spawnBabyAt(world,pos,mother.createChild(mother)),100));

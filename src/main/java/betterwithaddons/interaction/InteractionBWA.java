@@ -1,10 +1,7 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
-import betterwithaddons.block.BlockAqueduct;
-import betterwithaddons.block.BlockModUnbaked;
-import betterwithaddons.block.BlockWeight;
-import betterwithaddons.block.ModBlocks;
+import betterwithaddons.block.*;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.recipes.FoodCombiningRecipe;
 import betterwithaddons.handler.*;
@@ -242,6 +239,9 @@ public class InteractionBWA extends Interaction {
         }
 
         CauldronManager.getInstance().addRecipe(new ItemStack(BWMItems.FERTILIZER), ItemStack.EMPTY, new Object[]{new ItemStack(ModItems.rottenFood)});
+
+        BlockRopeSideways.addFastenableBlock(ModBlocks.scaffold);
+        BlockRopeSideways.addFastenableBlock(ModBlocks.ropePost);
     }
 
     @Override

@@ -117,10 +117,14 @@ public class ModItems {
     public static ItemAncestryBottle ancestryBottle;
     @GameRegistry.ObjectHolder("betterwithaddons:food_sashimi")
     public static ItemFood sashimi;
+    @GameRegistry.ObjectHolder("betterwithaddons:food_mulberry")
+    public static ItemFood mulberry;
     @GameRegistry.ObjectHolder("betterwithaddons:food_cooked_rice")
     public static ItemFood rice;
     @GameRegistry.ObjectHolder("betterwithaddons:food_bowl_rice")
     public static ItemFood riceBowl;
+    @GameRegistry.ObjectHolder("betterwithaddons:laxative")
+    public static Item laxative;
     @GameRegistry.ObjectHolder("betterwithaddons:brick_stained")
     public static ItemStainedBrick stainedBrick;
     @GameRegistry.ObjectHolder("betterwithaddons:material")
@@ -312,8 +316,10 @@ public class ModItems {
         fuguSac = (ItemFood) registerItem("food_fugu_sac", new ItemFood(2, 0.1F, false).setPotionEffect(new PotionEffect(MobEffects.WITHER, 2000, 1), 1.0F));
 
         sashimi = (ItemFood) registerItem("food_sashimi", new ItemFood(2, 0.1F, false));
+        mulberry = (ItemFood) registerItem("food_mulberry", new ItemFood(1, 0.2F, false));
         rice = (ItemFood) registerItem("food_cooked_rice", new ItemFood(2, 0.3F, false));
         riceBowl = (ItemFood) registerItem("food_bowl_rice", new ItemFood(9, 0.6F, false).setMaxStackSize(1));
+        laxative = registerItem("laxative", new Item());
 
         soulSandPile = registerItem("soulsand_pile", new Item());
         rottenFood = (ItemFood)registerItem("rotten_food", new ItemFood(1,0.1f,false).setPotionEffect(new PotionEffect(MobEffects.HUNGER, 2000, 1), 1.0F));

@@ -3,6 +3,7 @@ package betterwithaddons.interaction.minetweaker;
 import betterwithaddons.block.EriottoMod.BlockCherryBox;
 import betterwithaddons.crafting.manager.CraftingManagerDryingBox;
 import betterwithaddons.crafting.recipes.CherryBoxRecipe;
+import betterwithaddons.interaction.InteractionCraftTweaker;
 import betterwithaddons.interaction.jei.category.DryingBoxRecipeCategory;
 import com.blamejared.mtlib.helpers.InputHelper;
 import com.google.common.collect.Lists;
@@ -22,13 +23,13 @@ public class DryingBox extends CherryBox {
     @ZenMethod
     public static void add(IItemStack output, IItemStack input) {
         CherryBoxRecipe recipe = new CherryBoxRecipe(BlockCherryBox.CherryBoxType.DRYING,InputHelper.toObject(input),InputHelper.toStack(output));
-        CraftTweakerAPI.apply(new Add("DryingBox", CraftingManagerDryingBox.instance(), Lists.newArrayList(recipe)));
+        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add("DryingBox", CraftingManagerDryingBox.instance(), Lists.newArrayList(recipe)));
     }
 
     @ZenMethod
     public static void remove(IItemStack input)
     {
         List<CherryBoxRecipe> recipes = CraftingManagerDryingBox.instance().findRecipeForRemoval(InputHelper.toStack(input));
-        CraftTweakerAPI.apply(new Remove("DryingBox", CraftingManagerDryingBox.instance(), recipes));
+        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove("DryingBox", CraftingManagerDryingBox.instance(), recipes));
     }
 }

@@ -147,6 +147,12 @@ public class ModBlocks {
     public static BlockInfuser infuser;
     @GameRegistry.ObjectHolder("betterwithaddons:unbaked")
     public static BlockModUnbaked unbaked;
+    @GameRegistry.ObjectHolder("betterwithaddons:scaffold")
+    public static BlockScaffold scaffold;
+    @GameRegistry.ObjectHolder("betterwithaddons:rope_sideways")
+    public static BlockRopeSideways ropeSideways;
+    @GameRegistry.ObjectHolder("betterwithaddons:rope_post")
+    public static BlockRopePost ropePost;
 
     public static void load(FMLPreInitializationEvent event) {
         FluidRegistry.registerFluid(new Fluid("brine", new ResourceLocation(Reference.MOD_ID, "blocks/brine_still"), new ResourceLocation(Reference.MOD_ID, "blocks/brine_flow")));
@@ -185,6 +191,10 @@ public class ModBlocks {
                 return isFull;
             }
         });
+
+        registerBlock(new BlockScaffold("scaffold"));
+        registerBlock(new BlockRopeSideways("rope_sideways"), null, false);
+        registerBlock(new BlockRopePost("rope_post"), null, false);
 
         registerBlock(new BlockSpindle());
         registerBlock(new BlockLoom());

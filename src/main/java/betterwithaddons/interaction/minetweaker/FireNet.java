@@ -3,6 +3,7 @@ package betterwithaddons.interaction.minetweaker;
 import betterwithaddons.block.EriottoMod.BlockNettedScreen;
 import betterwithaddons.crafting.manager.CraftingManagerFireNet;
 import betterwithaddons.crafting.recipes.NetRecipe;
+import betterwithaddons.interaction.InteractionCraftTweaker;
 import betterwithaddons.interaction.jei.category.FireNetRecipeCategory;
 import com.blamejared.mtlib.helpers.InputHelper;
 import crafttweaker.CraftTweakerAPI;
@@ -21,12 +22,12 @@ public class FireNet extends Net {
     @ZenMethod
     public static void add(IItemStack[] outputs, @NotNull IIngredient input) {
         NetRecipe r = new NetRecipe(BlockNettedScreen.SifterType.FIRE, InputHelper.toObject(input),0,InputHelper.toStacks(outputs));
-        CraftTweakerAPI.apply(new Add("FireNet", CraftingManagerFireNet.getInstance(),r));
+        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add("FireNet", CraftingManagerFireNet.getInstance(),r));
     }
 
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        CraftTweakerAPI.apply(new Remove("FireNet", CraftingManagerFireNet.getInstance(),InputHelper.toStack(input)));
+        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove("FireNet", CraftingManagerFireNet.getInstance(),InputHelper.toStack(input)));
     }
 }

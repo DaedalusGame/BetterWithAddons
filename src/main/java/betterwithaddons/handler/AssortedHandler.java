@@ -2,7 +2,8 @@ package betterwithaddons.handler;
 
 import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BlockLattice;
-import betterwithaddons.block.BlockModUnbaked;
+import betterwithaddons.block.BlockRopeSideways;
+import betterwithaddons.block.BlockRopeSideways.EnumRopeShape;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionBWM;
 import betterwithaddons.item.ModItems;
@@ -10,8 +11,7 @@ import betterwithaddons.item.rbdtools.IConvenientTool;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.util.BannerUtil;
 import betterwithaddons.util.InventoryUtil;
-import betterwithmods.common.BWMItems;
-import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.BWMBlocks;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -28,7 +28,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.BossInfo.Overlay;
@@ -65,9 +64,97 @@ public class AssortedHandler {
     private final int BossCleanupThreshold = 10;
     private final float HardnessThreshold = 5.0f;
     private HashMap<UUID, BossInfoServer> BossList = new HashMap<>();
+    private final int ropeLimit = 9;
 
     public static boolean doScaleQuarriesExist() {
         return ScaleQuarryAmt > 0 && ScaleQuarries[0] != null;
+    }
+
+    @SubscribeEvent
+    public void attachPergolaEvent(PlayerInteractEvent.RightClickBlock event)
+    {
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        IBlockState state = world.getBlockState(pos);
+        ItemStack stack = event.getItemStack();
+        EnumFacing facing = event.getFace();
+        EntityPlayer player = event.getEntityPlayer();
+
+        if(facing.getAxis() == EnumFacing.Axis.Y)
+            return;
+
+        if(stack.getItem() == Item.getItemFromBlock(BWMBlocks.ROPE) && BlockRopeSideways.canFastenBlock(state.getBlock()))
+        {
+            int consumedRope = attachRope(world, pos, facing, Math.min(stack.getCount(),ropeLimit));
+            if (consumedRope > 0) {
+                if(!player.isCreative())
+                    stack.shrink(consumedRope);
+                event.setCancellationResult(EnumActionResult.SUCCESS);
+                event.setCanceled(true);
+            }
+        }
+    }
+
+    private int attachRope(World world, BlockPos pos, EnumFacing facing, int limit) {
+        BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos(pos);
+        int consumedRope = 0;
+        int i;
+        for(i = 0; i < limit; i++)
+        {
+            checkPos.move(facing);
+            IBlockState checkState = world.getBlockState(checkPos);
+            if(i > 0 && BlockRopeSideways.canFastenBlock(checkState.getBlock()))
+                break;
+            if(!checkState.getBlock().isReplaceable(world,checkPos) && !(checkState.getBlock() == ModBlocks.ropeSideways && !checkState.getValue(BlockRopeSideways.SHAPE).has(facing.getAxis())))
+                return 0;
+        }
+
+        if(i >= limit)
+            return 0;
+
+        while(i > 0)
+        {
+            checkPos.move(facing.getOpposite());
+            IBlockState checkState = world.getBlockState(checkPos);
+            EnumRopeShape placedRope = facing.getAxis() == EnumFacing.Axis.X ? EnumRopeShape.X : EnumRopeShape.Z;
+            IBlockState placedState = ModBlocks.ropeSideways.getDefaultState().withProperty(BlockRopeSideways.SHAPE,placedRope);
+            if(checkState.getBlock() == ModBlocks.ropeSideways)
+            {
+                placedState = checkState.withProperty(BlockRopeSideways.SHAPE,checkState.getValue(BlockRopeSideways.SHAPE).add(placedRope));
+            }
+            world.setBlockState(checkPos,placedState,2);
+            consumedRope++;
+            i--;
+        }
+
+        return consumedRope;
+    }
+
+    @SubscribeEvent
+    public void attachRopeEvent(PlayerInteractEvent.RightClickBlock event)
+    {
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        IBlockState state = world.getBlockState(pos);
+        ItemStack stack = event.getItemStack();
+        EnumFacing facing = event.getFace();
+        EntityPlayer player = event.getEntityPlayer();
+
+        if(stack.getItem() == Item.getItemFromBlock(BWMBlocks.ROPE) && state.getBlock() instanceof BlockFence && state.getBlock() != ModBlocks.ropePost)
+        {
+            ModBlocks.ropePost.placeFencePost(world,pos);
+            state = world.getBlockState(pos);
+
+            int consumedRope = 1;
+            if(BlockRopeSideways.canFastenBlock(state.getBlock())) {
+                consumedRope += attachRope(world, pos, facing, Math.min(stack.getCount()-1,ropeLimit));
+            }
+            if(!player.isCreative())
+                stack.shrink(consumedRope);
+
+            event.setCancellationResult(EnumActionResult.SUCCESS);
+            event.setCanceled(true);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

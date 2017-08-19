@@ -43,6 +43,16 @@ public abstract class BlockWeight extends BlockBase {
     }
 
     @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
+    }
+
+    @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if(fromPos.equals(pos.up()))
             worldIn.scheduleUpdate(pos,this,1);

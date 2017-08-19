@@ -20,6 +20,8 @@ public class ItemModels
         ModBlocks.LIST.forEach(ItemModels::registerBlock);
 
         ModelLoaderRegistry.registerLoader(ModelToolShard.LoaderToolShard.INSTANCE);
+        ModelLoaderRegistry.registerLoader(new ModelRopeSideways.Loader());
+        ModelLoaderRegistry.registerLoader(new ModelRopePost.Loader());
     }
 
     private static void registerBlock(Block block)

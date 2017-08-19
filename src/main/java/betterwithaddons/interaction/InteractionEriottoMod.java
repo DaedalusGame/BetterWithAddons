@@ -12,6 +12,7 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWOreDictionary;
+import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
@@ -133,19 +134,8 @@ public class InteractionEriottoMod extends Interaction {
             }
         });
 
-        //GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraPlanks, 4), new ItemStack(ModBlocks.sakuraLog));
-        //GameRegistry.addShapedRecipe(new ItemStack(Items.PAPER), "aaa", 'a', new ItemStack(ModBlocks.mulberryLog));
-        //GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberryPlanks), new ItemStack(ModBlocks.mulberryLog));
-        //GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("mulberry_sheet"), "aa", "aa", 'a', ModItems.materialJapan.getMaterial("mulberry_paste"));
-
-        if (ModInteractions.bwm.isActive()) {
-            CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.rice), new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
-        }
-        /*else {
-            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.PINK.getDyeDamage()));
-            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mulberrySapling), new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata()), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()));
-            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.bamboo), new ItemStack(Items.REEDS, 1), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()));
-        }*/
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.rice), new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
+        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.laxative), new Object[]{new ItemStack(ModItems.mulberry,3),new ItemStack(Items.SUGAR),BlockRawPastry.getStack(BlockRawPastry.EnumType.BREAD)});
 
         GameRegistry.addSmelting(new ItemStack(ModItems.preparedPuffer), new ItemStack(ModItems.preparedCookedPuffer), 0.35f);
         GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("soaked_rice"), new ItemStack(ModItems.rice), 0.35f);
@@ -155,41 +145,7 @@ public class InteractionEriottoMod extends Interaction {
         //    MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rush), 2);
         //}
 
-        //GameRegistry.addShapedRecipe(new ItemStack(ModItems.riceBowl), "r", "r", "b", 'r', ModItems.rice, 'b', new ItemStack(Items.BOWL));
-
-        //addFoldingRecipe(ModItems.materialJapan.getMaterial("hocho_tetsu_fold_1"), ModItems.materialJapan.getMaterial("hocho_tetsu_heated"));
-        //addFoldingRecipe(ModItems.materialJapan.getMaterial("hocho_tetsu_fold_2"), ModItems.materialJapan.getMaterial("hocho_tetsu_fold_1"));
-        //addFoldingRecipe(ModItems.materialJapan.getMaterial("hocho_tetsu_finished"), ModItems.materialJapan.getMaterial("hocho_tetsu_fold_2"));
-
-        //addFoldingRecipe(ModItems.materialJapan.getMaterial("tamahagane_folded"), ModItems.materialJapan.getMaterial("tamahagane_heated"));
-        //addFoldingRecipe(ModItems.materialJapan.getMaterial("tamahagane_finished"), ModItems.materialJapan.getMaterial("tamahagane_reheated"));
-        /*GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("tamahagane_wrapped"), " w ", "wtw", " w ", 't', ModItems.materialJapan.getMaterial("tamahagane_folded"), 'w', ModItems.materialJapan.getMaterial("washi"));
-
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("lamellar"), "iii", "sls", "iii", 'i', ModItems.materialJapan.getMaterial("iron_scales"), 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STRING));
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("paper_lamellar"), "pwp", "sws", "pwp", 'w', ModItems.materialJapan.getMaterial("washi"), 'p', new ItemStack(Items.PAPER), 's', new ItemStack(Items.STRING));
-
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("tsuka"), "lll", "ssp", 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STICK), 'p', new ItemStack(ModBlocks.sakuraPlanks));
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("half_katana_blade"), "t", "h", "t", 't', ModItems.materialJapan.getMaterial("tamahagane_finished"), 'h', ModItems.materialJapan.getMaterial("hocho_tetsu_finished"));
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("ya_head", 3), "t  ", "hh ", "ttt", 't', ModItems.materialJapan.getMaterial("tamahagane_finished"), 'h', ModItems.materialJapan.getMaterial("hocho_tetsu_finished"));
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("yumi_top"), " b", "bs", "bl", 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STICK), 'b', ModItems.materialJapan.getMaterial("bamboo_slats"));
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("yumi_bottom"), "bl", "bs", " b", 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STICK), 'b', ModItems.materialJapan.getMaterial("bamboo_slats"));
-
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("helmet_undecorated"), "lll", "l l", 'l', ModItems.materialJapan.getMaterial("lamellar"));
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("chest_undecorated"), "l l", "lll", "lll", 'l', ModItems.materialJapan.getMaterial("lamellar"));
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("legs_undecorated"), "lll", "l l", "l l", 'l', ModItems.materialJapan.getMaterial("lamellar"));
-        GameRegistry.addShapedRecipe(ModItems.materialJapan.getMaterial("boots_undecorated"), "l l", "l l", 'l', ModItems.materialJapan.getMaterial("lamellar"));
-
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.bambooSlats), "bb", "bb", 'b', ModItems.materialJapan.getMaterial("bamboo_slats"));
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.shoji, 4), "bwb", "wbw", "bwb", 'b', ModItems.materialJapan.getMaterial("bamboo_slats"), 'w', ModItems.materialJapan.getMaterial("washi"));
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.fusuma, 4), "bwb", "wpw", "bwb", 'b', ModItems.materialJapan.getMaterial("bamboo_slats"), 'w', ModItems.materialJapan.getMaterial("washi"), 'p', new ItemStack(ModBlocks.sakuraPlanks));
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.tatami, 2), "rrr", "www", 'r', ModItems.materialJapan.getMaterial("rush"), 'w', ModItems.materialJapan.getMaterial("rice_hay"));*/
-
         GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("rice_stalk"), ModItems.materialJapan.getMaterial("rice_ash"), 0.1f);
-
-        //if (ALTERNATE_INFUSER_RECIPE)
-        //    GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.infuser), " a ", "waw", "dod", 'o', new ItemStack(Blocks.OBSIDIAN), 'd', new ItemStack(Items.DIAMOND), 'w', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), 'a', new ItemStack(ModItems.ancestryBottle));
-        //else
-        //    GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.infuser), " a ", " a ", "wtw", 't', new ItemStack(Blocks.ENCHANTING_TABLE), 'w', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.YELLOW.getMetadata()), 'a', new ItemStack(ModItems.ancestryBottle));
 
         CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ResourceLocation(Reference.MOD_ID,"katana"),new ItemStack(ModItems.katana), 8, "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("half_katana_blade"), 'w', ModItems.materialJapan.getMaterial("tsuka")));
         CraftingManagerInfuser.getInstance().addRecipe(new ShapedInfuserRecipe(new ResourceLocation(Reference.MOD_ID,"wakizashi"),new ItemStack(ModItems.wakizashi), 6, "l", "l", "w", 'l', "ingotTamahagane", 'w', ModItems.materialJapan.getMaterial("tsuka")));

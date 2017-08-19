@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "betterwithaddons:scaffold",
+	"data": 0
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "betterwithmods:rope",
+	  "data": 0
+    },
+	{
+      "item": "betterwithmods:platform",
+	  "data": 0
+    }
+  ]
+}

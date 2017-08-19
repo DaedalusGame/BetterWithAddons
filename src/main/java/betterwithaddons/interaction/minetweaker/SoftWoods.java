@@ -2,6 +2,7 @@ package betterwithaddons.interaction.minetweaker;
 
 import betterwithaddons.handler.StumpingHandler;
 import betterwithaddons.handler.StumpingHandler.WoodHardness;
+import betterwithaddons.interaction.InteractionCraftTweaker;
 import com.blamejared.mtlib.helpers.InputHelper;
 import com.blamejared.mtlib.utils.BaseListAddition;
 import com.blamejared.mtlib.utils.BaseListRemoval;
@@ -29,7 +30,7 @@ public class SoftWoods {
         }
         ItemStack stack = InputHelper.toStack(input);
         WoodHardness r = new WoodHardness(Block.getBlockFromItem(stack.getItem()),stack.getMetadata(),hardness);
-        CraftTweakerAPI.apply(new Add(r));
+        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add(r));
     }
 
     @ZenMethod
@@ -41,7 +42,7 @@ public class SoftWoods {
             return;
         }
         ItemStack stack = InputHelper.toStack(input);
-        CraftTweakerAPI.apply(new Remove(Block.getBlockFromItem(stack.getItem()),stack.getMetadata()));
+        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove(Block.getBlockFromItem(stack.getItem()),stack.getMetadata()));
     }
 
     public static class Add extends BaseListAddition<WoodHardness>

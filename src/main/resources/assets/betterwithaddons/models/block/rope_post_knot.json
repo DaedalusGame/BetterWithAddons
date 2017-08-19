@@ -1,0 +1,21 @@
+{
+	"textures": {
+		"0": "betterwithmods:blocks/rope_top",
+		"2": "betterwithmods:blocks/rope_side",
+		"particle": "betterwithmods:blocks/rope_side"
+	},
+	"elements": [
+		{
+			"from": [5, 11.2, 5],
+			"to": [11, 15.2, 11],
+			"faces": {
+				"north": {"texture": "#2"},
+				"east": {"texture": "#2"},
+				"south": {"texture": "#2"},
+				"west": {"texture": "#2"},
+				"up": {"texture": "#0"},
+				"down": {"texture": "#0"}
+			}
+		}
+	]
+}

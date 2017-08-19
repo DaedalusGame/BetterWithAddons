@@ -1,8 +1,6 @@
 package betterwithaddons;
 
-import betterwithaddons.block.BlockThorns;
-import betterwithaddons.block.IColorable;
-import betterwithaddons.block.ModBlocks;
+import betterwithaddons.block.*;
 import betterwithaddons.client.BrineStateMapper;
 import betterwithaddons.client.ToolShardModelHandler;
 import betterwithaddons.client.fx.FXLeafParticle;
@@ -18,7 +16,10 @@ import betterwithmods.manual.api.ManualAPI;
 import betterwithmods.manual.api.prefab.manual.ItemStackTabIconRenderer;
 import betterwithmods.manual.api.prefab.manual.ResourceContentProvider;
 import betterwithmods.manual.client.manual.provider.*;
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStem;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -27,6 +28,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -40,6 +42,8 @@ import java.util.Map;
 public class ClientProxy implements IProxy
 {
     public static ModelResourceLocation aqueductWaterLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "aqueduct_water"), "normal");
+    public static ModelResourceLocation ropeBridgeLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "rope_bridge"), "normal");
+    public static ModelResourceLocation ropePostLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "rope_post_knot"), "normal");
 
     @Override
     public void preInit() {
@@ -91,6 +95,31 @@ public class ClientProxy implements IProxy
 
         ModelLoader.setCustomStateMapper(ModBlocks.thorns,new StateMap.Builder().ignore(BlockThorns.FACING).build());
         ModelLoader.setCustomStateMapper(ModBlocks.brine, new BrineStateMapper());
+        ModelLoader.setCustomStateMapper(ModBlocks.ropeSideways, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                if(state.getValue(BlockRopeSideways.HAS_PLANKS))
+                    return ropeBridgeLocation;
+
+                Map <IProperty<?>,Comparable<?>> map = Maps.newLinkedHashMap(state.getProperties());
+                map.remove(BlockRopeSideways.HAS_PLANKS);
+
+                return new ModelResourceLocation(Block.REGISTRY.getNameForObject(state.getBlock()),this.getPropertyString(map));
+            }
+        });
+        ModelLoader.setCustomStateMapper(ModBlocks.ropePost, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                if(state.getValue(BlockRopePost.HAS_POST))
+                    return ropePostLocation;
+
+                Map <IProperty<?>,Comparable<?>> map = Maps.newLinkedHashMap(state.getProperties());
+                map.remove(BlockRopePost.HAS_PLANKS);
+                map.remove(BlockRopePost.HAS_POST);
+
+                return new ModelResourceLocation(Block.REGISTRY.getNameForObject(state.getBlock()),this.getPropertyString(map));
+            }
+        });
         ModelLoader.setCustomStateMapper(ModBlocks.aqueductWater, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {

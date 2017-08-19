@@ -40,6 +40,8 @@ tile.pcb_block.name=PCB
 tile.weight_wood.name=Weight Sensor
 tile.weight_stone.name=Stone Weight Sensor
 
+tile.scaffold.name=Scaffold
+
 tile.spindle.name=Spindle
 tile.loom.name=Spinning Wheel
 

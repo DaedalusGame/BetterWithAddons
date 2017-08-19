@@ -2,6 +2,7 @@ package betterwithaddons.interaction.minetweaker;
 
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
 import betterwithaddons.crafting.recipes.SpindleRecipe;
+import betterwithaddons.interaction.InteractionCraftTweaker;
 import betterwithaddons.interaction.jei.category.SpindleRecipeCategory;
 import com.blamejared.mtlib.helpers.InputHelper;
 import com.blamejared.mtlib.utils.BaseListAddition;
@@ -24,13 +25,13 @@ public class Spindle {
     @ZenMethod
     public static void add(IItemStack[] outputs, @NotNull IIngredient input, boolean consumesSpindle) {
         SpindleRecipe r = new SpindleRecipe(consumesSpindle, InputHelper.toObject(input), InputHelper.toStacks(outputs));
-        CraftTweakerAPI.apply(new Add(r));
+        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add(r));
     }
 
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        CraftTweakerAPI.apply(new Remove(InputHelper.toStack(input)));
+        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove(InputHelper.toStack(input)));
     }
 
     public static class Add extends BaseListAddition<SpindleRecipe>

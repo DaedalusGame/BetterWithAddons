@@ -3,6 +3,7 @@ package betterwithaddons.interaction.minetweaker;
 import betterwithaddons.block.EriottoMod.BlockNettedScreen;
 import betterwithaddons.crafting.manager.CraftingManagerSandNet;
 import betterwithaddons.crafting.recipes.NetRecipe;
+import betterwithaddons.interaction.InteractionCraftTweaker;
 import betterwithaddons.interaction.jei.category.SandNetRecipeCategory;
 import com.blamejared.mtlib.helpers.InputHelper;
 import crafttweaker.CraftTweakerAPI;
@@ -21,12 +22,12 @@ public class SandNet extends Net {
     @ZenMethod
     public static void add(IItemStack[] outputs, @NotNull IIngredient input, int sand) {
         NetRecipe r = new NetRecipe(BlockNettedScreen.SifterType.SAND,InputHelper.toObject(input),sand,InputHelper.toStacks(outputs));
-        CraftTweakerAPI.apply(new Add("SandNet", CraftingManagerSandNet.getInstance(),r));
+        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add("SandNet", CraftingManagerSandNet.getInstance(),r));
     }
 
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        CraftTweakerAPI.apply(new Remove("SandNet", CraftingManagerSandNet.getInstance(),InputHelper.toStack(input)));
+        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove("SandNet", CraftingManagerSandNet.getInstance(),InputHelper.toStack(input)));
     }
 }

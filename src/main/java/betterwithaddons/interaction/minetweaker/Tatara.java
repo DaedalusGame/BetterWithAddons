@@ -2,6 +2,7 @@ package betterwithaddons.interaction.minetweaker;
 
 import betterwithaddons.crafting.manager.CraftingManagerTatara;
 import betterwithaddons.crafting.recipes.SmeltingRecipe;
+import betterwithaddons.interaction.InteractionCraftTweaker;
 import com.blamejared.mtlib.helpers.InputHelper;
 import com.blamejared.mtlib.utils.BaseListAddition;
 import com.blamejared.mtlib.utils.BaseListRemoval;
@@ -22,14 +23,14 @@ public class Tatara {
     @ZenMethod
     public static void add(IItemStack output, IItemStack input) {
         SmeltingRecipe recipe = new SmeltingRecipe(InputHelper.toObject(input),InputHelper.toStack(output));
-        CraftTweakerAPI.apply(new Add(Lists.newArrayList(recipe)));
+        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add(Lists.newArrayList(recipe)));
     }
 
     @ZenMethod
     public static void remove(IItemStack input)
     {
         List<SmeltingRecipe> recipes = CraftingManagerTatara.instance().findRecipeForRemoval(InputHelper.toStack(input));
-        CraftTweakerAPI.apply(new Remove(recipes));
+        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove(recipes));
     }
 
     public static class Add extends BaseListAddition<SmeltingRecipe>

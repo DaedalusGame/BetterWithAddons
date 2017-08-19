@@ -1,0 +1,42 @@
+{
+	"textures": {
+		"top": "betterwithmods:blocks/wicker",
+		"side": "betterwithaddons:blocks/scaffold_side",
+		"in_side": "betterwithmods:blocks/rope_side",
+		"in_top": "betterwithaddons:blocks/scaffold_bottom",
+		"particle": "betterwithmods:blocks/wicker"
+	},
+	"elements": [
+		{
+			"from": [16, 2, 0],
+			"to": [0, 10, 16],
+			"faces": {
+				"up": {"texture": "#in_top"},
+				"down": {"texture": "#top"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"texture": "#side"},
+				"east": {"texture": "#side"},
+				"south": {"texture": "#side"},
+				"west": {"texture": "#side"},
+				"up": {"texture": "#top"},
+				"down": {"texture": "#top"}
+			}
+		},
+		{
+			"from": [15, 10, 1],
+			"to": [1, 14, 15],
+			"faces": {
+				"north": { "texture": "#in_side"},
+				"east": { "texture": "#in_side"},
+				"south": { "texture": "#in_side"},
+				"west": { "texture": "#in_side"},
+				"up": { "texture": "#top"}
+			}
+		}
+	]
+}

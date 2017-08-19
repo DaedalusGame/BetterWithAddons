@@ -34,6 +34,8 @@ public abstract class Interaction {
 
     void postInit() {}
 
+    void loadComplete() {}
+
     void modifyRecipes(RegistryEvent.Register<IRecipe> event) {}
 
     protected void removeRecipeByOutput(ForgeRegistry<IRecipe> reg, ItemStack outputToRemove) {

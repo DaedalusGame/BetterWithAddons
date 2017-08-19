@@ -4,6 +4,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -25,6 +26,7 @@ public class ModInteractions {
     public static InteractionBTWTweak btwTweak;
     public static InteractionBWR betterWithRenewables;
     public static InteractionWheat betterWithWheat;
+    public static InteractionCraftTweaker craftTweaker;
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event)
@@ -43,6 +45,7 @@ public class ModInteractions {
         btwTweak = (InteractionBTWTweak) addInteraction(new InteractionBTWTweak());
         betterWithRenewables = (InteractionBWR) addInteraction(new InteractionBWR());
         betterWithWheat = (InteractionWheat) addInteraction(new InteractionWheat());
+        craftTweaker = (InteractionCraftTweaker) addInteraction(new InteractionCraftTweaker());
 
         validate();
 
@@ -64,6 +67,10 @@ public class ModInteractions {
 
     public static void postInit(FMLPostInitializationEvent event) {
         LIST.stream().filter(Interaction::isActive).forEach(Interaction::postInit);
+    }
+
+    public static void loadComplete(FMLLoadCompleteEvent event) {
+        LIST.stream().filter(Interaction::isActive).forEach(Interaction::loadComplete);
     }
 
     private static Interaction addInteraction(Interaction interaction) {
