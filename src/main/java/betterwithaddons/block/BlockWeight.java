@@ -32,7 +32,7 @@ public abstract class BlockWeight extends BlockBase {
 
     protected BlockWeight(String name) {
         super(name, Material.WOOD);
-        this.setHardness(3.5F);
+        this.setHardness(1.5F);
         this.setTickRandomly(true);
         this.setDefaultState(blockState.getBaseState().withProperty(ACTIVE,false));
     }

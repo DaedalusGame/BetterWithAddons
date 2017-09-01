@@ -21,6 +21,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public class BlockChute extends BlockContainerBase {
     protected BlockChute() {
         super("chute", Material.WOOD);
+        this.setHardness(1.5F);
+        this.setResistance(2.0F);
+        this.setHarvestLevel("axe", 0);
     }
 
     @Override
