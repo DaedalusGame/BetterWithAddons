@@ -21,6 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
@@ -45,8 +46,10 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
 
     public boolean isBroken(IBlockState state)
     {
-        return state.getValue(CRACKED) >= 5;
+        return state.getValue(CRACKED) >= 4;
     }
+
+    public boolean isBlock(IBlockState state) {return state.getValue(CRACKED) >= 5;}
 
     public void addCracks(World worldIn, BlockPos pos, IBlockState state, int n)
     {
@@ -62,23 +65,19 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
     }
 
     @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return ModItems.worldShard;
-    }
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 
-    /*@Override
-    public int damageDropped(IBlockState state) {
-        return 1;
-    }*/
-
-    @Override
-    public int quantityDropped(IBlockState state, int fortune, Random random) {
-        return isBroken(state) ? random.nextInt(2)+3 : 0;
+        if(isBroken(state))
+        if(!isBlock(state))
+            drops.add(new ItemStack(ModItems.worldShard,rand.nextInt(2)+3));
+        else
+            super.getDrops(drops, world, pos, state, fortune);
     }
 
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-        return new ItemStack(this,1,isBroken(state) ? 1 : 0);
+        return new ItemStack(this,1,isBlock(state) ? 1 : 0);
     }
 
     @Override
@@ -129,8 +128,9 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
 
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        if(willHarvest && isBroken(state) && exposedToElements(world,pos))
-            return super.removedByPlayer(state,world,pos,player,willHarvest);
+        if(willHarvest)
+            if(player.isCreative() || (isBroken(state) && exposedToElements(world,pos)))
+                return super.removedByPlayer(state,world,pos,player,willHarvest);
 
         return false;
     }
