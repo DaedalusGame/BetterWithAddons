@@ -27,7 +27,7 @@ public class BlockLantern extends BlockBase {
 
     @Override
     public int getLightValue(IBlockState state) {
-        return state.getValue(LIT) ? 10 : 0;
+        return state.getValue(LIT) ? 15 : 0;
     }
 
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
