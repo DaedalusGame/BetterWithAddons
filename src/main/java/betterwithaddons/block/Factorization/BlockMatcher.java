@@ -91,7 +91,7 @@ public class BlockMatcher extends BlockBase {
 
     @Override
     public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-        return blockState.getValue(ACTIVE) ? 16 : 0;
+        return blockState.getValue(ACTIVE) ? 15 : 0;
     }
 
     @Override
