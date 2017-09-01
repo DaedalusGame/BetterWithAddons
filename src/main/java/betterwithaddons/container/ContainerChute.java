@@ -57,18 +57,19 @@ public class ContainerChute extends Container {
     {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
+        int slots = this.inventorySlots.size();
 
         if(slot != null && slot.getHasStack())
         {
             ItemStack stack1 = slot.getStack();
             stack = stack1.copy();
 
-            if(index < 3)
+            if(index < slots)
             {
-                if(!mergeItemStack(stack1, 3, this.inventorySlots.size(), true))
+                if(!mergeItemStack(stack1, slots, this.inventorySlots.size(), true))
                     return ItemStack.EMPTY;
             }
-            else if(!mergeItemStack(stack1, 0, 3, false))
+            else if(!mergeItemStack(stack1, 0, slots, false))
                 return ItemStack.EMPTY;
             if(stack1.getCount() == 0)
                 slot.putStack(ItemStack.EMPTY);
