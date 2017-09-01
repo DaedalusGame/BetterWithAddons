@@ -148,7 +148,7 @@ public class BlockWirePCB extends Block implements IColorable {
     }
 
     private IBlockState calculateCurrentChanges(World world, BlockPos thispos, BlockPos p_calculateCurrentChanges_3_, IBlockState state) {
-        IBlockState iblockstate = state;
+        IBlockState origState = state;
         int power = state.getValue(BlockRedstoneWire.POWER);
         int maxCurrPower = this.getMaxCurrentStrength(world, p_calculateCurrentChanges_3_, 0);
         /*this.canProvidePower = false;
@@ -186,9 +186,11 @@ public class BlockWirePCB extends Block implements IColorable {
             maxCurrPower = maxinpower;
         }
 
+        maxCurrPower = MathHelper.clamp(maxCurrPower, 0, 15);
+
         if(power != maxCurrPower) {
-            state = state.withProperty(BlockRedstoneWire.POWER, Integer.valueOf(maxCurrPower));
-            if(world.getBlockState(thispos) == iblockstate) {
+            state = state.withProperty(BlockRedstoneWire.POWER, maxCurrPower);
+            if(world.getBlockState(thispos) == origState) {
                 world.setBlockState(thispos, state, 2);
             }
 
