@@ -60,7 +60,7 @@ public class StumpingHandler {
         float multiplier = 1f;
 
         if(InteractionBTWTweak.HARD_STUMPS) {
-            if(block instanceof BlockLog && state.getValue(BlockLog.LOG_AXIS) == BlockLog.EnumAxis.Y) {
+            if(block instanceof BlockLog && isRooted(state)) {
                 IBlockState bottomstate = world.getBlockState(breakpos.down());
                 Material material = bottomstate.getMaterial();
                 if (material == Material.GROUND || material == Material.GRASS)
@@ -76,5 +76,13 @@ public class StumpingHandler {
         }
 
         breakEvent.setNewSpeed(speed * multiplier);
+    }
+
+    private boolean isRooted(IBlockState state)
+    {
+        if(state.getPropertyKeys().contains(BlockLog.LOG_AXIS))
+            return state.getValue(BlockLog.LOG_AXIS) == BlockLog.EnumAxis.Y;
+        else
+            return true;
     }
 }
