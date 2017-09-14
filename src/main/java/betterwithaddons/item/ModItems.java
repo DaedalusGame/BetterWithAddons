@@ -97,8 +97,8 @@ public class ModItems {
     @GameRegistry.ObjectHolder("betterwithaddons:rotten_food")
     public static ItemFood rottenFood;
 
-    @GameRegistry.ObjectHolder("betterwithaddons:bowl")
-    public static ItemMaterial bowls;
+    @GameRegistry.ObjectHolder("betterwithaddons:salt")
+    public static ItemMaterial salts;
 
     @GameRegistry.ObjectHolder("betterwithaddons:food_clownfish_cooked")
     public static ItemFood cookedClownfish;
@@ -325,8 +325,11 @@ public class ModItems {
         rottenFood = (ItemFood)registerItem("rotten_food", new ItemFood(1,0.1f,false).setPotionEffect(new PotionEffect(MobEffects.HUNGER, 2000, 1), 1.0F));
         wool = (ItemColored)registerItem("wool",new ItemColored());
 
-        bowls = (ItemMaterial) registerItem("bowl", new ItemMaterial(
+        /*bowls = (ItemMaterial) registerItem("bowl", new ItemMaterial(
                 new String[]{"salt"}
+        ));*/
+        salts = (ItemMaterial) registerItem("salt", new ItemMaterial(
+                new String[]{"crystal"}
         ));
 
         artifactFrame = (ItemArtifactFrame) registerItem("artifact_frame", new ItemArtifactFrame());

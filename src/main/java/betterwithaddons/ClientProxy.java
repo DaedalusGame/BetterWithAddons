@@ -94,7 +94,7 @@ public class ClientProxy implements IProxy
         ItemModels.register();
 
         ModelLoader.setCustomStateMapper(ModBlocks.thorns,new StateMap.Builder().ignore(BlockThorns.FACING).build());
-        ModelLoader.setCustomStateMapper(ModBlocks.brine, new BrineStateMapper());
+        //ModelLoader.setCustomStateMapper(ModBlocks.brine, new BrineStateMapper());
         ModelLoader.setCustomStateMapper(ModBlocks.ropeSideways, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {

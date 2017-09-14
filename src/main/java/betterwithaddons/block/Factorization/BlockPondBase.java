@@ -141,7 +141,7 @@ public class BlockPondBase extends BlockBase implements IHasVariants {
         IBlockState waterState = worldIn.getBlockState(pos.up());
         Block block = waterState.getBlock();
 
-        if(block != ModBlocks.brine) {
+        /*if(block != ModBlocks.brine) {
             if(waterState.getMaterial() == Material.WATER) {
                 if (waterState.getValue(BlockLiquid.LEVEL) < 5 && isValidOnAllSides(worldIn, pos.up(), waterState)) {
                     worldIn.setBlockState(pos.up(), ModBlocks.brine.getDefaultState(), 3);
@@ -149,7 +149,7 @@ public class BlockPondBase extends BlockBase implements IHasVariants {
                 }
                 worldIn.scheduleUpdate(pos, this, 10);
             }
-        }
+        }*/
     }
 
     public boolean isValidOnAllSides(World world, BlockPos pos, IBlockState thisstate)
@@ -158,13 +158,13 @@ public class BlockPondBase extends BlockBase implements IHasVariants {
         for (EnumFacing facing: EnumFacing.HORIZONTALS) {
             BlockPos sidepos = pos.offset(facing);
             IBlockState sidestate = world.getBlockState(sidepos);
-            if(sidestate.getBlock() != ModBlocks.brine)
+            /*if(sidestate.getBlock() != ModBlocks.brine)
             if(sidestate.getMaterial() == Material.WATER) {
                 if (sidestate.getValue(BlockLiquid.LEVEL) > thislevel)
                     return false;
             }
             else if(!sidestate.isSideSolid(world,sidepos,facing.getOpposite()))
-                return false;
+                return false;*/
         }
         return true;
     }

@@ -16,7 +16,7 @@ import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
-import betterwithmods.module.hardcore.HCLumber;
+import betterwithmods.module.hardcore.crafting.HCLumber;
 import com.google.common.collect.Lists;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -129,7 +129,7 @@ public class InteractionEriottoMod extends Interaction {
             @Override
             public ItemStack getPlank(int count) {
                 ItemStack copy = plank.copy();
-                copy.setCount((int)Math.ceil(count / (float)HCLumber.axePlankAmount));
+                copy.setCount((int)Math.ceil(count / (float) HCLumber.axePlankAmount));
                 return copy;
             }
         });

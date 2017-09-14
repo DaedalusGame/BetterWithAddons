@@ -46,7 +46,7 @@ public class BlockSaltLayer extends BlockBase {
         return 0;
     }
 
-    @Override
+    /*@Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = playerIn.getHeldItem(hand);
 
@@ -60,7 +60,7 @@ public class BlockSaltLayer extends BlockBase {
         }
 
         return false;
-    }
+    }*/
 
     @Nullable
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)

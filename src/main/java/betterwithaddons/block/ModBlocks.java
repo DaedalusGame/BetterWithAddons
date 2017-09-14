@@ -14,7 +14,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemCloth;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -22,6 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import java.util.ArrayList;
 
@@ -29,134 +34,138 @@ import java.util.ArrayList;
 public class ModBlocks {
     public static ArrayList<Block> LIST = new ArrayList<Block>();
 
-    @GameRegistry.ObjectHolder("betterwithaddons:banner_detector")
+    @ObjectHolder("betterwithaddons:banner_detector")
     public static BlockBannerDetector bannerDetector;
-    @GameRegistry.ObjectHolder("betterwithaddons:world_scale")
+    @ObjectHolder("betterwithaddons:world_scale")
     public static BlockWorldScale worldScale;
-    @GameRegistry.ObjectHolder("betterwithaddons:world_scale_active")
+    @ObjectHolder("betterwithaddons:world_scale_active")
     public static BlockWorldScaleActive worldScaleActive;
-    @GameRegistry.ObjectHolder("betterwithaddons:elytra_magma")
+    @ObjectHolder("betterwithaddons:elytra_magma")
     public static BlockElytraMagma elytraMagma;
-    @GameRegistry.ObjectHolder("betterwithaddons:extra_grass")
+    @ObjectHolder("betterwithaddons:extra_grass")
     public static BlockExtraGrass grass;
-    @GameRegistry.ObjectHolder("betterwithaddons:pcb_wire")
+    @ObjectHolder("betterwithaddons:pcb_wire")
     public static BlockWirePCB pcbwire;
-    @GameRegistry.ObjectHolder("betterwithaddons:pcb_block")
+    @ObjectHolder("betterwithaddons:pcb_block")
     public static BlockPCB pcbblock;
-    @GameRegistry.ObjectHolder("betterwithaddons:lattice")
+    @ObjectHolder("betterwithaddons:lattice")
     public static BlockLattice lattice;
-    @GameRegistry.ObjectHolder("betterwithaddons:alchemical_dragon")
+    @ObjectHolder("betterwithaddons:alchemical_dragon")
     public static BlockAlchDragon alchDragon;
-    @GameRegistry.ObjectHolder("betterwithaddons:log_mulberry")
+    @ObjectHolder("betterwithaddons:log_mulberry")
     public static BlockModLog mulberryLog;
-    @GameRegistry.ObjectHolder("betterwithaddons:log_sakura")
+    @ObjectHolder("betterwithaddons:log_sakura")
     public static BlockModLog sakuraLog;
-    @GameRegistry.ObjectHolder("betterwithaddons:planks_mulberry")
+    @ObjectHolder("betterwithaddons:planks_mulberry")
     public static BlockModPlanks mulberryPlanks;
-    @GameRegistry.ObjectHolder("betterwithaddons:planks_sakura")
+    @ObjectHolder("betterwithaddons:planks_sakura")
     public static BlockModPlanks sakuraPlanks;
-    @GameRegistry.ObjectHolder("betterwithaddons:crop_rush")
+    @ObjectHolder("betterwithaddons:crop_rush")
     public static BlockCropRush rush;
-    @GameRegistry.ObjectHolder("betterwithaddons:crop_rice")
+    @ObjectHolder("betterwithaddons:crop_rice")
     public static BlockCropRice rice;
-    @GameRegistry.ObjectHolder("betterwithaddons:bricks_stained")
+    @ObjectHolder("betterwithaddons:bricks_stained")
     public static BlockColoredBrick coloredBrick;
-    @GameRegistry.ObjectHolder("betterwithaddons:slat")
+    @ObjectHolder("betterwithaddons:slat")
     public static BlockSlat bambooSlats;
-    @GameRegistry.ObjectHolder("betterwithaddons:iron_sand")
+    @ObjectHolder("betterwithaddons:iron_sand")
     public static BlockIronSand ironSand;
-    @GameRegistry.ObjectHolder("betterwithaddons:kera")
+    @ObjectHolder("betterwithaddons:kera")
     public static BlockKera kera;
-    @GameRegistry.ObjectHolder("betterwithaddons:netted_screen")
+    @ObjectHolder("betterwithaddons:netted_screen")
     public static BlockNettedScreen nettedScreen;
-    @GameRegistry.ObjectHolder("betterwithaddons:tatara")
+    @ObjectHolder("betterwithaddons:tatara")
     public static BlockTatara tatara;
-    @GameRegistry.ObjectHolder("betterwithaddons:cherrybox")
+    @ObjectHolder("betterwithaddons:cherrybox")
     public static BlockCherryBox cherrybox;
-    @GameRegistry.ObjectHolder("betterwithaddons:world_scale_ore")
+    @ObjectHolder("betterwithaddons:world_scale_ore")
     public static BlockWorldScaleOre worldScaleOre;
-    @GameRegistry.ObjectHolder("betterwithaddons:bamboo")
+    @ObjectHolder("betterwithaddons:bamboo")
     public static BlockBamboo bamboo;
-    @GameRegistry.ObjectHolder("betterwithaddons:leaves_sakura")
+    @ObjectHolder("betterwithaddons:leaves_sakura")
     public static BlockModLeaves sakuraLeaves;
-    @GameRegistry.ObjectHolder("betterwithaddons:sapling_sakura")
+    @ObjectHolder("betterwithaddons:sapling_sakura")
     public static BlockModSapling sakuraSapling;
-    @GameRegistry.ObjectHolder("betterwithaddons:leaves_mulberry")
+    @ObjectHolder("betterwithaddons:leaves_mulberry")
     public static BlockModLeaves mulberryLeaves;
-    @GameRegistry.ObjectHolder("betterwithaddons:sapling_mulberry")
+    @ObjectHolder("betterwithaddons:sapling_mulberry")
     public static BlockModSapling mulberrySapling;
-    @GameRegistry.ObjectHolder("betterwithaddons:leafpile_sakura")
+    @ObjectHolder("betterwithaddons:leafpile_sakura")
     public static BlockCherryLeafPile sakuraLeafPile;
-    @GameRegistry.ObjectHolder("betterwithaddons:thorn_rose")
+    @ObjectHolder("betterwithaddons:thorn_rose")
     public static BlockThornRose thornrose;
-    @GameRegistry.ObjectHolder("betterwithaddons:thorns")
+    @ObjectHolder("betterwithaddons:thorns")
     public static BlockThorns thorns;
-    @GameRegistry.ObjectHolder("betterwithaddons:leaves_luretree")
+    @ObjectHolder("betterwithaddons:leaves_luretree")
     public static BlockModLeaves luretreeLeaves;
-    @GameRegistry.ObjectHolder("betterwithaddons:sapling_luretree")
+    @ObjectHolder("betterwithaddons:sapling_luretree")
     public static BlockLureTreeSapling luretreeSapling;
-    @GameRegistry.ObjectHolder("betterwithaddons:log_luretree")
+    @ObjectHolder("betterwithaddons:log_luretree")
     public static BlockModLog luretreeLog;
-    @GameRegistry.ObjectHolder("betterwithaddons:log_luretree_face")
+    @ObjectHolder("betterwithaddons:log_luretree_face")
     public static BlockLureTree luretreeFace;
-    @GameRegistry.ObjectHolder("betterwithaddons:paper_wall")
+    @ObjectHolder("betterwithaddons:paper_wall")
     public static BlockModPane paperWall;
-    @GameRegistry.ObjectHolder("betterwithaddons:wrought_bars")
+    @ObjectHolder("betterwithaddons:wrought_bars")
     public static BlockModPane wroughtBars;
-    @GameRegistry.ObjectHolder("betterwithaddons:shoji")
+    @ObjectHolder("betterwithaddons:shoji")
     public static BlockModPane shoji;
-    @GameRegistry.ObjectHolder("betterwithaddons:fusuma")
+    @ObjectHolder("betterwithaddons:fusuma")
     public static BlockFusumaPainted fusuma;
-    @GameRegistry.ObjectHolder("betterwithaddons:chandelier")
+    @ObjectHolder("betterwithaddons:chandelier")
     public static BlockChandelier chandelier;
-    @GameRegistry.ObjectHolder("betterwithaddons:wood_lamp")
+    @ObjectHolder("betterwithaddons:wood_lamp")
     public static BlockLantern paperLantern;
-    @GameRegistry.ObjectHolder("betterwithaddons:wrought_lamp")
+    @ObjectHolder("betterwithaddons:wrought_lamp")
     public static BlockLantern wroughtLantern;
-    @GameRegistry.ObjectHolder("betterwithaddons:tatami")
+    @ObjectHolder("betterwithaddons:tatami")
     public static BlockTatami tatami;
-    @GameRegistry.ObjectHolder("betterwithaddons:pavement")
+    @ObjectHolder("betterwithaddons:pavement")
     public static BlockPavement pavement;
-    @GameRegistry.ObjectHolder("betterwithaddons:wet_soap")
+    @ObjectHolder("betterwithaddons:wet_soap")
     public static BlockSoap wetSoap;
-    @GameRegistry.ObjectHolder("betterwithaddons:whitebrick")
+    @ObjectHolder("betterwithaddons:whitebrick")
     public static BlockWhiteBrick whiteBrick;
-    @GameRegistry.ObjectHolder("betterwithaddons:chute")
+    @ObjectHolder("betterwithaddons:chute")
     public static BlockChute chute;
-    @GameRegistry.ObjectHolder("betterwithaddons:ecksie_sapling")
+    @ObjectHolder("betterwithaddons:ecksie_sapling")
     public static BlockEcksieSapling ecksieSapling;
-    @GameRegistry.ObjectHolder("betterwithaddons:aqueduct_water")
+    @ObjectHolder("betterwithaddons:aqueduct_water")
     public static BlockAqueductWater aqueductWater;
-    @GameRegistry.ObjectHolder("betterwithaddons:aqueduct")
+    @ObjectHolder("betterwithaddons:aqueduct")
     public static BlockAqueduct aqueduct;
-    @GameRegistry.ObjectHolder("betterwithaddons:greatbow")
+    @ObjectHolder("betterwithaddons:greatbow")
     public static BlockLegendarium legendarium;
-    @GameRegistry.ObjectHolder("betterwithaddons:pond_base")
-    public static BlockPondBase pondBase;
-    @GameRegistry.ObjectHolder("betterwithaddons:brine")
-    public static BlockBrine brine;
-    @GameRegistry.ObjectHolder("betterwithaddons:salt_layer")
-    public static BlockSaltLayer saltLayer;
-    @GameRegistry.ObjectHolder("betterwithaddons:spindle")
+    //@ObjectHolder("betterwithaddons:pond_base")
+    //public static BlockPondBase pondBase;
+    //@ObjectHolder("betterwithaddons:brine")
+    //public static BlockBrine brine;
+    //@ObjectHolder("betterwithaddons:salt_layer")
+    //public static BlockSaltLayer saltLayer;
+    @ObjectHolder("betterwithaddons:spindle")
     public static BlockSpindle spindle;
-    @GameRegistry.ObjectHolder("betterwithaddons:loom")
+    @ObjectHolder("betterwithaddons:loom")
     public static BlockLoom loom;
-    @GameRegistry.ObjectHolder("betterwithaddons:ancestry_sand")
+    @ObjectHolder("betterwithaddons:ancestry_sand")
     public static BlockAncestrySand ancestrySand;
-    @GameRegistry.ObjectHolder("betterwithaddons:ancestry_infuser")
+    @ObjectHolder("betterwithaddons:ancestry_infuser")
     public static BlockInfuser infuser;
-    @GameRegistry.ObjectHolder("betterwithaddons:unbaked")
+    @ObjectHolder("betterwithaddons:unbaked")
     public static BlockModUnbaked unbaked;
-    @GameRegistry.ObjectHolder("betterwithaddons:scaffold")
+    @ObjectHolder("betterwithaddons:scaffold")
     public static BlockScaffold scaffold;
-    @GameRegistry.ObjectHolder("betterwithaddons:rope_sideways")
+    @ObjectHolder("betterwithaddons:rope_sideways")
     public static BlockRopeSideways ropeSideways;
-    @GameRegistry.ObjectHolder("betterwithaddons:rope_post")
+    @ObjectHolder("betterwithaddons:rope_post")
     public static BlockRopePost ropePost;
+    @ObjectHolder("betterwithaddons:adobe")
+    public static BlockAdobe adobe;
+    @ObjectHolder("betterwithaddons:pond_replacement")
+    public static BlockReplacement pondReplacement;
 
     public static void load(FMLPreInitializationEvent event) {
-        FluidRegistry.registerFluid(new Fluid("brine", new ResourceLocation(Reference.MOD_ID, "blocks/brine_still"), new ResourceLocation(Reference.MOD_ID, "blocks/brine_flow")));
-        FluidRegistry.registerFluid(new Fluid("salinated_brine", new ResourceLocation(Reference.MOD_ID, "blocks/salinated_brine_still"), new ResourceLocation(Reference.MOD_ID, "blocks/salinated_brine_flow")));
+        //FluidRegistry.registerFluid(new Fluid("brine", new ResourceLocation(Reference.MOD_ID, "blocks/brine_still"), new ResourceLocation(Reference.MOD_ID, "blocks/brine_flow")));
+        //FluidRegistry.registerFluid(new Fluid("salinated_brine", new ResourceLocation(Reference.MOD_ID, "blocks/salinated_brine_still"), new ResourceLocation(Reference.MOD_ID, "blocks/salinated_brine_flow")));
 
         registerBlock(new BlockBannerDetector());
         registerBlock(new BlockWorldScale());
@@ -175,9 +184,9 @@ public class ModBlocks {
 
         registerBlock(new BlockMatcher());
         registerBlock(new BlockLegendarium());
-        registerBlock(new BlockPondBase());
-        registerBlock(new BlockBrine(), null, false);
-        registerBlock(new BlockSaltLayer());
+        //registerBlock(new BlockPondBase());
+        //registerBlock(new BlockBrine(), null, false);
+        //registerBlock(new BlockSaltLayer());
 
         registerBlock(new BlockWeight("weight_wood") {
             @Override
@@ -243,6 +252,27 @@ public class ModBlocks {
 
         registerBlock(new BlockColoredBrick(), ItemCloth.class, true);
         registerBlock(new BlockModUnbaked());
+
+        registerBlock(new BlockAdobe("adobe", new AdobeType[]{
+                AdobeType.MOSTLY_CLAY, AdobeType.CLAYSAND, AdobeType.SANDCLAY, AdobeType.MOSTLY_SAND,
+                AdobeType.MOSTLY_STRAW, AdobeType.LIGHT, AdobeType.DARK, AdobeType.MOSTLY_DUNG
+        }));
+
+        registerBlock(new BlockReplacement("pond_replacement"){
+            @Override
+            public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+                switch(state.getValue(BlockReplacement.META))
+                {
+                    case(0):
+                    case(1):
+                        drops.add(new ItemStack(adobe, 1,1));
+                        break;
+                    case(2):
+                        drops.add(new ItemStack(adobe, 1,9));
+                        break;
+                }
+            }
+        });
 
         ecksieSapling = (BlockEcksieSapling) registerBlock(new BlockEcksieSapling("ecksie_sapling") {
             @Override

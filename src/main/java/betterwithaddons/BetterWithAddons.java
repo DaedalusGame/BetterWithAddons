@@ -10,20 +10,26 @@ import betterwithaddons.lib.Reference;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.tileentity.ModTileEntities;
 import betterwithmods.common.BWMRecipes;
+import com.blamejared.mtlib.helpers.InputHelper;
+import crafttweaker.api.item.IIngredient;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, dependencies = "required-after:betterwithmods")
 public class BetterWithAddons
@@ -62,6 +68,8 @@ public class BetterWithAddons
 		proxy.preInit();
 		ModInteractions.preInitEnd(event);
 
+		MinecraftForge.EVENT_BUS.register(this);
+
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 	}
 
@@ -85,9 +93,32 @@ public class BetterWithAddons
 		ModInteractions.loadComplete(event);
 	}
 
-	@EventHandler
-	public void serverStarting(FMLServerStartingEvent event)
+	@SubscribeEvent
+	public void remapBlocks(RegistryEvent.MissingMappings<Block> event)
 	{
+		for(RegistryEvent.MissingMappings.Mapping<Block> mapping : event.getAllMappings())
+		{
+			if(!mapping.key.getResourceDomain().equals(Reference.MOD_ID))
+				continue;
+
+			if(mapping.key.getResourcePath().equals("pond_base"))
+				mapping.remap(ModBlocks.pondReplacement);
+		}
+	}
+
+	@SubscribeEvent
+	public void remapItems(RegistryEvent.MissingMappings<Item> event)
+	{
+		for(RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getAllMappings())
+		{
+			if(!mapping.key.getResourceDomain().equals(Reference.MOD_ID))
+				continue;
+
+			if(mapping.key.getResourcePath().equals("pond_base"))
+				mapping.remap(Item.getItemFromBlock(ModBlocks.pondReplacement));
+			if(mapping.key.getResourcePath().equals("bowl"))
+				mapping.remap(ModItems.salts);
+		}
 	}
 
 	public static void removeSmeltingRecipe(ItemStack withoutput)

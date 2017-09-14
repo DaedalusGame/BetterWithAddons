@@ -173,8 +173,8 @@ public class BlockBrine extends BlockFluidClassic {
             case(0):
             case(1):
                 return getDefaultState().withProperty(STATE,brinestate+1).withProperty(LEVEL,getLiquidLevel(brinestate+1));
-            case(2):
-                return ModBlocks.saltLayer.getDefaultState();
+            //case(2):
+            //    return ModBlocks.saltLayer.getDefaultState();
         }
 
         return null;
@@ -195,10 +195,10 @@ public class BlockBrine extends BlockFluidClassic {
         IBlockState state = world.getBlockState(pos);
         if(state.isSideSolid(world,pos,facing.getOpposite()))
             return true;
-        else if((state.getBlock() == ModBlocks.brine || state.getMaterial() == Material.WATER) && state.getValue(LEVEL) >= thisstate.getValue(LEVEL))
+        /*else if((state.getBlock() == ModBlocks.brine || state.getMaterial() == Material.WATER) && state.getValue(LEVEL) >= thisstate.getValue(LEVEL))
             return true;
         else if(state.getBlock() == ModBlocks.saltLayer)
-            return true;
+            return true;*/
 
         return false;
     }

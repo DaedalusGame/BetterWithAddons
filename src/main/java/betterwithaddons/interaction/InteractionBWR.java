@@ -21,7 +21,7 @@ import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
 import betterwithmods.module.ModuleLoader;
-import betterwithmods.module.hardcore.HCDiamond;
+import betterwithmods.module.hardcore.crafting.HCDiamond;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;

@@ -15,7 +15,6 @@
  * [Banner Detector](bannerdetector.md)
 
 ## Resources
- * [Salination Pond](salinationpond.md)
  * [Drying Unit](dryingbox.md)
  * [Soaking Unit](soakingbox.md)
  * [Tatara](tatara.md)

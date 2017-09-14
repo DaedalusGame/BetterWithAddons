@@ -13,7 +13,7 @@ import betterwithmods.common.blocks.mechanical.BlockMechMachines;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
-import betterwithmods.module.hardcore.HCBonemeal;
+import betterwithmods.module.hardcore.world.HCBonemeal;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

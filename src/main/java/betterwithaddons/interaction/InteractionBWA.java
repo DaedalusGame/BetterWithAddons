@@ -15,12 +15,14 @@ import betterwithmods.common.BWMItems;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.KilnManager;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
+import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
+import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.gameplay.AnvilRecipes;
 import betterwithmods.module.gameplay.MetalReclaming;
-import betterwithmods.module.hardcore.HCDiamond;
-import betterwithmods.module.hardcore.hchunger.HCHunger;
+import betterwithmods.module.hardcore.crafting.HCDiamond;
+import betterwithmods.module.hardcore.needs.hunger.HCHunger;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -142,12 +144,12 @@ public class InteractionBWA extends Interaction {
         if(PatientiaHandler.shouldRegister())
             MinecraftForge.EVENT_BUS.register(new PatientiaHandler());
 
-        ModItems.bowls.setContainer(new ItemStack(Items.BOWL));
+        //ModItems.bowls.setContainer(new ItemStack(Items.BOWL));
 
         ModBlocks.luretreeSapling.setLeaves(ModBlocks.luretreeLeaves.getDefaultState()).setLog(ModBlocks.luretreeLog.getDefaultState()).setBig(true);
         ModBlocks.luretreeLeaves.setSapling(new ItemStack(ModBlocks.luretreeSapling));
 
-        OreDictionary.registerOre("foodSalt", ModItems.bowls.getMaterial("salt"));
+        //OreDictionary.registerOre("foodSalt", ModItems.bowls.getMaterial("salt"));
 
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_spade"),new ItemStack(ModItems.steelSpade),"x","x","i","i",'x',"ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_matchpick"),new ItemStack(ModItems.steelMatchPick),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT),'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");
@@ -242,6 +244,11 @@ public class InteractionBWA extends Interaction {
 
         BlockRopeSideways.addFastenableBlock(ModBlocks.scaffold);
         BlockRopeSideways.addFastenableBlock(ModBlocks.ropePost);
+
+        StokedCauldronManager.getInstance().addRecipe(new StokedCauldronRecipe(ItemStack.EMPTY,ItemStack.EMPTY,new Object[]{})
+        {
+
+        });
     }
 
     @Override
