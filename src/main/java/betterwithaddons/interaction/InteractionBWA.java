@@ -15,8 +15,10 @@ import betterwithmods.common.BWMItems;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.KilnManager;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
+import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
+import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.gameplay.AnvilRecipes;
@@ -304,6 +306,16 @@ public class InteractionBWA extends Interaction {
         RotHandler.addRottingItem(new ItemStack(Items.FISH,1,ItemFishFood.FishType.SALMON.getMetadata()),FISH_ROT_TIME,"fish",new ItemStack(Items.ROTTEN_FLESH));
         RotHandler.addRottingItem(new ItemStack(Items.FISH,1,ItemFishFood.FishType.CLOWNFISH.getMetadata()),FISH_ROT_TIME,"fish",new ItemStack(Items.ROTTEN_FLESH));
         RotHandler.addRottingItem(new ItemStack(Items.FISH,1,ItemFishFood.FishType.PUFFERFISH.getMetadata()),FISH_ROT_TIME,"fish",new ItemStack(Items.ROTTEN_FLESH));
+
+        //Salt Cluster grinding recipe (migration version, to be changed)
+        List<ItemStack> saltDusts = OreDictionary.getOres("foodSalt");
+        if(saltDusts != null && saltDusts.size() > 0)
+        {
+            ItemStack saltCluster = new ItemStack(ModItems.salts,1,0);
+            ItemStack saltDust = saltDusts.get(0).copy();
+            saltDust.setCount(3);
+            MillManager.getInstance().addRecipe(new MillRecipe(0, saltDust, ItemStack.EMPTY, new Object[]{saltCluster}));
+        }
     }
 
     private boolean isFruit(ItemStack stack) {
