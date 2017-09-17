@@ -19,7 +19,6 @@ public class ModTileEntities
         registerTE(TileEntityChute.class, "chute");
         registerTE(TileEntityAqueductWater.class, "aqueductWater");
         registerTE(TileEntityLegendarium.class, "legendarium");
-        registerTE(TileEntityBrine.class, "brine");
         registerTE(TileEntityAncestrySand.class, "ancestrySand");
         registerTE(TileEntityInfuser.class, "infuser");
         registerTE(TileEntityLoom.class, "loom");
