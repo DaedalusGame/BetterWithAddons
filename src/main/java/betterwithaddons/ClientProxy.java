@@ -1,7 +1,6 @@
 package betterwithaddons;
 
 import betterwithaddons.block.*;
-import betterwithaddons.client.BrineStateMapper;
 import betterwithaddons.client.ToolShardModelHandler;
 import betterwithaddons.client.fx.FXLeafParticle;
 import betterwithaddons.client.handler.ParticleHandler;
