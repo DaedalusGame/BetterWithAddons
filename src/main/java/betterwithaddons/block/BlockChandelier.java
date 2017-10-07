@@ -1,5 +1,6 @@
 package betterwithaddons.block;
 
+import betterwithmods.common.BWMBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -97,6 +98,6 @@ public class BlockChandelier extends BlockBase {
     public boolean canBlockStay(World worldIn, BlockPos pos)
     {
         IBlockState top = worldIn.getBlockState(pos.up());
-        return top.isSideSolid(worldIn,pos, EnumFacing.DOWN);
+        return top.isSideSolid(worldIn,pos, EnumFacing.DOWN) || top.getBlock() == BWMBlocks.ROPE;
     }
 }

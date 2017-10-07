@@ -5,6 +5,7 @@ import betterwithaddons.block.BlockLattice;
 import betterwithaddons.block.BlockRopeSideways;
 import betterwithaddons.block.BlockRopeSideways.EnumRopeShape;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.entity.EntityKarateZombie;
 import betterwithaddons.interaction.InteractionBWM;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.item.rbdtools.IConvenientTool;
@@ -18,6 +19,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityShulker;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -33,6 +35,7 @@ import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.BossInfo.Overlay;
 import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -155,6 +158,19 @@ public class AssortedHandler {
             event.setCancellationResult(EnumActionResult.SUCCESS);
             event.setCanceled(true);
         }
+    }
+
+    @SubscribeEvent
+    public void onDismount(EntityMountEvent event)
+    {
+        Entity rider = event.getEntityMounting();
+        Entity mount = event.getEntityBeingMounted();
+        /*if(!rider.isDead && !mount.isDead) {
+            //if (event.isDismounting() && mount instanceof EntityHorse)
+            //    event.setCanceled(true);
+            if (event.isDismounting() && mount instanceof EntityKarateZombie && !((EntityKarateZombie) mount).tryDismount())
+                event.setCanceled(true);
+        }*/
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

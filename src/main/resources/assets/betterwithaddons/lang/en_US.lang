@@ -104,6 +104,9 @@ tile.wood_lamp.firefly.name=Firefly Lantern
 tile.wrought_lamp.name=Wrought Iron Lantern
 tile.pavement.name=Pavement
 
+tile.adobe.wet.name=Wet Adobe
+tile.adobe.dry.name=Dried Adobe
+
 tile.bricks_stained.white.name=White Stained Bricks
 tile.bricks_stained.orange.name=Orange Stained Bricks
 tile.bricks_stained.magenta.name=Magenta Stained Bricks
@@ -263,6 +266,7 @@ item.tweakmat.ink_and_quill.name=Ink and Quill
 
 item.seed_grain.name=Grain
 item.bag.grain.name=Bag of Grain
+item.wheatmat.hay.name=Hay
 
 item.decomat.hemp_oil.name=Hemp Oil
 item.decomat.wood_bleach.name=Wood Bleach
@@ -350,7 +354,12 @@ item.chest_samurai.name=Samurai Chestplate [WIP]
 item.legs_samurai.name=Samurai Leggings [WIP]
 item.boots_samurai.name=Samurai Boots [WIP]
 
+entity.karate_zombie.name=Karate Zombie
+
 bwm.manual.bwa=Better With Addons
+
+tooltip.adobe.crafting=Depends on mixture
+tooltip.adobe.description=Leave in the sun to dry.
 
 tooltip.quartz.verbose=%s%% Saturation
 tooltip.souls.verbose=%s Vindictive Souls

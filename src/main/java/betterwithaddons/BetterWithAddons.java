@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -71,6 +72,12 @@ public class BetterWithAddons
 		MinecraftForge.EVENT_BUS.register(this);
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+	}
+
+	@EventHandler
+	public void construct(FMLConstructionEvent event)
+	{
+		proxy.registerResourcePack();
 	}
 
 	@EventHandler

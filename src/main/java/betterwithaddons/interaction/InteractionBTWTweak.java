@@ -5,7 +5,6 @@ import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.recipes.DisplaySawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.SoapHandler;
-import betterwithaddons.handler.StumpingHandler;
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAesthetic;
@@ -23,16 +22,12 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class InteractionBTWTweak extends Interaction {
     public static boolean ENABLED = true;
-    public static boolean HARD_STUMPS = true;
-    public static double HARD_STUMPS_MODIFIER = 0.1;
-    public static boolean SOFT_WOODS = true;
     public static boolean SAW_RECYCLING = true;
     //public static boolean KILN_DOUBLING = true;
     public static boolean EGG_INCUBATION = true;
@@ -69,8 +64,6 @@ public class InteractionBTWTweak extends Interaction {
             MinecraftForge.EVENT_BUS.register(new SoapHandler(BWMBlocks.AESTHETIC.getDefaultState().withProperty(BlockAesthetic.TYPE, BlockAesthetic.EnumType.SOAP)));
         if(EGG_INCUBATION)
             MinecraftForge.EVENT_BUS.register(new EggIncubationHandler());
-        if(HARD_STUMPS || SOFT_WOODS)
-            MinecraftForge.EVENT_BUS.register(new StumpingHandler());
         if(REPLACE_WRITABLE_BOOK_RECIPE)
             BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.WRITABLE_BOOK));
 
@@ -79,13 +72,6 @@ public class InteractionBTWTweak extends Interaction {
 
     @Override
     public void init() {
-        if(SOFT_WOODS)
-        {
-            StumpingHandler.addSoftWood(Blocks.LOG,BlockPlanks.EnumType.SPRUCE.getMetadata(),1.3f);
-            StumpingHandler.addSoftWood(Blocks.LOG,BlockPlanks.EnumType.JUNGLE.getMetadata(),1.0f);
-            StumpingHandler.addSoftWood(Blocks.LOG2,BlockPlanks.EnumType.DARK_OAK.getMetadata() - 4,1.3f);
-        }
-
         if(ASH_FERTILIZER) {
             HCBonemeal.registerFertilzier(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
             HCBonemeal.registerFertilzier(ModItems.materialTweak.getMaterial("ash"));

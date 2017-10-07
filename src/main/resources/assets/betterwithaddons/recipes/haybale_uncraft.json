@@ -1,0 +1,23 @@
+{
+  "conditions": [
+	  {
+        "type": "betterwithaddons:module",
+        "module": "HayBales"
+      }
+  ],
+  "result": {
+    "item": "betterwithaddons:wheatmat",
+	"data": 0,
+	"count": 9
+  },
+  "pattern": [
+    "S"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:hay_block",
+	  "data": 0
+    }
+  }
+}

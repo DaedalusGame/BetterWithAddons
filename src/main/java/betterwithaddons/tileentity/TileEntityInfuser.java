@@ -14,11 +14,21 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 public class TileEntityInfuser extends TileEntityBase implements ITickable {
+    public TileEntityInfuser()
+    {
+        super();
+    }
+
+    public int animLife = 0;
+    public float activeGlow = 0.0f;
+    public float activeGlowLast = 0.0f;
+
     @Override
     public void writeDataToNBT(NBTTagCompound compound) {
 
@@ -67,6 +77,10 @@ public class TileEntityInfuser extends TileEntityBase implements ITickable {
 
     @Override
     public void update() {
+        animLife++;
+        activeGlowLast = activeGlow;
+        activeGlow = MathHelper.clamp(activeGlow + (isValid() ? 0.05f : -0.05f), 0, 1);
+
         if(world.isRemote)
             return;
 

@@ -136,12 +136,6 @@ public class ModBlocks {
     public static BlockAqueduct aqueduct;
     @ObjectHolder("betterwithaddons:greatbow")
     public static BlockLegendarium legendarium;
-    //@ObjectHolder("betterwithaddons:pond_base")
-    //public static BlockPondBase pondBase;
-    //@ObjectHolder("betterwithaddons:brine")
-    //public static BlockBrine brine;
-    //@ObjectHolder("betterwithaddons:salt_layer")
-    //public static BlockSaltLayer saltLayer;
     @ObjectHolder("betterwithaddons:spindle")
     public static BlockSpindle spindle;
     @ObjectHolder("betterwithaddons:loom")

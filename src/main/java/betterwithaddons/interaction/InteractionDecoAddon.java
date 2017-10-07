@@ -13,6 +13,7 @@ import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.module.gameplay.AnvilRecipes;
+import betterwithmods.module.hardcore.needs.HCMovement;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockStoneBrick;

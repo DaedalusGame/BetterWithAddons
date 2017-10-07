@@ -1,6 +1,6 @@
 # Tatara
 
-![Tatara](block:betterwithaddons:tatara@0)
+#[Tatara](block:betterwithaddons:tatara@0)
 
 The Tatara is a traditional japanese furnace, used in the smelting of iron sand to create Tamahagane and Hocho-Tetsu.
 To construct it, follow the schematics written underneath.

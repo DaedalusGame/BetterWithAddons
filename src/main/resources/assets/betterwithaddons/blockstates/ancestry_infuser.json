@@ -4,7 +4,7 @@
 	"textures": {
 		"particle": "betterwithaddons:blocks/infuser_bottom",
         "bottom": "betterwithaddons:blocks/infuser_bottom",
-        "top": "betterwithaddons:blocks/infuser_top_off",
+        "top": "betterwithaddons:blocks/infuser_top_empty",
         "side": "betterwithaddons:blocks/infuser_side"
     },
 	"model": "enchanting_table_base",
@@ -12,9 +12,11 @@
   },
   "variants": {
     "normal": [{}],
-	"inventory": [{}],
+	"inventory": [{
+		"textures": { "top": "betterwithaddons:blocks/infuser_top_on" }
+	}],
 	"active": {
-		"true":{ "textures": { "top": "betterwithaddons:blocks/infuser_top_on" } },
+		"true":{},
 		"false":{}
 	}
   }

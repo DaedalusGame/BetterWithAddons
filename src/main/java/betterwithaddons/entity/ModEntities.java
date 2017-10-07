@@ -13,6 +13,9 @@ public class ModEntities
         EntityRegistry.registerModEntity(new ResourceLocation("betterwithaddons","artifactframe"),EntityArtifactFrame.class, "artifactframe", 2, BetterWithAddons.instance, 80, 1, true);
         EntityRegistry.registerModEntity(new ResourceLocation("betterwithaddons","ancestrybottle"),EntityAncestryBottle.class, "ancestrybottle", 3, BetterWithAddons.instance, 80, 1, true);
         EntityRegistry.registerModEntity(new ResourceLocation("betterwithaddons","spirit"),EntitySpirit.class, "spirit", 4, BetterWithAddons.instance, 80, 1, true);
+        EntityRegistry.registerModEntity(new ResourceLocation("betterwithaddons","karate_zombie"),EntityKarateZombie.class, "karate_zombie", 5, BetterWithAddons.instance, 80, 1, true);
+
+        EntityRegistry.registerEgg(new ResourceLocation("betterwithaddons","karate_zombie"),1,1);
     }
 }
 

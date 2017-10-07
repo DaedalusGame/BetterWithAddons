@@ -11,6 +11,8 @@ import betterwithaddons.interaction.ModInteractions;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityAlchDragon;
+import betterwithaddons.tileentity.TileEntityInfuser;
+import betterwithaddons.util.ResourceProxy;
 import betterwithmods.manual.api.ManualAPI;
 import betterwithmods.manual.api.prefab.manual.ItemStackTabIconRenderer;
 import betterwithmods.manual.api.prefab.manual.ResourceContentProvider;
@@ -25,6 +27,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -35,7 +38,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.util.List;
 import java.util.Map;
 
 public class ClientProxy implements IProxy
@@ -43,6 +48,12 @@ public class ClientProxy implements IProxy
     public static ModelResourceLocation aqueductWaterLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "aqueduct_water"), "normal");
     public static ModelResourceLocation ropeBridgeLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "rope_bridge"), "normal");
     public static ModelResourceLocation ropePostLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "rope_post_knot"), "normal");
+
+    static ResourceProxy resourceProxy;
+
+    static {
+        resourceProxy = new ResourceProxy();
+    }
 
     @Override
     public void preInit() {
@@ -83,9 +94,22 @@ public class ClientProxy implements IProxy
     }
 
     @Override
-    public void overrideItemModel(Item item, int meta, ModelResourceLocation location) {
-        ModelLoader.setCustomModelResourceLocation(item,meta,location);
+    public void registerResourcePack() {
+        List<IResourcePack> packs = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "aD", "field_110449_ao", "defaultResourcePacks");
+        packs.add(resourceProxy);
     }
+
+    @Override
+    public void addResourceOverride(String space, String dir, String file, String ext) {
+        resourceProxy.addResource(space, dir, file, ext);
+    }
+
+    @Override
+    public void addResourceOverride(String modid, String space, String dir, String file, String ext) {
+        resourceProxy.addResource(space, modid, dir, file, ext);
+    }
+
+
 
     @SubscribeEvent
     public void registerModels(ModelRegistryEvent event)
@@ -131,7 +155,9 @@ public class ClientProxy implements IProxy
         RenderingRegistry.registerEntityRenderingHandler(EntitySpirit.class, manager -> new RenderSpirit(manager));
         RenderingRegistry.registerEntityRenderingHandler(EntityAncestryBottle.class, manager -> new RenderSnowball<>(manager,ModItems.ancestryBottle,Minecraft.getMinecraft().getRenderItem()));
         RenderingRegistry.registerEntityRenderingHandler(EntityArtifactFrame.class, RenderArtifactFrame.ARTIFACEFRAME_RENDER);
+        RenderingRegistry.registerEntityRenderingHandler(EntityKarateZombie.class, RenderKarateZombie::new);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAlchDragon.class, new RenderAlchDragon());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInfuser.class, new RenderInfuser());
     }
 
     private void registerColorable(IColorable colorable)

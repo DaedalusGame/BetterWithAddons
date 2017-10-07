@@ -145,6 +145,9 @@ public class ModItems {
     public static ItemMaterial materialDeco;
     @GameRegistry.ObjectHolder("betterwithaddons:tweakmat")
     public static ItemMaterial materialTweak;
+    @GameRegistry.ObjectHolder("betterwithaddons:wheatmat")
+    public static ItemMaterial materialWheat;
+
     @GameRegistry.ObjectHolder("betterwithaddons:katana")
     public static ItemKatana katana;
     @GameRegistry.ObjectHolder("betterwithaddons:wakizashi")
@@ -381,6 +384,10 @@ public class ModItems {
 
         materialTweak = (ItemMaterial) registerItem("tweakmat", new ItemMaterial(
                 new String[]{"ash", "ink_and_quill"}
+        ));
+
+        materialWheat = (ItemMaterial) registerItem("wheatmat", new ItemMaterial(
+                new String[]{"hay"}
         ));
 
         explosion = registerItem("explosion", new Item() {

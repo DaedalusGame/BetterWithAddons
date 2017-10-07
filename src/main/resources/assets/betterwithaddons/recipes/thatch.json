@@ -1,0 +1,28 @@
+{
+  "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "quark"
+      },
+	  {
+        "type": "betterwithaddons:module",
+        "module": "HayBales"
+      }
+  ],
+  "result": {
+    "item": "quark:thatch",
+	"data": 0,
+	"count": 1
+  },
+  "pattern": [
+    "SS",
+	"SS"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "item": "betterwithaddons:wheatmat",
+	  "data": 0
+    }
+  }
+}

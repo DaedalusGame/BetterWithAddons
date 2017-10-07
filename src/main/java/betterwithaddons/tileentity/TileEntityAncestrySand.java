@@ -123,7 +123,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
         if(spirits < InteractionEriottoMod.MAX_SPIRITS)
         for(EntitySpirit spirit : attractedSpirits)
         {
-            double spiritdist = spirit.getDistanceSq(middleOfBlock.x,middleOfBlock.y,middleOfBlock.z);
+            double spiritdist = spirit.getDistanceSq(middleOfBlock.x,middleOfBlock.y+0.5,middleOfBlock.z);
 
             if(spiritdist < 1.2f)
             {

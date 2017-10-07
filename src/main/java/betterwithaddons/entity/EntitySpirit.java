@@ -180,6 +180,22 @@ public class EntitySpirit extends EntityXPOrb {
         }
     }
 
+    @Override
+    public int getTextureByXP() {
+        if(xpValue >= 128)
+            return 10;
+        else if(xpValue >= 64)
+            return 8;
+        else if(xpValue >= 3)
+            return 6;
+        else if(xpValue >= 2)
+            return 4;
+        else if(xpValue >= 1)
+            return 2;
+        else
+            return 0;
+    }
+
     public static int getSpiritSplit(int i) {
         return (i >= 128 ? 128 : (i >= 64 ? 64 : (i >= 3 ? 3 : (i >= 2 ? 2 : 1))));
     }

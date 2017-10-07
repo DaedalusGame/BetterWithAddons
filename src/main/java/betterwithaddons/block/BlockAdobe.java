@@ -1,5 +1,6 @@
 package betterwithaddons.block;
 
+import betterwithaddons.util.IHasVariants;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -7,21 +8,27 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-public class BlockAdobe extends BlockBase {
+public class BlockAdobe extends BlockBase implements IHasVariants {
     public static final PropertyInteger VARIANT = PropertyInteger.create("variant", 0, 7);
     public static final PropertyBool DRY_STATE = PropertyBool.create("dry");
 
@@ -34,6 +41,7 @@ public class BlockAdobe extends BlockBase {
         {
             types[meta].wetBlock = getDefaultState().withProperty(VARIANT,meta).withProperty(DRY_STATE,false);
             types[meta].dryBlock = getDefaultState().withProperty(VARIANT,meta).withProperty(DRY_STATE,true);
+            types[meta].block = this;
         }
     }
 
@@ -79,6 +87,35 @@ public class BlockAdobe extends BlockBase {
     }
 
     @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+        super.onBlockAdded(worldIn, pos, state);
+
+        if(!state.getValue(DRY_STATE))
+            worldIn.scheduleUpdate(pos,this,2000);
+    }
+
+    private boolean shouldDry(World world, BlockPos pos)
+    {
+        int light = world.getLightFor(EnumSkyBlock.SKY,pos.up());
+        light = Math.max(light,world.getLightFor(EnumSkyBlock.SKY,pos.south()));
+        light = Math.max(light,world.getLightFor(EnumSkyBlock.SKY,pos.north()));
+        light = Math.max(light,world.getLightFor(EnumSkyBlock.SKY,pos.east()));
+        light = Math.max(light,world.getLightFor(EnumSkyBlock.SKY,pos.west()));
+        return world.isDaytime() && !world.isRaining() && !world.isThundering() && light >= 15;
+    }
+
+    @Override
+    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        if(!state.getValue(DRY_STATE))
+        {
+            if(shouldDry(worldIn,pos) && rand.nextInt(3) < 1)
+                worldIn.setBlockState(pos,state.withProperty(DRY_STATE,true),2);
+            else
+                worldIn.scheduleUpdate(pos,this,200);
+        }
+    }
+
+    @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, new IProperty[] {VARIANT, DRY_STATE});
     }
@@ -97,5 +134,23 @@ public class BlockAdobe extends BlockBase {
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
         for(int meta = 0; meta < 16; meta++)
             items.add(new ItemStack(this,1,meta));
+    }
+
+    @Override
+    public List<ModelResourceLocation> getVariantModels() {
+        ArrayList<ModelResourceLocation> rlist = new ArrayList<ModelResourceLocation>();
+
+        for(int i = 0; i < 16; ++i) {
+            int variant = i % 8;
+            boolean dry = i >= 8;
+            rlist.add(new ModelResourceLocation(getRegistryName(), "dry="+dry+",variant="+variant));
+        }
+
+        return rlist;
+    }
+
+    @Override
+    public String getVariantName(int meta) {
+        return meta >= 8 ? "dry" : "wet";
     }
 }

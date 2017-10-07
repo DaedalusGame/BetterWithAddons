@@ -3,6 +3,7 @@ package betterwithaddons.interaction;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.*;
 import betterwithaddons.crafting.conditions.ConditionModule;
+import betterwithaddons.crafting.recipes.AdobeRecipe;
 import betterwithaddons.crafting.recipes.FoodCombiningRecipe;
 import betterwithaddons.handler.*;
 import betterwithaddons.item.ModItems;
@@ -247,10 +248,7 @@ public class InteractionBWA extends Interaction {
         BlockRopeSideways.addFastenableBlock(ModBlocks.scaffold);
         BlockRopeSideways.addFastenableBlock(ModBlocks.ropePost);
 
-        StokedCauldronManager.getInstance().addRecipe(new StokedCauldronRecipe(ItemStack.EMPTY,ItemStack.EMPTY,new Object[]{})
-        {
-
-        });
+        CauldronManager.getInstance().addRecipe(new AdobeRecipe());
     }
 
     @Override

@@ -19,6 +19,13 @@ public class GuiBannerDetector extends GuiContainer
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2)
     {
         fontRenderer.drawString(I18n.format("tile.banner_detector.name", new Object[0]), 8, 6, 4210752);

@@ -77,14 +77,23 @@ public class ModConfiguration {
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
     ConfigOptionInteger CondensedOutputs_SpindleTime = new ConfigOptionInteger("addons.CondensedOutputs", "SpindleTime", InteractionCondensedOutputs.SPINUP_TIME, "The amount of time in ticks it takes for the spindle to spin up once.");
 
+    ConfigOptionBool Wheat_Enabled = new ConfigOptionBool("addons.BetterWithWheat", "Enabled", InteractionWheat.ENABLED);
+    ConfigOptionBool Wheat_MillGrain = new ConfigOptionBool("addons.BetterWithWheat", "MillGrain", InteractionWheat.MILL_GRAIN, "Instead of milling wheat into flour, wheat seeds must be milled instead.");
+    ConfigOptionBool Wheat_ReplaceWheatDrops = new ConfigOptionBool("addons.BetterWithWheat", "ReplaceWheatDrops", InteractionWheat.REPLACE_WHEAT_DROPS, "Wheat, when harvested, will drop wheat and hay instead.");
+    ConfigOptionBool Wheat_ChangeHayBales = new ConfigOptionBool("addons.BetterWithWheat", "ChangeHayBales", InteractionWheat.CHANGE_HAY_BALES, "Haybales require hay instead of wheat.");
+    ConfigOptionBool Wheat_ThreshWheat = new ConfigOptionBool("addons.BetterWithWheat", "ThreshWheat", InteractionWheat.THRESH_WHEAT, "Wheat can be threshed into seeds using shovels.");
+    ConfigOptionBool Wheat_ThreshWheatMill = new ConfigOptionBool("addons.BetterWithWheat", "ThreshWheatMill", InteractionWheat.THRESH_WHEAT_MILL, "Wheat can be threshed into seeds using a millstone.");
+    ConfigOptionBool Wheat_DigUpCrops = new ConfigOptionBool("addons.BetterWithWheat", "DigUpCrops", InteractionWheat.DIG_UP_CROPS, "Carrots and Potatoes cannot be instantly harvested, and instead have a breaktime and a preferred tool (hoe)");
+    ConfigOptionBool Wheat_ChangeTextures = new ConfigOptionBool("addons.BetterWithWheat", "ChangeTextures", InteractionWheat.TEXTURE_CHANGES, "Changes textures of Wheat and Wheat Seeds.");
+
     ConfigOptionBool EriottoMod_Enabled = new ConfigOptionBool("addons.EriottoMod", "Enabled", InteractionEriottoMod.ENABLED);
     //ConfigOptionBool EriottoMod_GrassDropsSeeds = new ConfigOptionBool("addons.EriottoMod", "GrassDropsSeeds", InteractionEriottoMod.GRASS_DROPS_SEEDS, "Rice and Rush seeds can be gotten from breaking grass.");
     ConfigOptionBool EriottoMod_AlternateInfuserRecipe = new ConfigOptionBool("addons.EriottoMod", "AlternateInfuserRecipe", InteractionEriottoMod.ALTERNATE_INFUSER_RECIPE, "Hardcore Structures pushes the Enchanting Table behind some exploration. This enables an alternate recipe if you want to start japanese culture before finding a Desert Temple.");
     ConfigOptionBool EriottoMod_InfuserRepairs = new ConfigOptionBool("addons.EriottoMod", "InfuserRepairs", InteractionEriottoMod.INFUSER_REPAIRS, "Infusers can repair japanese weapons and armors.");
     ConfigOptionInteger EriottoMod_SpiritsPerBottle = new ConfigOptionInteger("addons.EriottoMod", "SpiritsPerBottle", InteractionEriottoMod.SPIRIT_PER_BOTTLE, "How much spirit is contained in one bottle.");
     ConfigOptionInteger EriottoMod_MaxSpirits = new ConfigOptionInteger("addons.EriottoMod", "MaxSpirits", InteractionEriottoMod.MAX_SPIRITS, "Maximum amount of spirit to be stored in Infused Soul Sand.");
-    ConfigOptionBool EriottoMod_RandomJapaneseMobs = new ConfigOptionBool("addons.EriottoMod", "RandomJapaneseMobs", InteractionEriottoMod.JAPANESE_RANDOM_SPAWN, "Mobs infused with ancestral spirit spawn randomly.");
-    ConfigOptionDouble EriottoMod_RandomJapaneseChance = new ConfigOptionDouble("addons.EriottoMod", "RandomJapaneseMobsChance", InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_CHANCE, "Chance for a zombie or skeleton to be infused.");
+    ConfigOptionBool EriottoMod_RandomJapaneseMobs = new ConfigOptionBool("addons.EriottoMod", "RandomJapaneseMobs", InteractionEriottoMod.JAPANESE_RANDOM_SPAWN, "Karate Zombies infused with ancestral spirit spawn randomly.");
+    ConfigOptionInteger EriottoMod_RandomJapaneseWeight = new ConfigOptionInteger("addons.EriottoMod", "RandomJapaneseMobsWeight", InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_WEIGHT, "Weight for a karate zombie to spawn.");
 
     ConfigOptionBool DecoAddon_Enabled = new ConfigOptionBool("addons.DecoAddon", "Enabled", InteractionDecoAddon.ENABLED);
     ConfigOptionBool DecoAddon_WoodColoring = new ConfigOptionBool("addons.DecoAddon", "WoodColoring", InteractionDecoAddon.WOOD_COLORING, "Vanilla planks can be bleached or stained.");
@@ -96,10 +105,6 @@ public class ModConfiguration {
     ConfigOptionBool DecoAddon_RecycleBottles = new ConfigOptionBool("addons.DecoAddon", "RecycleBottles", InteractionDecoAddon.RECYCLE_BOTTLES, "Glass bottles can melted into chunks in a crucible. This allows you to make glass from a witch farm.");
 
     ConfigOptionBool BTWTweak_Enabled = new ConfigOptionBool("addons.BTWTweak", "Enabled", InteractionBTWTweak.ENABLED);
-    //ConfigOptionBool BTWTweak_KilnDoubling = new ConfigOptionBool("addons.BTWTweak", "KilnDoubling", InteractionBTWTweak.KILN_DOUBLING, "Ores can be smelted into double the amount of output in a kiln.");
-    ConfigOptionBool BTWTweak_SoftWoods = new ConfigOptionBool("addons.BTWTweak", "SoftWoods", InteractionBTWTweak.SOFT_WOODS, "Spruce, Jungle and Dark Oak logs are much easier to break.");
-    ConfigOptionBool BTWTweak_HardStumps = new ConfigOptionBool("addons.BTWTweak", "HardStumps", InteractionBTWTweak.HARD_STUMPS, "Makes treefarms great ag- I mean, makes logs with dirt underneath them much harder to break to encourage leaving awesome stumps.");
-    ConfigOptionDouble BTWTweak_HardStumpModifier = new ConfigOptionDouble("addons.BTWTweak", "HardStumpsModifier", InteractionBTWTweak.HARD_STUMPS_MODIFIER, "Speed modifier for harvesting logs. 0.5 is half speed.");
     ConfigOptionBool BTWTweak_SawRecycling = new ConfigOptionBool("addons.BTWTweak", "SawRecycling", InteractionBTWTweak.SAW_RECYCLING, "Many wooden blocks can be recycled by putting them infront of a saw, at a bit of a loss.");
     ConfigOptionBool BTWTweak_EggIncubation = new ConfigOptionBool("addons.BTWTweak", "EggIncubation", InteractionBTWTweak.EGG_INCUBATION, "Allows eggs to be incubated into chicken by placing them on a Block of Padding with a lit Light Block above.");
     ConfigOptionBool BTWTweak_SlipperyWhenWet = new ConfigOptionBool("addons.BTWTweak", "SlipperyWhenWet", InteractionBTWTweak.SLIPPERY_WHEN_WET, "Water running over blocks of soap will make them slippery.");
@@ -156,13 +161,12 @@ public class ModConfiguration {
         InteractionBWA.FRUIT_ROT_TIME = BWA_RottenFruitTime.init(configuration);
         InteractionBWA.MISC_ROT_TIME = BWA_RottenMiscTime.init(configuration);
 
-
         InteractionEriottoMod.ENABLED = EriottoMod_Enabled.init(configuration);
         //InteractionEriottoMod.GRASS_DROPS_SEEDS = EriottoMod_GrassDropsSeeds.init(configuration);
         InteractionEriottoMod.ALTERNATE_INFUSER_RECIPE = EriottoMod_AlternateInfuserRecipe.init(configuration);
         InteractionEriottoMod.INFUSER_REPAIRS = EriottoMod_InfuserRepairs.init(configuration);
         InteractionEriottoMod.JAPANESE_RANDOM_SPAWN = EriottoMod_RandomJapaneseMobs.init(configuration);
-        InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_CHANCE = EriottoMod_RandomJapaneseChance.init(configuration);
+        InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_WEIGHT = EriottoMod_RandomJapaneseWeight.init(configuration);
         InteractionEriottoMod.MAX_SPIRITS = EriottoMod_MaxSpirits.init(configuration);
         InteractionEriottoMod.SPIRIT_PER_BOTTLE = EriottoMod_SpiritsPerBottle.init(configuration);
 
@@ -181,9 +185,6 @@ public class ModConfiguration {
 
         InteractionBTWTweak.ENABLED = BTWTweak_Enabled.init(configuration);
         //InteractionBTWTweak.KILN_DOUBLING = BTWTweak_KilnDoubling.init(configuration);
-        InteractionBTWTweak.SOFT_WOODS = BTWTweak_SoftWoods.init(configuration);
-        InteractionBTWTweak.HARD_STUMPS = BTWTweak_HardStumps.init(configuration);
-        InteractionBTWTweak.HARD_STUMPS_MODIFIER = BTWTweak_HardStumpModifier.init(configuration);
         InteractionBTWTweak.SAW_RECYCLING = BTWTweak_SawRecycling.init(configuration);
         InteractionBTWTweak.EGG_INCUBATION = BTWTweak_EggIncubation.init(configuration);
         InteractionBTWTweak.SLIPPERY_WHEN_WET = BTWTweak_SlipperyWhenWet.init(configuration);
@@ -191,6 +192,15 @@ public class ModConfiguration {
         InteractionBTWTweak.LOGS_SMELT_TO_ASH = BTWTweak_LogsSmeltToAsh.init(configuration);
         InteractionBTWTweak.REPLACE_WRITABLE_BOOK_RECIPE = BTWTweak_ReplaceWritableBookRecipe.init(configuration);
         InteractionBTWTweak.WOOL_RECYCLING = BTWTweak_WoolRecycling.init(configuration);
+
+        InteractionWheat.ENABLED = Wheat_Enabled.init(configuration);
+        InteractionWheat.TEXTURE_CHANGES = Wheat_ChangeTextures.init(configuration);
+        InteractionWheat.MILL_GRAIN = Wheat_MillGrain.init(configuration);
+        InteractionWheat.THRESH_WHEAT = Wheat_ThreshWheat.init(configuration);
+        InteractionWheat.THRESH_WHEAT_MILL = Wheat_ThreshWheatMill.init(configuration);
+        InteractionWheat.CHANGE_HAY_BALES = Wheat_ChangeHayBales.init(configuration);
+        InteractionWheat.REPLACE_WHEAT_DROPS = Wheat_ReplaceWheatDrops.init(configuration);
+        InteractionWheat.DIG_UP_CROPS = Wheat_DigUpCrops.init(configuration);
 
         InteractionBWR.ENABLED = BWR_Enabled.init(configuration);
         InteractionBWR.REDSTONE_SYNTHESIS = BWR_RedstoneSynthesis.init(configuration);

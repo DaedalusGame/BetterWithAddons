@@ -7,25 +7,26 @@ import betterwithaddons.crafting.manager.*;
 import betterwithaddons.crafting.recipes.ArmorDecorateRecipe;
 import betterwithaddons.crafting.recipes.infuser.ShapedInfuserRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
-import betterwithaddons.handler.JapaneseMobHandler;
+import betterwithaddons.entity.EntityKarateZombie;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWOreDictionary;
 import betterwithmods.common.blocks.BlockRawPastry;
-import betterwithmods.common.items.ItemMaterial;
-import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.module.hardcore.crafting.HCLumber;
 import com.google.common.collect.Lists;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -40,8 +41,9 @@ public class InteractionEriottoMod extends Interaction {
     public static boolean ALTERNATE_INFUSER_RECIPE = false;
     public static int MAX_SPIRITS = 128;
     public static int SPIRIT_PER_BOTTLE = 8;
+    public static int SPIRIT_PER_LEVEL = 8;
     public static boolean JAPANESE_RANDOM_SPAWN = true;
-    public static double JAPANESE_RANDOM_SPAWN_CHANCE = 0.2;
+    public static int JAPANESE_RANDOM_SPAWN_WEIGHT = 40;
     public final ArrayList<Item> REPAIRABLE_TOOLS;
 
     public InteractionEriottoMod() {
@@ -71,9 +73,15 @@ public class InteractionEriottoMod extends Interaction {
 
     @Override
     public void preInit() {
-        if(JAPANESE_RANDOM_SPAWN)
-            MinecraftForge.EVENT_BUS.register(new JapaneseMobHandler());
-        JapaneseMobHandler.registerCapability();
+        if(JAPANESE_RANDOM_SPAWN) {
+            List<Biome> biomes = new ArrayList<>();
+            for (Biome biome: Biome.REGISTRY) {
+                if(biome.getSpawnableList(EnumCreatureType.MONSTER).stream().anyMatch(entry -> entry.entityClass.isAssignableFrom(EntityZombie.class)))
+                    biomes.add(biome);
+            }
+
+            EntityRegistry.addSpawn(EntityKarateZombie.class, JAPANESE_RANDOM_SPAWN_WEIGHT, 1, 3, EnumCreatureType.MONSTER, biomes.toArray(new Biome[biomes.size()]));
+        }
 
         ConditionModule.MODULES.put("EriottoMod", this::isActive);
         ConditionModule.MODULES.put("AlternateInfuser", () -> ALTERNATE_INFUSER_RECIPE);

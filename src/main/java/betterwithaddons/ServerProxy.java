@@ -25,7 +25,17 @@ public class ServerProxy implements IProxy {
     }
 
     @Override
-    public void overrideItemModel(Item item, int meta, ModelResourceLocation location) {
+    public void registerResourcePack() {
+
+    }
+
+    @Override
+    public void addResourceOverride(String space, String dir, String file, String ext) {
+
+    }
+
+    @Override
+    public void addResourceOverride(String modid, String space, String dir, String file, String ext) {
 
     }
 }

@@ -14,12 +14,18 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
@@ -65,6 +71,12 @@ public class BlockInfuser extends BlockContainerBase {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileEntityInfuser();
     }
@@ -101,7 +113,20 @@ public class BlockInfuser extends BlockContainerBase {
         if(state.getBlock() != ModBlocks.infuser || bottomState.getBlock() != ModBlocks.ancestrySand)
             return false;
 
-        if(world.getLight(pos) > 7)
+        int light = world.getLightFor(EnumSkyBlock.BLOCK, pos);
+        int skylight = world.getLightFor(EnumSkyBlock.SKY, pos) - world.getSkylightSubtracted();
+        float celestialAngle = world.getCelestialAngleRadians(1.0F);
+
+        if (skylight > 0)
+        {
+            float celestialAngleClamped = celestialAngle < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
+            celestialAngle = celestialAngle + (celestialAngleClamped - celestialAngle) * 0.2F;
+            skylight = Math.round((float)skylight * MathHelper.cos(celestialAngle));
+        }
+
+        skylight = MathHelper.clamp(skylight, 0, 15);
+
+        if(Math.max(light,skylight) > 7)
             return false;
 
         for(int x=-1; x<=1; x++)
