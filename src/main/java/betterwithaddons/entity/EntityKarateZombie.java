@@ -348,7 +348,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
             Vec3d pos = getPositionVector();
             float maxdist = 8.0f;
-            AxisAlignedBB aabb = new AxisAlignedBB(pos, pos);
+            AxisAlignedBB aabb = new AxisAlignedBB(pos.x,pos.y,pos.z, pos.x,pos.y,pos.z);
 
             if (nextCheck-- < 0) {
                 attractedSpirits = world.getEntitiesWithinAABB(EntitySpirit.class, aabb.grow(maxdist - 0.5));

@@ -32,7 +32,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, dependencies = "required-after:betterwithmods")
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions = "1.12,1.12.1,1.12.2", dependencies = "required-after:betterwithmods")
 public class BetterWithAddons
 {
 	@Instance(Reference.MOD_ID)
