@@ -10,24 +10,31 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithaddons.tileentity.TileEntityLureTree;
+import betterwithaddons.util.EntityUtil;
 import betterwithaddons.util.ISpecialMeasuringBehavior;
 import betterwithaddons.util.ItemUtil;
+import betterwithaddons.util.PulleyUtil;
+import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.PulleyStructureManager;
 import betterwithmods.common.registry.blockmeta.managers.KilnManager;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
-import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.common.registry.bulk.recipes.MillRecipe;
-import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.gameplay.AnvilRecipes;
 import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.hunger.HCHunger;
+import betterwithmods.util.DirUtils;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -35,7 +42,9 @@ import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -205,6 +214,41 @@ public class InteractionBWA extends Interaction {
             }
         }
 
+        TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),450);
+
+        //TODO: Make this more sensible holy shit
+        TileEntityAqueductWater.reloadBiomeList();
+
+        ISpecialMeasuringBehavior platformBehavior = new ISpecialMeasuringBehavior() {
+            @Override
+            public boolean isFull(World world, BlockPos pos, IBlockState state) {
+                HashSet<BlockPos> platformBlocks = new HashSet<>();
+                boolean success = PulleyUtil.findPlatformPart(world,pos,platformBlocks);
+                if(success)
+                {
+                    return measurePlatform(world,platformBlocks) >= countPlatforms(world,platformBlocks);
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean isEmpty(World world, BlockPos pos, IBlockState state) {
+                HashSet<BlockPos> platformBlocks = new HashSet<>();
+                boolean success = PulleyUtil.findPlatformPart(world,pos,platformBlocks);
+                if(success)
+                {
+                    return measurePlatform(world,platformBlocks) == 0 && countPlatforms(world,platformBlocks) > 0;
+                }
+
+                return true;
+            }
+
+            @Override
+            public int getDelay(World world, BlockPos pos, IBlockState state) {
+                return 4;
+            }
+        };
         BlockWeight.addSpecialMeasuringBehavior(Blocks.CAULDRON, new ISpecialMeasuringBehavior() {
             @Override
             public boolean isFull(World world, BlockPos pos, IBlockState state) {
@@ -221,11 +265,24 @@ public class InteractionBWA extends Interaction {
                 return 1;
             }
         });
+        BlockWeight.addSpecialMeasuringBehavior(BWMBlocks.ANCHOR, new ISpecialMeasuringBehavior() {
+            @Override
+            public boolean isFull(World world, BlockPos pos, IBlockState state) {
+                return false;
+            }
 
-        TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),450);
+            @Override
+            public boolean isEmpty(World world, BlockPos pos, IBlockState state) {
+                return state.getValue(DirUtils.FACING) != EnumFacing.UP;
+            }
 
-        //TODO: Make this more sensible holy shit
-        TileEntityAqueductWater.reloadBiomeList();
+            @Override
+            public int getDelay(World world, BlockPos pos, IBlockState state) {
+                return 1;
+            }
+        });
+        BlockWeight.addSpecialMeasuringBehavior(BWMBlocks.PLATFORM, platformBehavior);
+        BlockWeight.addSpecialMeasuringBehavior(BWMBlocks.IRON_WALL, platformBehavior);
 
         GameRegistry.addSmelting(Items.CARROT,new ItemStack(ModItems.bakedCarrot),0.35f);
         GameRegistry.addSmelting(Items.BEETROOT,new ItemStack(ModItems.bakedBeetroot),0.35f);
@@ -249,6 +306,71 @@ public class InteractionBWA extends Interaction {
         BlockRopeSideways.addFastenableBlock(ModBlocks.ropePost);
 
         CauldronManager.getInstance().addRecipe(new AdobeRecipe());
+    }
+
+    int countPlatforms(World world, HashSet<BlockPos> platforms)
+    {
+        int count = 0;
+
+        for(BlockPos pos : platforms)
+        {
+            IBlockState state = world.getBlockState(pos);
+            if(state.getBlock() == BWMBlocks.PLATFORM)
+                count++;
+        }
+
+        return count;
+    }
+
+    int measurePlatform(World world, HashSet<BlockPos> platforms)
+    {
+        int detected = 0;
+        int minx = 0,miny = 0,minz = 0;
+        int maxx = 0,maxy = 0,maxz = 0;
+        boolean first = true;
+        AxisAlignedBB aabb = null;
+
+        for(BlockPos pos : platforms)
+        {
+            IBlockState state = world.getBlockState(pos);
+            if(PulleyStructureManager.isPulleyBlock(state))
+            {
+                if(first) {
+                    minx = pos.getX();
+                    miny = pos.getY();
+                    minz = pos.getZ();
+                    maxx = pos.getX() + 1;
+                    maxy = pos.getY() + 1;
+                    maxz = pos.getZ() + 1;
+                    first = false;
+                }
+                else
+                {
+                    minx = Math.min(pos.getX(),minx);
+                    miny = Math.min(pos.getY(),miny);
+                    minz = Math.min(pos.getZ(),minz);
+                    maxx = Math.max(pos.getX()+1,maxx);
+                    maxy = Math.max(pos.getY()+1,maxy);
+                    maxz = Math.max(pos.getZ()+1,maxz);
+                }
+            }
+        }
+
+        aabb = new AxisAlignedBB(minx,miny,minz,maxx,maxy,maxz).offset(0,1,0);
+
+        for(Entity entity : world.getEntitiesWithinAABB(Entity.class,aabb, x -> isHeavyEntity(x) && x.onGround))
+        {
+            BlockPos pos = EntityUtil.getEntityFloor(entity,2);
+            if(platforms.contains(pos))
+                detected++;
+        }
+
+        return detected;
+    }
+
+    boolean isHeavyEntity(Entity entity)
+    {
+        return entity instanceof EntityLivingBase || entity instanceof EntityMinecart;
     }
 
     @Override

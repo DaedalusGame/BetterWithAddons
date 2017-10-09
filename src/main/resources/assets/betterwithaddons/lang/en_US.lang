@@ -24,6 +24,7 @@ tile.lattice.name=Iron Lattice
 tile.thorns.name=Thorny Vine
 tile.thorn_rose.name=Thorny Vine Seed
 tile.chute.name=Chute
+tile.inverted_gearbox.name=Clutchbox
 tile.aqueduct.name=Aqueduct
 
 tile.ecksie_sapling.name=Ecksie Sapling

@@ -252,7 +252,7 @@ public class ModBlocks {
                 AdobeType.MOSTLY_STRAW, AdobeType.LIGHT, AdobeType.DARK, AdobeType.MOSTLY_DUNG
         }));
 
-        registerBlock(new BlockReplacement("pond_replacement"){
+        registerBlock(new BlockReplacement("pond_replacement") {
             @Override
             public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
                 switch(state.getValue(BlockReplacement.META))
@@ -268,7 +268,7 @@ public class ModBlocks {
             }
         });
 
-        ecksieSapling = (BlockEcksieSapling) registerBlock(new BlockEcksieSapling("ecksie_sapling") {
+        registerBlock(new BlockEcksieSapling("ecksie_sapling") {
             @Override
             public IBlockState getLeafBlock(int type) {
                 switch (type) {
@@ -300,6 +300,8 @@ public class ModBlocks {
                 return 9;
             }
         });
+
+        registerBlock(new BlockInvertedGearbox("inverted_gearbox"));
     }
 
     @SubscribeEvent

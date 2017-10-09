@@ -54,7 +54,7 @@ public abstract class BlockWeight extends BlockBase {
 
     @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-        if(fromPos.equals(pos.up()))
+        //if(fromPos.equals(pos.up()))
             worldIn.scheduleUpdate(pos,this,1);
     }
 

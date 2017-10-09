@@ -1,0 +1,30 @@
+{
+  "result": {
+    "item": "betterwithaddons:inverted_gearbox",
+	"data": 0
+  },
+  "pattern": [
+    " MS",
+	"XGX",
+	"SM "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+	  "type": "forge:ore_dict",
+	  "ore": "sidingWood"
+    },
+	"M": {
+	  "type": "forge:ore_dict",
+	  "ore": "mouldingWood"
+	},
+	"G": {
+	  "item": "betterwithmods:wooden_gearbox",
+	  "data": 0
+	},
+    "X": {
+      "type": "forge:ore_dict",
+	  "ore": "gearWood"
+    }
+  }
+}

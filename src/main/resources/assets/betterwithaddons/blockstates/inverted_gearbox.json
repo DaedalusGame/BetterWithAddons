@@ -1,0 +1,115 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "side": "blocks/planks_oak",
+      "input": "betterwithmods:blocks/wooden_gearbox_input",
+	  "invert": "betterwithaddons:blocks/wooden_gearbox_invert",
+      "output": "betterwithmods:blocks/wooden_gearbox_output"
+    },
+    "model": "betterwithmods:gearbox"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {
+        "transform": "forge:default-block",
+        "textures": {
+          "up": "#input"
+        }
+      }
+    ],
+    "active": {
+      "false": {},
+      "true": {}
+    },
+    "facing": {
+      "down": {
+        "textures": {
+          "down": "#input",
+		  "up": "#output"
+        }
+      },
+      "up": {
+        "textures": {
+          "up": "#input",
+		  "down": "#output"
+        }
+      },
+      "north": {
+        "textures": {
+          "north": "#input",
+		  "south": "#output"
+        }
+      },
+      "south": {
+        "textures": {
+          "south": "#input",
+		  "north": "#output"
+        }
+      },
+      "west": {
+        "textures": {
+          "west": "#input",
+		  "east": "#output"
+        }
+      },
+      "east": {
+        "textures": {
+          "east": "#input",
+		  "west": "#output"
+        }
+      }
+    },
+    "up": {
+      "false": {},
+      "true": {
+        "textures": {
+          "up": "#invert"
+        }
+      }
+    },
+    "down": {
+      "false": {},
+      "true": {
+        "textures": {
+          "down": "#invert"
+        }
+      }
+    },
+    "north": {
+      "false": {},
+      "true": {
+        "textures": {
+          "north": "#invert"
+        }
+      }
+    },
+    "south": {
+      "false": {},
+      "true": {
+        "textures": {
+          "south": "#invert"
+        }
+      }
+    },
+    "west": {
+      "false": {},
+      "true": {
+        "textures": {
+          "west": "#invert"
+        }
+      }
+    },
+    "east": {
+      "false": {},
+      "true": {
+        "textures": {
+          "east": "#invert"
+        }
+      }
+    }
+  }
+}
