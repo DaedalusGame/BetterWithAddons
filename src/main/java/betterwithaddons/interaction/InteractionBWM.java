@@ -4,6 +4,7 @@ import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockModUnbaked;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
+import betterwithaddons.crafting.manager.CraftingManagerPacking;
 import betterwithaddons.handler.ButcherHandler;
 import betterwithaddons.handler.FallingPlatformHandler;
 import betterwithaddons.handler.HardcoreWoolHandler;
@@ -32,6 +33,7 @@ import betterwithmods.module.hardcore.needs.HCPiles;
 import betterwithmods.module.hardcore.needs.hunger.HCHunger;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockSand;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
@@ -48,6 +50,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InteractionBWM extends Interaction {
     final String modid = "betterwithmods";
@@ -149,22 +152,25 @@ public class InteractionBWM extends Interaction {
     public static NonNullList<ItemStack> convertShearedWool(List<ItemStack> sheared)
     {
         NonNullList<ItemStack> returnList = NonNullList.create();
-        for(ItemStack stack : sheared)
-        {
-            if(stack.getItem() == Item.getItemFromBlock(Blocks.WOOL))
-                returnList.add(new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,stack.getMetadata()));
-            else
-                returnList.add(stack);
-        }
+        returnList.addAll(sheared.stream().map(InteractionBWM::convertOneWool).collect(Collectors.toList()));
         return returnList;
     }
 
     public static void convertShearedWoolEntities(List<EntityItem> sheared) {
         for (EntityItem item : sheared) {
             ItemStack stack = item.getItem();
-            if(stack.getItem() == Item.getItemFromBlock(Blocks.WOOL))
-                item.setItem(new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,stack.getMetadata()));
+            item.setItem(convertOneWool(stack));
         }
+    }
+
+    public static ItemStack convertOneWool(ItemStack stack)
+    {
+        if(stack.getItem() == Item.getItemFromBlock(Blocks.WOOL))
+            return new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,stack.getMetadata());
+        else if(ItemUtil.matchesOreDict(stack,"blockWool"))
+            return new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,0);
+        else
+            return stack;
     }
 
     @Override
@@ -222,6 +228,20 @@ public class InteractionBWM extends Interaction {
 
         OreDictionary.registerOre("book", Items.WRITTEN_BOOK);
         OreDictionary.registerOre("book", Items.BOOK);
+
+        //Hardcore Packing
+        CraftingManagerPacking.getInstance().addRecipe(Blocks.DIRT.getDefaultState(),new ItemStack(Blocks.DIRT),new ItemStack(BWMItems.DIRT_PILE,4));
+        CraftingManagerPacking.getInstance().addRecipe(Blocks.SAND.getDefaultState(),new ItemStack(Blocks.SAND),new ItemStack(BWMItems.SAND_PILE,4));
+        CraftingManagerPacking.getInstance().addRecipe(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND),new ItemStack(Blocks.SAND,1,1),new ItemStack(BWMItems.RED_SAND_PILE,4));
+        CraftingManagerPacking.getInstance().addRecipe(Blocks.GRAVEL.getDefaultState(),new ItemStack(Blocks.GRAVEL),new ItemStack(BWMItems.GRAVEL_PILE,4));
+        CraftingManagerPacking.getInstance().addRecipe(Blocks.SOUL_SAND.getDefaultState(),new ItemStack(Blocks.SOUL_SAND),new ItemStack(ModItems.soulSandPile,4));
+        CraftingManagerPacking.getInstance().addRecipe(Blocks.CLAY.getDefaultState(),new ItemStack(Blocks.CLAY),new ItemStack(Items.CLAY_BALL,4));
+        CraftingManagerPacking.getInstance().addRecipe(Blocks.SNOW.getDefaultState(),new ItemStack(Blocks.SNOW),new ItemStack(Items.SNOWBALL,4));
+        CraftingManagerPacking.getInstance().addRecipe(Blocks.BRICK_BLOCK.getDefaultState(),new ItemStack(Blocks.BRICK_BLOCK),new ItemStack(Items.BRICK,4));
+        CraftingManagerPacking.getInstance().addRecipe(Blocks.NETHER_BRICK.getDefaultState(),new ItemStack(Blocks.NETHER_BRICK),new ItemStack(Items.NETHERBRICK,4));
+        CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.FLINT),BlockAesthetic.getStack(BlockAesthetic.EnumType.FLINT),new ItemStack(Items.FLINT,9));
+        CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.DUNG),BlockAesthetic.getStack(BlockAesthetic.EnumType.DUNG),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG,9));
+        CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.SOAP),BlockAesthetic.getStack(BlockAesthetic.EnumType.SOAP),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOAP,9));
 
         if(CAULDRONS_EXPLODE)
             addCauldronExplosion();

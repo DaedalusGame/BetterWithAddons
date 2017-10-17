@@ -58,9 +58,19 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     int moveTime = -1;
     int moveTimeout = 0;
     boolean performingMove = false;
+    int spawnSpirits = 0;
 
     public EntityKarateZombie(World worldIn) {
         super(worldIn);
+
+        int spiritsPerLevel = InteractionEriottoMod.SPIRIT_PER_LEVEL;
+        spawnSpirits = (spiritsPerLevel * 2) / 3;
+        if(rand.nextInt(100) < 30)
+            spawnSpirits += rand.nextInt(4) * spiritsPerLevel;
+        else
+            spawnSpirits += rand.nextInt(spiritsPerLevel);
+
+        setSpirits(spawnSpirits);
     }
 
     public int getSpirits() {
@@ -122,7 +132,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
         int i = getSpirits();
 
-        if(!isARealAmerican())
+        if(!isARealAmerican() && !world.isRemote)
         while (i > 0)
         {
             int j = EntitySpirit.getSpiritSplit(i);
@@ -212,13 +222,14 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
         IEntityLivingData data = super.onInitialSpawn(difficulty, livingdata);
 
-        int spiritsPerLevel = InteractionEriottoMod.SPIRIT_PER_LEVEL;
-        int spirits = (spiritsPerLevel * 2) / 3;
-        if(rand.nextInt(100) < 30)
-            spirits += rand.nextInt(4) * spiritsPerLevel;
-        else
-            spirits += rand.nextInt(spiritsPerLevel);
-        setSpirits(spirits);
+        //TODO: bother primetoxinz lots
+        //int spiritsPerLevel = InteractionEriottoMod.SPIRIT_PER_LEVEL;
+        //int spirits = (spiritsPerLevel * 2) / 3;
+        //if(rand.nextInt(100) < 30)
+        //    spirits += rand.nextInt(4) * spiritsPerLevel;
+        //else
+        //    spirits += rand.nextInt(spiritsPerLevel);
+        //setSpirits(spirits);
 
         return data;
     }
@@ -308,7 +319,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
             setSpirits(InteractionEriottoMod.MAX_SPIRITS);
         }
 
-        if (!world.isRemote) {
+        if (!world.isRemote && !isDead) {
             double power = getPower();
             getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(MathHelper.clampedLerp(3.0,6.0,power));
             getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(MathHelper.clampedLerp(0.23,0.5,power));

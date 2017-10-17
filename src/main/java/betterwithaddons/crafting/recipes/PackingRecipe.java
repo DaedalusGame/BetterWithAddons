@@ -3,7 +3,9 @@ package betterwithaddons.crafting.recipes;
 import betterwithaddons.crafting.OreStack;
 import betterwithaddons.util.ItemUtil;
 import com.google.common.collect.Lists;
+import com.ibm.icu.util.Output;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,51 +13,58 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PackingRecipe
 {
-    public ArrayList<ItemStack> outputs = new ArrayList<>();
+    public IBlockState output;
+    public Object jeiOutput = ItemStack.EMPTY;
     public Object input = ItemStack.EMPTY;
-    public Object jeiInput = ItemStack.EMPTY;
 
-    public PackingRecipe(Object input, ItemStack... outputs)
+    public PackingRecipe(Object input, IBlockState output)
     {
-        for (ItemStack out: outputs) {
-            if(out.isEmpty())
-                this.outputs.add(ItemStack.EMPTY);
-            else
-                this.outputs.add(out.copy());
-        }
+        this.output = output;
 
         if(input instanceof ItemStack) {
             this.input = ((ItemStack) input).copy();
-            this.jeiInput = ((ItemStack) input).copy();
         }
         else if(input instanceof Item) {
             this.input = new ItemStack((Item) input, 1, OreDictionary.WILDCARD_VALUE);
-            this.jeiInput = new ItemStack((Item) input, 1, OreDictionary.WILDCARD_VALUE);
         }
         else if(input instanceof Block) {
             this.input = new ItemStack((Block) input, 1, OreDictionary.WILDCARD_VALUE);
-            this.jeiInput = new ItemStack((Block) input, 1, OreDictionary.WILDCARD_VALUE);
         }
         else if(input instanceof OreStack) {
             this.input = ((OreStack) input).copy();
-            this.jeiInput = ItemUtil.getOreList(((OreStack)input).copy());
         }
         else
         {
-            String ret = "Invalid spindle recipe: ";
-            for(Object tmp : outputs)
-                ret += tmp + ", ";
+            String ret = "Invalid packing recipe: ";
+            ret += "Output: " + output;
             ret += "Input: " + input;
             throw new RuntimeException(ret);
         }
     }
 
-    public ArrayList<ItemStack> getOutput()
+    public void setJeiOutput(Object output)
     {
-        return this.outputs;
+        if(input instanceof ItemStack) {
+            this.jeiOutput = ((ItemStack) output).copy();
+        }
+        else if(input instanceof Item) {
+            this.jeiOutput = new ItemStack((Item) output, 1, OreDictionary.WILDCARD_VALUE);
+        }
+        else if(input instanceof Block) {
+            this.jeiOutput = new ItemStack((Block) output, 1, OreDictionary.WILDCARD_VALUE);
+        }
+        else if(input instanceof OreStack) {
+            this.jeiOutput = ItemUtil.getOreList(((OreStack)output).copy());
+        }
+    }
+
+    public Object getOutput()
+    {
+        return this.jeiOutput;
     }
 
     public Object getInput()
@@ -65,6 +74,15 @@ public class PackingRecipe
 
     public List<ItemStack> getRecipeInputs() {
         Object o = getInput();
+        if(o instanceof ItemStack)
+            return Lists.newArrayList((ItemStack) o);
+        if(o instanceof OreStack)
+            return ItemUtil.getOreList((OreStack)o);
+        return null;
+    }
+
+    public List<ItemStack> getRecipeOutputs() {
+        Object o = getOutput();
         if(o instanceof ItemStack)
             return Lists.newArrayList((ItemStack) o);
         if(o instanceof OreStack)
@@ -99,7 +117,7 @@ public class PackingRecipe
         else if(input instanceof OreStack)
         {
             OreStack stack = (OreStack)input;
-            if(stack.matches(item))
+            if(stack.matches(item) && item.getCount() >= stack.getStackSize())
                 return true;
         }
         return false;
@@ -118,6 +136,34 @@ public class PackingRecipe
         return false;
     }
 
+    public int getInputCount()
+    {
+        if(input instanceof ItemStack)
+            return ((ItemStack) input).getCount();
+        else if(input instanceof OreStack)
+            return ((OreStack) input).getStackSize();
+        return 0;
+    }
+
+    public boolean consumeIngredients(List<EntityItem> inv)
+    {
+        for (EntityItem ent: inv) {
+            if(matchesInput(ent))
+            {
+                ItemStack stack = ent.getItem();
+                int count = getInputCount();
+                if(stack.getCount() - count <= 0)
+                    ent.setDead();
+                else {
+                    stack.shrink(count);
+                    ent.setItem(stack);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean stacksMatch(Object first, Object second)
     {
         if(first instanceof ItemStack && second instanceof ItemStack) {
@@ -131,7 +177,7 @@ public class PackingRecipe
         {
             OreStack firstitem = (OreStack) first;
             OreStack seconditem = (OreStack) second;
-            return firstitem.getOreName() == seconditem.getOreName() && firstitem.getStackSize() == seconditem.getStackSize();
+            return Objects.equals(firstitem.getOreName(), seconditem.getOreName()) && firstitem.getStackSize() == seconditem.getStackSize();
         }
 
         return false;

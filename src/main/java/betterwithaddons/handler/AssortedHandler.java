@@ -5,6 +5,8 @@ import betterwithaddons.block.BlockLattice;
 import betterwithaddons.block.BlockRopeSideways;
 import betterwithaddons.block.BlockRopeSideways.EnumRopeShape;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.crafting.manager.CraftingManagerPacking;
+import betterwithaddons.crafting.recipes.PackingRecipe;
 import betterwithaddons.entity.EntityKarateZombie;
 import betterwithaddons.interaction.InteractionBWM;
 import betterwithaddons.item.ModItems;
@@ -14,10 +16,12 @@ import betterwithaddons.util.BannerUtil;
 import betterwithaddons.util.InventoryUtil;
 import betterwithmods.common.BWMBlocks;
 import net.minecraft.block.*;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,6 +31,8 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -35,6 +41,7 @@ import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.BossInfo.Overlay;
 import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.World;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -49,10 +56,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class AssortedHandler {
     public static final int ScaleQuarryAmt = 5;
@@ -239,42 +243,67 @@ public class AssortedHandler {
         }
     }
 
-    //@SubscribeEvent
-    public void hardcorePacking(BlockEvent.NeighborNotifyEvent notifyEvent) {
-        World world = notifyEvent.getWorld();
-        BlockPos pos = notifyEvent.getPos();
-        IBlockState state = notifyEvent.getState();
-        if(state.getBlock() instanceof BlockPistonBase)
+    HashSet<TileEntityPiston> activePistons = new HashSet<>();
+
+    @SubscribeEvent
+    public void hardcorePackingInit(AttachCapabilitiesEvent<TileEntity> event)
+    {
+        TileEntity te = event.getObject();
+        if(te instanceof TileEntityPiston)
         {
-            boolean extended = state.getValue(BlockPistonBase.EXTENDED);
-            EnumFacing facing = state.getValue(BlockPistonBase.FACING);
-            if(world.isBlockPowered(pos) && !extended)
+            activePistons.add((TileEntityPiston) te);
+        }
+    }
+
+    @SubscribeEvent
+    public void hardcorePackingCompress(TickEvent.WorldTickEvent event) {
+        HashSet<TileEntityPiston> toIterate = new HashSet<>(activePistons);
+        HashSet<TileEntityPiston> toRemove = new HashSet<>();
+        for (TileEntityPiston piston: toIterate) {
+            World world = piston.getWorld();
+
+            toRemove.add(piston);
+
+            if(!world.isRemote && piston.isExtending())
             {
-                BlockPos shovePos = pos.offset(facing);
-                IBlockState shoveState = world.getBlockState(shovePos);
+                BlockPos pos = piston.getPos();
+                EnumFacing facing = piston.getFacing();
+                BlockPos shovePos = piston.getPos();
+                IBlockState shoveState = piston.getPistonState();
 
-                if(!isEmpty(world,shovePos,shoveState))
-                {
-                    shovePos = shovePos.offset(facing);
-                    shoveState = world.getBlockState(shovePos);
-                }
-
-                if(isEmpty(world, shovePos, shoveState))
-                {
                     BlockPos compressPos = shovePos.offset(facing);
                     IBlockState compressState = world.getBlockState(compressPos);
-                    if(isEmpty(world, compressPos, compressState))
+                    if(isEmpty(world, compressPos, compressState) && isSurrounded(world,compressPos,facing.getOpposite()))
                     {
-                        world.setBlockState(compressPos,Blocks.CLAY.getDefaultState());
+                        AxisAlignedBB blockMask = new AxisAlignedBB(shovePos).union(new AxisAlignedBB(compressPos));
+                        List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class,blockMask);
+                        PackingRecipe recipe = CraftingManagerPacking.getInstance().getMostValidRecipe(items);
+                        if(recipe != null && recipe.consumeIngredients(items)) {
+                            world.setBlockState(compressPos, recipe.output);
+                        }
                     }
-                }
-            }
 
+            }
         }
+
+        activePistons.removeAll(toRemove);
     }
 
     public boolean isEmpty(World world, BlockPos shovePos, IBlockState shoveState) {
         return shoveState.getBlock().isAir(shoveState,world,shovePos) || shoveState.getBlock().isReplaceable(world,shovePos);
+    }
+
+    public boolean isSurrounded(World world, BlockPos pos, EnumFacing except)
+    {
+        for (EnumFacing facing : EnumFacing.VALUES) {
+            if(facing == except)
+                continue;
+            IBlockState wallState = world.getBlockState(pos.offset(facing));
+            if(wallState.getBlockFaceShape(world,pos,facing.getOpposite()) != BlockFaceShape.SOLID)
+                return false;
+        }
+
+        return true;
     }
 
     /*@SubscribeEvent

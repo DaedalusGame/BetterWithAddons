@@ -17,6 +17,7 @@ import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.plugins.vanilla.crafting.ShapedOreRecipeWrapper;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -36,6 +37,7 @@ public class BWAJEIPlugin extends BlankModPlugin {
                 new SoakingBoxRecipeCategory(guiHelper),
                 new DryingBoxRecipeCategory(guiHelper),
                 new SpindleRecipeCategory(guiHelper),
+                new PackingRecipeCategory(guiHelper),
                 new InfuserRecipeCategory(guiHelper),
                 new TransmutationRecipeCategory(guiHelper)
         );
@@ -48,6 +50,7 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, DryingBoxRecipeCategory.UID);
         reg.handleRecipes(SmeltingRecipe.class, SmeltingRecipeWrapper::new, TataraRecipeCategory.UID);
         reg.handleRecipes(TransmutationRecipe.class, TransmutationRecipeWrapper::new, TransmutationRecipeCategory.UID);
+        reg.handleRecipes(PackingRecipe.class, PackingRecipeWrapper::new, PackingRecipeCategory.UID);
 
         reg.handleRecipes(ShapedInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapedOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
         //reg.handleRecipes(ShapelessInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapelessOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
@@ -61,12 +64,14 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.addRecipes(CraftingManagerTatara.instance().getRecipes(),TataraRecipeCategory.UID);
         reg.addRecipes(CraftingManagerInfuser.getInstance().getRecipeList(),InfuserRecipeCategory.UID);
         reg.addRecipes(CraftingManagerInfuserTransmutation.instance().getRecipes(),TransmutationRecipeCategory.UID);
+        reg.addRecipes(CraftingManagerPacking.getInstance().getRecipes(),PackingRecipeCategory.UID);
 
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.tatara), TataraRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 0), SoakingBoxRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 1), DryingBoxRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.nettedScreen), WaterNetRecipeCategory.UID, SandNetRecipeCategory.UID, FireNetRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.spindle), SpindleRecipeCategory.UID);
+        reg.addRecipeCatalyst(new ItemStack(Blocks.PISTON), PackingRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), InfuserRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), TransmutationRecipeCategory.UID);
 

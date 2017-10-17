@@ -14,6 +14,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -21,23 +22,24 @@ import java.util.Random;
 
 public class ButcherHandler {
     @SubscribeEvent
-    public void playerTick(AttackEntityEvent attackEvent)
+    public void playerTick(LivingAttackEvent attackEvent)
     {
-        Entity target = attackEvent.getTarget();
-        EntityLivingBase attacker = attackEvent.getEntityLiving();
-        if(attacker == null || target == null)
-            return;
-        World world = attacker.getEntityWorld();
-        BlockPos pos = EntityUtil.getEntityFloor(target,2);
+        Entity target = attackEvent.getEntity();
+        Entity source = attackEvent.getSource().getImmediateSource();
+        if(source instanceof EntityLivingBase) {
+            EntityLivingBase attacker = (EntityLivingBase) source;
+            if (target == null)
+                return;
+            World world = attacker.getEntityWorld();
+            BlockPos pos = EntityUtil.getEntityFloor(target, 2);
 
-        if(!world.isRemote)
-        {
-            IBlockState state = world.getBlockState(pos);
-            if(isChopBlock(state) && isSuitableWeapon(attacker.getHeldItemMainhand()))
-            {
-                attacker.addPotionEffect(new PotionEffect(MobEffects.STRENGTH,200));
-                attacker.addPotionEffect(new PotionEffect(MobEffects.HUNGER,200));
-                splatter(world,pos,1);
+            if (!world.isRemote) {
+                IBlockState state = world.getBlockState(pos);
+                if (isChopBlock(state) && isSuitableWeapon(attacker.getHeldItemMainhand())) {
+                    attacker.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200));
+                    attacker.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 200));
+                    splatter(world, pos, 1);
+                }
             }
         }
     }

@@ -4,6 +4,7 @@ import betterwithaddons.crafting.OreStack;
 import betterwithaddons.crafting.recipes.PackingRecipe;
 import betterwithaddons.crafting.recipes.SpindleRecipe;
 import betterwithaddons.util.InventoryUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -28,28 +29,25 @@ public class CraftingManagerPacking
         return instance;
     }
 
-    public void addRecipe(ItemStack[] outputs, ItemStack input)
+    public void addRecipe(IBlockState output, Object jeiOutput, Object input)
     {
-        addRecipe(outputs, (Object)input);
+        PackingRecipe recipe = createRecipe(output, input);
+        recipe.setJeiOutput(jeiOutput);
+        recipes.add(recipe);
     }
 
-    public void addRecipe(ItemStack[] outputs, OreStack input)
+    public void addRecipe(IBlockState output, Object input)
     {
-        addRecipe(outputs, (Object)input);
-    }
-
-    public void addRecipe(ItemStack[] outputs, Object input)
-    {
-        recipes.add(createRecipe(outputs, input));
+        recipes.add(createRecipe(output, input));
     }
 
     public List<PackingRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
         return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
     }
 
-    public boolean removeRecipe(ItemStack[] outputs, Object input)
+    public boolean removeRecipe(IBlockState output, Object input)
     {
-        PackingRecipe recipe = createRecipe(outputs, input);
+        PackingRecipe recipe = createRecipe(output, input);
         int matchingIndex = getMatchingRecipeIndex(recipe);
 
         if(matchingIndex >= 0)
@@ -103,9 +101,9 @@ public class CraftingManagerPacking
         return validrecipes;
     }
 
-    private PackingRecipe createRecipe(ItemStack[] outputs, Object input)
+    private PackingRecipe createRecipe(IBlockState output, Object input)
     {
-        return new PackingRecipe(input, outputs);
+        return new PackingRecipe(input, output);
     }
 
     public List<PackingRecipe> getRecipes()

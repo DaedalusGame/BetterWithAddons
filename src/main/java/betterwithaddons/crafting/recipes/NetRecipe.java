@@ -11,6 +11,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NetRecipe
 {
@@ -141,7 +142,7 @@ public class NetRecipe
         {
             OreStack firstitem = (OreStack) first;
             OreStack seconditem = (OreStack) second;
-            return firstitem.getOreName() == seconditem.getOreName() && firstitem.getStackSize() == seconditem.getStackSize();
+            return Objects.equals(firstitem.getOreName(), seconditem.getOreName()) && firstitem.getStackSize() == seconditem.getStackSize();
         }
 
         return false;

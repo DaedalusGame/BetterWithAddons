@@ -11,6 +11,7 @@
 ## Mechanical Devices
  * [Chute](chute.md)
  * [Spinning Wheel](spinningwheel.md)
+ * [Clutchbox](invertedgearbox.md)
 
 ## Redstone
  * [PCB](pcb.md)
