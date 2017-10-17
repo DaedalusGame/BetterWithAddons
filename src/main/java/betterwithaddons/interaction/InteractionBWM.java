@@ -236,6 +236,7 @@ public class InteractionBWM extends Interaction {
         CraftingManagerPacking.getInstance().addRecipe(Blocks.GRAVEL.getDefaultState(),new ItemStack(Blocks.GRAVEL),new ItemStack(BWMItems.GRAVEL_PILE,4));
         CraftingManagerPacking.getInstance().addRecipe(Blocks.SOUL_SAND.getDefaultState(),new ItemStack(Blocks.SOUL_SAND),new ItemStack(ModItems.soulSandPile,4));
         CraftingManagerPacking.getInstance().addRecipe(Blocks.CLAY.getDefaultState(),new ItemStack(Blocks.CLAY),new ItemStack(Items.CLAY_BALL,4));
+        CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.NETHERCLAY),BlockAesthetic.getStack(BlockAesthetic.EnumType.NETHERCLAY),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHER_SLUDGE,4));
         CraftingManagerPacking.getInstance().addRecipe(Blocks.SNOW.getDefaultState(),new ItemStack(Blocks.SNOW),new ItemStack(Items.SNOWBALL,4));
         CraftingManagerPacking.getInstance().addRecipe(Blocks.BRICK_BLOCK.getDefaultState(),new ItemStack(Blocks.BRICK_BLOCK),new ItemStack(Items.BRICK,4));
         CraftingManagerPacking.getInstance().addRecipe(Blocks.NETHER_BRICK.getDefaultState(),new ItemStack(Blocks.NETHER_BRICK),new ItemStack(Items.NETHERBRICK,4));
