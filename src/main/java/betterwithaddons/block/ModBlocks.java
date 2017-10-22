@@ -156,6 +156,8 @@ public class ModBlocks {
     public static BlockAdobe adobe;
     @ObjectHolder("betterwithaddons:pond_replacement")
     public static BlockReplacement pondReplacement;
+    @ObjectHolder("betterwithaddons:redstone_emitter")
+    public static BlockRedstoneEmitter redstoneEmitter;
 
     public static void load(FMLPreInitializationEvent event) {
         //FluidRegistry.registerFluid(new Fluid("brine", new ResourceLocation(Reference.MOD_ID, "blocks/brine_still"), new ResourceLocation(Reference.MOD_ID, "blocks/brine_flow")));
@@ -175,6 +177,7 @@ public class ModBlocks {
         registerBlock(new BlockChute());
         registerBlock(new BlockAqueduct());
         registerBlock(new BlockAqueductWater(), null, false);
+        registerBlock(new BlockRedstoneEmitter());
 
         registerBlock(new BlockMatcher());
         registerBlock(new BlockLegendarium());

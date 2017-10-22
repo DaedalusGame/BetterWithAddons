@@ -29,6 +29,7 @@ import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.hunger.HCHunger;
 import betterwithmods.util.DirUtils;
+import crafttweaker.api.block.IBlock;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -283,6 +284,9 @@ public class InteractionBWA extends Interaction {
         });
         BlockWeight.addSpecialMeasuringBehavior(BWMBlocks.PLATFORM, platformBehavior);
         BlockWeight.addSpecialMeasuringBehavior(BWMBlocks.IRON_WALL, platformBehavior);
+
+        //meme? idk
+        ModBlocks.redstoneEmitter.getBlockState().getValidStates().forEach(PulleyStructureManager::registerPulleyBlock);
 
         GameRegistry.addSmelting(Items.CARROT,new ItemStack(ModItems.bakedCarrot),0.35f);
         GameRegistry.addSmelting(Items.BEETROOT,new ItemStack(ModItems.bakedBeetroot),0.35f);

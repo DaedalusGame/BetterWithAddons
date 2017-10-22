@@ -247,7 +247,7 @@ public class InteractionBWM extends Interaction {
         if(CAULDRONS_EXPLODE)
             addCauldronExplosion();
 
-        TileEntityAqueductWater.addWaterSource(BWMBlocks.TEMP_LIQUID_SOURCE);
+        //TileEntityAqueductWater.addWaterSource(BWMBlocks.TEMP_LIQUID_SOURCE);
         BlockBUD.addBlacklistBlock(ModBlocks.pcbwire);
 
         ItemStack arrowhead = ModItems.material.getMaterial("arrowhead");

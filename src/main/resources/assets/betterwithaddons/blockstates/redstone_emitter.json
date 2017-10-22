@@ -1,0 +1,62 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "side": "betterwithaddons:blocks/redstone_emitter_side",
+      "top": "betterwithmods:blocks/wicker",
+
+      "front": "betterwithaddons:blocks/redstone_emitter_side_off",
+      "vertical": "betterwithaddons:blocks/redstone_emitter_top_off",
+
+      "north": "#front",
+      "south": "#side",
+      "east": "#side",
+      "west": "#side",
+      "up": "#top",
+      "down": "#top",
+
+      "particle": "#side"
+    },
+    "model": "cube",
+    "transform": "forge:default-block",
+    "uvlock": true
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "facing": {
+      "down": {
+        "textures": {
+          "down": "#vertical",
+          "north": "#side"
+        }
+      },
+      "up": {
+        "textures": {
+          "down": "#vertical",
+          "north": "#side"
+        },
+        "x": 180
+      },
+      "north": {},
+      "south": {
+        "y": 180
+      },
+      "west": {
+        "y": 270
+      },
+      "east": {
+        "y": 90
+      }
+    },
+    "active": {
+      "true": {
+        "textures": {
+          "front": "betterwithaddons:blocks/redstone_emitter_side_on",
+          "vertical": "betterwithaddons:blocks/redstone_emitter_top_on"
+        }
+      },
+      "false": {}
+    }
+  }
+}

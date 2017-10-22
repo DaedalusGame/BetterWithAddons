@@ -2,7 +2,9 @@ package betterwithaddons.tileentity;
 
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionBWA;
-import betterwithaddons.interaction.InteractionBWM;
+import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.blocks.mechanical.BlockPump;
+import betterwithmods.util.DirUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -12,16 +14,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 
 public class TileEntityAqueductWater extends TileEntityBase {
@@ -79,20 +77,12 @@ public class TileEntityAqueductWater extends TileEntityBase {
             BlockPos neighborpos = checkpos.offset(facing);
             IBlockState state = world.getBlockState(neighborpos);
             boolean isWater = false;
+            int dist = getBlockDistanceFromSource(world,neighborpos,state,false);
 
-            if(isProperSource(world,neighborpos,state))
+            if(dist > -1)
             {
-                minDistance = Math.min(minDistance,0);
+                minDistance = Math.min(minDistance,dist);
                 isWater = true;
-            }
-            else
-            {
-                TileEntity te = world.getTileEntity(neighborpos);
-
-                if (te instanceof TileEntityAqueductWater) {
-                    minDistance = Math.min(minDistance,((TileEntityAqueductWater) te).getDistanceFromSource());
-                    isWater = true;
-                }
             }
 
             if(isWater)
@@ -106,30 +96,47 @@ public class TileEntityAqueductWater extends TileEntityBase {
         {
             IBlockState state = world.getBlockState(neighborpos);
 
-            if(isProperSource(world,neighborpos,state))
-            {
-                minDistance = Math.min(minDistance,0);
-            }
-            else
-            {
-                TileEntity te = world.getTileEntity(neighborpos);
-
-                if (te instanceof TileEntityAqueductWater) {
-                    minDistance = Math.min(minDistance,((TileEntityAqueductWater) te).getDistanceFromSource());
-                }
-            }
+            minDistance = Math.min(minDistance,getBlockDistanceFromSource(world,neighborpos,state,false));
         }
 
         return minDistance;
     }
 
-    public static boolean isProperSource(World world, BlockPos pos, IBlockState state) {
+    public static int getBlockDistanceFromSource(World world, BlockPos pos, IBlockState state, boolean recursed) {
         boolean isValidBiome = true;
 
         if(!BIOMES.isEmpty())
             isValidBiome = BIOMES.contains(world.getBiome(pos)) == InteractionBWA.AQUEDUCT_BIOMES_IS_WHITELIST;
 
-        return isValidBiome && ((state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0) || WATER_SOURCES.contains(state.getBlock()));
+        if(isValidBiome && ((state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0) || WATER_SOURCES.contains(state.getBlock())))
+        {
+            return 0;
+        }
+        else if(state.getBlock() == BWMBlocks.TEMP_LIQUID_SOURCE)
+        {
+            BlockPos pumppos = pos.down();
+            IBlockState pump = world.getBlockState(pumppos);
+            if(pump.getBlock() == BWMBlocks.PUMP)
+            {
+                EnumFacing facing = pump.getValue(DirUtils.HORIZONTAL);
+                BlockPos pumpInput = pumppos.offset(facing);
+                return getBlockDistanceFromSource(world,pumpInput,world.getBlockState(pumpInput),true);
+            }
+        }
+        else if(state.getBlock() == ModBlocks.aqueduct)
+        {
+            return getBlockDistanceFromSource(world,pos.up(),world.getBlockState(pos.up()),true);
+        }
+        else
+        {
+            TileEntity te = world.getTileEntity(pos);
+
+            if (te instanceof TileEntityAqueductWater) {
+                return ((TileEntityAqueductWater) te).getDistanceFromSource();
+            }
+        }
+
+        return -1;
     }
 
     public static void reloadBiomeList()

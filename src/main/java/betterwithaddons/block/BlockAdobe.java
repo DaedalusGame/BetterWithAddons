@@ -43,6 +43,7 @@ public class BlockAdobe extends BlockBase implements IHasVariants {
             types[meta].dryBlock = getDefaultState().withProperty(VARIANT,meta).withProperty(DRY_STATE,true);
             types[meta].block = this;
         }
+        this.setTickRandomly(true);
     }
 
     @Override
