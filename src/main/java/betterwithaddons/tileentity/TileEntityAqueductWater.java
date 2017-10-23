@@ -96,7 +96,9 @@ public class TileEntityAqueductWater extends TileEntityBase {
         {
             IBlockState state = world.getBlockState(neighborpos);
 
-            minDistance = Math.min(minDistance,getBlockDistanceFromSource(world,neighborpos,state,false));
+            int dist = getBlockDistanceFromSource(world,neighborpos,state,false);
+            if(dist > -1)
+                minDistance = Math.min(minDistance,dist);
         }
 
         return minDistance;
@@ -112,7 +114,7 @@ public class TileEntityAqueductWater extends TileEntityBase {
         {
             return 0;
         }
-        else if(state.getBlock() == BWMBlocks.TEMP_LIQUID_SOURCE)
+        else if(state.getBlock() == BWMBlocks.TEMP_LIQUID_SOURCE && !recursed)
         {
             BlockPos pumppos = pos.down();
             IBlockState pump = world.getBlockState(pumppos);
@@ -123,7 +125,7 @@ public class TileEntityAqueductWater extends TileEntityBase {
                 return getBlockDistanceFromSource(world,pumpInput,world.getBlockState(pumpInput),true);
             }
         }
-        else if(state.getBlock() == ModBlocks.aqueduct)
+        else if(state.getBlock() == ModBlocks.aqueduct && !recursed)
         {
             return getBlockDistanceFromSource(world,pos.up(),world.getBlockState(pos.up()),true);
         }
