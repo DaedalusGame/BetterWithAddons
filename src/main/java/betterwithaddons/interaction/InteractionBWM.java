@@ -279,12 +279,12 @@ public class InteractionBWM extends Interaction {
         ItemStack rosebush = new ItemStack(Blocks.DOUBLE_PLANT, 4, BlockDoublePlant.EnumPlantType.ROSE.getMeta());
         ItemStack thornrose = ModItems.material.getMaterial("thornrose", 2);
         ItemStack soulUrn = new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumType.FULL.getMeta());
-        ItemStack cactus = new ItemStack(Blocks.CACTUS, 1);
+        ItemStack cactus = new ItemStack(Items.DYE,1, EnumDyeColor.GREEN.getDyeDamage());
         ItemStack dung = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG, 1);
         ItemStack midori = ModItems.material.getMaterial("midori",8);
         CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.thornrose), ItemStack.EMPTY, new Object[]{cactus, rosebush, dung, soulUrn});
         CauldronManager.getInstance().addRecipe(new ItemStack(ModBlocks.thornrose), ItemStack.EMPTY, new Object[]{midori, thornrose, dung, soulUrn});
-        MillManager.getInstance().addRecipe(0,new ItemStack(Items.DYE,1, EnumDyeColor.GREEN.getDyeDamage()),new Object[]{ ModItems.material.getMaterial("midori",1) });
+        MillManager.getInstance().addRecipe(0,cactus,new Object[]{ ModItems.material.getMaterial("midori",1) });
 
         //Alicio Sapling
         ItemStack wheat = new ItemStack(Items.WHEAT, 16);
