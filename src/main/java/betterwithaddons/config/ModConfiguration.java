@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ModConfiguration {
     Configuration configuration;
-    ConfigOptionBool BWM_Enabled = new ConfigOptionBool("interaction.BetterWithMods", "Enabled", InteractionBWM.ENABLED);
+    ConfigOptionBool BWM_Enabled = new ConfigOptionBool("interaction.BetterWithMods", "Enabled", InteractionBWM.ENABLED, "Whether the Better With Mods compat module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool BWM_MillClay = new ConfigOptionBool("interaction.BetterWithMods", "MillClay", InteractionBWM.MILL_CLAY, "Hardened clay can be milled into bricks, saving fuel and allowing dyed bricks.");
     ConfigOptionBool BWM_ChorusInCauldron = new ConfigOptionBool("interaction.BetterWithMods", "ChorusInCauldron", InteractionBWM.CHORUS_IN_CAULDRON, "Chorus fruit (and Midori) can only be popped in a cauldron.");
     ConfigOptionBool BWM_ButcherBlocks = new ConfigOptionBool("interaction.BetterWithMods", "ButcherBlocks", InteractionBWM.BUTCHER_BLOCKS, "Striking an enemy on chopping blocks will bloody them and bestow a short strenth buff.");
@@ -17,8 +17,8 @@ public class ModConfiguration {
     ConfigOptionBool BWM_DyeInCauldron = new ConfigOptionBool("interaction.BetterWithMods", "DyeInCauldron", InteractionBWM.DYE_IN_CAULDRON, "Wool can be dyed in batches of 8 in a cauldron and bleached with potash.");
     //ConfigOptionBool BWM_HiddenEnchantments = new ConfigOptionBool("addons.BetterWithMods", "HiddenEnchantments", InteractionBWM.HIDDEN_ENCHANTS, "Enchantments on enchanted books are hidden. (They still function as usual)");
 
-    ConfigOptionBool Quark_Enabled = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.ENABLED);
-    ConfigOptionBool Quark_MidoriBlocksNeedChunks = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS, "Midori blocks require popped Midori chunks.");
+    ConfigOptionBool Quark_Enabled = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.ENABLED, "Whether the Quark compat module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
+    ConfigOptionBool Quark_MidoriBlocksNeedChunks = new ConfigOptionBool("interaction.Quark", "MidoriBlocksNeedChunks", InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS, "Midori blocks require popped Midori chunks.");
 
     ConfigOptionBool BWA_StoneBricksNeedSmelting = new ConfigOptionBool("addons.BetterWithAddons", "StoneBricksNeedSmelting", InteractionBWA.STONEBRICKS_NEED_SMELTING, "Stonebricks need two extra steps in crafting.");
     ConfigOptionInteger BWA_LureTreeRadius = new ConfigOptionInteger("addons.BetterWithAddons", "LureTreeRadius", InteractionBWA.RADIUS, "Radius in which the tree can spawn mobs.");
@@ -49,7 +49,7 @@ public class ModConfiguration {
     ConfigOptionInteger BWA_LegendariumMinQueueSize = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumMinQueueSize", InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE, "How many artifacts must be in the Hall of Legends to take one out.");
     ConfigOptionInteger BWA_LegendariumTurnInDelay = new ConfigOptionInteger("addons.BetterWithAddons", "LegendariumTurnInDelay", InteractionBWA.LEGENDARIUM_TURN_IN_DELAY, "How long until the next artifact can be turned in. (in ticks; 1000 ticks is one Minecraft hour)");
 
-    ConfigOptionBool BWR_Enabled = new ConfigOptionBool("addons.BetterWithRenewables","Enabled",InteractionBWR.ENABLED);
+    ConfigOptionBool BWR_Enabled = new ConfigOptionBool("addons.BetterWithRenewables","Enabled",InteractionBWR.ENABLED,"Whether the Better With Renewables module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool BWR_RedstoneSynthesis = new ConfigOptionBool("addons.BetterWithRenewables","RedstoneSynthesis",InteractionBWR.REDSTONE_SYNTHESIS,"Allows redstone to be farbricated from concentrated hellfire and gold.");
     ConfigOptionBool BWR_RedstoneSynthesisEarly = new ConfigOptionBool("addons.BetterWithRenewables","RedstoneSynthesisEarly",InteractionBWR.REDSTONE_SYNTHESIS_EARLY,"Allows redstone to be synthesized earlier to create Hibachis.");
     ConfigOptionInteger BWR_RedstonePerSynthesis = new ConfigOptionInteger("addons.BetterWithRenewables","RedstonePerSynthesis",InteractionBWR.REDSTONE_PER_SYNTHESIS,"How much redstone is obtained per bar of concentrated hellfire.");
@@ -73,11 +73,11 @@ public class ModConfiguration {
     ConfigOptionBool BWR_MeltHellfire = new ConfigOptionBool("addons.BetterWithRenewables","MeltHellfire",InteractionBWR.MELT_HELLFIRE,"Allows Blocks of Hellfire to be melted into lava by proximity to it.");
     ConfigOptionBool BWR_RedstoneBoiling = new ConfigOptionBool("addons.BetterWithRenewables","BoilRedstone",InteractionBWR.REDSTONE_BOILING,"Allows redstone to be 'boiled' into glowstone by exposure to focused sunlight.");
 
-    ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED);
+    ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED,"Whether the Condensed Outputs module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
     ConfigOptionInteger CondensedOutputs_SpindleTime = new ConfigOptionInteger("addons.CondensedOutputs", "SpindleTime", InteractionCondensedOutputs.SPINUP_TIME, "The amount of time in ticks it takes for the spindle to spin up once.");
 
-    ConfigOptionBool Wheat_Enabled = new ConfigOptionBool("addons.BetterWithWheat", "Enabled", InteractionWheat.ENABLED);
+    ConfigOptionBool Wheat_Enabled = new ConfigOptionBool("addons.BetterWithWheat", "Enabled", InteractionWheat.ENABLED, "Whether the Better With Wheat module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool Wheat_MillGrain = new ConfigOptionBool("addons.BetterWithWheat", "MillGrain", InteractionWheat.MILL_GRAIN, "Instead of milling wheat into flour, wheat seeds must be milled instead.");
     ConfigOptionBool Wheat_ReplaceWheatDrops = new ConfigOptionBool("addons.BetterWithWheat", "ReplaceWheatDrops", InteractionWheat.REPLACE_WHEAT_DROPS, "Wheat, when harvested, will drop wheat and hay instead.");
     ConfigOptionBool Wheat_ChangeHayBales = new ConfigOptionBool("addons.BetterWithWheat", "ChangeHayBales", InteractionWheat.CHANGE_HAY_BALES, "Haybales require hay instead of wheat.");
@@ -86,7 +86,7 @@ public class ModConfiguration {
     ConfigOptionBool Wheat_DigUpCrops = new ConfigOptionBool("addons.BetterWithWheat", "DigUpCrops", InteractionWheat.DIG_UP_CROPS, "Carrots and Potatoes cannot be instantly harvested, and instead have a breaktime and a preferred tool (hoe)");
     ConfigOptionBool Wheat_ChangeTextures = new ConfigOptionBool("addons.BetterWithWheat", "ChangeTextures", InteractionWheat.TEXTURE_CHANGES, "Changes textures of Wheat and Wheat Seeds.");
 
-    ConfigOptionBool EriottoMod_Enabled = new ConfigOptionBool("addons.EriottoMod", "Enabled", InteractionEriottoMod.ENABLED);
+    ConfigOptionBool EriottoMod_Enabled = new ConfigOptionBool("addons.EriottoMod", "Enabled", InteractionEriottoMod.ENABLED, "Whether the Japanese Culture module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     //ConfigOptionBool EriottoMod_GrassDropsSeeds = new ConfigOptionBool("addons.EriottoMod", "GrassDropsSeeds", InteractionEriottoMod.GRASS_DROPS_SEEDS, "Rice and Rush seeds can be gotten from breaking grass.");
     ConfigOptionBool EriottoMod_AlternateInfuserRecipe = new ConfigOptionBool("addons.EriottoMod", "AlternateInfuserRecipe", InteractionEriottoMod.ALTERNATE_INFUSER_RECIPE, "Hardcore Structures pushes the Enchanting Table behind some exploration. This enables an alternate recipe if you want to start japanese culture before finding a Desert Temple.");
     ConfigOptionBool EriottoMod_InfuserRepairs = new ConfigOptionBool("addons.EriottoMod", "InfuserRepairs", InteractionEriottoMod.INFUSER_REPAIRS, "Infusers can repair japanese weapons and armors.");
@@ -95,7 +95,7 @@ public class ModConfiguration {
     ConfigOptionBool EriottoMod_RandomJapaneseMobs = new ConfigOptionBool("addons.EriottoMod", "RandomJapaneseMobs", InteractionEriottoMod.JAPANESE_RANDOM_SPAWN, "Karate Zombies infused with ancestral spirit spawn randomly.");
     ConfigOptionInteger EriottoMod_RandomJapaneseWeight = new ConfigOptionInteger("addons.EriottoMod", "RandomJapaneseMobsWeight", InteractionEriottoMod.JAPANESE_RANDOM_SPAWN_WEIGHT, "Weight for a karate zombie to spawn.");
 
-    ConfigOptionBool DecoAddon_Enabled = new ConfigOptionBool("addons.DecoAddon", "Enabled", InteractionDecoAddon.ENABLED);
+    ConfigOptionBool DecoAddon_Enabled = new ConfigOptionBool("addons.DecoAddon", "Enabled", InteractionDecoAddon.ENABLED, "Whether the Deco Addon module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool DecoAddon_WoodColoring = new ConfigOptionBool("addons.DecoAddon", "WoodColoring", InteractionDecoAddon.WOOD_COLORING, "Vanilla planks can be bleached or stained.");
     ConfigOptionBool DecoAddon_AlternateWroughtBars = new ConfigOptionBool("addons.DecoAddon", "AlternateWroughtBars", InteractionDecoAddon.ALTERNATE_WROUGHT_BARS, "Wrought bars are made at a ratio of 1 iron ingot per bar instead of 1/2 an iron ingot per bar.");
     ConfigOptionBool DecoAddon_ChiselBricksInAnvil = new ConfigOptionBool("addons.DecoAddon", "ChiselBricksInAnvil", InteractionDecoAddon.CHISEL_BRICKS_IN_ANVIL, "Chiseled Stone Bricks can only be crafted on a Steel Anvil.");
@@ -104,7 +104,7 @@ public class ModConfiguration {
     ConfigOptionBool DecoAddon_CheaperBottles = new ConfigOptionBool("addons.DecoAddon", "CheaperBottles", InteractionDecoAddon.CHEAPER_BOTTLES, "Glass bottles are made from half as much glass as normal.");
     ConfigOptionBool DecoAddon_RecycleBottles = new ConfigOptionBool("addons.DecoAddon", "RecycleBottles", InteractionDecoAddon.RECYCLE_BOTTLES, "Glass bottles can melted into chunks in a crucible. This allows you to make glass from a witch farm.");
 
-    ConfigOptionBool BTWTweak_Enabled = new ConfigOptionBool("addons.BTWTweak", "Enabled", InteractionBTWTweak.ENABLED);
+    ConfigOptionBool BTWTweak_Enabled = new ConfigOptionBool("addons.BTWTweak", "Enabled", InteractionBTWTweak.ENABLED, "Whether the BTWTweak module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool BTWTweak_SawRecycling = new ConfigOptionBool("addons.BTWTweak", "SawRecycling", InteractionBTWTweak.SAW_RECYCLING, "Many wooden blocks can be recycled by putting them infront of a saw, at a bit of a loss.");
     ConfigOptionBool BTWTweak_EggIncubation = new ConfigOptionBool("addons.BTWTweak", "EggIncubation", InteractionBTWTweak.EGG_INCUBATION, "Allows eggs to be incubated into chicken by placing them on a Block of Padding with a lit Light Block above.");
     ConfigOptionBool BTWTweak_SlipperyWhenWet = new ConfigOptionBool("addons.BTWTweak", "SlipperyWhenWet", InteractionBTWTweak.SLIPPERY_WHEN_WET, "Water running over blocks of soap will make them slippery.");
