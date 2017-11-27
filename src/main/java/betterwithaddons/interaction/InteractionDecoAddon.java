@@ -96,8 +96,8 @@ public class InteractionDecoAddon extends Interaction {
         if(ALTERNATE_WROUGHT_BARS)
             AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"wrought_bars"),new ItemStack(ModBlocks.wroughtBars, 8), "bbbb", "bbbb", 'b', new ItemStack(Blocks.IRON_BARS));
         else
-            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"wrought_bars"),new ItemStack(ModBlocks.wroughtBars,10), "b b ", "bbbb", "b b ", "b b ", 'b', new ItemStack(Items.IRON_INGOT));
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"chandelier"),new ItemStack(ModBlocks.chandelier), " ss ", " bb ", "tbbt", "tbbt", 's', new ItemStack(Blocks.STONE),'b',new ItemStack(Items.GOLD_NUGGET),'t',chandelierLight);
+            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"wrought_bars"),new ItemStack(ModBlocks.wroughtBars,10), "b b ", "bbbb", "b b ", "b b ", 'b', "ingotIron");
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"chandelier"),new ItemStack(ModBlocks.chandelier), " ss ", " bb ", "tbbt", "tbbt", 's', "stone",'b',"nuggetGold",'t',"blockCandle");
 
         ItemStack whiteBrick = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata());
         ItemStack whiteBrick_mossy = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.MOSSY.getMetadata());
