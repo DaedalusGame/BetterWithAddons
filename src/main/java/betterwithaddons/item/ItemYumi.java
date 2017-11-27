@@ -101,7 +101,7 @@ public class ItemYumi extends ItemBow {
                     {
                         ItemYa itemarrow = (ItemYa)((itemstack.getItem() instanceof ItemYa ? itemstack.getItem() : ModItems.ya));
                         EntityYa entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
-                        entityarrow.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+                        entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
                         if (f == 1.0F)
                         {

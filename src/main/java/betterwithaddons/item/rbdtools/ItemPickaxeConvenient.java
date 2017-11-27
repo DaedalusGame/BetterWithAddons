@@ -51,8 +51,8 @@ public class ItemPickaxeConvenient extends ItemPickaxe implements IConvenientToo
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state) {
-        return super.getStrVsBlock(stack, state) * getEfficiency(stack,state);
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+        return super.getDestroySpeed(stack, state) * getEfficiency(stack,state);
     }
 
     @Override

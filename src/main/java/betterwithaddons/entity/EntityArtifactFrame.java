@@ -49,7 +49,7 @@ public class EntityArtifactFrame extends EntityItemFrame implements IEntityAddit
             if (!this.isDead && !this.world.isRemote)
             {
                 this.setDead();
-                this.setBeenAttacked();
+                this.markVelocityChanged();
                 this.onBroken(source.getImmediateSource());
             }
 

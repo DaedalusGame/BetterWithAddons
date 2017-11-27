@@ -60,7 +60,7 @@ public class ItemAncestryBottle extends Item {
         if (!worldIn.isRemote)
         {
             EntityAncestryBottle entityexpbottle = new EntityAncestryBottle(worldIn, playerIn);
-            entityexpbottle.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.7F, 1.0F);
+            entityexpbottle.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.7F, 1.0F);
             worldIn.spawnEntity(entityexpbottle);
         }
 

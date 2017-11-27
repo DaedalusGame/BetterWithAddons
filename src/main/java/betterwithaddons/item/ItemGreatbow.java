@@ -84,7 +84,7 @@ public class ItemGreatbow extends ItemBow {
                         int enchpunch = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
                         ItemGreatarrow itemarrow = (ItemGreatarrow)(itemstack.getItem() instanceof ItemGreatarrow ? itemstack.getItem() : ModItems.greatarrow);
                         EntityGreatarrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
-                        entityarrow.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0f, f * 4.5f, 0.5f);
+                        entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0f, f * 4.5f, 0.5f);
                         if (f == 1.0f) {
                             entityarrow.setIsCritical(true);
                         }

@@ -70,7 +70,7 @@ public class BlockScaffold extends BlockBase {
                 entityIn.motionY = .05;
                 return;
             }
-            if (entityIn.isCollidedHorizontally)
+            if (entityIn.collidedHorizontally)
                 entityIn.motionY = .2;
         }
     }

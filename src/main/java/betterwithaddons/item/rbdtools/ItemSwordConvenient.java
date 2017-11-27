@@ -52,8 +52,8 @@ public class ItemSwordConvenient extends ItemSword implements IConvenientTool {
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state) {
-        return super.getStrVsBlock(stack, state) * getEfficiency(stack,state);
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
+        return super.getDestroySpeed(stack, state) * getEfficiency(stack,state);
     }
 
     @Override

@@ -77,7 +77,7 @@ public class EntitySpirit extends EntityXPOrb {
 
         if (this.xpColor - 20 + this.getEntityId() % 100 > nextCheck)
         {
-            if (this.closestPlayer == null || this.closestPlayer.getDistanceSqToEntity(this) > maxdist * maxdist)
+            if (this.closestPlayer == null || this.closestPlayer.getDistanceSq(this) > maxdist * maxdist)
             {
                 this.closestPlayer = this.world.getClosestPlayer(posX, posY, posZ, maxdist, player -> InventoryUtil.getInventorySlotContainItem(((EntityPlayer)player).inventory,Items.GLASS_BOTTLE) >= 0);
             }

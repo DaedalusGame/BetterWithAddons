@@ -64,7 +64,7 @@ public class ColorHandlers {
     public static final IItemColor MIMIC_COLORING = (stack,tintindex) -> {
         ItemStack innerstack = ModItems.brokenArtifact.getInnerStack(stack);
         if (!innerstack.isEmpty())
-            return Minecraft.getMinecraft().getItemColors().getColorFromItemstack(innerstack, tintindex);
+            return Minecraft.getMinecraft().getItemColors().colorMultiplier(innerstack, tintindex);
         return 0xFFFFFF;
     };
 }

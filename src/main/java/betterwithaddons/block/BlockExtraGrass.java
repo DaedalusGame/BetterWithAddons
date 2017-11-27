@@ -175,7 +175,7 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
         switch ((ExtraGrassType) state.getValue(VARIANT))
         {
             case SAND: case REDSAND:
-                if (world.getBiomeForCoordsBody(pos).getTemperature() >= 2.0f)
+                if (world.getBiomeForCoordsBody(pos).getDefaultTemperature() >= 2.0f)
                 {
                     //world.setBlockState(pos, this.getDirtBlockState(state));
                 }

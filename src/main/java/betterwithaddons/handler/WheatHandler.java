@@ -72,7 +72,7 @@ public class WheatHandler {
             try {
                 Item.ToolMaterial material = (Item.ToolMaterial) toolMaterialField.get(tool.getItem());
                 if(material != null)
-                    event.setNewSpeed(event.getNewSpeed() * material.getEfficiencyOnProperMaterial());
+                    event.setNewSpeed(event.getNewSpeed() * material.getEfficiency());
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
