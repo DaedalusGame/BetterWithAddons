@@ -264,7 +264,7 @@ public class AssortedHandler {
 
             toRemove.add(piston);
 
-            if(!world.isRemote && piston.isExtending())
+            if(world != null && !world.isRemote && piston != null && piston.isExtending())
             {
                 BlockPos pos = piston.getPos();
                 EnumFacing facing = piston.getFacing();
