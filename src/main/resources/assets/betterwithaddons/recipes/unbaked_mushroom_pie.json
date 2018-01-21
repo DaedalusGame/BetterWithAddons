@@ -14,9 +14,9 @@
 	  "data": 0
     },
 	{
-	  "type": "forge:ore_dict",
-	  "ore": "foodSalt"
-	},
+      "item": "minecraft:sugar",
+	  "data": 0
+    },
 	{
       "item": "betterwithmods:raw_egg",
 	  "data": 0
