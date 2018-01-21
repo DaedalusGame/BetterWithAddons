@@ -42,10 +42,10 @@ public class BWAJEIPlugin extends BlankModPlugin {
                 new TransmutationRecipeCategory(guiHelper)
         );
 
+        reg.handleRecipes(SpindleRecipe.class, SpindleRecipeWrapper::new, SpindleRecipeCategory.UID);
         reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, SandNetRecipeCategory.UID);
         reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, WaterNetRecipeCategory.UID);
         reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, FireNetRecipeCategory.UID);
-        reg.handleRecipes(SpindleRecipe.class, SpindleRecipeWrapper::new, SpindleRecipeCategory.UID);
         reg.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, SoakingBoxRecipeCategory.UID);
         reg.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, DryingBoxRecipeCategory.UID);
         reg.handleRecipes(SmeltingRecipe.class, SmeltingRecipeWrapper::new, TataraRecipeCategory.UID);
@@ -55,10 +55,10 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.handleRecipes(ShapedInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapedOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
         //reg.handleRecipes(ShapelessInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapelessOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
 
+        reg.addRecipes(CraftingManagerSpindle.getInstance().getRecipes(),SpindleRecipeCategory.UID);
         reg.addRecipes(CraftingManagerSandNet.getInstance().getRecipes(),SandNetRecipeCategory.UID);
         reg.addRecipes(CraftingManagerWaterNet.getInstance().getRecipes(),WaterNetRecipeCategory.UID);
         reg.addRecipes(CraftingManagerFireNet.getInstance().getRecipes(),FireNetRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerSpindle.getInstance().getRecipes(),SpindleRecipeCategory.UID);
         reg.addRecipes(CraftingManagerDryingBox.instance().getRecipes(),DryingBoxRecipeCategory.UID);
         reg.addRecipes(CraftingManagerSoakingBox.instance().getRecipes(),SoakingBoxRecipeCategory.UID);
         reg.addRecipes(CraftingManagerTatara.instance().getRecipes(),TataraRecipeCategory.UID);

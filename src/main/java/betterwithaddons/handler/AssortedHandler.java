@@ -243,69 +243,6 @@ public class AssortedHandler {
         }
     }
 
-    HashSet<TileEntityPiston> activePistons = new HashSet<>();
-
-    @SubscribeEvent
-    public void hardcorePackingInit(AttachCapabilitiesEvent<TileEntity> event)
-    {
-        TileEntity te = event.getObject();
-        if(te instanceof TileEntityPiston)
-        {
-            activePistons.add((TileEntityPiston) te);
-        }
-    }
-
-    @SubscribeEvent
-    public void hardcorePackingCompress(TickEvent.WorldTickEvent event) {
-        HashSet<TileEntityPiston> toIterate = new HashSet<>(activePistons);
-        HashSet<TileEntityPiston> toRemove = new HashSet<>();
-        for (TileEntityPiston piston: toIterate) {
-            World world = piston.getWorld();
-
-            toRemove.add(piston);
-
-            if(world != null && !world.isRemote && piston != null && piston.isExtending())
-            {
-                BlockPos pos = piston.getPos();
-                EnumFacing facing = piston.getFacing();
-                BlockPos shovePos = piston.getPos();
-                IBlockState shoveState = piston.getPistonState();
-
-                    BlockPos compressPos = shovePos.offset(facing);
-                    IBlockState compressState = world.getBlockState(compressPos);
-                    if(isEmpty(world, compressPos, compressState) && isSurrounded(world,compressPos,facing.getOpposite()))
-                    {
-                        AxisAlignedBB blockMask = new AxisAlignedBB(shovePos).union(new AxisAlignedBB(compressPos));
-                        List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class,blockMask);
-                        PackingRecipe recipe = CraftingManagerPacking.getInstance().getMostValidRecipe(items);
-                        if(recipe != null && recipe.consumeIngredients(items)) {
-                            world.setBlockState(compressPos, recipe.output);
-                        }
-                    }
-
-            }
-        }
-
-        activePistons.removeAll(toRemove);
-    }
-
-    public boolean isEmpty(World world, BlockPos shovePos, IBlockState shoveState) {
-        return shoveState.getBlock().isAir(shoveState,world,shovePos) || shoveState.getBlock().isReplaceable(world,shovePos);
-    }
-
-    public boolean isSurrounded(World world, BlockPos pos, EnumFacing except)
-    {
-        for (EnumFacing facing : EnumFacing.VALUES) {
-            if(facing == except)
-                continue;
-            IBlockState wallState = world.getBlockState(pos.offset(facing));
-            if(wallState.getBlockFaceShape(world,pos,facing.getOpposite()) != BlockFaceShape.SOLID)
-                return false;
-        }
-
-        return true;
-    }
-
     /*@SubscribeEvent
     public void onArtifactInteract(PlayerInteractEvent event) {
         World world = event.getWorld();

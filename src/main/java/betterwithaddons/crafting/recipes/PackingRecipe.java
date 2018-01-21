@@ -18,7 +18,7 @@ import java.util.Objects;
 public class PackingRecipe
 {
     public IBlockState output;
-    public Object jeiOutput = ItemStack.EMPTY;
+    public ItemStack jeiOutput = ItemStack.EMPTY;
     public Object input = ItemStack.EMPTY;
 
     public PackingRecipe(Object input, IBlockState output)
@@ -48,28 +48,30 @@ public class PackingRecipe
 
     public void setJeiOutput(Object output)
     {
-        if(input instanceof ItemStack) {
+        if(output instanceof ItemStack) {
             this.jeiOutput = ((ItemStack) output).copy();
         }
-        else if(input instanceof Item) {
+        else if(output instanceof Item) {
             this.jeiOutput = new ItemStack((Item) output, 1, OreDictionary.WILDCARD_VALUE);
         }
-        else if(input instanceof Block) {
+        else if(output instanceof Block) {
             this.jeiOutput = new ItemStack((Block) output, 1, OreDictionary.WILDCARD_VALUE);
-        }
-        else if(input instanceof OreStack) {
-            this.jeiOutput = ItemUtil.getOreList(((OreStack)output).copy());
         }
     }
 
-    public Object getOutput()
+    public IBlockState getOutput(IBlockState compressState, List<EntityItem> inv)
     {
-        return this.jeiOutput;
+        return this.output;
     }
 
     public Object getInput()
     {
         return this.input;
+    }
+
+    public ItemStack getJeiOutput()
+    {
+        return jeiOutput;
     }
 
     public List<ItemStack> getRecipeInputs() {
@@ -82,12 +84,7 @@ public class PackingRecipe
     }
 
     public List<ItemStack> getRecipeOutputs() {
-        Object o = getOutput();
-        if(o instanceof ItemStack)
-            return Lists.newArrayList((ItemStack) o);
-        if(o instanceof OreStack)
-            return ItemUtil.getOreList((OreStack)o);
-        return null;
+        return Lists.newArrayList(getJeiOutput());
     }
 
     public boolean matches(PackingRecipe recipe)
@@ -127,7 +124,7 @@ public class PackingRecipe
         return stack == null || stack instanceof ItemStack && ((ItemStack)stack).isEmpty();
     }
 
-    public boolean matches(List<EntityItem> inv)
+    public boolean matches(IBlockState compressState, List<EntityItem> inv)
     {
         for (EntityItem ent: inv) {
             if(matchesInput(ent))

@@ -24,7 +24,7 @@ public class CraftingManagerPacking
         this.recipes = new ArrayList<>();
     }
 
-    public static final CraftingManagerPacking getInstance()
+    public static CraftingManagerPacking getInstance()
     {
         return instance;
     }
@@ -84,9 +84,9 @@ public class CraftingManagerPacking
         return false;
     }
 
-    public PackingRecipe getMostValidRecipe(List<EntityItem> inv)
+    public PackingRecipe getMostValidRecipe(IBlockState compressState, List<EntityItem> inv)
     {
-        List<PackingRecipe> recipes = getValidCraftingRecipes(inv);
+        List<PackingRecipe> recipes = getValidCraftingRecipes(compressState,inv);
 
         if(recipes == null || recipes.size() == 0)
             return null;
@@ -94,11 +94,10 @@ public class CraftingManagerPacking
         return recipes.get(0);
     }
 
-    public List<PackingRecipe> getValidCraftingRecipes(List<EntityItem> inv)
+    public List<PackingRecipe> getValidCraftingRecipes(IBlockState compressState, List<EntityItem> inv)
     {
-        ArrayList<PackingRecipe> validrecipes = recipes.stream().filter(recipe -> recipe.matches(inv)).collect(Collectors.toCollection(ArrayList::new));
 
-        return validrecipes;
+        return recipes.stream().filter(recipe -> recipe.matches(compressState,inv)).collect(Collectors.toCollection(ArrayList::new));
     }
 
     private PackingRecipe createRecipe(IBlockState output, Object input)

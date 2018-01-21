@@ -71,7 +71,6 @@ public class SpindleRecipeCategory extends BlankRecipeCategory<SpindleRecipeWrap
         guiItemStacks.init(1, false, 60, 18);
         guiItemStacks.init(2, false, 32, 18);
 
-
         guiItemStacks.set(0, recipeWrapper.getInputs());
         guiItemStacks.set(1, recipeWrapper.getOutputs());
         guiItemStacks.set(2, new ItemStack(ModBlocks.spindle));

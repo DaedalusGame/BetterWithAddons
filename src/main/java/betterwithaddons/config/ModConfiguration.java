@@ -13,6 +13,7 @@ public class ModConfiguration {
     ConfigOptionBool BWM_ButcherBlocks = new ConfigOptionBool("interaction.BetterWithMods", "ButcherBlocks", InteractionBWM.BUTCHER_BLOCKS, "Striking an enemy on chopping blocks will bloody them and bestow a short strenth buff.");
     ConfigOptionBool BWM_CauldronsExplode = new ConfigOptionBool("interaction.BetterWithMods", "CauldronsExplode", InteractionBWM.CAULDRONS_EXPLODE, "Cooking hellfire or any other explosive in a stoked cauldron or crucible will result in a violent explosion.");
     ConfigOptionBool BWM_HardcoreShearing = new ConfigOptionBool("interaction.BetterWithMods", "HardcoreShearing", InteractionBWM.HARDCORE_SHEARING, "Sheep will only be sheared into wool items, which must be crafted into wool blocks. This does not work with machines that use onSheared, but should work with Fake Players.");
+    ConfigOptionBool BWM_HardcorePacking = new ConfigOptionBool("interaction.BetterWithMods", "HardcorePacking", InteractionBWM.HARDCORE_PACKING, "Items can be compressed in world with a piston pushing them into an enclosed space.");
     ConfigOptionInteger BWM_WoolMultiplier = new ConfigOptionInteger("interaction.BetterWithMods", "WoolMultiplier", InteractionBWM.WOOL_MULTIPLIER, "Adjusts how much wool a sheep drops if Hardcore Shearing is enabled.");
     ConfigOptionBool BWM_DyeInCauldron = new ConfigOptionBool("interaction.BetterWithMods", "DyeInCauldron", InteractionBWM.DYE_IN_CAULDRON, "Wool can be dyed in batches of 8 in a cauldron and bleached with potash.");
     //ConfigOptionBool BWM_HiddenEnchantments = new ConfigOptionBool("addons.BetterWithMods", "HiddenEnchantments", InteractionBWM.HIDDEN_ENCHANTS, "Enchantments on enchanted books are hidden. (They still function as usual)");
@@ -129,6 +130,7 @@ public class ModConfiguration {
         InteractionBWM.HARDCORE_SHEARING = BWM_HardcoreShearing.init(configuration);
         InteractionBWM.WOOL_MULTIPLIER = BWM_WoolMultiplier.init(configuration);
         InteractionBWM.DYE_IN_CAULDRON = BWM_DyeInCauldron.init(configuration);
+        InteractionBWM.HARDCORE_PACKING = BWM_HardcorePacking.init(configuration);
         InteractionQuark.ENABLED = Quark_Enabled.init(configuration);
         InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS = Quark_MidoriBlocksNeedChunks.init(configuration);
 
