@@ -87,7 +87,7 @@ public class InteractionBTWTweak extends Interaction {
         if(WOOL_RECYCLING && InteractionBWM.HARDCORE_SHEARING)
         {
             for (EnumDyeColor color: EnumDyeColor.values()) {
-                StokedCauldronManager.getInstance().addRecipe(new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()), ModItems.wool.getByColor(color,4), new Object[]{ new ItemStack(Blocks.WOOL,1,color.getMetadata()) });
+                StokedCauldronManager.getInstance().addRecipe(new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()), ModItems.wool.getByColor(color,4), new Object[]{ new ItemStack(Blocks.WOOL,1,color.getMetadata()) }).setPriority(-1);
             }
         }
 
