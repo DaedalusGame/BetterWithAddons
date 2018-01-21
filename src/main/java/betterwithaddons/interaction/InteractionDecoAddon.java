@@ -74,9 +74,9 @@ public class InteractionDecoAddon extends Interaction {
         ConditionModule.MODULES.put("ChiselBricksInAnvil", () -> CHISEL_BRICKS_IN_ANVIL);
         ConditionModule.MODULES.put("CheaperBottles", () -> CHEAPER_BOTTLES);
         if(CHEAPER_BOTTLES)
-            BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.GLASS_BOTTLE,3));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation("minecraft","glass_bottle"));
         if(CHISEL_BRICKS_IN_ANVIL)
-            BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.CHISELED.getMetadata()));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation("minecraft","chiseled_stonebrick"));
     }
 
     @Override

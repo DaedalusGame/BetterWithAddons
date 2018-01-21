@@ -141,7 +141,7 @@ public class InteractionBWA extends Interaction {
             MinecraftForge.EVENT_BUS.register(new GrassHandler());
         }
         if(STONEBRICKS_NEED_SMELTING)
-            BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.STONEBRICK, 4));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation("minecraft","stonebrick"));
     }
 
     @Override

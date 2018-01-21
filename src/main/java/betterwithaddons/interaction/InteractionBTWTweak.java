@@ -19,6 +19,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -65,7 +66,7 @@ public class InteractionBTWTweak extends Interaction {
         if(EGG_INCUBATION)
             MinecraftForge.EVENT_BUS.register(new EggIncubationHandler());
         if(REPLACE_WRITABLE_BOOK_RECIPE)
-            BetterWithAddons.removeCraftingRecipe(new ItemStack(Items.WRITABLE_BOOK));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation("minecraft","writable_book"));
 
         ConditionModule.MODULES.put("ReplaceWritableBookRecipe",() -> REPLACE_WRITABLE_BOOK_RECIPE);
     }

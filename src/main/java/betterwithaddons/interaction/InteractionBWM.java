@@ -41,6 +41,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -94,7 +95,7 @@ public class InteractionBWM extends Interaction {
             MinecraftForge.EVENT_BUS.register(new FallingPlatformHandler());
         if (HARDCORE_SHEARING) {
             MinecraftForge.EVENT_BUS.register(new HardcoreWoolHandler());
-            BetterWithAddons.removeCraftingRecipe(new ItemStack(Blocks.WOOL));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation("minecraft","string_to_wool"));
         }
 
         ConditionModule.MODULES.put("HardcoreDiamond", () -> ModuleLoader.isFeatureEnabled(HCDiamond.class));

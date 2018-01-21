@@ -138,9 +138,9 @@ public class BetterWithAddons
 		}
 	}
 
-	public static void removeCraftingRecipe(ItemStack withoutput)
+	public static void removeCraftingRecipe(ResourceLocation resloc)
 	{
-		BWMRecipes.removeRecipe(withoutput);
+		BWMRecipes.removeRecipe(resloc);
 
 		/*List<IRecipe> craftingList = CraftingManager.getInstance().getRecipeList();
 		for(Iterator<IRecipe> craftingIterator = craftingList.iterator(); craftingIterator.hasNext(); ) {
