@@ -112,7 +112,7 @@ public class RenewablesHandler {
                 Block block = targetState.getBlock();
                 int meta = targetState.getBlock().damageDropped(targetState);
                 if (BWMHeatRegistry.get(block, meta) != null)
-                    fireFactor += BWMHeatRegistry.get(block, meta).value;
+                    fireFactor += BWMHeatRegistry.get(block, meta).getHeat();
             }
         }
 

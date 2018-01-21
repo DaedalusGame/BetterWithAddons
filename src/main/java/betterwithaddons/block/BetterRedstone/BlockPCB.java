@@ -1,8 +1,6 @@
 package betterwithaddons.block.BetterRedstone;
 
 import betterwithaddons.block.BlockBase;
-import betterwithmods.api.block.ITurnable;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -12,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockPCB extends BlockBase {

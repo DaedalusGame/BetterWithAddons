@@ -3,6 +3,7 @@ package betterwithaddons.tileentity;
 import betterwithaddons.block.BlockChute;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.util.InventoryUtil;
+import betterwithmods.api.BWMAPI;
 import betterwithmods.api.tile.IMechanicalPower;
 import betterwithmods.common.blocks.mechanical.IBlockActive;
 import betterwithmods.util.MechanicalUtil;
@@ -311,7 +312,7 @@ public class TileEntityChute extends TileEntityBase implements ITickable, IMecha
     @Override
     public int getMechanicalInput(EnumFacing facing) {
         if(facing == EnumFacing.DOWN)
-            return MechanicalUtil.getPowerOutput(world, pos.offset(facing), facing.getOpposite());
+            return BWMAPI.IMPLEMENTATION.getPowerOutput(world, pos.offset(facing), facing.getOpposite());
         return 0;
     }
 

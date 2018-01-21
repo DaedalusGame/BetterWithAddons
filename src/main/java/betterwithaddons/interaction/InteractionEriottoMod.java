@@ -13,12 +13,12 @@ import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWOreDictionary;
 import betterwithmods.common.blocks.BlockRawPastry;
+import betterwithmods.common.registry.Wood;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.module.hardcore.crafting.HCLumber;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -132,11 +132,11 @@ public class InteractionEriottoMod extends Interaction {
         OreDictionary.registerOre("ingotTamahagane", ModItems.materialJapan.getMaterial("tamahagane_finished"));
         OreDictionary.registerOre("ingotHochoTetsu", ModItems.materialJapan.getMaterial("hocho_tetsu_finished"));
 
-        BWOreDictionary.woods.add(new BWOreDictionary.Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
-        BWOreDictionary.woods.add(new BWOreDictionary.Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")){
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")){
             @Override
             public ItemStack getPlank(int count) {
-                ItemStack copy = plank.copy();
+                ItemStack copy = new ItemStack(ModBlocks.mulberryPlanks);
                 copy.setCount((int)Math.ceil(count / (float) HCLumber.axePlankAmount));
                 return copy;
             }
@@ -296,7 +296,7 @@ public class InteractionEriottoMod extends Interaction {
 
     @Override
     public void postInit() {
-        BWOreDictionary.woods.add(new BWOreDictionary.Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")));
-        BWOreDictionary.woods.add(new BWOreDictionary.Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")));
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
     }
 }

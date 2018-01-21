@@ -5,6 +5,7 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.entity.EntitySpirit;
 import betterwithaddons.interaction.InteractionEriottoMod;
 import betterwithaddons.item.ModItems;
+import betterwithmods.api.BWMAPI;
 import betterwithmods.api.tile.IMechanicalPower;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.mechanical.BlockMechMachines;
@@ -171,7 +172,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
 
     @Override
     public int getMechanicalInput(EnumFacing facing) {
-        return MechanicalUtil.getPowerOutput(world, pos.offset(facing), facing.getOpposite());
+        return BWMAPI.IMPLEMENTATION.getPowerOutput(world, pos.offset(facing), facing.getOpposite());
     }
 
     @Override

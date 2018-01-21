@@ -3,6 +3,7 @@ package betterwithaddons.tileentity;
 import betterwithaddons.block.BlockLoom;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionCondensedOutputs;
+import betterwithmods.api.BWMAPI;
 import betterwithmods.api.tile.IMechanicalPower;
 import betterwithmods.util.MechanicalUtil;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +30,7 @@ public class TileEntityLoom extends TileEntityBase implements IMechanicalPower, 
             return 0;
 
         if(facing != state.getValue(BlockLoom.FACING))
-            return MechanicalUtil.getPowerOutput(world, pos.offset(facing), facing.getOpposite());
+            return BWMAPI.IMPLEMENTATION.getPowerOutput(world, pos.offset(facing), facing.getOpposite());
         return 0;
     }
 

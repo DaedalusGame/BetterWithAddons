@@ -1,5 +1,6 @@
 package betterwithaddons.tileentity;
 
+import betterwithmods.api.BWMAPI;
 import betterwithmods.common.blocks.mechanical.tile.TileGearbox;
 import betterwithmods.util.MechanicalUtil;
 import net.minecraft.util.EnumFacing;
@@ -12,7 +13,7 @@ public class TileEntityInvertedGearbox extends TileGearbox {
 
     @Override
     public int getMechanicalOutput(EnumFacing facing) {
-        if (facing == getFacing().getOpposite() && MechanicalUtil.isAxle(world, pos.offset(facing), facing.getOpposite()))
+        if (facing == getFacing().getOpposite() && BWMAPI.IMPLEMENTATION.isAxle(world, pos.offset(facing), facing.getOpposite()))
             return getPower();
         return -1;
     }

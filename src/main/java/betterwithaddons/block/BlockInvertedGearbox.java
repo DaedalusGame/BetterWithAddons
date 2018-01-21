@@ -3,6 +3,7 @@ package betterwithaddons.block;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityInvertedGearbox;
+import betterwithmods.api.BWMAPI;
 import betterwithmods.common.blocks.EnumTier;
 import betterwithmods.common.blocks.mechanical.BlockGearbox;
 import betterwithmods.util.DirUtils;
@@ -33,7 +34,7 @@ public class BlockInvertedGearbox extends BlockGearbox {
         EnumFacing gearfacing = this.getFacing(world, pos);
         for (int i = 0; i < 6; i++) {
             EnumFacing facing = EnumFacing.getFront(i);
-            dirs[i] = MechanicalUtil.isAxle(world, pos.offset(facing), facing.getOpposite()) && gearfacing != facing && gearfacing != facing.getOpposite();
+            dirs[i] = BWMAPI.IMPLEMENTATION.isAxle(world, pos.offset(facing), facing.getOpposite()) && gearfacing != facing && gearfacing != facing.getOpposite();
         }
         return state.withProperty(DirUtils.DOWN, dirs[0]).withProperty(DirUtils.UP, dirs[1]).withProperty(DirUtils.NORTH, dirs[2]).withProperty(DirUtils.SOUTH, dirs[3]).withProperty(DirUtils.WEST, dirs[4]).withProperty(DirUtils.EAST, dirs[5]);
     }
