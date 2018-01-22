@@ -6,6 +6,12 @@ inv.tatara.name=玉钢炉
 inv.firenet.name=熔火网格筛
 inv.waternet.name=水沁网格筛
 inv.sandnet.name=压沙网格筛
+inv.spindle.name=纺锤
+inv.spindle.throw.name=投掷物
+inv.infuser.name=灵魂灌注器
+inv.infuser.throw.name=投掷
+inv.infuser.cost.name=%s
+inv.infuser.cost.description=需要%s先祖的灵魂
 
 tile.banner_detector.name=旗帜检测器
 tile.world_scale_ore.name=世界守护矿石
@@ -18,6 +24,8 @@ tile.lattice.name=铁栅加固块
 tile.thorns.name=荆棘之藤
 tile.thorn_rose.name=荆棘之藤种子
 tile.chute.name=滑槽漏斗
+tile.aqueduct.name=水道
+
 tile.ecksie_sapling.name=瓮中树苗
 
 tile.log_luretree.name=爱丽丝树原木
@@ -29,6 +37,12 @@ tile.planks_luretree.name=爱丽丝树木板
 tile.pcb_wire.name=红石线
 tile.pcb_block.name=PCB
 
+tile.spindle.name=纺锤
+tile.loom.name=纺车
+
+tile.ancestry_sand.name=注魂灵魂沙
+tile.ancestry_sand.spirits=包含%s的灵魂
+tile.ancestry_infuser.name=灵魂灌注器
 tile.log_mulberry.name=桑树原木
 tile.log_sakura.name=樱花原木
 tile.planks_mulberry.name=桑树木木板
@@ -52,7 +66,31 @@ tile.shoji.name=障子
 tile.fusuma.name=障子门
 tile.tatami.name=榻榻米垫
 
+tile.legendarium.name=圣坛
+tile.legendarium.frames_populated=框架填充。
+tile.legendarium.frames_cleared=清除框架。
+tile.legendarium.not_item=一件神器可以隐退于此。
+tile.legendarium.not_tool=这不是一件工具。
+tile.legendarium.not_artifact=这件工具不是神器，神器应当拥有属于自己的名称和附魔。
+tile.legendarium.not_broken=工具并没有损坏。
+tile.legendarium.not_at_limit=这仍然可以被铁砧修补。
+tile.legendarium.not_enough_artifacts=没有足够的遗物。
+tile.legendarium.not_now=还没有准备好，请%s天或%s时在过来看看吧。
+tile.legendarium.ready=神器检索准备完成！
+tile.pond_base.dry.name=盐化池
+tile.pond_base.wet.name=砂土
+tile.salt_layer.name=盐层
+
+fluid.brine=盐水
+fluid.salinated_brine=饱和盐水
+
+tile.dung.name=粪便块
 tile.wet_soap.name=湿滑肥皂块
+
+tile.unbaked.raw_melon_pie.name=未烹调的南瓜派
+tile.unbaked.raw_meat_pie.name=未烹调的肉馅派
+tile.unbaked.raw_mushroom_pie.name=未烹调的蘑菇派
+tile.unbaked.raw_amanita_pie.name=未烹调的蘑菇派
 
 tile.whitebrick.default.name=白色石砖
 tile.whitebrick.mossy.name=苔白石砖
@@ -95,6 +133,60 @@ item.greatbow.name=重型大弓
 item.greatarrow.name=重箭
 item.monument.name=纪念碑盾
 item.warwall.name=战争墙
+
+item.tool_shard.name=%s碎片
+item.artifact_frame.name=神器展示框
+item.bowl.salt.name=一碗盐
+
+item.brick_stained.white.name=白色彩色砖块
+item.brick_stained.orange.name=橙色彩色砖块
+item.brick_stained.magenta.name=品红色彩色砖块
+item.brick_stained.lightBlue.name=淡蓝色彩色砖块
+item.brick_stained.yellow.name=黄色彩色砖块
+item.brick_stained.lime.name=黄绿色彩色砖块
+item.brick_stained.pink.name=粉色彩色砖块
+item.brick_stained.gray.name=灰色彩色砖块
+item.brick_stained.silver.name=淡灰色彩色砖块
+item.brick_stained.cyan.name=青色彩色砖块
+item.brick_stained.purple.name=紫色彩色砖块
+item.brick_stained.blue.name=蓝色彩色砖块
+item.brick_stained.brown.name=棕色彩色砖块
+item.brick_stained.green.name=绿色彩色砖块
+item.brick_stained.red.name=红色彩色砖块
+item.brick_stained.black.name=黑色彩色砖块
+
+item.iron_spade.name=铁铲
+item.iron_matchpick.name=铁探路镐
+item.iron_machete.name=铁开山刀
+item.iron_kukri.name=铁反曲刀
+item.iron_carpentersaw.name=铁锯
+item.iron_masonpick.name=铁石匠镐
+
+item.gold_spade.name=金铲
+item.gold_matchpick.name=金探路镐
+item.gold_machete.name=金开山刀
+item.gold_kukri.name=金反曲刀
+item.gold_carpentersaw.name=金锯
+item.gold_masonpick.name=金石匠镐
+
+item.diamond_spade.name=钻石铲
+item.diamond_matchpick.name=钻石探路镐
+item.diamond_machete.name=钻石开山刀
+item.diamond_kukri.name=钻石反曲刀
+item.diamond_carpentersaw.name=钻石锯
+item.diamond_masonpick.name=钻石石匠镐
+
+item.steel_spade.name=钢铲
+item.steel_matchpick.name=钢探路镐
+item.steel_machete.name=钢开山刀
+item.steel_kukri.name=钢反曲刀
+item.steel_carpentersaw.name=钢锯
+item.steel_masonpick.name=钢石匠镐
+
+item.ancient_manuscript.name=古代手稿
+item.soulsand_pile.name=一堆灵魂沙
+item.explosion.name=§e极易挥发！
+item.rotten_food.name=腐烂的食物
 
 item.brick_stained.white.name=白色彩色砖块
 item.brick_stained.orange.name=橙色彩色砖块
@@ -140,6 +232,7 @@ item.bag.seed_hemp.name=一袋大麻种子
 item.bag.seed_melon.name=一袋西瓜种子
 item.bag.seed_pumpkin.name=一袋南瓜种子
 item.bag.seed_beets.name=一袋甜菜种子
+item.bag.cocoa.name=一袋可可豆
 item.bag.redstone.name=一袋红石
 item.bag.glowstone.name=一袋荧石
 item.bag.sugar.name=一袋糖
@@ -151,6 +244,7 @@ item.bag.sawdust.name=一袋木屑
 item.bag.sawdust_soul.name=一袋灵魂之尘
 item.bag.potash.name=一袋木灰
 item.bag.hellfire.name=一袋炼狱火之烬
+item.bag.kibble.name=一袋粗粮
 item.crate.pork.name=装箱的熟猪排
 item.crate.pork_raw.name=装箱的生猪排
 item.crate.steak.name=装箱的牛排
@@ -164,6 +258,12 @@ item.crate.rabbit_raw.name=装箱的生兔肉
 item.crate.egg.name=装箱的鸡蛋
 item.crate.slime.name=装箱的粘液球
 item.crate.enderpearl.name=装箱的末影珍珠
+
+item.tweakmat.ash.name=灰烬
+item.tweakmat.ink_and_quill.name=墨与羽毛
+
+item.seed_grain.name=干粮
+item.bag.grain.name=一袋干粮
 
 item.decomat.hemp_oil.name=大麻籽油
 item.decomat.wood_bleach.name=木材漂白剂
@@ -196,7 +296,10 @@ item.food_fugu_sac.name=河豚毒囊
 item.food_cooked_rice.name=熟米饭
 item.food_bowl_rice.name=大碗米饭
 item.food_sashimi.name=生鱼片
+item.food_mulberry.name=桑葚
+item.laxative.name=泻药
 
+item.ancestry_bottle.name=日本先祖之魂瓶
 item.shinai.name=竹剑
 item.katana.name=武士刀
 item.wakizashi.name=胁差
@@ -246,21 +349,46 @@ item.chest_samurai.name=武士胴甲[WIP]
 item.legs_samurai.name=武士臑当[WIP]
 item.boots_samurai.name=武士足沓[WIP]
 
+tooltip.pond_creation.name=盐水池需要在阳光下晾晒。
+tooltip.salt_creation.name=最终盐水将晾晒形成盐层。
+tooltip.salt_layer.name=手持碗即可盛装。
+bwm.manual.bwa=Better With Addons
 
+tooltip.quartz.verbose=%s%%饱和
+tooltip.souls.verbose=%s灵魂
 
+tooltip.quartz.starting=开始改变...
+tooltip.quartz.longway=需要等待一段时间...
+tooltip.quartz.halfway=开始形成晶体结构。
+tooltip.quartz.readysoon=即将就绪。
+tooltip.quartz.almostready=准备就绪。
 
+tooltip.souls.one=它是不是在动？
+tooltip.souls.two=坐立不安
+tooltip.souls.three=疯狂
+tooltip.souls.half=鸦雀无声
+tooltip.souls.danger=§k复活
 
+food.rot.0=新鲜
+food.rot.25=
+food.rot.50=变味
+food.rot.75=变味
+food.rot.100=腐烂
 
+meat.rot.0=新鲜
+meat.rot.25=
+meat.rot.50=酸性
+meat.rot.75=酸性
+meat.rot.100=腐烂
 
+fish.rot.0=新鲜
+fish.rot.25=
+fish.rot.50=恶臭
+fish.rot.75=恶臭
+fish.rot.100=腐烂
 
-
-
-
-
-
-
-
-
-
-
-
+fruit.rot.0=新鲜
+fruit.rot.25=
+fruit.rot.50=
+fruit.rot.75=发霉
+fruit.rot.100=腐烂
