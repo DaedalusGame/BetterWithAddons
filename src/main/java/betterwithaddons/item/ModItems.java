@@ -366,7 +366,7 @@ public class ModItems {
                 new String[]{"seed", "seed_hemp", "seed_melon", "seed_pumpkin", "seed_beets", "cocoa", "redstone", "glowstone", "sugar", "gunpowder", "flour", "sulfur", "nitre", "sawdust", "sawdust_soul", "potash", "hellfire", "kibble"}
         ));
         materialCrate = (ItemMaterial) registerItem("crate", new ItemMaterial(
-                new String[]{"pork", "pork_raw", "chicken", "chicken_raw", "steak", "steak_raw", "mutton", "mutton_raw", "rabbit", "rabbit_raw", "egg", "slime", "enderpearl"}
+                new String[]{"pork", "pork_raw", "chicken", "chicken_raw", "steak", "steak_raw", "mutton", "mutton_raw", "rabbit", "rabbit_raw", "egg", "slime", "enderpearl", "cactus", "inksac"}
         ));
         materialCongealed = (ItemMaterial) registerItem("congealed", new ItemMaterial(
                 new String[]{"bone", "flesh", "eye", "amanita", "mushroom", "wart"}

@@ -263,6 +263,8 @@ item.crate.rabbit_raw.name=Crated Raw Rabbit
 item.crate.egg.name=Crated Eggs
 item.crate.slime.name=Crated Slimeballs
 item.crate.enderpearl.name=Crated Enderpearls
+item.crate.cactus.name=Crated Cacti
+item.crate.inksac.name=Crated Ink Sacs
 
 item.tweakmat.ash.name=Ash
 item.tweakmat.ink_and_quill.name=Ink and Quill

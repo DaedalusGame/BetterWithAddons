@@ -132,6 +132,8 @@ public class InteractionCondensedOutputs extends Interaction {
         addCratingRecipe(registry,"egg",new ItemStack(Items.EGG));
         addCratingRecipe(registry,"slime",new ItemStack(Items.SLIME_BALL));
         addCratingRecipe(registry,"enderpearl",new ItemStack(Items.ENDER_PEARL));
+        addCratingRecipe(registry,"cactus",new ItemStack(Blocks.CACTUS));
+        addCratingRecipe(registry,"inksac",new ItemStack(Items.DYE,1,EnumDyeColor.BLACK.getDyeDamage()));
 
         addCongealingRecipe(registry,"mushroom",new ItemStack(Blocks.BROWN_MUSHROOM));
         addCongealingRecipe(registry,"amanita",new ItemStack(Blocks.RED_MUSHROOM));
@@ -143,9 +145,9 @@ public class InteractionCondensedOutputs extends Interaction {
         addRollupRecipe(registry,"fabric",new OreStack("fabricHemp",8),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH));
         addRollupRecipe(registry,"vine",new ItemStack(Blocks.VINE));
         addRollupRecipe(registry,"paper",new OreStack("paper",8), new ItemStack(Items.PAPER));
-        addRollupRecipe(registry,"leather",new OreStack("leather",8), new ItemStack(Items.LEATHER));
-        addRollupRecipe(registry,"scoured_leather",new OreStack("hideScoured",8),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER));
-        addRollupRecipe(registry,"tanned_leather",new OreStack("hideTanned",8),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER));
+        addRollupRecipe(registry,"leather",new ItemStack(Items.LEATHER));
+        addRollupRecipe(registry,"scoured_leather",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER));
+        addRollupRecipe(registry,"tanned_leather",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER));
         addRollupRecipe(registry,"string",new OreStack("string",8), new ItemStack(Items.STRING));
 
         addBundlingRecipe(registry,"feather",new ItemStack(Items.FEATHER));
