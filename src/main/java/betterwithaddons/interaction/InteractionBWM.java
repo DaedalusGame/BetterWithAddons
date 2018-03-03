@@ -51,6 +51,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,6 +69,11 @@ public class InteractionBWM extends Interaction {
     public static int WOOL_MULTIPLIER = 1;
     public static boolean DYE_IN_CAULDRON = true;
     public static boolean HIDDEN_ENCHANTS = false;
+
+    public static String[] SHEARS_WHITELIST = new String[] {
+            "tconstruct:kama",
+            "tconstruct:scythe" //This is normally AoE and wlll lose the property
+    };
 
     @Override
     public boolean isActive() {
@@ -105,6 +112,8 @@ public class InteractionBWM extends Interaction {
         ConditionModule.MODULES.put("HardcoreDiamond", () -> ModuleLoader.isFeatureEnabled(HCDiamond.class));
         ConditionModule.MODULES.put("HardcoreShearing", () -> HARDCORE_SHEARING);
         ConditionModule.MODULES.put("HardcoreHunger", () -> ModuleLoader.isFeatureEnabled(HCHunger.class));
+
+        HardcoreWoolHandler.EXTRA_SHEARS = new HashSet<>(Arrays.asList(SHEARS_WHITELIST)); //Populate the set of extra shears.
     }
 
     public void addCauldronExplosion() {

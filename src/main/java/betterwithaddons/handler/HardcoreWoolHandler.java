@@ -20,7 +20,11 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.HashSet;
+
 public class HardcoreWoolHandler {
+    public static HashSet<String> EXTRA_SHEARS = new HashSet<>();
+
     @SubscribeEvent
     public void onShearEvent(PlayerInteractEvent.EntityInteractSpecific event)
     {
@@ -32,7 +36,7 @@ public class HardcoreWoolHandler {
         ItemStack tool = event.getItemStack();
         EntityPlayer player = event.getEntityPlayer();
         Entity target = event.getTarget();
-        if(!world.isRemote && event.getTarget() instanceof IShearable && tool.getItem() instanceof ItemShears)
+        if(!world.isRemote && event.getTarget() instanceof IShearable && isShears(tool))
         {
             IShearable sheep = (IShearable) event.getTarget();
             if(!sheep.isShearable(tool,world,pos))
@@ -49,6 +53,13 @@ public class HardcoreWoolHandler {
             event.setCanceled(true);
             event.setCancellationResult(EnumActionResult.SUCCESS);
         }
+    }
+
+    private boolean isShears(ItemStack stack)
+    {
+        Item item = stack.getItem();
+        String regname = item.getRegistryName().toString(); //no it may not produce a nullpointer exception. If it does, we shouldn't catch it.
+        return item instanceof ItemShears || EXTRA_SHEARS.contains(regname);
     }
 
     @SubscribeEvent

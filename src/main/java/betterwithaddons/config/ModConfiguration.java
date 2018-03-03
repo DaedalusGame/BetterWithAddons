@@ -17,6 +17,7 @@ public class ModConfiguration {
     ConfigOptionInteger BWM_WoolMultiplier = new ConfigOptionInteger("interaction.BetterWithMods", "WoolMultiplier", InteractionBWM.WOOL_MULTIPLIER, "Adjusts how much wool a sheep drops if Hardcore Shearing is enabled.");
     ConfigOptionBool BWM_DyeInCauldron = new ConfigOptionBool("interaction.BetterWithMods", "DyeInCauldron", InteractionBWM.DYE_IN_CAULDRON, "Wool can be dyed in batches of 8 in a cauldron and bleached with potash.");
     //ConfigOptionBool BWM_HiddenEnchantments = new ConfigOptionBool("addons.BetterWithMods", "HiddenEnchantments", InteractionBWM.HIDDEN_ENCHANTS, "Enchantments on enchanted books are hidden. (They still function as usual)");
+    ConfigOptionStringList BWM_ShearWhitelist = new ConfigOptionStringList("interaction.BetterWithMods", "ShearWhitelist", InteractionBWM.SHEARS_WHITELIST, "Extra items that are functionally shears but don't extend ItemShears.");
 
     ConfigOptionBool Quark_Enabled = new ConfigOptionBool("interaction.Quark", "Enabled", InteractionQuark.ENABLED, "Whether the Quark compat module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool Quark_MidoriBlocksNeedChunks = new ConfigOptionBool("interaction.Quark", "MidoriBlocksNeedChunks", InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS, "Midori blocks require popped Midori chunks.");
@@ -131,6 +132,8 @@ public class ModConfiguration {
         InteractionBWM.WOOL_MULTIPLIER = BWM_WoolMultiplier.init(configuration);
         InteractionBWM.DYE_IN_CAULDRON = BWM_DyeInCauldron.init(configuration);
         InteractionBWM.HARDCORE_PACKING = BWM_HardcorePacking.init(configuration);
+        InteractionBWM.SHEARS_WHITELIST = BWM_ShearWhitelist.init(configuration);
+
         InteractionQuark.ENABLED = Quark_Enabled.init(configuration);
         InteractionQuark.MIDORI_BLOCKS_NEED_CHUNKS = Quark_MidoriBlocksNeedChunks.init(configuration);
 
