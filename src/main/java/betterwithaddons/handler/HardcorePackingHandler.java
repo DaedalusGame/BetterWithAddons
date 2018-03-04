@@ -1,19 +1,30 @@
 package betterwithaddons.handler;
 
+import betterwithaddons.crafting.manager.CraftingManagerCrate;
+import betterwithaddons.crafting.manager.CraftingManagerInfuser;
 import betterwithaddons.crafting.manager.CraftingManagerPacking;
+import betterwithaddons.crafting.recipes.CrateRecipe;
 import betterwithaddons.crafting.recipes.PackingRecipe;
+import betterwithmods.common.blocks.mechanical.tile.TileEntityFilteredHopper;
+import betterwithmods.util.InvUtils;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.HashSet;
 import java.util.List;
@@ -22,11 +33,9 @@ public class HardcorePackingHandler {
     HashSet<TileEntityPiston> activePistons = new HashSet<>();
 
     @SubscribeEvent
-    public void hardcorePackingInit(AttachCapabilitiesEvent<TileEntity> event)
-    {
+    public void hardcorePackingInit(AttachCapabilitiesEvent<TileEntity> event) {
         TileEntity te = event.getObject();
-        if(te instanceof TileEntityPiston)
-        {
+        if (te instanceof TileEntityPiston) {
             activePistons.add((TileEntityPiston) te);
         }
     }

@@ -78,6 +78,9 @@ public class ModConfiguration {
     ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED,"Whether the Condensed Outputs module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
     ConfigOptionInteger CondensedOutputs_SpindleTime = new ConfigOptionInteger("addons.CondensedOutputs", "SpindleTime", InteractionCondensedOutputs.SPINUP_TIME, "The amount of time in ticks it takes for the spindle to spin up once.");
+    ConfigOptionBool CondensedOutputs_Spinning = new ConfigOptionBool("addons.CondensedOutputs", "Spinning", InteractionCondensedOutputs.SPINDLE_COMPRESSES_BOLTS, "Whether the spindle can compress items into bolts.");
+    ConfigOptionBool CondensedOutputs_Congealing = new ConfigOptionBool("addons.CondensedOutputs", "Congealing", InteractionCondensedOutputs.CAULDRON_COMPRESSES_SLIME, "Whether cauldrons can congeal items.");
+    ConfigOptionBool CondensedOutputs_Crating = new ConfigOptionBool("addons.CondensedOutputs", "Crating", InteractionCondensedOutputs.HOPPER_COMPRESSES_CRATES, "Whether filtered hoppers can fill crates.");
 
     ConfigOptionBool Wheat_Enabled = new ConfigOptionBool("addons.BetterWithWheat", "Enabled", InteractionWheat.ENABLED, "Whether the Better With Wheat module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool Wheat_MillGrain = new ConfigOptionBool("addons.BetterWithWheat", "MillGrain", InteractionWheat.MILL_GRAIN, "Instead of milling wheat into flour, wheat seeds must be milled instead.");
@@ -187,6 +190,9 @@ public class ModConfiguration {
         InteractionCondensedOutputs.ENABLED = CondensedOutputs_Enabled.init(configuration);
         InteractionCondensedOutputs.LOSE_BINDER = CondensedOutputs_LoseBinder.init(configuration);
         InteractionCondensedOutputs.SPINUP_TIME = CondensedOutputs_SpindleTime.init(configuration);
+        InteractionCondensedOutputs.SPINDLE_COMPRESSES_BOLTS = CondensedOutputs_Spinning.init(configuration);
+        InteractionCondensedOutputs.HOPPER_COMPRESSES_CRATES = CondensedOutputs_Crating.init(configuration);
+        InteractionCondensedOutputs.CAULDRON_COMPRESSES_SLIME = CondensedOutputs_Congealing.init(configuration);
 
         InteractionBTWTweak.ENABLED = BTWTweak_Enabled.init(configuration);
         //InteractionBTWTweak.KILN_DOUBLING = BTWTweak_KilnDoubling.init(configuration);

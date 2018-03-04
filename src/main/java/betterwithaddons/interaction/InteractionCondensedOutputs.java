@@ -2,7 +2,11 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.crafting.OreStack;
 import betterwithaddons.crafting.conditions.ConditionModule;
+import betterwithaddons.crafting.manager.CraftingManagerCrate;
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
+import betterwithaddons.handler.CompressionHandler;
+import betterwithaddons.handler.GrassHandler;
+import betterwithaddons.handler.PatientiaHandler;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
@@ -18,6 +22,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -31,6 +36,9 @@ import java.util.List;
 public class InteractionCondensedOutputs extends Interaction {
     public static boolean ENABLED = true;
     public static boolean LOSE_BINDER = false;
+    public static boolean CAULDRON_COMPRESSES_SLIME = true;
+    public static boolean SPINDLE_COMPRESSES_BOLTS = true;
+    public static boolean HOPPER_COMPRESSES_CRATES = true;
     public static int SPINUP_TIME = 40;
 
     public ItemStack bagStack;
@@ -66,7 +74,10 @@ public class InteractionCondensedOutputs extends Interaction {
 
     @Override
     public void preInit() {
-        ConditionModule.MODULES.put("DecoAddon", this::isActive);
+        ConditionModule.MODULES.put("CondensedOutputs", this::isActive);
+
+        if(HOPPER_COMPRESSES_CRATES)
+            MinecraftForge.EVENT_BUS.register(new CompressionHandler());
     }
 
     @Override
@@ -176,6 +187,12 @@ public class InteractionCondensedOutputs extends Interaction {
 
         addCondensingRecipe(registry,id,output, material, crateStack);
         addUncondensingRecipe(registry,id,output,material);
+
+        if(HOPPER_COMPRESSES_CRATES) {
+            ItemStack material8 = material.copy();
+            material8.setCount(8);
+            CraftingManagerCrate.getInstance().addRecipe(output, new Object[]{material8});
+        }
     }
 
     private void addCongealingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)
@@ -185,9 +202,11 @@ public class InteractionCondensedOutputs extends Interaction {
         addCondensingRecipe(registry,id,output, material, congealedStack);
         addUncondensingRecipe(registry,id,output,material);
 
-        ItemStack material8 = material.copy();
-        material8.setCount(8);
-        CauldronManager.getInstance().addRecipe(output,new Object[]{material8,congealedStack.copy()});
+        if(CAULDRON_COMPRESSES_SLIME) {
+            ItemStack material8 = material.copy();
+            material8.setCount(8);
+            CauldronManager.getInstance().addRecipe(output, new Object[]{material8, congealedStack.copy()});
+        }
     }
 
     private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)
@@ -197,9 +216,11 @@ public class InteractionCondensedOutputs extends Interaction {
         addCondensingRecipe(registry,id,output, material, boltStack);
         addUncondensingRecipe(registry,id,output,material);
 
-        ItemStack material8 = material.copy();
-        material8.setCount(8);
-        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material8,true);
+        if(SPINDLE_COMPRESSES_BOLTS) {
+            ItemStack material8 = material.copy();
+            material8.setCount(8);
+            CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output}, material8, true);
+        }
     }
 
     private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, OreStack material, ItemStack materialStack)
@@ -209,9 +230,11 @@ public class InteractionCondensedOutputs extends Interaction {
         addCondensingRecipe(registry,id,output, material, boltStack);
         addUncondensingRecipe(registry,id,output,materialStack);
 
-        OreStack material8 = material.copy();
-        material8.setCount(8);
-        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output},material8,true);
+        if(SPINDLE_COMPRESSES_BOLTS) {
+            OreStack material8 = material.copy();
+            material8.setCount(8);
+            CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output}, material8, true);
+        }
     }
 
     private void addBundlingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material)

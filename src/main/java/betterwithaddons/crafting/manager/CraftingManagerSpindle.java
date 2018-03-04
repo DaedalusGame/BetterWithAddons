@@ -70,21 +70,6 @@ public class CraftingManagerSpindle
         return -1;
     }
 
-    private boolean containsIngredient(Object input, ItemStack stack)
-    {
-        if(input instanceof ItemStack)
-        {
-            if(ItemStack.areItemsEqual((ItemStack)input, stack) || (((ItemStack)input).getItemDamage() == OreDictionary.WILDCARD_VALUE && stack.getItem() == ((ItemStack)input).getItem()))
-                return true;
-        }
-        else if(input instanceof OreStack)
-        {
-            if(InventoryUtil.listContains(stack, ((OreStack)input).getOres()))
-                return true;
-        }
-        return false;
-    }
-
     public SpindleRecipe getMostValidRecipe(List<EntityItem> inv)
     {
         List<SpindleRecipe> recipes = getValidCraftingRecipes(inv);
