@@ -9,6 +9,8 @@ inv.sandnet.name=Netted Screen
 inv.packing.name=Hardcore Packing
 inv.spindle.name=Spindle
 inv.spindle.throw.name=Throw Items
+inv.crating.name=Boxing
+inv.crating.throw.name=Throw Items
 inv.infuser.name=Ancestral Infuser
 inv.infuser.throw.name=Throw
 inv.infuser.cost.name=%s
@@ -106,6 +108,7 @@ tile.wood_lamp.name=Wooden Lantern
 tile.wood_lamp.firefly.name=Firefly Lantern
 tile.wrought_lamp.name=Wrought Iron Lantern
 tile.pavement.name=Pavement
+tile.box.name=Wooden Box
 
 tile.adobe.wet.name=Wet Adobe
 tile.adobe.dry.name=Dried Adobe

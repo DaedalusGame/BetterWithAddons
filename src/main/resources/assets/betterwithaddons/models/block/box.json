@@ -3,7 +3,8 @@
         "side": "betterwithaddons:blocks/box_side",
         "top": "betterwithaddons:blocks/box_top",
         "bottom": "betterwithaddons:blocks/box_bottom",
-		"inside": "betterwithaddons:blocks/box_inside"
+		"inside": "betterwithaddons:blocks/box_inside",
+		"particle": "betterwithaddons:blocks/box_side"
     },
     "elements": [
         {

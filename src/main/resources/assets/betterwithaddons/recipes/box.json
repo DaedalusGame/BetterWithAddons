@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "betterwithaddons:box",
+	"data": 0,
+	"count": 2
+  },
+  "pattern": [
+    " S ",
+    "S S",
+    " S "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "S": {
+      "ore": "sidingWood",
+      "type": "forge:ore_dict"
+    }
+  }
+}

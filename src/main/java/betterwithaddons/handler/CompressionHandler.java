@@ -1,5 +1,6 @@
 package betterwithaddons.handler;
 
+import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.manager.CraftingManagerCrate;
 import betterwithmods.common.blocks.mechanical.tile.TileEntityFilteredHopper;
 import betterwithmods.util.InvUtils;
@@ -63,6 +64,6 @@ public class CompressionHandler {
 
     public boolean isCrate(IBlockState state)
     {
-        return state.getBlock() == Blocks.PLANKS && state.getValue(BlockPlanks.VARIANT) == BlockPlanks.EnumType.OAK;
+        return state.getBlock() == ModBlocks.box;
     }
 }
