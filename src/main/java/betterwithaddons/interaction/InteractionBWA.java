@@ -165,12 +165,20 @@ public class InteractionBWA extends Interaction {
 
         //OreDictionary.registerOre("foodSalt", ModItems.bowls.getMaterial("salt"));
 
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_spade"),new ItemStack(ModItems.steelSpade),"x","x","i","i",'x',"ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_matchpick"),new ItemStack(ModItems.steelMatchPick),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT),'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_machete"),new ItemStack(ModItems.steelMachete),"   x","  x "," x  ","i   ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_kukri"),new ItemStack(ModItems.steelKukri),"xx","x ","xx"," i",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_carpentersaw"),new ItemStack(ModItems.steelCarpenterSaw),"xxxi","x x ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_masonpick"),new ItemStack(ModItems.steelMasonPick),"xxxx"," i  "," i  "," i  ",'x', "ingotSoulforgedSteel",'i',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT));
+        ItemStack greatarrowhead = ModItems.material.getMaterial("arrowhead");
+        ItemStack haft = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT);
+
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatbow"), new ItemStack(ModItems.greatbow), "si ", "s i", "s i", "si ", 'i', haft, 's', new ItemStack(BWMBlocks.ROPE));
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_head"), greatarrowhead, " n ", "nnn", "nnn", "n n", 'n', "nuggetSoulforgedSteel");
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_lightning"), new ItemStack(ModItems.greatarrowLightning), "nxn", "nxn", " i ", " f ", 'n', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH), 'x', greatarrowhead, 'i', haft, 'f', new ItemStack(Items.FEATHER));
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_destruction"), new ItemStack(ModItems.greatarrowDestruction), "n n", "nxn", " i ", " f ", 'n', "nuggetSoulforgedSteel", 'x', greatarrowhead, 'i', haft, 'f', new ItemStack(Items.FEATHER));
+
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_spade"),new ItemStack(ModItems.steelSpade),"x","x","i","i",'x',"ingotSoulforgedSteel",'i', haft);
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_matchpick"),new ItemStack(ModItems.steelMatchPick),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i', haft,'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_machete"),new ItemStack(ModItems.steelMachete),"   x","  x "," x  ","i   ",'x', "ingotSoulforgedSteel",'i', haft);
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_kukri"),new ItemStack(ModItems.steelKukri),"xx","x ","xx"," i",'x', "ingotSoulforgedSteel",'i', haft);
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_carpentersaw"),new ItemStack(ModItems.steelCarpenterSaw),"xxxi","x x ",'x', "ingotSoulforgedSteel",'i', haft);
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_masonpick"),new ItemStack(ModItems.steelMasonPick),"xxxx"," i  "," i  "," i  ",'x', "ingotSoulforgedSteel",'i', haft);
 
         int axeAmt = HCTools.changeAxeRecipe ? 2 : 3;
         if(ModuleLoader.isFeatureEnabled(MetalReclaming.class) && MetalReclaming.reclaimCount > 0) {

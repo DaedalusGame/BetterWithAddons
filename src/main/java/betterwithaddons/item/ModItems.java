@@ -1,6 +1,7 @@
 package betterwithaddons.item;
 
 import betterwithaddons.BetterWithAddons;
+import betterwithaddons.entity.EntityGreatarrow;
 import betterwithaddons.item.rbdtools.*;
 import betterwithaddons.item.rbdtools.ItemSpade;
 import betterwithaddons.lib.Reference;
@@ -8,6 +9,7 @@ import betterwithaddons.util.ItemUtil;
 import betterwithmods.common.BWMItems;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
@@ -17,6 +19,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.IRegistry;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -57,6 +60,10 @@ public class ModItems {
     public static ItemGreatbow greatbow;
     @GameRegistry.ObjectHolder("betterwithaddons:greatarrow")
     public static ItemGreatarrow greatarrow;
+    @GameRegistry.ObjectHolder("betterwithaddons:greatarrow_lightning")
+    public static ItemGreatarrow greatarrowLightning;
+    @GameRegistry.ObjectHolder("betterwithaddons:greatarrow_destruction")
+    public static ItemGreatarrow greatarrowDestruction;
     @GameRegistry.ObjectHolder("betterwithaddons:monument")
     public static ItemMonument monument;
     @GameRegistry.ObjectHolder("betterwithaddons:artifact_frame")
@@ -293,6 +300,8 @@ public class ModItems {
         worldShard = (ItemWorldScale) registerItem("worldshard", new ItemWorldScale());
         greatbow = (ItemGreatbow) registerItem("greatbow", new ItemGreatbow());
         greatarrow = (ItemGreatarrow) registerItem("greatarrow", new ItemGreatarrow());
+        greatarrowLightning = (ItemGreatarrow) registerItem("greatarrow_lightning", new ItemGreatarrowLightning());
+        greatarrowDestruction = (ItemGreatarrow) registerItem("greatarrow_destruction", new ItemGreatarrowDestruction());
         monument = (ItemMonument) registerItem("monument", new ItemMonument());
         //Food
         bakedMushroom = (ItemFood) registerItem("food_mushroom_baked", new ItemFood(3, 0.2F, false));

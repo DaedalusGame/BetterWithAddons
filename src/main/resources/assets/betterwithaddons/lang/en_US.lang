@@ -137,6 +137,8 @@ item.material.ender_cream.name=Magma Cream Verus
 item.worldshard.name=World Scale Shard
 item.greatbow.name=Greatbow
 item.greatarrow.name=Greatarrow
+item.greatarrow_lightning.name=Lightning Greatarrow
+item.greatarrow_destruction.name=Destructive Greatarrow
 item.monument.name=Monument
 item.warwall.name=Warwall
 

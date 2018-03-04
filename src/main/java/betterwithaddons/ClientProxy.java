@@ -3,7 +3,7 @@ package betterwithaddons;
 import betterwithaddons.block.*;
 import betterwithaddons.client.ToolShardModelHandler;
 import betterwithaddons.client.fx.FXLeafParticle;
-import betterwithaddons.client.handler.ParticleHandler;
+import betterwithaddons.client.fx.FXLightning;
 import betterwithaddons.client.models.ItemModels;
 import betterwithaddons.client.render.*;
 import betterwithaddons.entity.*;
@@ -70,7 +70,6 @@ public class ClientProxy implements IProxy
         registerColorable(ModItems.samuraiChestplate);
         registerColorable(ModItems.samuraiLeggings);
         registerColorable(ModItems.brokenArtifact);
-        MinecraftForge.EVENT_BUS.register(ParticleHandler.class);
         MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
         //TODO definition provider
         ManualAPI.addProvider(new ResourceContentProvider(Reference.MOD_ID, "docs/"));
@@ -88,9 +87,15 @@ public class ClientProxy implements IProxy
 
     @Override
     public void makeLeafFX(double x, double y, double z, float r, float g, float b, float size, float motionx, float motiony, float motionz, float maxAgeMul) {
-        FXLeafParticle wisp = new FXLeafParticle(Minecraft.getMinecraft().world, x, y, z, size, r, g, b, true, maxAgeMul);
-        wisp.setSpeed(motionx, motiony, motionz);
-        Minecraft.getMinecraft().effectRenderer.addEffect(wisp);
+        FXLeafParticle leaf = new FXLeafParticle(Minecraft.getMinecraft().world, x, y, z, size, r, g, b, true, maxAgeMul);
+        leaf.setSpeed(motionx, motiony, motionz);
+        Minecraft.getMinecraft().effectRenderer.addEffect(leaf);
+    }
+
+    @Override
+    public void makeLightningFX(double x, double y, double z, float r, float g, float b, float size, float maxAgeMul) {
+        FXLightning spark = new FXLightning(Minecraft.getMinecraft().world, x, y, z, size, r, g, b, true, maxAgeMul);
+        Minecraft.getMinecraft().effectRenderer.addEffect(spark);
     }
 
     @Override
@@ -117,7 +122,6 @@ public class ClientProxy implements IProxy
         ItemModels.register();
 
         ModelLoader.setCustomStateMapper(ModBlocks.thorns,new StateMap.Builder().ignore(BlockThorns.FACING).build());
-        //ModelLoader.setCustomStateMapper(ModBlocks.brine, new BrineStateMapper());
         ModelLoader.setCustomStateMapper(ModBlocks.ropeSideways, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {

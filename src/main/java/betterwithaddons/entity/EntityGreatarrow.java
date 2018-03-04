@@ -1,13 +1,18 @@
 package betterwithaddons.entity;
 
+import betterwithaddons.item.ItemGreatarrow;
 import betterwithaddons.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.dispenser.IPosition;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -17,6 +22,8 @@ import net.minecraft.world.World;
 public class EntityGreatarrow extends EntityArrow {
     protected float blockBreakPower = 3.0f;
     public boolean impactSoundPlayed = false;
+
+    private static final DataParameter<ItemStack> ARROW_TYPE = EntityDataManager.createKey(EntityGreatarrow.class, DataSerializers.ITEM_STACK);
 
     public EntityGreatarrow(World worldIn) {
         super(worldIn);
@@ -31,8 +38,22 @@ public class EntityGreatarrow extends EntityArrow {
     }
 
     @Override
+    protected void entityInit()
+    {
+        super.entityInit();
+        this.dataManager.register(ARROW_TYPE, new ItemStack(ModItems.greatarrow));
+    }
+
+    public void setArrowStack(ItemStack stack)
+    {
+        stack = stack.copy();
+        stack.setCount(1); //Bows tend to only fire one arrow.
+        dataManager.set(ARROW_TYPE, stack);
+    }
+
+    @Override
     protected ItemStack getArrowStack() {
-        return new ItemStack(ModItems.greatarrow);
+        return dataManager.get(ARROW_TYPE);
     }
 
     @Override
@@ -53,7 +74,13 @@ public class EntityGreatarrow extends EntityArrow {
     protected void onHit(RayTraceResult raytraceResultIn) {
         boolean isnormalhit = true;
 
-        if(raytraceResultIn.entityHit == null)
+        ItemStack arrowstack = getArrowStack();
+        ItemGreatarrow arrowtype = ModItems.greatarrow;
+        if(!arrowstack.isEmpty() && arrowstack.getItem() instanceof ItemGreatarrow) //I don't trust people like you.
+            arrowtype = (ItemGreatarrow) arrowstack.getItem();
+        Entity entity = raytraceResultIn.entityHit;
+
+        if(entity == null)
         {
             BlockPos blockpos = raytraceResultIn.getBlockPos();
             IBlockState blockstate = world.getBlockState(blockpos);
@@ -80,6 +107,12 @@ public class EntityGreatarrow extends EntityArrow {
                 this.playSound(SoundEvents.ENTITY_IRONGOLEM_DEATH, 1.0f, 1.2f / (this.rand.nextFloat() * 0.2f + 0.9f));
                 impactSoundPlayed = true;
             }
+
+            arrowtype.hitBlock(this,blockpos,blockstate,!isnormalhit);
+        }
+        else
+        {
+            arrowtype.hitEntity(this,entity);
         }
 
         if(isnormalhit)

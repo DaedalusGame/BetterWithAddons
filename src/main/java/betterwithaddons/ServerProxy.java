@@ -25,6 +25,11 @@ public class ServerProxy implements IProxy {
     }
 
     @Override
+    public void makeLightningFX(double x, double y, double z, float r, float g, float b, float size, float maxAgeMul) {
+
+    }
+
+    @Override
     public void registerResourcePack() {
 
     }
