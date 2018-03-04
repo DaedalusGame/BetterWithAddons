@@ -119,7 +119,7 @@ public class BlockBamboo extends BlockReed implements IHasVariants {
     {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        if (block.canSustainPlant(state, world, pos.down(), EnumFacing.UP, this)) return true;
+        if (block.canSustainPlant(state, world, pos, EnumFacing.UP, this)) return true;
         else if(block != Blocks.GRASS && block != Blocks.DIRT) return false;
         return true;
     }

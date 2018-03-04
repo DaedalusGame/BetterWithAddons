@@ -195,7 +195,6 @@ public class ModConfiguration {
         InteractionCondensedOutputs.CAULDRON_COMPRESSES_SLIME = CondensedOutputs_Congealing.init(configuration);
 
         InteractionBTWTweak.ENABLED = BTWTweak_Enabled.init(configuration);
-        //InteractionBTWTweak.KILN_DOUBLING = BTWTweak_KilnDoubling.init(configuration);
         InteractionBTWTweak.SAW_RECYCLING = BTWTweak_SawRecycling.init(configuration);
         InteractionBTWTweak.EGG_INCUBATION = BTWTweak_EggIncubation.init(configuration);
         InteractionBTWTweak.SLIPPERY_WHEN_WET = BTWTweak_SlipperyWhenWet.init(configuration);

@@ -2,13 +2,10 @@ package betterwithaddons.tileentity;
 
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.manager.CraftingManagerInfuserTransmutation;
-import betterwithaddons.crafting.recipes.IInfuserRecipe;
-import betterwithaddons.crafting.recipes.SmeltingRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
@@ -96,7 +93,7 @@ public class TileEntityInfuser extends TileEntityBase implements ITickable {
                 continue;
 
             ItemStack stack = item.getItem();
-            TransmutationRecipe recipe = CraftingManagerInfuserTransmutation.instance().getSmeltingRecipe(stack,spirits);
+            TransmutationRecipe recipe = CraftingManagerInfuserTransmutation.getInstance().getSmeltingRecipe(stack,spirits);
 
             if(recipe != null)
             {

@@ -7,8 +7,7 @@ import betterwithaddons.client.gui.GuiSoakingBox;
 import betterwithaddons.client.gui.GuiTatara;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.crafting.recipes.*;
-import betterwithaddons.crafting.recipes.infuser.ShapedInfuserRecipe;
-import betterwithaddons.crafting.recipes.infuser.ShapelessInfuserRecipe;
+import betterwithaddons.crafting.recipes.infuser.InfuserRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.interaction.jei.category.*;
 import betterwithaddons.interaction.jei.wrapper.*;
@@ -16,9 +15,17 @@ import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModRegistry;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.plugins.vanilla.crafting.ShapedOreRecipeWrapper;
+import mezz.jei.plugins.vanilla.crafting.ShapedRecipesWrapper;
+import mezz.jei.plugins.vanilla.crafting.ShapelessRecipeWrapper;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import javax.annotation.Nonnull;
 
@@ -52,8 +59,7 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.handleRecipes(TransmutationRecipe.class, TransmutationRecipeWrapper::new, TransmutationRecipeCategory.UID);
         reg.handleRecipes(PackingRecipe.class, PackingRecipeWrapper::new, PackingRecipeCategory.UID);
 
-        reg.handleRecipes(ShapedInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapedOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
-        //reg.handleRecipes(ShapelessInfuserRecipe.class, recipe -> new InfuserRecipeWrapper(new ShapelessOreRecipeWrapper(helper, recipe),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
+        reg.handleRecipes(InfuserRecipe.class, recipe -> new InfuserRecipeWrapper(getCraftingRecipeWrapper(helper, recipe.internal),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
 
         reg.addRecipes(CraftingManagerSpindle.getInstance().getRecipes(),SpindleRecipeCategory.UID);
         reg.addRecipes(CraftingManagerSandNet.getInstance().getRecipes(),SandNetRecipeCategory.UID);
@@ -63,7 +69,7 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.addRecipes(CraftingManagerSoakingBox.instance().getRecipes(),SoakingBoxRecipeCategory.UID);
         reg.addRecipes(CraftingManagerTatara.instance().getRecipes(),TataraRecipeCategory.UID);
         reg.addRecipes(CraftingManagerInfuser.getInstance().getRecipeList(),InfuserRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerInfuserTransmutation.instance().getRecipes(),TransmutationRecipeCategory.UID);
+        reg.addRecipes(CraftingManagerInfuserTransmutation.getInstance().getRecipes(),TransmutationRecipeCategory.UID);
         reg.addRecipes(CraftingManagerPacking.getInstance().getRecipes(),PackingRecipeCategory.UID);
 
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.tatara), TataraRecipeCategory.UID);
@@ -79,5 +85,16 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.addRecipeClickArea(GuiSoakingBox.class, 78, 32, 28, 23, SoakingBoxRecipeCategory.UID);
         reg.addRecipeClickArea(GuiDryingBox.class, 78, 32, 28, 23, DryingBoxRecipeCategory.UID);
         reg.addRecipeClickArea(GuiInfuser.class, 94, 35, 19, 16, InfuserRecipeCategory.UID);
+    }
+
+    private IRecipeWrapper getCraftingRecipeWrapper(IJeiHelpers helper, IRecipe recipe)
+    {
+        if(recipe instanceof ShapedOreRecipe)
+            return new ShapedOreRecipeWrapper(helper, (ShapedOreRecipe) recipe);
+        if(recipe instanceof ShapedRecipes)
+            return new ShapedRecipesWrapper(helper, (ShapedRecipes) recipe);
+        if(recipe instanceof ShapelessOreRecipe || recipe instanceof ShapelessRecipes)
+            return new ShapelessRecipeWrapper<>(helper, recipe);
+        return null;
     }
 }

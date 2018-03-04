@@ -2,13 +2,11 @@ package betterwithaddons.container;
 
 import betterwithaddons.container.slots.SlotInfuserCrafting;
 import betterwithaddons.crafting.manager.CraftingManagerInfuser;
-import betterwithaddons.crafting.recipes.IInfuserRecipe;
+import betterwithaddons.crafting.recipes.infuser.InfuserRecipe;
 import betterwithaddons.tileentity.TileEntityInfuser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -84,12 +82,12 @@ public class ContainerInfuser extends Container {
 
     public void onCraftMatrixChanged(IInventory inventoryIn)
     {
-        IInfuserRecipe recipe = CraftingManagerInfuser.getInstance().findMatchingRecipe(this.craftMatrix, this.tileInfuser.getWorld());
+        InfuserRecipe recipe = CraftingManagerInfuser.getInstance().findMatchingRecipe(this.craftMatrix, this.tileInfuser.getWorld());
 
         requiredSpirit = recipe != null ? recipe.getRequiredSpirit(craftMatrix) : 0;
         spiritMet = recipe != null && tileInfuser.getSpirits() >= requiredSpirit;
         if(canCraft())
-            this.craftResult.setInventorySlotContents(0, recipe.getCraftingResult(this.craftMatrix));
+            this.craftResult.setInventorySlotContents(0, recipe.internal.getCraftingResult(this.craftMatrix));
         else
             this.craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
     }
@@ -168,7 +166,7 @@ public class ContainerInfuser extends Container {
     }
 
     public void onCrafting(ItemStack stack) {
-        IInfuserRecipe recipe = CraftingManagerInfuser.getInstance().findMatchingRecipe(craftMatrix,world);
+        InfuserRecipe recipe = CraftingManagerInfuser.getInstance().findMatchingRecipe(craftMatrix,world);
 
         tileInfuser.consumeSpirits(recipe.getRequiredSpirit(craftMatrix));
     }

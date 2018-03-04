@@ -55,6 +55,7 @@ public class InfuserRecipeWrapper extends BlankRecipeWrapper {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-        innerWrapper.getIngredients(ingredients);
+        if(innerWrapper != null)
+            innerWrapper.getIngredients(ingredients);
     }
 }

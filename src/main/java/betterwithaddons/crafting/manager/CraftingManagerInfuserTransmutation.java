@@ -3,6 +3,7 @@ package betterwithaddons.crafting.manager;
 import betterwithaddons.block.EriottoMod.BlockCherryBox;
 import betterwithaddons.crafting.recipes.CherryBoxRecipe;
 import betterwithaddons.crafting.recipes.SmeltingRecipe;
+import betterwithaddons.crafting.recipes.infuser.InfuserRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import net.minecraft.item.ItemStack;
 
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 public class CraftingManagerInfuserTransmutation {
     private static final CraftingManagerInfuserTransmutation instance = new CraftingManagerInfuserTransmutation();
 
-    public static CraftingManagerInfuserTransmutation instance() {
+    public static CraftingManagerInfuserTransmutation getInstance() {
         return instance;
     }
 
@@ -34,13 +35,21 @@ public class CraftingManagerInfuserTransmutation {
         this.recipes.add(createRecipe(input, spirits, output));
     }
 
+    public void removeRecipe(TransmutationRecipe recipe) {
+        this.recipes.remove(recipe);
+    }
+
+    public void clearRecipes() {
+        this.recipes.clear();
+    }
+
     protected TransmutationRecipe createRecipe(Object input, int spirits, ItemStack output)
     {
         return new TransmutationRecipe(input, spirits, output);
     }
 
-    public List<TransmutationRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
-        return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
+    public List<TransmutationRecipe> findRecipeForRemoval(@Nonnull ItemStack output) {
+        return recipes.stream().filter(recipe -> recipe.output.isItemEqual(output)).collect(Collectors.toList());
     }
 
     public TransmutationRecipe getSmeltingRecipe(ItemStack input, int spirits) {

@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "betterwithaddons:box",
+    "uvlock": false
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [
+      {
+        "transform": "forge:default-block"
+      }
+    ]
+  }
+}
