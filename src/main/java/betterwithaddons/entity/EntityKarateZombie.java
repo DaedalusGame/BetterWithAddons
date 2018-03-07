@@ -82,7 +82,12 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     }
 
     public MartialArts getMove() {
-        return MartialArts.values()[dataManager.get(MOVE)];
+        return getMove(dataManager.get(MOVE));
+    }
+
+    public MartialArts getMove(int n) {
+        MartialArts[] artses = MartialArts.values();
+        return artses[MathHelper.clamp(n,0,artses.length-1)];
     }
 
     public void setMove(MartialArts n) {
@@ -281,11 +286,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
         List<Entity> passengers = getPassengers();
         if(getCurrentMove() == MartialArts.Suplex)
         {
-            for (Entity passenger:passengers
-                 ) {
-                forceDismount(passenger);
-
-            }
+            passengers.forEach(this::forceDismount);
             float[] ret = net.minecraftforge.common.ForgeHooks.onLivingFall(this, distance, damageMultiplier);
             if (ret == null) return;
             distance = ret[0]; damageMultiplier = ret[1];
@@ -342,12 +343,11 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
                 case Throw:
                     if (moveTime == 0) {
                         double throwpower = MathHelper.clampedLerp(1.0,2.0,power);
-                        for (Entity passenger : passengers)
-                            if (passenger instanceof EntityLivingBase) {
-                                forceDismount(passenger);
-                                passenger.attackEntityFrom(DamageSource.causeMobDamage(this), (float)2);
-                                passenger.addVelocity(throwpower * -MathHelper.sin(this.rotationYaw * rad), 0, throwpower * MathHelper.cos(this.rotationYaw * rad));
-                            }
+                        passengers.stream().filter(passenger -> passenger instanceof EntityLivingBase).forEach(passenger -> {
+                            forceDismount(passenger);
+                            passenger.attackEntityFrom(DamageSource.causeMobDamage(this), (float) 2);
+                            passenger.addVelocity(throwpower * -MathHelper.sin(this.rotationYaw * rad), 0, throwpower * MathHelper.cos(this.rotationYaw * rad));
+                        });
                         randomizeMove();
                     }
                     break;
