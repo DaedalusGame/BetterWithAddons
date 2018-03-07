@@ -26,19 +26,31 @@ public class HardcoreWoolHandler {
     public static HashSet<String> EXTRA_SHEARS = new HashSet<>();
 
     @SubscribeEvent
-    public void onShearEvent(PlayerInteractEvent.EntityInteractSpecific event)
+    public void onShearEventTry1(PlayerInteractEvent.EntityInteract event)
     {
+        shearSheep(event, event.getTarget());
+    }
+
+    @SubscribeEvent
+    public void onShearEventTry2(PlayerInteractEvent.EntityInteractSpecific event)
+    {
+        shearSheep(event, event.getTarget());
+    }
+
+    private void shearSheep(PlayerInteractEvent event, Entity target) {
         if(!InteractionBWM.HARDCORE_SHEARING)
             return;
 
         World world = event.getWorld();
-        BlockPos pos = event.getEntity().getPosition();
-        ItemStack tool = event.getItemStack();
         EntityPlayer player = event.getEntityPlayer();
-        Entity target = event.getTarget();
-        if(!world.isRemote && event.getTarget() instanceof IShearable && isShears(tool))
+        BlockPos pos = player.getPosition();
+        ItemStack tool = event.getItemStack();
+
+        if(!world.isRemote && target instanceof IShearable && isShears(tool))
         {
-            IShearable sheep = (IShearable) event.getTarget();
+            event.setCanceled(true);
+            event.setCancellationResult(EnumActionResult.PASS);
+            IShearable sheep = (IShearable) target;
             if(!sheep.isShearable(tool,world,pos))
                 return;
             java.util.Random rand = new java.util.Random();
@@ -50,7 +62,6 @@ public class HardcoreWoolHandler {
                 ent.motionZ += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
             }
             tool.damageItem(1, player);
-            event.setCanceled(true);
             event.setCancellationResult(EnumActionResult.SUCCESS);
         }
     }

@@ -5,10 +5,16 @@ import betterwithmods.module.tweaks.Dung.DungProducer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.world.World;
 
-public class ItemLaxative extends Item {
+public class ItemLaxative extends ItemFood {
+    public ItemLaxative(int amount, float saturation, boolean isWolfFood) {
+        super(amount, saturation, isWolfFood);
+    }
+
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
         if(target.hasCapability(Dung.DUNG_PRODUCER_CAP,null))
