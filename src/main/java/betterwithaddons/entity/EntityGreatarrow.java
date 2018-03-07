@@ -20,10 +20,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityGreatarrow extends EntityArrow {
-    protected float blockBreakPower = 3.0f;
     public boolean impactSoundPlayed = false;
 
     private static final DataParameter<ItemStack> ARROW_TYPE = EntityDataManager.createKey(EntityGreatarrow.class, DataSerializers.ITEM_STACK);
+    private static final DataParameter<Float> BLOCK_BREAK_POWER = EntityDataManager.createKey(EntityGreatarrow.class, DataSerializers.FLOAT);
 
     public EntityGreatarrow(World worldIn) {
         super(worldIn);
@@ -42,6 +42,17 @@ public class EntityGreatarrow extends EntityArrow {
     {
         super.entityInit();
         this.dataManager.register(ARROW_TYPE, new ItemStack(ModItems.greatarrow));
+        this.dataManager.register(BLOCK_BREAK_POWER, 3.0f);
+    }
+
+    public void setBlockBreakPower(float amt)
+    {
+        dataManager.set(BLOCK_BREAK_POWER, amt);
+    }
+
+    public Float getBlockBreakPower()
+    {
+        return dataManager.get(BLOCK_BREAK_POWER);
     }
 
     public void setArrowStack(ItemStack stack)
@@ -74,10 +85,7 @@ public class EntityGreatarrow extends EntityArrow {
     protected void onHit(RayTraceResult raytraceResultIn) {
         boolean isnormalhit = true;
 
-        ItemStack arrowstack = getArrowStack();
-        ItemGreatarrow arrowtype = ModItems.greatarrow;
-        if(!arrowstack.isEmpty() && arrowstack.getItem() instanceof ItemGreatarrow) //I don't trust people like you.
-            arrowtype = (ItemGreatarrow) arrowstack.getItem();
+        ItemGreatarrow arrowtype = getArrowType();
         Entity entity = raytraceResultIn.entityHit;
 
         if(entity == null)
@@ -86,19 +94,23 @@ public class EntityGreatarrow extends EntityArrow {
             IBlockState blockstate = world.getBlockState(blockpos);
             Block block = blockstate.getBlock();
             float hardness = block.getExplosionResistance(world,blockpos,this,null);
+            float blockBreakPower = getBlockBreakPower();
 
-            if(!world.isRemote && breakBlockWithParticles(blockpos,blockBreakPower))
+            if(breakBlockWithParticles(blockpos,blockBreakPower))
             {
                 blockBreakPower -= hardness;
                 isnormalhit = false;
 
+                if(!world.isRemote)
                 for(int i = 0; i < 2; i++) {
                     BlockPos sideblock = blockpos.offset(EnumFacing.random(rand), 1);
                     float sidehardness = world.getBlockState(sideblock).getBlock().getExplosionResistance(world,blockpos,this,null);
-                    if (breakBlockWithParticles(sideblock, blockBreakPower))
-                        blockBreakPower -= sidehardness * 0.7f;
+                    if(breakBlockWithParticles(sideblock,blockBreakPower))
+                    blockBreakPower -= sidehardness;
                 }
             }
+
+            setBlockBreakPower(blockBreakPower);
 
             this.posX -= (float)((this.posX + this.motionX) - raytraceResultIn.hitVec.x);
             this.posY -= (float)((this.posY + this.motionY) - raytraceResultIn.hitVec.y);
@@ -110,29 +122,33 @@ public class EntityGreatarrow extends EntityArrow {
 
             arrowtype.hitBlock(this,blockpos,blockstate,!isnormalhit);
         }
-        else
-        {
-            arrowtype.hitEntity(this,entity);
-        }
 
         if(isnormalhit)
         {
             super.onHit(raytraceResultIn);
         }
 
+        if(inGround)
+            arrowtype.hitBlockFinal(this);
+
         //if(!worldObj.isRemote)
         //    worldObj.createExplosion(this, posX, posY, posZ, 2F, true);
         //setDead();
     }
 
-    public void setBlockBreakPower(float power)
-    {
-        blockBreakPower = power;
+    @Override
+    protected void arrowHit(EntityLivingBase living) {
+        super.arrowHit(living);
+        ItemGreatarrow arrowtype = getArrowType();
+        arrowtype.hitEntity(this,living);
     }
 
-    public float getBlockBreakPower()
-    {
-        return blockBreakPower;
+    private ItemGreatarrow getArrowType() {
+        ItemStack arrowstack = getArrowStack();
+        ItemGreatarrow arrowtype = ModItems.greatarrow;
+        if(!arrowstack.isEmpty() && arrowstack.getItem() instanceof ItemGreatarrow) //I don't trust people like you.
+            arrowtype = (ItemGreatarrow) arrowstack.getItem();
+        return arrowtype;
     }
 
     protected boolean breakBlockWithParticles(BlockPos blockpos, float power)

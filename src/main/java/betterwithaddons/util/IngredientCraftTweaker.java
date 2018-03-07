@@ -1,7 +1,6 @@
 package betterwithaddons.util;
 
 import com.blamejared.mtlib.helpers.InputHelper;
-import com.sun.istack.internal.Nullable;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import net.minecraft.item.ItemStack;
@@ -25,7 +24,7 @@ public class IngredientCraftTweaker extends Ingredient {
     }
 
     @Override
-    public boolean apply(@Nullable ItemStack stack) {
+    public boolean apply(ItemStack stack) {
         if(predicate == null)
             return stack.isEmpty();
         return predicate.matches(InputHelper.toIItemStack(stack));

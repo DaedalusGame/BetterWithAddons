@@ -25,13 +25,15 @@ public class ItemGreatarrow extends Item {
         return false;
     }
 
-    public void hitBlock(EntityGreatarrow arrow,BlockPos pos, IBlockState state, boolean destroyed)
-    {
+    public void hitBlock(EntityGreatarrow arrow,BlockPos pos, IBlockState state, boolean destroyed) {
         //NOOP
     }
 
-    public void hitEntity(EntityGreatarrow arrow,Entity entity)
-    {
+    public void hitBlockFinal(EntityGreatarrow arrow) {
+        //NOOP
+    }
+
+    public void hitEntity(EntityGreatarrow arrow, Entity entity) {
         //NOOP
     }
 }

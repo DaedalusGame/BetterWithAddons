@@ -5,7 +5,9 @@ import betterwithaddons.potion.PotionBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
@@ -15,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.Random;
 
@@ -32,23 +35,36 @@ public class EffectElectrified extends PotionBase {
     }
 
     @Override
+    public void applyAttributesModifiersToEntity(EntityLivingBase entity, AbstractAttributeMap attributeMapIn, int amplifier) {
+        stunEntity(entity);
+    }
+
+    @Override
     public void performEffect(EntityLivingBase entity, int level) {
         if (entity instanceof EntityCreeper) {
             //spawn firefly particles
             return;
         }
 
-        if (entity instanceof EntityPlayer) {
+        stunEntity(entity);
+    }
+
+    private void stunEntity(EntityLivingBase entity)
+    {
+        if (entity instanceof EntityPlayer)
             entity.resetActiveHand();
+
+        if(entity.attackEntityFrom(DamageSource.LIGHTNING_BOLT, 0.1f)) {
+            entity.hurtResistantTime = 0;
+            entity.heal(0.1f);
+            entity.motionX = 0;
+            entity.motionY = 0;
+            entity.motionZ = 0;
         }
-        entity.attackEntityFrom(DamageSource.LIGHTNING_BOLT, 0.1f);
-        entity.heal(0.1f);
-        entity.motionX = 0;
-        entity.motionY = 0;
-        entity.motionZ = 0;
 
         Random rand = entity.getRNG();
         for(int i = 0; i < 5; i++)
             BetterWithAddons.proxy.makeLightningFX(entity.posX + (rand.nextDouble() - 0.5D) * (double)entity.width, entity.posY + rand.nextDouble() * (double)entity.height, entity.posZ + (rand.nextDouble() - 0.5D) * (double)entity.width, 1.0f, 1.0f, 1.0f, 0.4f, 10f);
+
     }
 }

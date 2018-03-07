@@ -7,7 +7,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityFireworkRocket;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
@@ -28,29 +31,47 @@ public class ItemGreatarrowLightning extends ItemGreatarrow {
     public ItemGreatarrowLightning() {
         super();
         fireworksEntity = new NBTTagCompound();
+        NBTTagCompound fireworksTagEntity = new NBTTagCompound();
         NBTTagCompound explosionEntity = new NBTTagCompound();
         explosionEntity.setBoolean("Flicker", true);
         explosionEntity.setByte("Type", (byte) 0);
-        explosionEntity.setIntArray("Colors", new int[]{EnumDyeColor.WHITE.getColorValue()});
-        explosionEntity.setIntArray("FadeColors", new int[]{EnumDyeColor.YELLOW.getColorValue()});
+        explosionEntity.setIntArray("Colors", new int[]{16383998});
+        explosionEntity.setIntArray("FadeColors", new int[]{16701501}); //THESE HAVE TO BE MAGIC NUMBERS BECAUSE THE METHOD FOR GETTING COLOR VALUE FROM DYE IS CLIENTSIDE
         NBTTagList explosionsEntityList = new NBTTagList();
         explosionsEntityList.appendTag(explosionEntity);
-        fireworksEntity.setTag("Explosions", explosionsEntityList);
+        fireworksTagEntity.setTag("Explosions", explosionsEntityList);
+        fireworksTagEntity.setByte("Flight", (byte)-100);
+        fireworksEntity.setTag("Fireworks", fireworksTagEntity);
 
         fireworksGround = new NBTTagCompound();
+        NBTTagCompound fireworksTagGround = new NBTTagCompound();
         NBTTagCompound explosionGround = explosionEntity.copy();
         explosionGround.setByte("Type", (byte) 1);
         NBTTagList explosionsGroundList = new NBTTagList();
         explosionsGroundList.appendTag(explosionGround);
-        fireworksGround.setTag("Explosions", explosionsGroundList);
+        fireworksTagGround.setTag("Explosions", explosionsGroundList);
+        fireworksTagGround.setByte("Flight", (byte)-100);
+        fireworksGround.setTag("Fireworks", fireworksTagGround);
+    }
+
+    private void makeFireworks(World world, Vec3d pos, NBTTagCompound parameters)
+    {
+        if(!world.isRemote)
+        {
+            ItemStack rocket = new ItemStack(Items.FIREWORKS);
+            rocket.setTagCompound(parameters);
+            EntityFireworkRocket explosion = new EntityFireworkRocket(world,pos.x,pos.y,pos.z,rocket);
+            explosion.setInvisible(true);
+            world.spawnEntity(explosion);
+        }
     }
 
     @Override
-    public void hitBlock(EntityGreatarrow arrow, BlockPos pos, IBlockState state, boolean destroyed) {
-        super.hitBlock(arrow, pos, state, destroyed);
-        if (!destroyed && !arrow.isDead) {
-            arrow.world.makeFireworks(arrow.posX, arrow.posY, arrow.posZ, 0, 0, 0, fireworksGround);
-            //Lightning field
+    public void hitBlockFinal(EntityGreatarrow arrow) {
+        super.hitBlockFinal(arrow);
+        if (!arrow.isDead && !arrow.world.isRemote) {
+            makeLightningField(arrow.world,arrow.getPositionVector(),4.0f);
+            makeFireworks(arrow.world,arrow.getPositionVector(),fireworksGround);
             arrow.setDead();
         }
     }
@@ -62,22 +83,22 @@ public class ItemGreatarrowLightning extends ItemGreatarrow {
 
         if (!entity.world.isRemote) {
             EntityLivingBase living = (EntityLivingBase) entity;
-            living.addPotionEffect(new PotionEffect(ModPotions.electrified, 20 * 5, 2, false, false)); //electrify for a bit
 
             if (isDragon(living)) {
-                DamageSource damagesource;
-                if (arrow.shootingEntity == null)
-                    damagesource = EntityUtil.causeLightningArrowDamage(arrow, arrow);
-                else
-                    damagesource = EntityUtil.causeLightningArrowDamage(arrow, arrow.shootingEntity);
+                DamageSource damagesource = EntityUtil.causeLightningArrowDamage(arrow.shootingEntity);
 
-                if (entity.attackEntityFrom(damagesource, EXTRA_LIGHTNING_DAMAGE)) {
-                    entity.hurtResistantTime = 0;
+                int hurtSave = entity.hurtResistantTime;
+                entity.hurtResistantTime = 0;
+                if (!entity.attackEntityFrom(damagesource, EXTRA_LIGHTNING_DAMAGE)) {
+                    entity.hurtResistantTime = hurtSave;
                 }
             }
-        }
 
-        arrow.world.makeFireworks(arrow.posX, arrow.posY, arrow.posZ, 0, 0, 0, fireworksEntity);
+            living.addPotionEffect(new PotionEffect(ModPotions.electrified, 20 * 5, 2, false, false)); //electrify for a bit
+            makeLightningField(arrow.world,arrow.getPositionVector(),1.0f);
+            makeFireworks(arrow.world,arrow.getPositionVector(),fireworksEntity);
+            arrow.setDead();
+        }
     }
 
     private static void makeLightningField(World world, Vec3d pos, double range) {

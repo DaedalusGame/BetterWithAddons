@@ -3,6 +3,7 @@ package betterwithaddons.util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -36,8 +37,8 @@ public class EntityUtil {
         return pos;
     }
 
-    public static DamageSource causeLightningArrowDamage(EntityArrow arrow, @Nullable Entity indirectEntityIn)
+    public static DamageSource causeLightningArrowDamage(Entity shooter)
     {
-        return (new EntityDamageSourceIndirect("lightningArrow", arrow, indirectEntityIn)).setProjectile();
+        return (new EntityDamageSource("lightningArrow",shooter)).setProjectile().setDamageBypassesArmor();
     }
 }
