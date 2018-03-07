@@ -47,9 +47,9 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     private List<EntitySpirit> attractedSpirits = new ArrayList<>();
 
     private static final String TAG_SPIRITS = "spirits";
-    private static final String TAG_MOVE = "move";
-    private static final String TAG_MOVETIMEOUT = "move_timeout";
-    private static final String TAG_MOVETIME = "move_time";
+    private static final String TAG_MOVE = "karate_move";
+    private static final String TAG_MOVETIMEOUT = "karate_move_timeout";
+    private static final String TAG_MOVETIME = "karate_move_time";
     private static final String TAG_PERFORMING = "performing";
 
     private static final DataParameter<Integer> SPIRITS = EntityDataManager.createKey(EntityKarateZombie.class, DataSerializers.VARINT);
