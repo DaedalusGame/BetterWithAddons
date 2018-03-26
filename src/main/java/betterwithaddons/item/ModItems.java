@@ -324,7 +324,7 @@ public class ModItems {
         mulberry = (ItemFood) registerItem("food_mulberry", new ItemFood(1, 0.2F, false));
         rice = (ItemFood) registerItem("food_cooked_rice", new ItemFood(2, 0.3F, false));
         riceBowl = (ItemFood) registerItem("food_bowl_rice", new ItemFood(9, 0.6F, false).setMaxStackSize(1));
-        laxative = registerItem("laxative", new Item());
+        laxative = registerItem("laxative", new ItemLaxative(0,0,true));
 
         soulSandPile = registerItem("soulsand_pile", new Item());
         rottenFood = (ItemFood)registerItem("rotten_food", new ItemFood(1,0.1f,false).setPotionEffect(new PotionEffect(MobEffects.HUNGER, 2000, 1), 1.0F));
