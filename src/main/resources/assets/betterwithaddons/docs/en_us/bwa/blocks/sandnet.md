@@ -6,4 +6,4 @@ This design combines a material with wet sand. First, sand must be inserted into
 
 This design is used to make the following items:
 
-#[Iron Sand](block:betterwithaddons:iron_sand@0)
+![Iron Sand](block:betterwithaddons:iron_sand@0)

@@ -1,6 +1,6 @@
 # Infused Soul Sand
 
-#[Infused Soul Sand](block:betterwithaddons:ancestry_sand@0)
+![Infused Soul Sand](block:betterwithaddons:ancestry_sand@0)
 
 Infused Soul Sand can be created by right-clicking a block of Soul Sand with a Bottle of Japanese Ancestry. The Soul Sand block will then turn red, and the spirits will be transferred into it.
 Infused Soul Sand attracts nearby free spirits and absorbs them on contact.

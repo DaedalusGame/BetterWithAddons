@@ -11,8 +11,8 @@ It will work twice as fast in very hot places.
 
 This machine is used to make the following items:
 
-#[Bamboo Slats](item:betterwithaddons:japanmat@7)
-#[Rice Hay](item:betterwithaddons:japanmat@3)
-#[Mulberry Pulp](item:betterwithaddons:japanmat@9)
+![Bamboo Slats](item:betterwithaddons:japanmat@7)
+![Rice Hay](item:betterwithaddons:japanmat@3)
+![Mulberry Pulp](item:betterwithaddons:japanmat@9)
 
 

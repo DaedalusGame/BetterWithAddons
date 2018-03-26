@@ -1,6 +1,6 @@
 # Banner Detector
 
-#[Banner Detector](block:betterwithaddons:banner_detector@0)
+![Banner Detector](block:betterwithaddons:banner_detector@0)
 
 The Banner Detector does exactly what you think it does. It can see Banners up to a certain distance. Whether the banners are placed or on people's heads doesn't matter to it. It can also see past most transparent-ish blocks.
 

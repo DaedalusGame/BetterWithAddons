@@ -1,7 +1,7 @@
 # The Worldscale
 
-#[Centerpiece](block:betterwithaddons:world_scale_active@0)
-#[Scale](block:betterwithaddons:world_scale@0)
+![Centerpiece](block:betterwithaddons:world_scale_active@0)
+![Scale](block:betterwithaddons:world_scale@0)
 
 The Worldscale is a structure that protects chunks from the destructive tools of other players. It's use is intended for faction or anarchy servers, where it's normally better to hide in a cave than build aboveground structures.
 The polished Worldscale is the centerpiece of the structure. To function, it must have any banner placed on top of it. The more complex the banner design, the better, as it will be more difficult to counterfeit.

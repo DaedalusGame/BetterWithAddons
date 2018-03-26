@@ -1,6 +1,6 @@
 # Thorny Vines
 
-#[Thorny Vine Seed](item:betterwithaddons:thorn_rose@0)
+![Thorny Vine Seed](item:betterwithaddons:thorn_rose@0)
 
 Thorny vines are an alien hybrid growth of cactus and rosebushes. They can be planted on either sand or mossy stonebricks. They will grow quite quickly and attempt to "hug" and grow around structures like walls, castles and enchanted wizard towers.
 

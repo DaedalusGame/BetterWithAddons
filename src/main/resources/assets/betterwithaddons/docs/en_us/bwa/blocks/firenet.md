@@ -8,4 +8,4 @@ This design places some kind of meltable material in a bamboo basket above a hea
 
 This design is used to make the following items:
 
-#[Iron Scales](item:betterwithaddons:japanmat@12)
+![Iron Scales](item:betterwithaddons:japanmat@12)

@@ -1,7 +1,7 @@
 # Yumi
 
-#[Yumi](item:betterwithaddons:yumi@0)
+![Yumi](item:betterwithaddons:yumi@0)
 
 
 
-#[Ya](item:betterwithaddons:ya@0)
+![Ya](item:betterwithaddons:ya@0)
