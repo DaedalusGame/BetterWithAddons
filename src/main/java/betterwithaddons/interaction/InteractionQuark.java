@@ -1,22 +1,14 @@
 package betterwithaddons.interaction;
 
-import betterwithaddons.BetterWithAddons;
 import betterwithaddons.crafting.conditions.ConditionModule;
-import betterwithaddons.item.ModItems;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.IRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.ForgeRegistry;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class InteractionQuark extends Interaction {

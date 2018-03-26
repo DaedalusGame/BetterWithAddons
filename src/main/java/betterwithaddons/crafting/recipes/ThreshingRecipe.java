@@ -1,17 +1,19 @@
 package betterwithaddons.crafting.recipes;
 
 import betterwithaddons.item.ModItems;
-import betterwithmods.common.registry.ToolDamageRecipe;
-import betterwithmods.module.hardcore.crafting.HCLumber;
+import betterwithmods.common.registry.crafting.ToolDamageRecipe;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class ThreshingRecipe extends ToolDamageRecipe {
     public ThreshingRecipe(ResourceLocation group, ItemStack result, Ingredient input) {
@@ -25,9 +27,7 @@ public class ThreshingRecipe extends ToolDamageRecipe {
     }
 
     @Override
-    public float[] getSoundValues() {
-        return new float[]{0.25F, 2.5F};
-    }
+    public Pair<Float, Float> getSoundValues() { return Pair.of(0.25F, 2.5F); }
 
     @Override
     public ItemStack getExampleStack() {
@@ -56,5 +56,25 @@ public class ThreshingRecipe extends ToolDamageRecipe {
                 event.player.entityDropItem(ModItems.materialWheat.getMaterial("hay"), 0);
             }
         }
+    }
+
+    @Override
+    public boolean matches(InventoryCrafting inv, World worldIn) {
+        return this.isMatch(inv,worldIn);
+    }
+
+    @Override
+    public ItemStack getCraftingResult(InventoryCrafting inv) {
+        return this.result.copy();
+    }
+
+    @Override
+    public boolean canFit(int width, int height) {
+        return width * height >= 2;
+    }
+
+    @Override
+    public ItemStack getRecipeOutput() {
+        return this.result.copy();
     }
 }

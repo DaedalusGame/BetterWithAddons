@@ -8,13 +8,10 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockRawPastry;
-import betterwithmods.common.registry.ToolDamageRecipe;
 import betterwithmods.common.registry.bulk.manager.MillManager;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -53,12 +50,6 @@ public class InteractionWheat extends Interaction {
             ModItems.materialBag.subItemUnlocalizedNames[0] = "grain"; //Very ugly but y'know
         }
 
-        if(DIG_UP_CROPS) {
-            Blocks.POTATOES.setHardness(1.0f).setHarvestLevel("hoe", 0);
-            Blocks.CARROTS.setHardness(1.0f).setHarvestLevel("hoe", 0);
-            Blocks.BEETROOTS.setHardness(1.0f).setHarvestLevel("hoe", 0);
-        }
-
         MinecraftForge.EVENT_BUS.register(WheatHandler.class);
 
         ConditionModule.MODULES.put("HayBales", () -> CHANGE_HAY_BALES);
@@ -90,6 +81,12 @@ public class InteractionWheat extends Interaction {
     @Override
     void init() {
         OreDictionary.registerOre("hay", ModItems.materialWheat.getMaterial("hay"));
+
+        if(DIG_UP_CROPS) {
+            Blocks.POTATOES.setHardness(1.0f).setHarvestLevel("hoe", 0);
+            Blocks.CARROTS.setHardness(1.0f).setHarvestLevel("hoe", 0);
+            Blocks.BEETROOTS.setHardness(1.0f).setHarvestLevel("hoe", 0);
+        }
 
         if(MILL_GRAIN) {
             MillManager.getInstance().removeRecipe(new ItemStack(BWMBlocks.RAW_PASTRY, 1, BlockRawPastry.EnumType.BREAD.getMetadata()), ItemStack.EMPTY);

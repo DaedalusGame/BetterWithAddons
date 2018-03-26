@@ -2,11 +2,11 @@ package betterwithaddons.interaction.minetweaker;
 
 import betterwithaddons.handler.RotHandler;
 import betterwithaddons.handler.RotHandler.RotInfo;
-import betterwithaddons.interaction.InteractionCraftTweaker;
-import com.blamejared.mtlib.helpers.InputHelper;
-import com.blamejared.mtlib.utils.BaseUndoable;
+import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.mc1120.CraftTweaker;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.NotNull;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -19,22 +19,21 @@ public class Rotting {
 
     @ZenMethod
     public static void add(@NotNull IItemStack input, IItemStack output, long time, String baseName) {
-        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add(InputHelper.toStack(input),InputHelper.toStack(output),time,baseName));
+        CraftTweaker.LATE_ACTIONS.add(new Add(CraftTweakerMC.getItemStack(input),CraftTweakerMC.getItemStack(output),time,baseName));
     }
 
     @ZenMethod
     public static void remove(@NotNull IItemStack input)
     {
-        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove(InputHelper.toStack(input)));
+        CraftTweaker.LATE_ACTIONS.add(new Remove(CraftTweakerMC.getItemStack(input)));
     }
 
-    public static class Add extends BaseUndoable
+    public static class Add implements IAction
     {
         ItemStack stack;
         RotInfo rotInfo;
 
         public Add(ItemStack input, ItemStack output, long time, String baseName) {
-            super("Rotting");
             stack = input;
             rotInfo = new RotInfo(input,time,baseName,output);
         }
@@ -45,17 +44,15 @@ public class Rotting {
         }
 
         @Override
-        protected String getRecipeInfo() {
-            return stack.toString();
+        public String describe() {
+            return "Adding rotting item: "+stack.toString();
         }
     }
 
-    public static class Remove extends BaseUndoable
-    {
+    public static class Remove implements IAction {
         ItemStack stack;
 
         protected Remove(ItemStack stack) {
-            super("Rotting");
             this.stack = stack;
         }
 
@@ -65,8 +62,8 @@ public class Rotting {
         }
 
         @Override
-        protected String getRecipeInfo() {
-            return stack.toString();
+        public String describe() {
+            return "Removing rotting item: "+stack.toString();
         }
     }
 }

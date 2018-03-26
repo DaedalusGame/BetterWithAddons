@@ -3,6 +3,7 @@ package betterwithaddons.tileentity;
 import betterwithaddons.block.BlockLureTree;
 import betterwithaddons.interaction.InteractionBWA;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,6 +46,10 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
         }
     }
 
+    public static void addTreeFood(TreeFood recipe) {
+        TREE_FOODS.add(recipe);
+    }
+
     public static void addTreeFood(ItemStack stack, int amount)
     {
         TREE_FOODS.add(new TreeFood(stack,amount));
@@ -63,9 +68,9 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
 
     int currentFood = 0;
     int chargeTicks = 0;
-    private static ArrayList<Class> BLACKLIST = new ArrayList<>();
+    private static ArrayList<Class<? extends Entity>> BLACKLIST = new ArrayList<>();
 
-    public static void addBlacklistEntry(Class entity)
+    public static void addBlacklistEntry(Class<? extends Entity> entity)
     {
         BLACKLIST.add(entity);
     }

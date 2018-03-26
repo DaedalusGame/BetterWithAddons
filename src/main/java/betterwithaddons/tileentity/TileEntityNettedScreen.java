@@ -2,11 +2,11 @@ package betterwithaddons.tileentity;
 
 import betterwithaddons.block.EriottoMod.BlockNettedScreen;
 import betterwithaddons.block.EriottoMod.BlockSlat;
-import betterwithaddons.crafting.recipes.NetRecipe;
 import betterwithaddons.crafting.manager.CraftingManagerFireNet;
 import betterwithaddons.crafting.manager.CraftingManagerNet;
 import betterwithaddons.crafting.manager.CraftingManagerSandNet;
 import betterwithaddons.crafting.manager.CraftingManagerWaterNet;
+import betterwithaddons.crafting.recipes.NetRecipe;
 import betterwithaddons.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -113,7 +113,7 @@ public class TileEntityNettedScreen extends TileEntityBase implements ITickable
                 if (recipe != null) {
                     List<ItemStack> ret = recipe.getOutput();
                     if (ret != null && ret.size() > 0) {
-                        ItemUtil.consumeItem(items,recipe.getInput());
+                        ItemUtil.consumeItem(items,recipe.input);
                         world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 
                         for (int i = 0; i < ret.size(); i++) {

@@ -1,6 +1,5 @@
 package betterwithaddons.tileentity;
 
-import betterwithaddons.block.EriottoMod.BlockAncestrySand;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.entity.EntitySpirit;
 import betterwithaddons.interaction.InteractionEriottoMod;
@@ -11,7 +10,6 @@ import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.mechanical.BlockMechMachines;
 import betterwithmods.common.blocks.mechanical.tile.TileEntityFilteredHopper;
 import betterwithmods.util.InvUtils;
-import betterwithmods.util.MechanicalUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

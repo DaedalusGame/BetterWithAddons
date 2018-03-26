@@ -1,19 +1,19 @@
 package betterwithaddons.crafting.recipes;
 
-import betterwithaddons.crafting.OreStack;
-import betterwithaddons.util.ItemUtil;
+import betterwithaddons.util.IHasSize;
 import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class SmeltingRecipe {
-    public Object input = ItemStack.EMPTY;
+    public Ingredient input = Ingredient.EMPTY;
     public ItemStack output = ItemStack.EMPTY;
 
-    public SmeltingRecipe(Object input, ItemStack output)
+    public SmeltingRecipe(Ingredient input, ItemStack output)
     {
         this.input = input;
         this.output = output;
@@ -24,89 +24,21 @@ public class SmeltingRecipe {
         return this.output;
     }
 
-    public Object getInput()
-    {
-        return this.input;
-    }
-
     public List<ItemStack> getRecipeInputs() {
-        Object o = getInput();
-        if(o instanceof ItemStack)
-            return Lists.newArrayList((ItemStack) o);
-        if(o instanceof OreStack)
-            return ItemUtil.getOreList((OreStack)o);
-        return null;
+        return Lists.newArrayList(input.getMatchingStacks());
     }
 
     public List<ItemStack> getRecipeOutputs() {
         List<ItemStack> inputs = getRecipeInputs();
-        ArrayList<ItemStack> outputs = new ArrayList<>();
 
-        for (ItemStack input : inputs) {
-            outputs.add(getOutput(input));
-        }
-
-        return outputs;
+        return inputs.stream().map(this::getOutput).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public boolean matches(SmeltingRecipe recipe)
-    {
-        if(!isInputEmpty(this.getInput()) && !isInputEmpty(recipe.getInput()))
-        {
-            boolean match = this.stacksMatch(this.getInput(), recipe.getInput());
-            return match;
-        }
-        return false;
+    public boolean matchesInput(ItemStack item) {
+        return input.apply(item);
     }
 
-    public boolean matchesInput(ItemStack item)
-    {
-        if(isInputEmpty(input))
-            return false;
-        if(input instanceof ItemStack)
-        {
-            ItemStack stack = (ItemStack)input;
-            if(item.isItemEqual(stack) && item.getCount() >= stack.getCount())
-                return true;
-        }
-        else if(input instanceof OreStack)
-        {
-            OreStack stack = (OreStack)input;
-            if(stack.matches(item) && item.getCount() >= stack.getStackSize())
-                return true;
-        }
-        return false;
-    }
-
-    public int getInputCount()
-    {
-        if(input instanceof ItemStack)
-            return ((ItemStack) input).getCount();
-        else if(input instanceof OreStack)
-            return ((OreStack) input).getStackSize();
-        return 0;
-    }
-
-    private boolean isInputEmpty(Object stack) {
-        return stack == null || stack instanceof ItemStack && ((ItemStack)stack).isEmpty();
-    }
-
-    private boolean stacksMatch(Object first, Object second)
-    {
-        if(first instanceof ItemStack && second instanceof ItemStack) {
-            ItemStack firstitem = (ItemStack) first;
-            ItemStack seconditem = (ItemStack) second;
-            if(firstitem.isEmpty() || seconditem.isEmpty())
-                return false;
-            return firstitem.getItem() == seconditem.getItem() && firstitem.getItemDamage() == seconditem.getItemDamage() && firstitem.getCount() == seconditem.getCount();
-        }
-        if(first instanceof OreStack && second instanceof OreStack)
-        {
-            OreStack firstitem = (OreStack) first;
-            OreStack seconditem = (OreStack) second;
-            return Objects.equals(firstitem.getOreName(), seconditem.getOreName()) && firstitem.getStackSize() == seconditem.getStackSize();
-        }
-
-        return false;
+    public int getInputCount() {
+        return input instanceof IHasSize ? ((IHasSize) input).getSize() : 1;
     }
 }

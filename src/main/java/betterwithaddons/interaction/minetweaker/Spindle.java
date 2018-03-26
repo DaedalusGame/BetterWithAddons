@@ -2,20 +2,18 @@ package betterwithaddons.interaction.minetweaker;
 
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
 import betterwithaddons.crafting.recipes.SpindleRecipe;
-import betterwithaddons.interaction.InteractionCraftTweaker;
-import betterwithaddons.interaction.jei.category.SpindleRecipeCategory;
-import com.blamejared.mtlib.helpers.InputHelper;
-import com.blamejared.mtlib.utils.BaseListAddition;
-import com.blamejared.mtlib.utils.BaseListRemoval;
-import com.google.common.collect.Lists;
-import crafttweaker.CraftTweakerAPI;
+import betterwithaddons.util.IngredientCraftTweaker;
+import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
-import net.minecraft.item.ItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.mc1120.CraftTweaker;
 import stanhebben.zenscript.annotations.NotNull;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
+
+import java.util.List;
 
 @ZenRegister
 @ZenClass(Spindle.clazz)
@@ -24,37 +22,52 @@ public class Spindle {
 
     @ZenMethod
     public static void add(IItemStack[] outputs, @NotNull IIngredient input, boolean consumesSpindle) {
-        SpindleRecipe r = new SpindleRecipe(consumesSpindle, InputHelper.toObject(input), InputHelper.toStacks(outputs));
-        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add(r));
+        SpindleRecipe r = new SpindleRecipe(consumesSpindle, new IngredientCraftTweaker(input), CraftTweakerMC.getItemStacks(outputs));
+        CraftTweaker.LATE_ACTIONS.add(new Add(r));
     }
 
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove(InputHelper.toStack(input)));
+        List<SpindleRecipe> recipes = CraftingManagerSpindle.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
+        CraftTweaker.LATE_ACTIONS.add(new Remove(recipes));
     }
 
-    public static class Add extends BaseListAddition<SpindleRecipe>
+    public static class Add implements IAction
     {
-        public Add(SpindleRecipe spindleRecipe) {
-            super("Spindle", CraftingManagerSpindle.getInstance().getRecipes(), Lists.newArrayList(spindleRecipe));
+        SpindleRecipe recipe;
+
+        public Add(SpindleRecipe recipe) {
+            this.recipe = recipe;
         }
 
         @Override
-        protected String getRecipeInfo(SpindleRecipe recipe) {
-            return recipe.getInput().toString();
-        }
-    }
-
-    public static class Remove extends BaseListRemoval<SpindleRecipe>
-    {
-        protected Remove(ItemStack input) {
-            super("Spindle", CraftingManagerSpindle.getInstance().getRecipes(), CraftingManagerSpindle.getInstance().findRecipeForRemoval(input));
+        public void apply() {
+            CraftingManagerSpindle.getInstance().addRecipe(recipe);
         }
 
         @Override
-        protected String getRecipeInfo(SpindleRecipe recipe) {
-            return recipe.getInput().toString();
+        public String describe() {
+            return "Adding Drying Unit recipe:"+recipe.toString();
+        }
+    }
+
+    public static class Remove implements IAction
+    {
+        List<SpindleRecipe> recipes;
+
+        public Remove(List<SpindleRecipe> recipes) {
+            this.recipes = recipes;
+        }
+
+        @Override
+        public void apply() {
+            CraftingManagerSpindle.getInstance().getRecipes().removeAll(recipes);
+        }
+
+        @Override
+        public String describe() {
+            return "Removing "+recipes.size()+" Drying Unit recipes";
         }
     }
 }

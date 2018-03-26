@@ -10,14 +10,11 @@ import betterwithaddons.lib.Reference;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.tileentity.ModTileEntities;
 import betterwithmods.common.BWMRecipes;
-import com.blamejared.mtlib.helpers.InputHelper;
-import crafttweaker.api.item.IIngredient;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -30,7 +27,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions = "1.12,1.12.1,1.12.2", dependencies = "required-after:betterwithmods")
 public class BetterWithAddons

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NetRecipeWrapper extends BlankRecipeWrapper {
     public NetRecipe recipe;
@@ -39,32 +40,12 @@ public class NetRecipeWrapper extends BlankRecipeWrapper {
 
     public List<ItemStack> getInputWithoutSand()
     {
-        List<ItemStack> inputs = new ArrayList<>();
-        Object obj = recipe.getInput();
-
-        if(obj instanceof ItemStack)
-        {
-            ItemStack stack = (ItemStack)obj;
-            if(!stack.isEmpty() && stack.getItem() != null)
-                inputs.add(stack.copy());
-        }
-        else if(obj instanceof List) {
-            inputs.addAll((List<ItemStack>)obj);
-        }
-
-        return inputs;
+        return recipe.getInput().stream().filter(stack -> !stack.isEmpty()).map(ItemStack::copy).collect(Collectors.toList());
     }
 
     public List<ItemStack> getOutputs()
     {
-        List<ItemStack> outputs = new ArrayList<ItemStack>();
-        for (ItemStack stack : recipe.getOutput()) {
-            if(!stack.isEmpty()) {
-                outputs.add(stack.copy());
-            }
-        }
-
-        return outputs;
+        return recipe.getOutput().stream().filter(stack -> !stack.isEmpty()).map(ItemStack::copy).collect(Collectors.toList());
     }
 
     @Nonnull

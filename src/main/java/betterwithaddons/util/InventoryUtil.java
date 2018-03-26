@@ -9,7 +9,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.IItemHandler;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 

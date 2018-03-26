@@ -1,7 +1,6 @@
 package betterwithaddons.block.EriottoMod;
 
 import betterwithaddons.BetterWithAddons;
-import betterwithaddons.block.BlockBase;
 import betterwithaddons.block.BlockContainerBase;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.lib.GuiIds;
@@ -11,11 +10,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;

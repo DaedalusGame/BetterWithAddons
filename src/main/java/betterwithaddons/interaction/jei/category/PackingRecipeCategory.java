@@ -1,15 +1,14 @@
 package betterwithaddons.interaction.jei.category;
 
 import betterwithaddons.interaction.jei.wrapper.PackingRecipeWrapper;
-import betterwithaddons.interaction.jei.wrapper.SmeltingRecipeWrapper;
-import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.gui.*;
+import mezz.jei.api.gui.IDrawable;
+import mezz.jei.api.gui.IGuiItemStackGroup;
+import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.util.Translator;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;

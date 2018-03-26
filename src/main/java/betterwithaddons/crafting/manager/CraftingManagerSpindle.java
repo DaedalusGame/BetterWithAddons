@@ -1,11 +1,9 @@
 package betterwithaddons.crafting.manager;
 
-import betterwithaddons.crafting.OreStack;
 import betterwithaddons.crafting.recipes.SpindleRecipe;
-import betterwithaddons.util.InventoryUtil;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -19,55 +17,26 @@ public class CraftingManagerSpindle
 
     public CraftingManagerSpindle()
     {
-        this.recipes = new ArrayList<SpindleRecipe>();
+        this.recipes = new ArrayList<>();
     }
 
-    public static final CraftingManagerSpindle getInstance()
+    public static CraftingManagerSpindle getInstance()
     {
         return instance;
     }
 
-    public void addRecipe(ItemStack[] outputs, ItemStack input, boolean consumesSpindle)
-    {
-        addRecipe(outputs, (Object)input, consumesSpindle);
-    }
-
-    public void addRecipe(ItemStack[] outputs, OreStack input, boolean consumesSpindle)
-    {
-        addRecipe(outputs, (Object)input, consumesSpindle);
-    }
-
-    public void addRecipe(ItemStack[] outputs, Object input, boolean consumesSpindle)
+    public void addRecipe(ItemStack[] outputs, Ingredient input, boolean consumesSpindle)
     {
         recipes.add(createRecipe(outputs, input, consumesSpindle));
     }
 
+    public void addRecipe(SpindleRecipe recipe)
+    {
+        recipes.add(recipe);
+    }
+
     public List<SpindleRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
         return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
-    }
-
-    public boolean removeRecipe(ItemStack[] outputs, Object input)
-    {
-        SpindleRecipe recipe = createRecipe(outputs, input, true);
-        int matchingIndex = getMatchingRecipeIndex(recipe);
-
-        if(matchingIndex >= 0)
-        {
-            this.recipes.remove(matchingIndex);
-            return true;
-        }
-        return false;
-    }
-
-    private int getMatchingRecipeIndex(SpindleRecipe recipe)
-    {
-        for(int i = 0; i < this.recipes.size(); i++)
-        {
-            SpindleRecipe tempRecipe = this.recipes.get(i);
-            if(tempRecipe.matches(recipe))
-                return i;
-        }
-        return -1;
     }
 
     public SpindleRecipe getMostValidRecipe(List<EntityItem> inv)
@@ -82,19 +51,11 @@ public class CraftingManagerSpindle
 
     public List<SpindleRecipe> getValidCraftingRecipes(List<EntityItem> inv)
     {
-        ArrayList<SpindleRecipe> validrecipes = new ArrayList<SpindleRecipe>();
 
-        for (SpindleRecipe recipe: recipes) {
-            if(recipe.matches(inv))
-            {
-                validrecipes.add(recipe);
-            }
-        }
-
-        return validrecipes;
+        return recipes.stream().filter(recipe -> recipe.matches(inv)).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private SpindleRecipe createRecipe(ItemStack[] outputs, Object input, boolean consumesSpindle)
+    private SpindleRecipe createRecipe(ItemStack[] outputs, Ingredient input, boolean consumesSpindle)
     {
         return new SpindleRecipe(consumesSpindle, input, outputs);
     }
@@ -102,18 +63,5 @@ public class CraftingManagerSpindle
     public List<SpindleRecipe> getRecipes()
     {
         return this.recipes;
-    }
-
-    //Lazy way of ensuring the ore dictionary entries were properly implemented.
-    public void refreshRecipes()
-    {
-        List<SpindleRecipe> recipes = getRecipes();
-        if(!recipes.isEmpty())
-        {
-            this.recipes = new ArrayList<SpindleRecipe>();
-            for(SpindleRecipe r : recipes) {
-                this.recipes.add(createRecipe(r.getOutput().toArray(new ItemStack[0]), r.input, r.willConsumeSpindle()));
-            }
-        }
     }
 }

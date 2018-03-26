@@ -4,25 +4,25 @@ import betterwithaddons.crafting.manager.CraftingManagerInfuser;
 import betterwithaddons.crafting.manager.CraftingManagerInfuserTransmutation;
 import betterwithaddons.crafting.recipes.infuser.InfuserRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
-import betterwithaddons.interaction.InteractionCraftTweaker;
 import betterwithaddons.util.IngredientCraftTweaker;
-import com.blamejared.mtlib.helpers.InputHelper;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.recipes.IRecipeAction;
 import crafttweaker.api.recipes.IRecipeFunction;
+import crafttweaker.mc1120.CraftTweaker;
 import crafttweaker.mc1120.recipes.MCRecipeBase;
 import crafttweaker.mc1120.recipes.MCRecipeManager;
 import crafttweaker.mc1120.recipes.MCRecipeShaped;
 import crafttweaker.mc1120.recipes.MCRecipeShapeless;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import java.util.Arrays;
 import java.util.List;
 
 @ZenRegister
@@ -32,38 +32,44 @@ public class Infuser {
 
     @ZenMethod
     public void addShaped(IItemStack output, IIngredient[][] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {
-        InteractionCraftTweaker.LATE_ADDITIONS.add(new AddShaped(output, ingredients, spirits, function, action, false, false));
+        CraftTweaker.LATE_ACTIONS.add(new AddShaped(output, ingredients, spirits, function, action, false, false));
     }
 
     @ZenMethod
     public void addShapedMirrored(IItemStack output, IIngredient[][] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {
-        InteractionCraftTweaker.LATE_ADDITIONS.add(new AddShaped(output, ingredients, spirits, function, action, true, false));
+        CraftTweaker.LATE_ACTIONS.add(new AddShaped(output, ingredients, spirits, function, action, true, false));
     }
 
     @ZenMethod
     public void addShapeless(IItemStack output, IIngredient[] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {
-        InteractionCraftTweaker.LATE_ADDITIONS.add(new AddShapeless(output, ingredients, spirits, function, action, false));
+        CraftTweaker.LATE_ACTIONS.add(new AddShapeless(output, ingredients, spirits, function, action, false));
     }
 
     @ZenMethod
     public void addTransmutation(IItemStack output, IIngredient input, int spirits) {
-        InteractionCraftTweaker.LATE_ADDITIONS.add(new AddTransmutation(output, input, spirits));
+        CraftTweaker.LATE_ACTIONS.add(new AddTransmutation(CraftTweakerMC.getItemStack(output), new IngredientCraftTweaker(input), spirits));
     }
 
     @ZenMethod
     public void removeAll() {
-        InteractionCraftTweaker.LATE_REMOVALS.add(new RemoveAll());
+        CraftTweaker.LATE_ACTIONS.add(new RemoveAll());
     }
 
     @ZenMethod
     public void remove(IItemStack output) {
-        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove(InputHelper.toStack(output)));
+        CraftTweaker.LATE_ACTIONS.add(new Remove(CraftTweakerMC.getItemStack(output)));
     }
 
     @ZenMethod
     public void removeTransmutation(IItemStack output) {
-        InteractionCraftTweaker.LATE_REMOVALS.add(new RemoveTransmutation(InputHelper.toStack(output)));
+        CraftTweaker.LATE_ACTIONS.add(new RemoveTransmutation(CraftTweakerMC.getItemStack(output)));
     }
+
+    @ZenMethod
+    public void removeAllTransmutation() {
+        CraftTweaker.LATE_ACTIONS.add(new RemoveAllTransmutations());
+    }
+
 
     public static class BaseAdd implements IAction {
         protected MCRecipeBase recipe;
@@ -116,11 +122,11 @@ public class Infuser {
     }
 
     private static class AddTransmutation implements IAction {
-        protected IItemStack output;
-        protected IIngredient input;
+        protected ItemStack output;
+        protected Ingredient input;
         protected int requiredSpirits;
 
-        public AddTransmutation(IItemStack output, IIngredient input, int spirits)
+        public AddTransmutation(ItemStack output, Ingredient input, int spirits)
         {
             this.output = output;
             this.input = input;
@@ -129,7 +135,7 @@ public class Infuser {
 
         @Override
         public void apply() {
-            CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipeCT(input,requiredSpirits,output));
+            CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(input,requiredSpirits,output));
         }
 
         @Override
@@ -193,25 +199,6 @@ public class Infuser {
 
         public String describe() {
             return "Removing all ancestral transmutation recipes";
-        }
-    }
-
-    public static class TransmutationRecipeCT extends TransmutationRecipe {
-        IngredientCraftTweaker input;
-
-        public TransmutationRecipeCT(IIngredient input, int requiredSpirit, IItemStack output) {
-            super(input, requiredSpirit, InputHelper.toStack(output));
-            this.input = new IngredientCraftTweaker(input);
-        }
-
-        @Override
-        public boolean matchesInput(ItemStack item) {
-            return input.apply(item);
-        }
-
-        @Override
-        public List<ItemStack> getRecipeInputs() {
-            return Arrays.asList(input.getMatchingStacks());
         }
     }
 }

@@ -5,8 +5,6 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.util.InventoryUtil;
 import betterwithmods.api.BWMAPI;
 import betterwithmods.api.tile.IMechanicalPower;
-import betterwithmods.common.blocks.mechanical.IBlockActive;
-import betterwithmods.util.MechanicalUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;

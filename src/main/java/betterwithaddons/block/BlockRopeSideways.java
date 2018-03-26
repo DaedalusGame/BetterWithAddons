@@ -2,16 +2,12 @@ package betterwithaddons.block;
 
 import betterwithaddons.tileentity.TileEntityRopeSideways;
 import betterwithaddons.util.BoundingUtil;
-import betterwithaddons.util.InventoryUtil;
 import betterwithaddons.util.ItemUtil;
 import betterwithmods.api.block.PropertyObject;
 import betterwithmods.common.BWMBlocks;
-import betterwithmods.common.BWMItems;
 import betterwithmods.util.InvUtils;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -20,7 +16,6 @@ import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -44,7 +39,6 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashSet;
-import java.util.List;
 
 public class BlockRopeSideways extends BlockContainerBase {
     private static AxisAlignedBB AABB_X = new AxisAlignedBB(0, 0.75, 0.4375, 1, 0.875, 0.5625);

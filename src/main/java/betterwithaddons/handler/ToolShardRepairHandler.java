@@ -1,8 +1,6 @@
 package betterwithaddons.handler;
 
 import betterwithaddons.item.ModItems;
-import betterwithaddons.util.ItemUtil;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

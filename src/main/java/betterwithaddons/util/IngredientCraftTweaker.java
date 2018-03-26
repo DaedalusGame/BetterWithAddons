@@ -1,15 +1,15 @@
 package betterwithaddons.util;
 
-import com.blamejared.mtlib.helpers.InputHelper;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IngredientCraftTweaker extends Ingredient {
+public class IngredientCraftTweaker extends Ingredient implements IHasSize {
     IIngredient predicate;
 
     public IngredientCraftTweaker(IIngredient ingredient)
@@ -20,13 +20,18 @@ public class IngredientCraftTweaker extends Ingredient {
     @Override
     public ItemStack[] getMatchingStacks() {
         List<IItemStack> stacks = predicate != null ? predicate.getItems() : new ArrayList<>();
-        return InputHelper.toStacks(stacks.toArray(new IItemStack[stacks.size()]));
+        return CraftTweakerMC.getItemStacks(stacks);
     }
 
     @Override
     public boolean apply(ItemStack stack) {
         if(predicate == null)
             return stack.isEmpty();
-        return predicate.matches(InputHelper.toIItemStack(stack));
+        return predicate.matches(CraftTweakerMC.getIItemStack(stack));
+    }
+
+    @Override
+    public int getSize() {
+        return predicate.getAmount();
     }
 }

@@ -1,17 +1,11 @@
 package betterwithaddons.tileentity;
 
 import betterwithaddons.block.BlockRopeSideways;
-import betterwithaddons.util.ItemMeta;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.HashMap;
 
 public class TileEntityRopeSideways extends TileEntityBase {
     ItemStack plankStack = ItemStack.EMPTY;

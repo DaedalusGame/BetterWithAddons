@@ -1,15 +1,12 @@
 package betterwithaddons.interaction.minetweaker;
 
-import betterwithaddons.interaction.InteractionCraftTweaker;
 import betterwithaddons.tileentity.TileEntityLureTree;
 import betterwithaddons.tileentity.TileEntityLureTree.TreeFood;
-import com.blamejared.mtlib.helpers.InputHelper;
-import com.blamejared.mtlib.utils.BaseListAddition;
-import com.blamejared.mtlib.utils.BaseListRemoval;
-import com.google.common.collect.Lists;
-import crafttweaker.CraftTweakerAPI;
+import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.mc1120.CraftTweaker;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.NotNull;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -22,39 +19,53 @@ public class LureTree {
 
     @ZenMethod
     public static void add(@NotNull IItemStack input, int food) {
-        ItemStack stack = InputHelper.toStack(input);
+        ItemStack stack = CraftTweakerMC.getItemStack(input);
         TreeFood r = new TreeFood(stack,food);
-        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add(r));
+        CraftTweaker.LATE_ACTIONS.add(new Add(r));
     }
 
     @ZenMethod
     public static void remove(@NotNull IItemStack input)
     {
-        ItemStack stack = InputHelper.toStack(input);
-        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove(stack));
+        ItemStack stack = CraftTweakerMC.getItemStack(input);
+        CraftTweaker.LATE_ACTIONS.add(new Remove(stack));
     }
 
-    public static class Add extends BaseListAddition<TreeFood>
+    public static class Add implements IAction
     {
+        TreeFood recipe;
+
         public Add(TreeFood recipe) {
-            super("LureTree", TileEntityLureTree.getTreeFoods(), Lists.newArrayList(recipe));
+            this.recipe = recipe;
         }
 
         @Override
-        protected String getRecipeInfo(TreeFood recipe) {
-            return recipe.stack.toString();
+        public void apply() {
+            TileEntityLureTree.addTreeFood(recipe);
+        }
+
+        @Override
+        public String describe() {
+            return "Adding Lure Tree food: "+recipe.stack.toString();
         }
     }
 
-    public static class Remove extends BaseListRemoval<TreeFood>
+    public static class Remove implements IAction
     {
+        TreeFood recipe;
+
         protected Remove(ItemStack stack) {
-            super("LureTree", TileEntityLureTree.getTreeFoods(), Lists.newArrayList(TileEntityLureTree.getTreeFood(stack)));
+            recipe = TileEntityLureTree.getTreeFood(stack);
         }
 
         @Override
-        protected String getRecipeInfo(TreeFood recipe) {
-            return recipe.stack.toString();
+        public void apply() {
+            TileEntityLureTree.getTreeFoods().remove(recipe);
+        }
+
+        @Override
+        public String describe() {
+            return "Removing Lure Tree food:"+recipe.stack.toString();
         }
     }
 }

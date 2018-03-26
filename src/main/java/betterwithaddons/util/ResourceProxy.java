@@ -3,16 +3,12 @@ package betterwithaddons.util;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.AbstractResourcePack;
-import net.minecraft.client.resources.IResourcePack;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

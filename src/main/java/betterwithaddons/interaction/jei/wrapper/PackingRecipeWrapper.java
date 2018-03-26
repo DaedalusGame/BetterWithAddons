@@ -1,7 +1,6 @@
 package betterwithaddons.interaction.jei.wrapper;
 
 import betterwithaddons.crafting.recipes.PackingRecipe;
-import betterwithaddons.crafting.recipes.SmeltingRecipe;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;

@@ -1,7 +1,6 @@
 package betterwithaddons.entity;
 
 import betterwithaddons.interaction.InteractionEriottoMod;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.init.PotionTypes;

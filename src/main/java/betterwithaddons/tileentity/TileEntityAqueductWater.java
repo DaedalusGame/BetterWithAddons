@@ -3,7 +3,6 @@ package betterwithaddons.tileentity;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionBWA;
 import betterwithmods.common.BWMBlocks;
-import betterwithmods.common.blocks.mechanical.BlockPump;
 import betterwithmods.util.DirUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;

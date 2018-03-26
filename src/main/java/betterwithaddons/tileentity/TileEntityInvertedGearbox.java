@@ -2,7 +2,6 @@ package betterwithaddons.tileentity;
 
 import betterwithmods.api.BWMAPI;
 import betterwithmods.common.blocks.mechanical.tile.TileGearbox;
-import betterwithmods.util.MechanicalUtil;
 import net.minecraft.util.EnumFacing;
 
 public class TileEntityInvertedGearbox extends TileGearbox {

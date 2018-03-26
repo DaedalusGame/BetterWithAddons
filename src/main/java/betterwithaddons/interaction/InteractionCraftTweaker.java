@@ -10,8 +10,8 @@ import java.util.List;
 public class InteractionCraftTweaker extends Interaction {
     final String modid = "crafttweaker";
 
-    public static List<IAction> LATE_REMOVALS = new LinkedList<>();
-    public static List<IAction> LATE_ADDITIONS = new LinkedList<>();
+    private static List<IAction> LATE_REMOVALS = new LinkedList<>();
+    private static List<IAction> LATE_ADDITIONS = new LinkedList<>();
 
     @Override
     boolean isActive() {

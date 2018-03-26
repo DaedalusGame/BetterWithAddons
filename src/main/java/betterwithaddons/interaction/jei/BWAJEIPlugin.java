@@ -11,7 +11,6 @@ import betterwithaddons.crafting.recipes.infuser.InfuserRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.interaction.jei.category.*;
 import betterwithaddons.interaction.jei.wrapper.*;
-import betterwithmods.module.compat.jei.wrapper.BulkRecipeWrapper;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IJeiHelpers;
@@ -52,7 +51,6 @@ public class BWAJEIPlugin extends BlankModPlugin {
         );
 
         reg.handleRecipes(SpindleRecipe.class, SpindleRecipeWrapper::new, SpindleRecipeCategory.UID);
-        reg.handleRecipes(CrateRecipe.class, recipe -> new BulkRecipeWrapper(helper,recipe), CrateRecipeCategory.UID);
         reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, SandNetRecipeCategory.UID);
         reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, WaterNetRecipeCategory.UID);
         reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, FireNetRecipeCategory.UID);
@@ -65,7 +63,6 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.handleRecipes(InfuserRecipe.class, recipe -> new InfuserRecipeWrapper(getCraftingRecipeWrapper(helper, recipe.internal),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
 
         reg.addRecipes(CraftingManagerSpindle.getInstance().getRecipes(),SpindleRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerCrate.getInstance().getRecipes(),CrateRecipeCategory.UID);
         reg.addRecipes(CraftingManagerSandNet.getInstance().getRecipes(),SandNetRecipeCategory.UID);
         reg.addRecipes(CraftingManagerWaterNet.getInstance().getRecipes(),WaterNetRecipeCategory.UID);
         reg.addRecipes(CraftingManagerFireNet.getInstance().getRecipes(),FireNetRecipeCategory.UID);

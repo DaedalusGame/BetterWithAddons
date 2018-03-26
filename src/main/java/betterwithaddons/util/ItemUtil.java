@@ -1,26 +1,14 @@
 package betterwithaddons.util;
 
-import betterwithaddons.crafting.OreStack;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ItemUtil
 {
-	public static List<ItemStack> getOreList(OreStack stack)
-	{
-		int stackSize = stack.getStackSize();
-		List<ItemStack> list = new ArrayList<ItemStack>();
-		if(stack.getOres() != null && !stack.getOres().isEmpty()) {
-			list.addAll(stack.getOres().stream().map(s -> new ItemStack(s.getItem(), stackSize, s.getItemDamage())).collect(Collectors.toList()));
-		}
-		return list;
-	}
-
 	public static boolean matchesOreDict(ItemStack stack, String oreDictName)
 	{
 		if(stack.isEmpty()) return false;
@@ -79,43 +67,15 @@ public class ItemUtil
 		return item instanceof ItemTool || item instanceof ItemArmor || item instanceof ItemSword || item instanceof ItemShears || item instanceof ItemBow || item instanceof ItemHoe;
 	}
 
-	public static boolean consumeItem(List<EntityItem> inv, Object stack)
+	public static boolean consumeItem(List<EntityItem> inv, Ingredient ingredient)
 	{
-		if(stack instanceof ItemStack)
-			return consumeItem(inv,(ItemStack)stack);
-		if(stack instanceof OreStack)
-			return consumeItem(inv,(OreStack)stack);
-		return false;
-	}
-
-	public static boolean consumeItem(List<EntityItem> inv, ItemStack stack)
-	{
-		int remainder = stack.getCount();
-
-		for (EntityItem ent: inv) {
+		int amount = ingredient instanceof IHasSize ? ((IHasSize) ingredient).getSize() : 1;
+		for (EntityItem ent : inv) {
 			ItemStack item = ent.getItem();
-			if(stack.isItemEqual(item) || (stack.getMetadata() == OreDictionary.WILDCARD_VALUE && stack.getItem() == item.getItem()))
-			{
-				remainder -= consumeItem(ent,remainder);
-			}
+			if(ingredient.apply(item))
+				amount -= consumeItem(ent,amount);
 		}
-
-		return remainder <= 0;
-	}
-
-	public static boolean consumeItem(List<EntityItem> inv, OreStack stack)
-	{
-		int remainder = stack.getStackSize();
-
-		for (EntityItem ent: inv) {
-			ItemStack item = ent.getItem();
-			if(stack.matches(item))
-			{
-				remainder -= consumeItem(ent,remainder);
-			}
-		}
-
-		return remainder <= 0;
+		return amount <= 0;
 	}
 
 	public static int consumeItem(EntityItem item, int n)

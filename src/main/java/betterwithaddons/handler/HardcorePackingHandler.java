@@ -1,36 +1,27 @@
 package betterwithaddons.handler;
 
-import betterwithaddons.crafting.manager.CraftingManagerCrate;
-import betterwithaddons.crafting.manager.CraftingManagerInfuser;
 import betterwithaddons.crafting.manager.CraftingManagerPacking;
-import betterwithaddons.crafting.recipes.CrateRecipe;
 import betterwithaddons.crafting.recipes.PackingRecipe;
-import betterwithmods.common.blocks.mechanical.tile.TileEntityFilteredHopper;
-import betterwithmods.util.InvUtils;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HardcorePackingHandler {
-    HashSet<TileEntityPiston> activePistons = new HashSet<>();
+    Set<TileEntityPiston> activePistons =  Collections.synchronizedSet(new HashSet<>());
 
     @SubscribeEvent
     public void hardcorePackingInit(AttachCapabilitiesEvent<TileEntity> event) {
@@ -42,11 +33,12 @@ public class HardcorePackingHandler {
 
     @SubscribeEvent
     public void hardcorePackingCompress(TickEvent.WorldTickEvent event) {
+        if(event.world == null || event.world.isRemote)
+            return;
         HashSet<TileEntityPiston> toIterate = new HashSet<>(activePistons);
         HashSet<TileEntityPiston> toRemove = new HashSet<>();
         for (TileEntityPiston piston: toIterate) {
             World world = piston.getWorld();
-
             toRemove.add(piston);
 
             if(world != null && !world.isRemote && piston != null && piston.isExtending())
@@ -58,17 +50,15 @@ public class HardcorePackingHandler {
 
                 BlockPos compressPos = shovePos.offset(facing);
                 IBlockState compressState = world.getBlockState(compressPos);
-                if(isEmpty(world, compressPos, compressState) && isSurrounded(world,compressPos,facing.getOpposite()))
-                {
+                if(isEmpty(world, compressPos, compressState) && isSurrounded(world,compressPos,facing.getOpposite())) {
                     AxisAlignedBB blockMask = new AxisAlignedBB(shovePos).union(new AxisAlignedBB(compressPos));
-                    List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class,blockMask);
-                    PackingRecipe recipe = CraftingManagerPacking.getInstance().getMostValidRecipe(compressState,items);
-                    if(recipe != null && recipe.consumeIngredients(items)) {
-                        world.setBlockState(compressPos, recipe.getOutput(compressState,items));
+                    List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, blockMask);
+                    PackingRecipe recipe = CraftingManagerPacking.getInstance().getMostValidRecipe(compressState, items);
+                    if (recipe != null && recipe.consumeIngredients(items)) {
+                        world.setBlockState(compressPos, recipe.getOutput(compressState, items));
                     }
                 }
-
-            }
+        }
         }
 
         activePistons.removeAll(toRemove);

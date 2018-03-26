@@ -2,8 +2,8 @@ package betterwithaddons.crafting.manager;
 
 import betterwithaddons.block.EriottoMod.BlockCherryBox.CherryBoxType;
 import betterwithaddons.crafting.recipes.CherryBoxRecipe;
-import betterwithaddons.crafting.recipes.NetRecipe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,11 +23,15 @@ public abstract class CraftingManagerCherryBox {
         return CherryBoxType.NONE;
     }
 
-    public void addRecipe(Object input, ItemStack output) {
+    public void addRecipe(Ingredient input, ItemStack output) {
         this.recipes.add(createRecipe(input, output));
     }
 
-    protected CherryBoxRecipe createRecipe(Object input, ItemStack output)
+    public void addRecipe(CherryBoxRecipe recipe) {
+        this.recipes.add(recipe);
+    }
+
+    protected CherryBoxRecipe createRecipe(Ingredient input, ItemStack output)
     {
         return new CherryBoxRecipe(getType(),input,output);
     }
@@ -35,7 +39,6 @@ public abstract class CraftingManagerCherryBox {
     public List<CherryBoxRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
         return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
     }
-
 
     @Nullable
     public ItemStack getWorkResult(ItemStack input) {

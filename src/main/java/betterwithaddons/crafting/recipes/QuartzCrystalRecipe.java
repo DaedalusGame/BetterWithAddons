@@ -62,8 +62,7 @@ public class QuartzCrystalRecipe extends CauldronRecipe {
                     int souls = compound.getInteger("QuartzSouls");
 
                     if(lidOn) {
-                        if (growth >= 20)//TODO: configurable
-                        {
+                        if (growth >= 20) {//TODO: configurable
                             result.add(new ItemStack(Items.QUARTZ, stack.getCount()));
                             stack.shrink(1);
                         } else {

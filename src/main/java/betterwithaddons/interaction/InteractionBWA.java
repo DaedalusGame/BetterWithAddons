@@ -1,7 +1,10 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
-import betterwithaddons.block.*;
+import betterwithaddons.block.BlockModUnbaked;
+import betterwithaddons.block.BlockRopeSideways;
+import betterwithaddons.block.BlockWeight;
+import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.recipes.AdobeRecipe;
 import betterwithaddons.crafting.recipes.FoodCombiningRecipe;
@@ -426,7 +429,7 @@ public class InteractionBWA extends Interaction {
 
             if(item instanceof ItemFishFood || ItemUtil.matchesOreDict(stack,"listAllfish"))
                 RotHandler.addRottingItem(stack,FISH_ROT_TIME,"fish",new ItemStack(Items.ROTTEN_FLESH));
-            else if(ItemUtil.matchesOreDict(stack,"listAllmeat") || ItemUtil.matchesOreDict(stack,"listAllmeatcooked"))
+            else if(ItemUtil.matchesOreDict(stack,"foodMeat") || ItemUtil.matchesOreDict(stack,"listAllmeat") || ItemUtil.matchesOreDict(stack,"listAllmeatcooked"))
                 RotHandler.addRottingItem(stack,MEAT_ROT_TIME,"meat",new ItemStack(Items.ROTTEN_FLESH));
             else if(isFruit(stack))
                 RotHandler.addRottingItem(stack,FRUIT_ROT_TIME,"fruit",new ItemStack(ModItems.rottenFood));

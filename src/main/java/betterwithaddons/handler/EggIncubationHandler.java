@@ -1,6 +1,5 @@
 package betterwithaddons.handler;
 
-import betterwithaddons.interaction.InteractionBTWTweak;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockLight;

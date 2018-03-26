@@ -1,19 +1,17 @@
 package betterwithaddons.interaction;
 
-import betterwithaddons.crafting.OreStack;
 import betterwithaddons.crafting.conditions.ConditionModule;
-import betterwithaddons.crafting.manager.CraftingManagerCrate;
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
-import betterwithaddons.handler.CompressionHandler;
-import betterwithaddons.handler.GrassHandler;
-import betterwithaddons.handler.PatientiaHandler;
+import betterwithaddons.crafting.recipes.HopperCratingRecipe;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
+import betterwithaddons.util.IngredientSized;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.HopperInteractions;
 import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
@@ -22,13 +20,10 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.ForgeRegistry;
-import org.apache.http.config.Registry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -75,9 +70,6 @@ public class InteractionCondensedOutputs extends Interaction {
     @Override
     public void preInit() {
         ConditionModule.MODULES.put("CondensedOutputs", this::isActive);
-
-        if(HOPPER_COMPRESSES_CRATES)
-            MinecraftForge.EVENT_BUS.register(new CompressionHandler());
     }
 
     @Override
@@ -92,8 +84,8 @@ public class InteractionCondensedOutputs extends Interaction {
 
         CauldronManager.getInstance().addRecipe(new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.DUNG.getMeta()),new Object[]{new betterwithmods.common.registry.OreStack("dung",9)});
 
-        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH)},new OreStack("fiberHemp",9),false);
-        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.ROPE.getMeta())},new ItemStack(BWMBlocks.ROPE,9),false);
+        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH)}, IngredientSized.fromOredict("fiberHemp",9),false);
+        CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.ROPE.getMeta())},IngredientSized.fromStacks(new ItemStack(BWMBlocks.ROPE,9)),false);
     }
 
     @Override
@@ -153,13 +145,13 @@ public class InteractionCondensedOutputs extends Interaction {
         addCongealingRecipe(registry,"eye",new ItemStack(Items.SPIDER_EYE));
         addCongealingRecipe(registry,"wart",new ItemStack(Items.NETHER_WART));
 
-        addRollupRecipe(registry,"fabric",new OreStack("fabricHemp",8),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH));
+        addRollupRecipe(registry,"fabric","fabricHemp",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH));
         addRollupRecipe(registry,"vine",new ItemStack(Blocks.VINE));
-        addRollupRecipe(registry,"paper",new OreStack("paper",8), new ItemStack(Items.PAPER));
+        addRollupRecipe(registry,"paper","paper", new ItemStack(Items.PAPER));
         addRollupRecipe(registry,"leather",new ItemStack(Items.LEATHER));
         addRollupRecipe(registry,"scoured_leather",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER));
         addRollupRecipe(registry,"tanned_leather",ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER));
-        addRollupRecipe(registry,"string",new OreStack("string",8), new ItemStack(Items.STRING));
+        addRollupRecipe(registry,"string","string", new ItemStack(Items.STRING));
 
         addBundlingRecipe(registry,"feather",new ItemStack(Items.FEATHER));
         addBundlingRecipe(registry,"blazerods",new ItemStack(Items.BLAZE_ROD));
@@ -191,7 +183,7 @@ public class InteractionCondensedOutputs extends Interaction {
         if(HOPPER_COMPRESSES_CRATES) {
             ItemStack material8 = material.copy();
             material8.setCount(8);
-            CraftingManagerCrate.getInstance().addRecipe(output, new Object[]{material8});
+            HopperInteractions.addHopperRecipe(new HopperCratingRecipe(material8,output));
         }
     }
 
@@ -219,11 +211,11 @@ public class InteractionCondensedOutputs extends Interaction {
         if(SPINDLE_COMPRESSES_BOLTS) {
             ItemStack material8 = material.copy();
             material8.setCount(8);
-            CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output}, material8, true);
+            CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output}, IngredientSized.fromStacks(material8), true);
         }
     }
 
-    private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, OreStack material, ItemStack materialStack)
+    private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, String material, ItemStack materialStack)
     {
         ItemStack output = ModItems.materialBolt.getMaterial(id);
 
@@ -231,9 +223,7 @@ public class InteractionCondensedOutputs extends Interaction {
         addUncondensingRecipe(registry,id,output,materialStack);
 
         if(SPINDLE_COMPRESSES_BOLTS) {
-            OreStack material8 = material.copy();
-            material8.setCount(8);
-            CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output}, material8, true);
+            CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{output}, IngredientSized.fromOredict(material,8), true);
         }
     }
 
@@ -254,11 +244,11 @@ public class InteractionCondensedOutputs extends Interaction {
         registry.register(new ShapedOreRecipe(compressLoc,output,"aaa","aba","aaa",'a',material,'b',frame).setRegistryName(compressLoc));
     }
 
-    private void addCondensingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack condensed, OreStack material, ItemStack frame)
+    private void addCondensingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack condensed, String material, ItemStack frame)
     {
         ResourceLocation compressLoc = new ResourceLocation(Reference.MOD_ID,"compress_"+id);
 
-        registry.register(new ShapedOreRecipe(compressLoc,condensed,"aaa","aba","aaa",'a',material.getOreName(),'b',frame).setRegistryName(compressLoc));
+        registry.register(new ShapedOreRecipe(compressLoc,condensed,"aaa","aba","aaa",'a',material,'b',frame).setRegistryName(compressLoc));
     }
 
     private void addUncondensingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack condensed, ItemStack material)

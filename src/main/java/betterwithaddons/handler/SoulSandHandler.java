@@ -1,6 +1,5 @@
 package betterwithaddons.handler;
 
-import betterwithaddons.block.ModBlocks;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAesthetic;
 import net.minecraft.block.state.IBlockState;

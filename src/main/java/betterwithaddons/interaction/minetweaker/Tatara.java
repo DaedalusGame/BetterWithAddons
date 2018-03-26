@@ -2,14 +2,12 @@ package betterwithaddons.interaction.minetweaker;
 
 import betterwithaddons.crafting.manager.CraftingManagerTatara;
 import betterwithaddons.crafting.recipes.SmeltingRecipe;
-import betterwithaddons.interaction.InteractionCraftTweaker;
-import com.blamejared.mtlib.helpers.InputHelper;
-import com.blamejared.mtlib.utils.BaseListAddition;
-import com.blamejared.mtlib.utils.BaseListRemoval;
-import com.google.common.collect.Lists;
-import crafttweaker.CraftTweakerAPI;
+import betterwithaddons.util.IngredientCraftTweaker;
+import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.mc1120.CraftTweaker;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -22,38 +20,52 @@ public class Tatara {
 
     @ZenMethod
     public static void add(IItemStack output, IItemStack input) {
-        SmeltingRecipe recipe = new SmeltingRecipe(InputHelper.toObject(input),InputHelper.toStack(output));
-        InteractionCraftTweaker.LATE_ADDITIONS.add(new Add(Lists.newArrayList(recipe)));
+        SmeltingRecipe recipe = new SmeltingRecipe(new IngredientCraftTweaker(input), CraftTweakerMC.getItemStack(output));
+        CraftTweaker.LATE_ACTIONS.add(new Add(recipe));
     }
 
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        List<SmeltingRecipe> recipes = CraftingManagerTatara.instance().findRecipeForRemoval(InputHelper.toStack(input));
-        InteractionCraftTweaker.LATE_REMOVALS.add(new Remove(recipes));
+        List<SmeltingRecipe> recipes = CraftingManagerTatara.instance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
+        CraftTweaker.LATE_ACTIONS.add(new Remove(recipes));
     }
 
-    public static class Add extends BaseListAddition<SmeltingRecipe>
+    public static class Add implements IAction
     {
-        public Add(List<SmeltingRecipe> recipes) {
-            super("Tatara", CraftingManagerTatara.instance().getRecipes(), recipes);
+        SmeltingRecipe recipe;
+
+        public Add(SmeltingRecipe recipe) {
+            this.recipe = recipe;
         }
 
         @Override
-        protected String getRecipeInfo(SmeltingRecipe recipe) {
-            return recipe.getInput().toString();
-        }
-    }
-
-    public static class Remove extends BaseListRemoval<SmeltingRecipe>
-    {
-        protected Remove(List<SmeltingRecipe> recipes) {
-            super("Tatara", CraftingManagerTatara.instance().getRecipes(), recipes);
+        public void apply() {
+            CraftingManagerTatara.instance().addRecipe(recipe);
         }
 
         @Override
-        protected String getRecipeInfo(SmeltingRecipe recipe) {
-            return recipe.getInput().toString();
+        public String describe() {
+            return "Adding Tatara recipe:"+recipe.toString();
+        }
+    }
+
+    public static class Remove implements IAction
+    {
+        List<SmeltingRecipe> recipes;
+
+        public Remove(List<SmeltingRecipe> recipes) {
+            this.recipes = recipes;
+        }
+
+        @Override
+        public void apply() {
+            CraftingManagerTatara.instance().getRecipes().removeAll(recipes);
+        }
+
+        @Override
+        public String describe() {
+            return "Removing "+recipes.size()+" Tatara recipes";
         }
     }
 }

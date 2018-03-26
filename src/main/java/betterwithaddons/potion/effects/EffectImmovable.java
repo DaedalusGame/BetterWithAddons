@@ -1,10 +1,7 @@
 package betterwithaddons.potion.effects;
 
 import betterwithaddons.potion.PotionBase;
-import net.minecraft.client.Minecraft;
 import net.minecraft.potion.PotionEffect;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.awt.*;
 

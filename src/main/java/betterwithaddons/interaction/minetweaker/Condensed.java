@@ -1,12 +1,11 @@
 package betterwithaddons.interaction.minetweaker;
 
-import betterwithaddons.interaction.InteractionCraftTweaker;
 import betterwithaddons.item.ItemMaterial;
-import com.blamejared.mtlib.helpers.InputHelper;
-import com.blamejared.mtlib.utils.BaseUndoable;
-import crafttweaker.CraftTweakerAPI;
+import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.mc1120.CraftTweaker;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.NotNull;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -22,20 +21,19 @@ public class Condensed {
 
     @ZenMethod
     public static void setContainer(@NotNull IItemStack condensed, @NotNull IItemStack input) {
-        ItemStack item = InputHelper.toStack(condensed);
-        ItemStack container = InputHelper.toStack(input);
+        ItemStack item = CraftTweakerMC.getItemStack(condensed);
+        ItemStack container = CraftTweakerMC.getItemStack(input);
         if(item.getItem() instanceof ItemMaterial)
-            InteractionCraftTweaker.LATE_REMOVALS.add(new SetContainer((ItemMaterial) item.getItem(),container));
+            CraftTweaker.LATE_ACTIONS.add(new SetContainer((ItemMaterial) item.getItem(),container));
     }
 
-    public static class SetContainer extends BaseUndoable
+    public static class SetContainer implements IAction
     {
         ItemMaterial condensed;
         ItemStack container;
         ItemStack prevContainer;
 
         public SetContainer(ItemMaterial condensed, ItemStack container) {
-            super("Condensed");
             this.condensed = condensed;
             this.container = container;
             this.prevContainer = condensed.getContainer();

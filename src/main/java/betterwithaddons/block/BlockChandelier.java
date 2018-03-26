@@ -1,7 +1,6 @@
 package betterwithaddons.block;
 
 import betterwithmods.common.BWMBlocks;
-import betterwithmods.util.DirUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

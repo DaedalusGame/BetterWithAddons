@@ -4,11 +4,9 @@ import betterwithmods.module.tweaks.Dung;
 import betterwithmods.module.tweaks.Dung.DungProducer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraft.world.World;
 
 public class ItemLaxative extends ItemFood {
     public ItemLaxative(int amount, float saturation, boolean isWolfFood) {

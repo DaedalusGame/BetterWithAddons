@@ -1,7 +1,6 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.block.ModBlocks;
-import betterwithaddons.crafting.OreStack;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.crafting.recipes.ArmorDecorateRecipe;
@@ -9,6 +8,7 @@ import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.entity.EntityKarateZombie;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
+import betterwithaddons.util.IngredientSized;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWOreDictionary;
 import betterwithmods.common.blocks.BlockRawPastry;
@@ -23,11 +23,13 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
@@ -97,12 +99,12 @@ public class InteractionEriottoMod extends Interaction {
 
         ModBlocks.connectPanes(ModBlocks.shoji, ModBlocks.fusuma);
 
-        CraftingManagerSandNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModBlocks.ironSand, 1)}, new ItemStack(Blocks.IRON_BLOCK, 1), 8);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.SAND, 8)}, new ItemStack(ModBlocks.ironSand, 1), 0);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, new ItemStack(ModItems.sashimi, 3)}, new ItemStack(Items.FISH, 1), 0);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModItems.fuguSac, 1), new ItemStack(ModItems.preparedPuffer, 3)}, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()), 0);
-        CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.materialJapan.getMaterial("iron_scales", 27)}, new ItemStack(ModBlocks.ironSand, 1), 0);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.materialJapan.getMaterial("washi", 9)}, ModItems.materialJapan.getMaterial("mulberry_sheet"), 0);
+        CraftingManagerSandNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModBlocks.ironSand, 1)}, new OreIngredient("blockIron"), 8);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.SAND, 8)}, IngredientSized.fromBlock(ModBlocks.ironSand, 1), 0);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, new ItemStack(ModItems.sashimi, 3)}, IngredientSized.fromStacks(new ItemStack(Items.FISH, 1)), 0);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModItems.fuguSac, 1), new ItemStack(ModItems.preparedPuffer, 3)}, Ingredient.fromStacks(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata())), 0);
+        CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.materialJapan.getMaterial("iron_scales", 27)}, Ingredient.fromStacks(new ItemStack(ModBlocks.ironSand, 1)));
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.materialJapan.getMaterial("washi", 9)}, Ingredient.fromStacks(ModItems.materialJapan.getMaterial("mulberry_sheet")), 0);
 
         OreDictionary.registerOre("seed", new ItemStack(Items.WHEAT_SEEDS)); //I'll beat the shit out of HarvestCraft
         OreDictionary.registerOre("seed", new ItemStack(Items.PUMPKIN_SEEDS));
@@ -174,7 +176,7 @@ public class InteractionEriottoMod extends Interaction {
 
 
         //Random seeds
-        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreStack("seed"), 1, ItemStack.EMPTY) {
+        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreIngredient("seed"), 1, ItemStack.EMPTY) {
             Random random = new Random();
 
             @Override
@@ -199,7 +201,7 @@ public class InteractionEriottoMod extends Interaction {
             }
         });
         //Random saplings
-        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreStack("treeSapling"), 1, ItemStack.EMPTY) {
+        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreIngredient("treeSapling"), 1, ItemStack.EMPTY) {
             Random random = new Random();
 
             @Override
@@ -224,10 +226,10 @@ public class InteractionEriottoMod extends Interaction {
             }
         });
         //Bamboo
-        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new OreStack("sugarcane"), 1, new ItemStack(ModBlocks.bamboo));
+        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new OreIngredient("sugarcane"), 1, new ItemStack(ModBlocks.bamboo));
         //Repair tools and armor
         if (INFUSER_REPAIRS)
-            CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new ItemStack(ModItems.katana), 2, ItemStack.EMPTY) {
+            CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(Ingredient.fromItem(ModItems.katana), 2, ItemStack.EMPTY) {
                 @Override
                 public boolean matchesInput(ItemStack item) {
                     return isRepairableTool(item);
@@ -260,22 +262,22 @@ public class InteractionEriottoMod extends Interaction {
                 }
             });
 
-        CraftingManagerSoakingBox.instance().addRecipe(new ItemStack(ModBlocks.bamboo), ModItems.materialJapan.getMaterial("soaked_bamboo"));
-        CraftingManagerSoakingBox.instance().addRecipe(ModItems.materialJapan.getMaterial("rice"), ModItems.materialJapan.getMaterial("soaked_rice"));
+        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.bamboo)), ModItems.materialJapan.getMaterial("soaked_bamboo"));
+        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("rice")), ModItems.materialJapan.getMaterial("soaked_rice"));
         if (ModInteractions.bwm.isActive())
-            CraftingManagerSoakingBox.instance().addRecipe(ModItems.materialJapan.getMaterial("bark_mulberry"), ModItems.materialJapan.getMaterial("soaked_mulberry"));
-        CraftingManagerSoakingBox.instance().addRecipe(new ItemStack(ModBlocks.mulberryLog), ModItems.materialJapan.getMaterial("soaked_mulberry"));
-        CraftingManagerSoakingBox.instance().addRecipe(new ItemStack(Blocks.SPONGE, 1, 0), new ItemStack(Blocks.SPONGE, 1, 1));
+            CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("bark_mulberry")), ModItems.materialJapan.getMaterial("soaked_mulberry"));
+        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.mulberryLog)), ModItems.materialJapan.getMaterial("soaked_mulberry"));
+        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(Blocks.SPONGE, 1, 0)), new ItemStack(Blocks.SPONGE, 1, 1));
 
-        CraftingManagerDryingBox.instance().addRecipe(ModItems.materialJapan.getMaterial("rice_stalk"), ModItems.materialJapan.getMaterial("rice_hay"));
-        CraftingManagerDryingBox.instance().addRecipe(ModItems.materialJapan.getMaterial("soaked_mulberry"), ModItems.materialJapan.getMaterial("mulberry_paste"));
-        CraftingManagerDryingBox.instance().addRecipe(ModItems.materialJapan.getMaterial("soaked_bamboo"), ModItems.materialJapan.getMaterial("bamboo_slats"));
-        CraftingManagerDryingBox.instance().addRecipe(new ItemStack(Blocks.SPONGE, 1, 1), new ItemStack(Blocks.SPONGE, 1, 0));
+        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("rice_stalk")), ModItems.materialJapan.getMaterial("rice_hay"));
+        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("soaked_mulberry")), ModItems.materialJapan.getMaterial("mulberry_paste"));
+        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("soaked_bamboo")), ModItems.materialJapan.getMaterial("bamboo_slats"));
+        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(Blocks.SPONGE, 1, 1)), new ItemStack(Blocks.SPONGE, 1, 0));
 
-        CraftingManagerTatara.instance().addRecipe(new ItemStack(ModBlocks.ironSand), new ItemStack(ModBlocks.kera));
-        CraftingManagerTatara.instance().addRecipe(ModItems.materialJapan.getMaterial("tamahagane"), ModItems.materialJapan.getMaterial("tamahagane_heated"));
-        CraftingManagerTatara.instance().addRecipe(ModItems.materialJapan.getMaterial("tamahagane_wrapped"), ModItems.materialJapan.getMaterial("tamahagane_reheated"));
-        CraftingManagerTatara.instance().addRecipe(ModItems.materialJapan.getMaterial("hocho_tetsu"), ModItems.materialJapan.getMaterial("hocho_tetsu_heated"));
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.ironSand)), new ItemStack(ModBlocks.kera));
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("tamahagane")), ModItems.materialJapan.getMaterial("tamahagane_heated"));
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("tamahagane_wrapped")), ModItems.materialJapan.getMaterial("tamahagane_reheated"));
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("hocho_tetsu")), ModItems.materialJapan.getMaterial("hocho_tetsu_heated"));
     }
 
     private boolean isRepairableTool(ItemStack stack) {
@@ -296,7 +298,7 @@ public class InteractionEriottoMod extends Interaction {
 
     @Override
     public void postInit() {
-        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")));
-        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
+        //BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")));
+        //BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
     }
 }

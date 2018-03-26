@@ -2,11 +2,9 @@ package betterwithaddons.item;
 
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.entity.EntityAncestryBottle;
-import betterwithaddons.entity.EntitySpirit;
 import betterwithaddons.interaction.InteractionEriottoMod;
 import betterwithaddons.tileentity.TileEntityAncestrySand;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;

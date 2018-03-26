@@ -1,6 +1,7 @@
 package betterwithaddons.tileentity;
 
 import betterwithaddons.crafting.manager.CraftingManagerTatara;
+import betterwithaddons.crafting.recipes.SmeltingRecipe;
 import betterwithaddons.item.ModItems;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -135,20 +136,21 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
     private boolean canSmelt() {
         ItemStack inputstack = inventory.getStackInSlot(0);
         ItemStack outputstack = inventory.getStackInSlot(2);
-        if(inputstack.isEmpty()) {
+        SmeltingRecipe recipe = CraftingManagerTatara.instance().getSmeltingRecipe(inputstack);
+        if(inputstack.isEmpty() || recipe == null) {
             return false;
         } else {
-            ItemStack itemstack = CraftingManagerTatara.instance().getSmeltingResult(inputstack);
-            if(itemstack.isEmpty()) {
-                return false;
-            } else if(outputstack.isEmpty()) {
-                return true;
-            } else if(!outputstack.isItemEqual(itemstack)) {
-                return false;
-            } else {
-                int result = outputstack.getCount() + itemstack.getCount();
-                return result <= this.getInventoryStackLimit() && result <= outputstack.getMaxStackSize();
-            }
+                ItemStack itemstack = recipe.getOutput(inputstack);
+                if (itemstack.isEmpty()) {
+                    return false;
+                } else if (outputstack.isEmpty()) {
+                    return true;
+                } else if (!outputstack.isItemEqual(itemstack)) {
+                    return false;
+                } else {
+                    int result = outputstack.getCount() + itemstack.getCount();
+                    return result <= this.getInventoryStackLimit() && result <= outputstack.getMaxStackSize();
+                }
         }
     }
 
@@ -157,16 +159,19 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
         ItemStack outputstack = inventory.getStackInSlot(2);
 
         if(this.canSmelt()) {
-            ItemStack itemstack = CraftingManagerTatara.instance().getSmeltingResult(inputstack);
-            if(outputstack.isEmpty()) {
-                inventory.setStackInSlot(2,itemstack.copy());
-            } else if(outputstack.getItem() == itemstack.getItem()) {
-                outputstack.grow(itemstack.getCount());
-            }
+            SmeltingRecipe recipe = CraftingManagerTatara.instance().getSmeltingRecipe(inputstack);
+            if(recipe != null) {
+                ItemStack itemstack = recipe.getOutput(inputstack);
+                if (outputstack.isEmpty()) {
+                    inventory.setStackInSlot(2, itemstack.copy());
+                } else if (outputstack.getItem() == itemstack.getItem()) {
+                    outputstack.grow(itemstack.getCount());
+                }
 
-            inputstack.shrink(1);
-            if(inputstack.getCount() <= 0) {
-                inventory.setStackInSlot(0,ItemStack.EMPTY);
+                inputstack.shrink(recipe.getInputCount());
+                if (inputstack.getCount() <= 0) {
+                    inventory.setStackInSlot(0, ItemStack.EMPTY);
+                }
             }
         }
 

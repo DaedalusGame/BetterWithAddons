@@ -1,7 +1,7 @@
 package betterwithaddons.block;
 
-import betterwithaddons.crafting.recipes.SpindleRecipe;
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
+import betterwithaddons.crafting.recipes.SpindleRecipe;
 import betterwithaddons.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -148,7 +148,7 @@ public class BlockSpindle extends BlockBase implements ISpindle {
             SpindleRecipe recipe = manager.getMostValidRecipe(list);
 
             if(recipe != null) {
-                ItemUtil.consumeItem(list, recipe.getInput());
+                ItemUtil.consumeItem(list, recipe.input);
 
                 List<ItemStack> ret = recipe.getOutput();
                 if (ret != null && ret.size() > 0) {

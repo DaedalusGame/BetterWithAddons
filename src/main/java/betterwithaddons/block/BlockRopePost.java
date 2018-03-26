@@ -3,7 +3,6 @@ package betterwithaddons.block;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityRopePost;
-import betterwithaddons.tileentity.TileEntityRopeSideways;
 import betterwithaddons.util.ItemUtil;
 import betterwithmods.api.block.PropertyObject;
 import betterwithmods.common.BWMBlocks;

@@ -1,8 +1,6 @@
 package betterwithaddons.interaction.jei.wrapper;
 
-import betterwithaddons.crafting.recipes.CherryBoxRecipe;
 import betterwithaddons.crafting.recipes.SmeltingRecipe;
-import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;

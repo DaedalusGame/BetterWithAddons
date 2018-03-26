@@ -1,7 +1,5 @@
 package betterwithaddons.interaction;
 
-import betterwithaddons.BetterWithAddons;
-import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.recipes.LapisRinsingRecipe;
 import betterwithaddons.crafting.recipes.QuartzCrystalRecipe;
 import betterwithaddons.handler.*;
@@ -16,7 +14,6 @@ import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
-import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
@@ -25,13 +22,9 @@ import betterwithmods.module.hardcore.crafting.HCDiamond;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.Arrays;
 import java.util.List;

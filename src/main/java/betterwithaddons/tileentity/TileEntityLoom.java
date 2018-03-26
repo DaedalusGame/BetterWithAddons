@@ -5,7 +5,6 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionCondensedOutputs;
 import betterwithmods.api.BWMAPI;
 import betterwithmods.api.tile.IMechanicalPower;
-import betterwithmods.util.MechanicalUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;

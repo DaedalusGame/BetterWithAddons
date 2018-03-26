@@ -7,7 +7,6 @@ import betterwithmods.api.BWMAPI;
 import betterwithmods.common.blocks.EnumTier;
 import betterwithmods.common.blocks.mechanical.BlockGearbox;
 import betterwithmods.util.DirUtils;
-import betterwithmods.util.MechanicalUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;

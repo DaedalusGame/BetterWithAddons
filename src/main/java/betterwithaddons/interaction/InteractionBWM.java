@@ -1,7 +1,6 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
-import betterwithaddons.block.BlockModUnbaked;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.manager.CraftingManagerPacking;
@@ -10,7 +9,7 @@ import betterwithaddons.handler.FallingPlatformHandler;
 import betterwithaddons.handler.HardcorePackingHandler;
 import betterwithaddons.handler.HardcoreWoolHandler;
 import betterwithaddons.item.ModItems;
-import betterwithaddons.tileentity.TileEntityAqueductWater;
+import betterwithaddons.util.IngredientSized;
 import betterwithaddons.util.ItemUtil;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
@@ -27,7 +26,6 @@ import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
-import betterwithmods.module.Module;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.HCPiles;
@@ -245,19 +243,19 @@ public class InteractionBWM extends Interaction {
 
         //Hardcore Packing
         if(HARDCORE_PACKING) {
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.DIRT.getDefaultState(), new ItemStack(Blocks.DIRT), new ItemStack(BWMItems.DIRT_PILE, 4));
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.SAND.getDefaultState(), new ItemStack(Blocks.SAND), new ItemStack(BWMItems.SAND_PILE, 4));
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND), new ItemStack(Blocks.SAND, 1, 1), new ItemStack(BWMItems.RED_SAND_PILE, 4));
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.GRAVEL.getDefaultState(), new ItemStack(Blocks.GRAVEL), new ItemStack(BWMItems.GRAVEL_PILE, 4));
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.SOUL_SAND.getDefaultState(), new ItemStack(Blocks.SOUL_SAND), new ItemStack(ModItems.soulSandPile, 4));
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.CLAY.getDefaultState(), new ItemStack(Blocks.CLAY), new ItemStack(Items.CLAY_BALL, 4));
-            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.NETHERCLAY), BlockAesthetic.getStack(BlockAesthetic.EnumType.NETHERCLAY), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHER_SLUDGE, 4));
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.SNOW.getDefaultState(), new ItemStack(Blocks.SNOW), new ItemStack(Items.SNOWBALL, 4));
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.BRICK_BLOCK.getDefaultState(), new ItemStack(Blocks.BRICK_BLOCK), new ItemStack(Items.BRICK, 4));
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.NETHER_BRICK.getDefaultState(), new ItemStack(Blocks.NETHER_BRICK), new ItemStack(Items.NETHERBRICK, 4));
-            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.FLINT), BlockAesthetic.getStack(BlockAesthetic.EnumType.FLINT), new ItemStack(Items.FLINT, 9));
-            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.DUNG), BlockAesthetic.getStack(BlockAesthetic.EnumType.DUNG), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG, 9));
-            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.SOAP), BlockAesthetic.getStack(BlockAesthetic.EnumType.SOAP), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOAP, 9));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.DIRT.getDefaultState(), new ItemStack(Blocks.DIRT), IngredientSized.fromItem(BWMItems.DIRT_PILE, 4));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.SAND.getDefaultState(), new ItemStack(Blocks.SAND), IngredientSized.fromItem(BWMItems.SAND_PILE, 4));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND), new ItemStack(Blocks.SAND, 1, 1), IngredientSized.fromItem(BWMItems.RED_SAND_PILE, 4));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.GRAVEL.getDefaultState(), new ItemStack(Blocks.GRAVEL), IngredientSized.fromItem(BWMItems.GRAVEL_PILE, 4));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.SOUL_SAND.getDefaultState(), new ItemStack(Blocks.SOUL_SAND), IngredientSized.fromItem(ModItems.soulSandPile, 4));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.CLAY.getDefaultState(), new ItemStack(Blocks.CLAY), IngredientSized.fromItem(Items.CLAY_BALL, 4));
+            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.NETHERCLAY), BlockAesthetic.getStack(BlockAesthetic.EnumType.NETHERCLAY), IngredientSized.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHER_SLUDGE, 4)));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.SNOW.getDefaultState(), new ItemStack(Blocks.SNOW), IngredientSized.fromItem(Items.SNOWBALL, 4));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.BRICK_BLOCK.getDefaultState(), new ItemStack(Blocks.BRICK_BLOCK), IngredientSized.fromItem(Items.BRICK, 4));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.NETHER_BRICK.getDefaultState(), new ItemStack(Blocks.NETHER_BRICK), IngredientSized.fromItem(Items.NETHERBRICK, 4));
+            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.FLINT), BlockAesthetic.getStack(BlockAesthetic.EnumType.FLINT), IngredientSized.fromItem(Items.FLINT, 9));
+            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.DUNG), BlockAesthetic.getStack(BlockAesthetic.EnumType.DUNG), IngredientSized.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG, 9)));
+            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.SOAP), BlockAesthetic.getStack(BlockAesthetic.EnumType.SOAP), IngredientSized.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOAP, 9)));
         }
 
         if(CAULDRONS_EXPLODE)

@@ -1,14 +1,10 @@
 package betterwithaddons.crafting.manager;
 
-import betterwithaddons.block.EriottoMod.BlockCherryBox;
-import betterwithaddons.crafting.recipes.CherryBoxRecipe;
-import betterwithaddons.crafting.recipes.SmeltingRecipe;
-import betterwithaddons.crafting.recipes.infuser.InfuserRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +27,7 @@ public class CraftingManagerInfuserTransmutation {
         this.recipes.add(recipe);
     }
 
-    public void addRecipe(Object input, int spirits, ItemStack output) {
+    public void addRecipe(Ingredient input, int spirits, ItemStack output) {
         this.recipes.add(createRecipe(input, spirits, output));
     }
 
@@ -43,7 +39,7 @@ public class CraftingManagerInfuserTransmutation {
         this.recipes.clear();
     }
 
-    protected TransmutationRecipe createRecipe(Object input, int spirits, ItemStack output)
+    protected TransmutationRecipe createRecipe(Ingredient input, int spirits, ItemStack output)
     {
         return new TransmutationRecipe(input, spirits, output);
     }
