@@ -46,6 +46,12 @@ public class BlockAqueduct extends BlockBase implements IHasVariants {
     }
 
     @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+        super.onBlockAdded(worldIn, pos, state);
+        worldIn.scheduleUpdate(pos, this, 25);
+    }
+
+    @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         IBlockState waterState = worldIn.getBlockState(pos.up());
         Block block = waterState.getBlock();
