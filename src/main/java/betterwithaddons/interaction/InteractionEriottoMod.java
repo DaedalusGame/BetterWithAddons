@@ -145,6 +145,16 @@ public class InteractionEriottoMod extends Interaction {
         //    MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rush), 2);
         //}
 
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")){
+            @Override
+            public ItemStack getPlank(int count) {
+                ItemStack copy = new ItemStack(ModBlocks.mulberryPlanks);
+                copy.setCount((int)Math.ceil(count / (float) HCLumber.axePlankAmount));
+                return copy;
+            }
+        });
+
         GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("rice_stalk"), ModItems.materialJapan.getMaterial("rice_ash"), 0.1f);
 
         CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"katana"),new ItemStack(ModItems.katana), "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("half_katana_blade"), 'w', ModItems.materialJapan.getMaterial("tsuka")),8);
@@ -284,22 +294,5 @@ public class InteractionEriottoMod extends Interaction {
 
     private void addFoldingRecipe(ItemStack out, ItemStack in) {
         //GameRegistry.addShapedRecipe(out, "t", "s", 't', in, 's', new ItemStack(Items.STICK));
-    }
-
-    @Override
-    public void postInit() {
-        BWOreDictionary.woods.removeIf(wood -> {
-            ItemStack log = wood.getLog(1);
-            return log.getItem() == Item.getItemFromBlock(ModBlocks.sakuraLog) || log.getItem() == Item.getItemFromBlock(ModBlocks.mulberryLog);
-        });
-        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
-        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")){
-            @Override
-            public ItemStack getPlank(int count) {
-                ItemStack copy = new ItemStack(ModBlocks.mulberryPlanks);
-                copy.setCount((int)Math.ceil(count / (float) HCLumber.axePlankAmount));
-                return copy;
-            }
-        });
     }
 }
