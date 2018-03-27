@@ -134,16 +134,6 @@ public class InteractionEriottoMod extends Interaction {
         OreDictionary.registerOre("ingotTamahagane", ModItems.materialJapan.getMaterial("tamahagane_finished"));
         OreDictionary.registerOre("ingotHochoTetsu", ModItems.materialJapan.getMaterial("hocho_tetsu_finished"));
 
-        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
-        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")){
-            @Override
-            public ItemStack getPlank(int count) {
-                ItemStack copy = new ItemStack(ModBlocks.mulberryPlanks);
-                copy.setCount((int)Math.ceil(count / (float) HCLumber.axePlankAmount));
-                return copy;
-            }
-        });
-
         CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.rice), new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
         CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.laxative), new Object[]{new ItemStack(ModItems.mulberry,3),new ItemStack(Items.SUGAR),BlockRawPastry.getStack(BlockRawPastry.EnumType.BREAD)});
 
@@ -298,7 +288,18 @@ public class InteractionEriottoMod extends Interaction {
 
     @Override
     public void postInit() {
-        //BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")));
-        //BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
+        BWOreDictionary.woods.removeIf(wood -> {
+            ItemStack log = wood.getLog(1);
+            return log.getItem() == Item.getItemFromBlock(ModBlocks.sakuraLog) || log.getItem() == Item.getItemFromBlock(ModBlocks.mulberryLog);
+        });
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")){
+            @Override
+            public ItemStack getPlank(int count) {
+                ItemStack copy = new ItemStack(ModBlocks.mulberryPlanks);
+                copy.setCount((int)Math.ceil(count / (float) HCLumber.axePlankAmount));
+                return copy;
+            }
+        });
     }
 }

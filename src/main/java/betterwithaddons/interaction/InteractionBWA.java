@@ -64,11 +64,6 @@ public class InteractionBWA extends Interaction {
     public static String[] AQUEDUCT_BIOME_STRINGS = new String[0];
     public static boolean AQUEDUCT_BIOMES_IS_WHITELIST = true;
 
-    public static boolean OBVIOUS_STORMS = false;
-    public static boolean OBVIOUS_SAND_STORMS = false;
-    public static int DUST_PARTICLES = 2;
-    public static int AIR_PARTICLES = 3;
-
     public static boolean GRASS_TO_CLAY = false;
     public static boolean GRASS_TO_SAND = false;
 
@@ -148,8 +143,6 @@ public class InteractionBWA extends Interaction {
 
     @Override
     void preInitClient() {
-        if(OBVIOUS_SAND_STORMS || OBVIOUS_STORMS)
-            MinecraftForge.EVENT_BUS.register(new StormHandler());
         if(ROTTEN_FOOD)
             MinecraftForge.EVENT_BUS.register(new RotHandler());
     }
