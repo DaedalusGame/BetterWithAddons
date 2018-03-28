@@ -1,6 +1,7 @@
 package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
+import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.recipes.DisplaySawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
@@ -12,7 +13,9 @@ import betterwithmods.common.blocks.mechanical.BlockMechMachines;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
+import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.module.hardcore.world.HCBonemeal;
+import betterwithmods.module.tweaks.MineshaftGeneration;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -37,6 +40,8 @@ public class InteractionBTWTweak extends Interaction {
     public static boolean WOOL_RECYCLING = true;
     public static boolean LOGS_SMELT_TO_ASH = true;
     public static boolean REPLACE_WRITABLE_BOOK_RECIPE = true;
+    public static boolean RUSTY_MINESHAFTS = true;
+    public static boolean INFESTED_MINESHAFTS = true;
 
     @Override
     public boolean isActive() {
@@ -78,12 +83,12 @@ public class InteractionBTWTweak extends Interaction {
             HCBonemeal.registerFertilzier(ModItems.materialTweak.getMaterial("ash"));
         }
 
-        //GameRegistry.addRecipe(new ShapelessOreRecipe(ModItems.materialTweak.getMaterial("ink_and_quill"),new ItemStack(Items.GLASS_BOTTLE),new ItemStack(Items.DYE,1,EnumDyeColor.BLACK.getDyeDamage()),"feather"));
-
-        if(REPLACE_WRITABLE_BOOK_RECIPE)
-        {
-            //GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Items.WRITABLE_BOOK),new ItemStack(Items.BOOK),ModItems.materialTweak.getMaterial("ink_and_quill")));
-        }
+        if(RUSTY_MINESHAFTS)
+            MineshaftGeneration.rail = piece -> ModBlocks.rustyRail.getDefaultState();
+        if(INFESTED_MINESHAFTS)
+            MineshaftGeneration.supports = piece -> ModBlocks.termiteLog.getDefaultState();
+        StokedCrucibleManager.getInstance().addRecipe(new ItemStack(Items.IRON_NUGGET),new Object[]{new ItemStack(ModBlocks.rustyRail)});
+        SawManager.WOOD_SAW.addRecipe(ModBlocks.termiteLog,OreDictionary.WILDCARD_VALUE, ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST,2));
 
         if(WOOL_RECYCLING && InteractionBWM.HARDCORE_SHEARING)
         {

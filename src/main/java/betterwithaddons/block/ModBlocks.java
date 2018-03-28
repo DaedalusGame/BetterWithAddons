@@ -156,6 +156,10 @@ public class ModBlocks {
     public static BlockRedstoneEmitter redstoneEmitter;
     @ObjectHolder("betterwithaddons:box")
     public static BlockBox box;
+    @ObjectHolder("betterwithaddons:rail_rusted")
+    public static BlockRustyRail rustyRail;
+    @ObjectHolder("betterwithaddons:log_termite")
+    public static BlockTermiteLog termiteLog;
 
     public static void load(FMLPreInitializationEvent event) {
         //FluidRegistry.registerFluid(new Fluid("brine", new ResourceLocation(Reference.MOD_ID, "blocks/brine_still"), new ResourceLocation(Reference.MOD_ID, "blocks/brine_flow")));
@@ -248,6 +252,9 @@ public class ModBlocks {
         registerBlock(new BlockBox());
         registerBlock(new BlockColoredBrick(), ItemCloth.class, true);
         registerBlock(new BlockModUnbaked());
+
+        registerBlock(new BlockRustyRail());
+        registerBlock(new BlockTermiteLog());
 
         registerBlock(new BlockAdobe("adobe", new AdobeType[]{
                 AdobeType.MOSTLY_CLAY, AdobeType.CLAYSAND, AdobeType.SANDCLAY, AdobeType.MOSTLY_SAND,

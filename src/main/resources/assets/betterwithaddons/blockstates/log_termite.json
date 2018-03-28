@@ -1,0 +1,31 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	"textures": {
+		"end": "betterwithaddons:blocks/log_termite_top",
+		"side": "minecraft:blocks/log_oak"
+    },
+	"model": "cube_column",
+	"transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+    "axis": {
+		"x": { 
+			"x": 90,
+			"y": 90
+		},
+		"y": { 
+		},
+		"z": { 
+			"x": 90
+		},
+		"none": { 
+			"textures": {
+				"all": "betterwithaddons:blocks/log_oak"
+			}
+		}
+    }
+  }
+}

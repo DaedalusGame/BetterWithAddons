@@ -50,6 +50,8 @@ tile.scaffold.name=Scaffold
 tile.spindle.name=Spindle
 tile.loom.name=Spinning Wheel
 
+tile.rail_rusted.name=Rusted Rail
+
 tile.ancestry_sand.name=Infused Soul Sand
 tile.ancestry_sand.spirits=Contains %s spirits
 tile.ancestry_infuser.name=Ancestral Infuser
