@@ -57,24 +57,4 @@ public class ThreshingRecipe extends ToolDamageRecipe {
             }
         }
     }
-
-    @Override
-    public boolean matches(InventoryCrafting inv, World worldIn) {
-        return this.isMatch(inv,worldIn);
-    }
-
-    @Override
-    public ItemStack getCraftingResult(InventoryCrafting inv) {
-        return this.result.copy();
-    }
-
-    @Override
-    public boolean canFit(int width, int height) {
-        return width * height >= 2;
-    }
-
-    @Override
-    public ItemStack getRecipeOutput() {
-        return this.result.copy();
-    }
 }
