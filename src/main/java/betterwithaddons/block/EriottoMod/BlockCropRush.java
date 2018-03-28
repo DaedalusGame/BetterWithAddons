@@ -86,7 +86,7 @@ public class BlockCropRush extends BlockCrops implements IPlantable, IHasVariant
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos)
     {
-        return EnumPlantType.Crop;
+        return EnumPlantType.Plains;
     }
 
     @Override
