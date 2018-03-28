@@ -127,11 +127,13 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
             if(spiritdist < 1.2f)
             {
                 if(spirits < InteractionEriottoMod.MAX_SPIRITS) {
-                    int consume = Math.min(InteractionEriottoMod.MAX_SPIRITS - spirits,spirit.xpValue);
+                    int cachedSpirits = spirit.getSpiritValue();
+                    int consume = Math.min(InteractionEriottoMod.MAX_SPIRITS - spirits,cachedSpirits);
                     addSpirits(consume);
-                    spirit.xpValue -= consume;
-                    if(spirit.xpValue <= 0)
+                    cachedSpirits -= consume;
+                    if(cachedSpirits <= 0)
                         spirit.setDead();
+                    spirit.setSpiritValue(cachedSpirits);
                 }
                 continue;
             }

@@ -82,7 +82,7 @@ public class InteractionEriottoMod extends Interaction {
                     biomes.add(biome);
             }
 
-            EntityRegistry.addSpawn(EntityKarateZombie.class, JAPANESE_RANDOM_SPAWN_WEIGHT, 1, 3, EnumCreatureType.MONSTER, biomes.toArray(new Biome[biomes.size()]));
+            EntityRegistry.addSpawn(EntityKarateZombie.class, JAPANESE_RANDOM_SPAWN_WEIGHT, 1, 4, EnumCreatureType.MONSTER, biomes.toArray(new Biome[biomes.size()]));
         }
 
         ConditionModule.MODULES.put("EriottoMod", this::isActive);

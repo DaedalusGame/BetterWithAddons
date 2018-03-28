@@ -4,19 +4,35 @@ import betterwithaddons.interaction.InteractionEriottoMod;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.InventoryUtil;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class EntitySpirit extends EntityXPOrb {
+public class EntitySpirit extends Entity {
+    /** A constantly increasing value that RenderXPOrb uses to control the colour shifting (Green / yellow) */
+    public int xpColor;
+    /** The age of the XP orb in ticks. */
+    public int orbAge;
+    public int delayBeforeCanPickup;
+    /** The health of this XP orb. */
+    private int orbHealth = 5;
+    /** The closest EntityPlayer to this orb. */
     private EntityPlayer closestPlayer;
+
+    private static final DataParameter<Integer> SPIRITS = EntityDataManager.createKey(EntitySpirit.class, DataSerializers.VARINT);
+
     private float currentAngle;
     private int nextCheck;
 
@@ -26,8 +42,27 @@ public class EntitySpirit extends EntityXPOrb {
     }
 
     public EntitySpirit(World worldIn, double x, double y, double z, int val) {
-        super(worldIn,x,y,z,val);
+        super(worldIn);
+        this.setSize(0.5F, 0.5F);
+        this.setPosition(x, y, z);
+        this.rotationYaw = (float)(Math.random() * 360.0D);
+        this.motionX = (double)((float)(Math.random() * 0.2D - 0.1D) * 2.0F);
+        this.motionY = (double)((float)(Math.random() * 0.2D) * 2.0F);
+        this.motionZ = (double)((float)(Math.random() * 0.2D - 0.1D) * 2.0F);
+        setSpiritValue(val);
         this.currentAngle = (float)Math.toRadians(rand.nextInt(360));
+    }
+
+    protected void entityInit() {
+        dataManager.register(SPIRITS, 0);
+    }
+
+    public int getSpiritValue() {
+        return dataManager.get(SPIRITS);
+    }
+
+    public void setSpiritValue(int value) {
+        dataManager.set(SPIRITS,value);
     }
 
     private void applyGravity()
@@ -40,15 +75,9 @@ public class EntitySpirit extends EntityXPOrb {
             this.motionY -= 0.02D;
     }
 
-    public void onUpdate() //Duplicate because why the hell not
+    public void onUpdate()
     {
-        //super.super.onUpdate violates encapsulations but this doesn't; thank you dark souls
-        if (!this.world.isRemote)
-        {
-            this.setFlag(6, this.isGlowing());
-        }
-
-        this.onEntityUpdate();
+        super.onUpdate();
 
         if (this.delayBeforeCanPickup > 0)
         {
@@ -134,9 +163,9 @@ public class EntitySpirit extends EntityXPOrb {
         }
 
         ++this.xpColor;
-        ++this.xpOrbAge;
+        ++this.orbAge;
 
-        if (this.xpOrbAge >= 6000)
+        if (this.orbAge >= 6000)
         {
             this.setDead();
         }
@@ -154,7 +183,7 @@ public class EntitySpirit extends EntityXPOrb {
                 int totalSpirit = 0;
 
                 for(EntitySpirit spirit : spirits)
-                    totalSpirit += spirit.xpValue;
+                    totalSpirit += spirit.getSpiritValue();
 
                 if (totalSpirit >= InteractionEriottoMod.SPIRIT_PER_BOTTLE)
                 {
@@ -167,11 +196,13 @@ public class EntitySpirit extends EntityXPOrb {
                         int consumed = InteractionEriottoMod.SPIRIT_PER_BOTTLE;
                         for(EntitySpirit spirit : spirits)
                         {
-                            int c = Math.min(consumed,spirit.xpValue);
+                            int spiritsCached = spirit.getSpiritValue();
+                            int c = Math.min(consumed,spiritsCached);
                             consumed -= c;
-                            spirit.xpValue -= c;
-                            if(spirit.xpValue <= 0)
+                            spiritsCached -= c;
+                            if(spiritsCached <= 0)
                                 spirit.setDead();
+                            spirit.setSpiritValue(spiritsCached);
                         }
                         break;
                     }
@@ -180,23 +211,86 @@ public class EntitySpirit extends EntityXPOrb {
         }
     }
 
-    @Override
-    public int getTextureByXP() {
-        if(xpValue >= 128)
+    public int getTextureBySpirits() {
+        if(getSpiritValue() >= 128)
             return 10;
-        else if(xpValue >= 64)
+        else if(getSpiritValue() >= 64)
             return 8;
-        else if(xpValue >= 3)
+        else if(getSpiritValue() >= 3)
             return 6;
-        else if(xpValue >= 2)
+        else if(getSpiritValue() >= 2)
             return 4;
-        else if(xpValue >= 1)
+        else if(getSpiritValue() >= 1)
             return 2;
         else
             return 0;
     }
 
-    public static int getSpiritSplit(int i) {
-        return (i >= 128 ? 128 : (i >= 64 ? 64 : (i >= 3 ? 3 : (i >= 2 ? 2 : 1))));
+    public static int getSpiritSplit(int value) {
+        return (value >= 128 ? 128 : (value >= 64 ? 64 : (value >= 3 ? 3 : (value >= 2 ? 2 : 1))));
+    }
+
+    protected boolean canTriggerWalking() {
+        return false;
+    }
+
+    public int getBrightnessForRender() {
+        float f = 0.5F;
+        f = MathHelper.clamp(f, 0.0F, 1.0F);
+        int i = super.getBrightnessForRender();
+        int j = i & 255;
+        int k = i >> 16 & 255;
+        j = j + (int)(f * 15.0F * 16.0F);
+
+        if (j > 240)
+        {
+            j = 240;
+        }
+
+        return j | k << 16;
+    }
+
+    public boolean handleWaterMovement() {
+        return this.world.handleMaterialAcceleration(this.getEntityBoundingBox(), Material.WATER, this);
+    }
+
+    protected void dealFireDamage(int amount) {
+        this.attackEntityFrom(DamageSource.IN_FIRE, (float) amount);
+    }
+
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (this.world.isRemote || this.isDead) return false; //Forge: Fixes MC-53850
+        if (this.isEntityInvulnerable(source))
+        {
+            return false;
+        }
+        else
+        {
+            this.markVelocityChanged();
+            this.orbHealth = (int)((float) this.orbHealth - amount);
+
+            if (this.orbHealth <= 0)
+            {
+                this.setDead();
+            }
+
+            return false;
+        }
+    }
+
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        compound.setShort("Health", (short) this.orbHealth);
+        compound.setShort("Age", (short) this.orbAge);
+        compound.setShort("Value", (short) getSpiritValue());
+    }
+
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        this.orbHealth = compound.getShort("Health");
+        this.orbAge = compound.getShort("Age");
+        setSpiritValue(compound.getShort("Value"));
+    }
+
+    public boolean canBeAttackedWithItem() {
+        return false;
     }
 }

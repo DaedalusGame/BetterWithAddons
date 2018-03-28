@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -93,6 +94,8 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
     public void addSpirits(int n) {
         setSpirits(getSpirits() + n);
+        updateStats(getPower());
+        heal(n / 2.0f);
     }
 
     public MartialArts getCurrentMove()
@@ -310,13 +313,11 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
         if(isARealAmerican())
         {
-            setSpirits(InteractionEriottoMod.MAX_SPIRITS);
+            addSpirits(InteractionEriottoMod.MAX_SPIRITS - getSpirits());
         }
 
         if (!world.isRemote && !isDead) {
             double power = getPower();
-            getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(MathHelper.clampedLerp(3.0,6.0,power));
-            getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(MathHelper.clampedLerp(0.23,0.5,power));
 
             moveTime--;
             moveTimeout--;
@@ -367,11 +368,13 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
                     if (spiritdist < 1.2f) {
                         if (spirits < InteractionEriottoMod.MAX_SPIRITS) {
-                            int consume = Math.min(InteractionEriottoMod.MAX_SPIRITS - spirits, spirit.xpValue);
+                            int cachedSpirits = spirit.getSpiritValue();
+                            int consume = Math.min(InteractionEriottoMod.MAX_SPIRITS - spirits, cachedSpirits);
                             addSpirits(consume);
-                            spirit.xpValue -= consume;
-                            if (spirit.xpValue <= 0)
+                            cachedSpirits -= consume;
+                            if (cachedSpirits <= 0)
                                 spirit.setDead();
+                            spirit.setSpiritValue(cachedSpirits);
                         }
                         continue;
                     }
@@ -393,6 +396,14 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
                     }
                 }
         }
+    }
+
+    private void updateStats(double power) {
+        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(MathHelper.clampedLerp(3.0,6.0,power));
+        getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(MathHelper.clampedLerp(0.23,0.5,power));
+        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(MathHelper.clampedLerp(0.0,0.8,power));
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(MathHelper.clampedLerp(2.0,10.0,power));
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(MathHelper.clampedLerp(20.0,100.0,power));
     }
 
     private void forceDismount(Entity passenger) {

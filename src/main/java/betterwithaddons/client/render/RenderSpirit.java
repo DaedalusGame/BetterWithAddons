@@ -33,7 +33,7 @@ public class RenderSpirit extends Render<EntitySpirit>
             GlStateManager.translate((float)x, (float)y, (float)z);
             this.bindEntityTexture(entity);
             RenderHelper.enableStandardItemLighting();
-            int i = entity.getTextureByXP();
+            int i = entity.getTextureBySpirits();
             float f = (float)(i % 4 * 16 + 0) / 64.0F;
             float f1 = (float)(i % 4 * 16 + 16) / 64.0F;
             float f2 = (float)(i / 4 * 16 + 0) / 64.0F;
