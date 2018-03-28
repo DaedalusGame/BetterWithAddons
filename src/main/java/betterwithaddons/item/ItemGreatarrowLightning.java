@@ -99,7 +99,7 @@ public class ItemGreatarrowLightning extends ItemGreatarrow {
     }
 
     private static void makeLightningField(World world, Vec3d pos, double range) {
-        AxisAlignedBB aabb = new AxisAlignedBB(pos.addVector(-range, -range, -range), pos.addVector(range, range, range));
+        AxisAlignedBB aabb = new AxisAlignedBB(pos.x-range, pos.y-range, pos.z-range, pos.x+range, pos.y+range, pos.z+range);
         List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
 
         for (EntityLivingBase living : list) {
