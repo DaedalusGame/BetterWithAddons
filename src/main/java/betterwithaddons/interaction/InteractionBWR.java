@@ -42,6 +42,7 @@ public class InteractionBWR extends Interaction {
     public static boolean GOLD_GRINDING = true;
     public static boolean NETHERRACK_SYNTHESIS = true;
     public static boolean QUARTZ_GROWING = true;
+    public static boolean EMERALD_PORTAL = true;
 
     public static boolean MELT_HELLFIRE = true;
     public static boolean DUNG_TO_DIRT = true;
@@ -89,6 +90,8 @@ public class InteractionBWR extends Interaction {
             MinecraftForge.EVENT_BUS.register(new RedstoneBoilHandler());
         if(SOULSAND_INFUSION)
             MinecraftForge.EVENT_BUS.register(new SoulSandHandler());
+        if(EMERALD_PORTAL)
+            MinecraftForge.EVENT_BUS.register(new PortalHandler());
         MinecraftForge.EVENT_BUS.register(new RenewablesHandler());
         RenewablesHandler.registerCapability();
     }

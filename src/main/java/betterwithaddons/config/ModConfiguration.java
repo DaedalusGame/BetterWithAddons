@@ -70,6 +70,7 @@ public class ModConfiguration {
     ConfigOptionBool BWR_SandToClay = new ConfigOptionBool("addons.BetterWithRenewables","SandToClay",InteractionBWR.SAND_TO_CLAY,"Allows sand to be turned into clay by adding acidic substances.");
     ConfigOptionBool BWR_MeltHellfire = new ConfigOptionBool("addons.BetterWithRenewables","MeltHellfire",InteractionBWR.MELT_HELLFIRE,"Allows Blocks of Hellfire to be melted into lava by proximity to it.");
     ConfigOptionBool BWR_RedstoneBoiling = new ConfigOptionBool("addons.BetterWithRenewables","BoilRedstone",InteractionBWR.REDSTONE_BOILING,"Allows redstone to be 'boiled' into glowstone by exposure to focused sunlight.");
+    ConfigOptionBool BWR_EmeraldPortal = new ConfigOptionBool("addons.BetterWithRenewables","EmeraldPortal",InteractionBWR.EMERALD_PORTAL,"Allows portals to be made from emerald blocks and sacrifice.");
 
     ConfigOptionBool CondensedOutputs_Enabled = new ConfigOptionBool("addons.CondensedOutputs", "Enabled", InteractionCondensedOutputs.ENABLED,"Whether the Condensed Outputs module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.");
     ConfigOptionBool CondensedOutputs_LoseBinder = new ConfigOptionBool("addons.CondensedOutputs", "LoseBinder", InteractionCondensedOutputs.LOSE_BINDER, "When uncrafting condensed materials, the binding material is not returned.");
@@ -233,6 +234,7 @@ public class ModConfiguration {
         InteractionBWR.CROSSBREED_ANIMALS = BWR_AnimalBreeding.init(configuration);
         InteractionBWR.MELT_HELLFIRE = BWR_MeltHellfire.init(configuration);
         InteractionBWR.REDSTONE_BOILING = BWR_RedstoneBoiling.init(configuration);
+        InteractionBWR.EMERALD_PORTAL = BWR_EmeraldPortal.init(configuration);
 
         if (configuration.hasChanged())
         {
