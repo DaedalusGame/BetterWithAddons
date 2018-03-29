@@ -9,13 +9,14 @@ import net.minecraft.util.NonNullList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class ItemMaterial extends Item implements IHasVariants {
     String[] subItemNames;
     public String[] subItemUnlocalizedNames;
     ItemStack container = ItemStack.EMPTY;
-    boolean disabled;
+    HashSet<Integer> disabledSubtypes = new HashSet<>();
 
     public ItemMaterial(String[] subnames) {
         subItemNames = subnames;
@@ -46,11 +47,13 @@ public class ItemMaterial extends Item implements IHasVariants {
         return !container.isEmpty();
     }
 
-    public ItemStack getMaterial(String material) {
-        return getMaterial(material,1);
+    public void setDisabled(String material)
+    {
+        int meta = getMaterialMeta(material);
+        disabledSubtypes.add(meta);
     }
 
-    public ItemStack getMaterial(String material,int count) {
+    private int getMaterialMeta(String material) {
         int meta = 0;
         for(int i = 0; i < subItemNames.length; i++) {
             if(subItemNames[i].toLowerCase().equals(material)) {
@@ -58,7 +61,15 @@ public class ItemMaterial extends Item implements IHasVariants {
                 break;
             }
         }
-        return new ItemStack(this, count, meta);
+        return meta;
+    }
+
+    public ItemStack getMaterial(String material) {
+        return getMaterial(material,1);
+    }
+
+    public ItemStack getMaterial(String material,int count) {
+        return new ItemStack(this, count, getMaterialMeta(material));
     }
 
     public String getUnlocalizedName(ItemStack stack) {
@@ -88,7 +99,8 @@ public class ItemMaterial extends Item implements IHasVariants {
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if(isInCreativeTab(tab))
             for(int i = 0; i < subItemNames.length; ++i) {
-                items.add(new ItemStack(this, 1, i));
+                if(!disabledSubtypes.contains(i))
+                    items.add(new ItemStack(this, 1, i));
             }
     }
 }

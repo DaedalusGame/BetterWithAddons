@@ -12,6 +12,7 @@ import java.util.List;
 public class BlockTermiteLog extends BlockModLog {
     public BlockTermiteLog() {
         super(ModWoods.TERMITE);
+        this.setUnlocalizedName("log.oak");
     }
 
     @Override

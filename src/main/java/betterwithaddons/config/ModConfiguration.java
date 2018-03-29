@@ -113,6 +113,9 @@ public class ModConfiguration {
     ConfigOptionBool BTWTweak_LogsSmeltToAsh = new ConfigOptionBool("addons.BTWTweak", "LogsSmeltToAsh", InteractionBTWTweak.LOGS_SMELT_TO_ASH, "Logs burn into ash in a furnace. This only works if they wouldn't burn into anything else.");
     ConfigOptionBool BTWTweak_ReplaceWritableBookRecipe = new ConfigOptionBool("addons.BTWTweak", "ReplaceWritableBookRecipe", InteractionBTWTweak.REPLACE_WRITABLE_BOOK_RECIPE, "Changes writable books to require the Ink and Quill item.");
     ConfigOptionBool BTWTweak_WoolRecycling = new ConfigOptionBool("addons.BTWTweak", "WoolRecycling", InteractionBTWTweak.WOOL_RECYCLING, "Wool can be rendered back into it's components. You might want to disable this if you use mods that violate Hardcore Shearing.");
+    ConfigOptionBool BTWTweak_RustedMineshafts = new ConfigOptionBool("addons.BTWTweak", "RustedMineshafts", InteractionBTWTweak.RUSTY_MINESHAFTS, "Rails in Mineshafts are rusted and melt down into much less iron.");
+    ConfigOptionBool BTWTweak_InfestedMineshafts = new ConfigOptionBool("addons.BTWTweak", "InfestedMineshafts", InteractionBTWTweak.INFESTED_MINESHAFTS, "Logs in Mineshafts are infested by Termites and crumble into sawdust when harvested.");
+    ConfigOptionInteger BTWTweak_WritingTableCost = new ConfigOptionInteger("addons.BTWTweak", "WritingTableCost", InteractionBTWTweak.WRITING_TABLE_COST, "How many levels it costs to rename an item or create a nametag.");
 
 
     public void preInit(FMLPreInitializationEvent event)
@@ -194,6 +197,9 @@ public class ModConfiguration {
         InteractionBTWTweak.LOGS_SMELT_TO_ASH = BTWTweak_LogsSmeltToAsh.init(configuration);
         InteractionBTWTweak.REPLACE_WRITABLE_BOOK_RECIPE = BTWTweak_ReplaceWritableBookRecipe.init(configuration);
         InteractionBTWTweak.WOOL_RECYCLING = BTWTweak_WoolRecycling.init(configuration);
+        InteractionBTWTweak.RUSTY_MINESHAFTS = BTWTweak_RustedMineshafts.init(configuration);
+        InteractionBTWTweak.INFESTED_MINESHAFTS = BTWTweak_InfestedMineshafts.init(configuration);
+        InteractionBTWTweak.WRITING_TABLE_COST = BTWTweak_WritingTableCost.init(configuration);
 
         InteractionWheat.ENABLED = Wheat_Enabled.init(configuration);
         InteractionWheat.TEXTURE_CHANGES = Wheat_ChangeTextures.init(configuration);

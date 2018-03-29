@@ -143,10 +143,13 @@ public class ModItems {
     public static ItemMaterial materialBundle;
     @GameRegistry.ObjectHolder("betterwithaddons:decomat")
     public static ItemMaterial materialDeco;
-    @GameRegistry.ObjectHolder("betterwithaddons:tweakmat")
-    public static ItemMaterial materialTweak;
     @GameRegistry.ObjectHolder("betterwithaddons:wheatmat")
     public static ItemMaterial materialWheat;
+
+    @GameRegistry.ObjectHolder("betterwithaddons:tweakmat")
+    public static ItemMaterial materialTweak;
+    @GameRegistry.ObjectHolder("betterwithaddons:ink_and_quill")
+    public static ItemInkAndQuill inkAndQuill;
 
     @GameRegistry.ObjectHolder("betterwithaddons:katana")
     public static ItemKatana katana;
@@ -387,6 +390,7 @@ public class ModItems {
         materialTweak = (ItemMaterial) registerItem("tweakmat", new ItemMaterial(
                 new String[]{"ash", "ink_and_quill"}
         ));
+        inkAndQuill = (ItemInkAndQuill) registerItem("ink_and_quill", new ItemInkAndQuill());
 
         materialWheat = (ItemMaterial) registerItem("wheatmat", new ItemMaterial(
                 new String[]{"hay"}
@@ -404,7 +408,6 @@ public class ModItems {
     public static void registryEvent(RegistryEvent.Register<Item> event) {
         for (Item item : LIST) {
             event.getRegistry().register(item);
-
         }
     }
 

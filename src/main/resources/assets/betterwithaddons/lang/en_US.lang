@@ -15,6 +15,8 @@ inv.infuser.name=Ancestral Infuser
 inv.infuser.throw.name=Throw
 inv.infuser.cost.name=%s
 inv.infuser.cost.description=Requires %s Ancestral Spirit
+inv.writing_table.name=Writing Table
+inv.writing_table.cost.name=Renaming Cost: %1$s
 
 tile.banner_detector.name=Banner Detector
 tile.world_scale_ore.name=World Scale Ore
@@ -51,6 +53,7 @@ tile.spindle.name=Spindle
 tile.loom.name=Spinning Wheel
 
 tile.rail_rusted.name=Rusted Rail
+tile.writing_table.name=Writing Table
 
 tile.ancestry_sand.name=Infused Soul Sand
 tile.ancestry_sand.spirits=Contains %s spirits
@@ -274,7 +277,8 @@ item.crate.cactus.name=Crated Cacti
 item.crate.inksac.name=Crated Ink Sacs
 
 item.tweakmat.ash.name=Ash
-item.tweakmat.ink_and_quill.name=Ink and Quill
+item.tweakmat.ink_and_quill.name=Ink and Quill (Old)
+item.ink_and_quill.name=Ink and Quill
 
 item.seed_grain.name=Grain
 item.bag.grain.name=Bag of Grain

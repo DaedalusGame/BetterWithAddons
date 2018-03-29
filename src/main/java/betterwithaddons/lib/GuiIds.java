@@ -8,4 +8,5 @@ public class GuiIds
 	public static final int DRYING_BOX = 3;
 	public static final int CHUTE = 4;
 	public static final int INFUSER = 5;
+	public static final int WRITING_TABLE = 6;
 }

@@ -255,6 +255,7 @@ public class ModBlocks {
 
         registerBlock(new BlockRustyRail());
         registerBlock(new BlockTermiteLog());
+        registerBlock(new BlockWritingTable());
 
         registerBlock(new BlockAdobe("adobe", new AdobeType[]{
                 AdobeType.MOSTLY_CLAY, AdobeType.CLAYSAND, AdobeType.SANDCLAY, AdobeType.MOSTLY_SAND,

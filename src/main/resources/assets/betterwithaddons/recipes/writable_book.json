@@ -16,8 +16,8 @@
 	  "ore": "book"
 	},
     {
-      "item": "betterwithaddons:tweakmat",
-	  "data": 1
+      "item": "betterwithaddons:ink_and_quill",
+	  "data": 32767
     }
   ]
 }

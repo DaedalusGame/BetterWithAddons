@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "betterwithaddons:writing_table",
+    "data": 2
+  },
+  "pattern": [
+    "P",
+    "T"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "type": "forge:ore_dict",
+      "ore": "paper"
+    },
+    "T": {
+      "item": "betterwithmods:wood_table",
+      "data": 2
+    }
+  }
+}

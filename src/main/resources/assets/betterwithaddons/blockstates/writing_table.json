@@ -1,0 +1,68 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "bottom": "blocks/planks_oak",
+      "cover": "betterwithaddons:blocks/writing_table",
+      "top": "#bottom",
+      "side": "#bottom",
+      "particle": "#side"
+    },
+    "model": "betterwithmods:table_supported",
+    "uvlock": true
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [
+      {
+        "transform": "forge:default-block",
+        "submodel": "betterwithaddons:table_cover"
+      }
+    ],
+    "supported": {
+      "true": {
+        "model": "betterwithmods:table_unsupported",
+        "submodel": {
+          "paper": { "model": "betterwithaddons:table_cover" }
+        }
+      },
+      "false": {
+        "submodel": {
+          "paper": { "model": "betterwithaddons:table_cover" }
+        }
+      }
+    },
+    "variant": {
+      "oak": {
+        "textures": {
+          "bottom": "blocks/planks_oak"
+        }
+      },
+      "spruce": {
+        "textures": {
+          "bottom": "blocks/planks_spruce"
+        }
+      },
+      "birch": {
+        "textures": {
+          "bottom": "blocks/planks_birch"
+        }
+      },
+      "jungle": {
+        "textures": {
+          "bottom": "blocks/planks_jungle"
+        }
+      },
+      "acacia": {
+        "textures": {
+          "bottom": "blocks/planks_acacia"
+        }
+      },
+      "dark_oak": {
+        "textures": {
+          "bottom": "blocks/planks_big_oak"
+        }
+      }
+    }
+  }
+}

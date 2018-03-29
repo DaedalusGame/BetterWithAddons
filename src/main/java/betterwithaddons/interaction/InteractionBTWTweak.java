@@ -7,6 +7,7 @@ import betterwithaddons.crafting.recipes.DisplaySawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.SoapHandler;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.mechanical.BlockMechMachines;
@@ -14,6 +15,7 @@ import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
+import betterwithmods.module.gameplay.CraftingRecipes;
 import betterwithmods.module.hardcore.world.HCBonemeal;
 import betterwithmods.module.tweaks.MineshaftGeneration;
 import net.minecraft.block.BlockPlanks;
@@ -22,10 +24,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.registries.ForgeRegistry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +48,7 @@ public class InteractionBTWTweak extends Interaction {
     public static boolean REPLACE_WRITABLE_BOOK_RECIPE = true;
     public static boolean RUSTY_MINESHAFTS = true;
     public static boolean INFESTED_MINESHAFTS = true;
+    public static int WRITING_TABLE_COST = 1;
 
     @Override
     public boolean isActive() {
@@ -77,11 +84,22 @@ public class InteractionBTWTweak extends Interaction {
     }
 
     @Override
+    void modifyRecipes(RegistryEvent.Register<IRecipe> event) {
+        ForgeRegistry<IRecipe> registry = (ForgeRegistry<IRecipe>) event.getRegistry();
+
+        //Temp conversion recipe
+        ResourceLocation resloc = new ResourceLocation(Reference.MOD_ID, "ink_and_quill_conversion");
+        registry.register(new ShapelessOreRecipe(resloc,new ItemStack(ModItems.inkAndQuill),new Object[]{ModItems.materialTweak.getMaterial("ink_and_quill")}).setRegistryName(resloc));
+    }
+
+    @Override
     public void init() {
         if(ASH_FERTILIZER) {
             HCBonemeal.registerFertilzier(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
             HCBonemeal.registerFertilzier(ModItems.materialTweak.getMaterial("ash"));
         }
+
+        ModItems.materialTweak.setDisabled("ink_and_quill"); //Deprecated
 
         if(RUSTY_MINESHAFTS)
             MineshaftGeneration.rail = piece -> ModBlocks.rustyRail.getDefaultState();

@@ -23,7 +23,7 @@
 		},
 		"none": { 
 			"textures": {
-				"all": "betterwithaddons:blocks/log_oak"
+				"all": "minecraft:blocks/log_oak"
 			}
 		}
     }
