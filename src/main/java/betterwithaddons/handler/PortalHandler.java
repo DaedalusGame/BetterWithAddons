@@ -10,6 +10,7 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -27,8 +28,6 @@ public class PortalHandler {
     public void onScrollClick(PlayerInteractEvent.EntityInteractSpecific event)
     {
         World world = event.getWorld();
-        if(world.isRemote)
-            return;
         EntityPlayer player = event.getEntityPlayer();
         Entity entity = event.getTarget();
         ItemStack tool = event.getItemStack();
@@ -39,6 +38,10 @@ public class PortalHandler {
         EntityVillager villager = (EntityVillager) entity;
         VillagerRegistry.VillagerProfession career = villager.getProfessionForge();
         if(career != PRIEST)
+            return;
+        //event.setCancellationResult(EnumActionResult.PASS);
+        event.setCanceled(true);
+        if(world.isRemote)
             return;
         BlockPos pos = entity.getPosition();
 
