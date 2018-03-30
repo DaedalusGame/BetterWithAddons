@@ -60,6 +60,8 @@ public class ModBlocks {
     public static BlockCropRush rush;
     @ObjectHolder("betterwithaddons:crop_rice")
     public static BlockCropRice rice;
+    @ObjectHolder("betterwithaddons:crop_tea")
+    public static BlockCropTea tea;
     @ObjectHolder("betterwithaddons:bricks_stained")
     public static BlockColoredBrick coloredBrick;
     @ObjectHolder("betterwithaddons:slat")
@@ -228,6 +230,7 @@ public class ModBlocks {
         registerBlock(new BlockCherryLeafPile());
         registerBlock(new BlockCropRush(), ItemBlockSeed.class, false);
         registerBlock(new BlockCropRice(), ItemBlockSeed.class, false);
+        registerBlock(new BlockCropTea(), ItemBlockSeed.class, false);
         registerBlock(new BlockBamboo());
         registerBlock(new BlockSlat());
         registerBlock(new BlockNettedScreen());

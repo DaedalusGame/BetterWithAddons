@@ -71,6 +71,12 @@ public class ClientProxy implements IProxy
         registerColorable(ModItems.samuraiChestplate);
         registerColorable(ModItems.samuraiLeggings);
         registerColorable(ModItems.brokenArtifact);
+        registerColorable(ModBlocks.tea);
+        registerColorable(ModItems.teaLeaves);
+        registerColorable(ModItems.teaSoaked);
+        registerColorable(ModItems.teaWilted);
+        registerColorable(ModItems.teaPowder);
+
         MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
         //TODO definition provider
         ManualAPI.addProvider(new ResourceContentProvider(Reference.MOD_ID, "docs/"));

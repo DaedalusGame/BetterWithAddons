@@ -4,6 +4,7 @@ import betterwithaddons.BetterWithAddons;
 import betterwithaddons.item.rbdtools.*;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.ItemUtil;
+import betterwithaddons.util.TeaType;
 import betterwithmods.common.BWMItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.MobEffects;
@@ -125,12 +126,21 @@ public class ModItems {
     public static ItemFood riceBowl;
     @GameRegistry.ObjectHolder("betterwithaddons:laxative")
     public static Item laxative;
+    @GameRegistry.ObjectHolder("betterwithaddons:japanmat")
+    public static ItemMaterial materialJapan;
+    @GameRegistry.ObjectHolder("betterwithaddons:tea_leaves")
+    public static ItemTea teaLeaves;
+    @GameRegistry.ObjectHolder("betterwithaddons:tea_soaked")
+    public static ItemTea teaSoaked;
+    @GameRegistry.ObjectHolder("betterwithaddons:tea_wilted")
+    public static ItemTea teaWilted;
+    @GameRegistry.ObjectHolder("betterwithaddons:tea_powder")
+    public static ItemTea teaPowder;
+
     @GameRegistry.ObjectHolder("betterwithaddons:brick_stained")
     public static ItemStainedBrick stainedBrick;
     @GameRegistry.ObjectHolder("betterwithaddons:material")
     public static ItemMaterial material;
-    @GameRegistry.ObjectHolder("betterwithaddons:japanmat")
-    public static ItemMaterial materialJapan;
     @GameRegistry.ObjectHolder("betterwithaddons:bolt")
     public static ItemMaterial materialBolt;
     @GameRegistry.ObjectHolder("betterwithaddons:congealed")
@@ -328,6 +338,10 @@ public class ModItems {
         rice = (ItemFood) registerItem("food_cooked_rice", new ItemFood(2, 0.3F, false));
         riceBowl = (ItemFood) registerItem("food_bowl_rice", new ItemFood(9, 0.6F, false).setMaxStackSize(1));
         laxative = registerItem("laxative", new ItemLaxative(0,0,true));
+        teaLeaves = (ItemTea) registerItem("tea_leaves", new ItemTea(TeaType.ItemType.Leaves));
+        teaSoaked = (ItemTea) registerItem("tea_soaked", new ItemTea(TeaType.ItemType.Soaked));
+        teaWilted = (ItemTea) registerItem("tea_wilted", new ItemTea(TeaType.ItemType.Wilted));
+        teaPowder = (ItemTea) registerItem("tea_powder", new ItemTea(TeaType.ItemType.Powder));
 
         soulSandPile = registerItem("soulsand_pile", new Item());
         rottenFood = (ItemFood)registerItem("rotten_food", new ItemFood(1,0.1f,false).setPotionEffect(new PotionEffect(MobEffects.HUNGER, 2000, 1), 1.0F));
