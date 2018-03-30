@@ -23,7 +23,7 @@ import java.util.HashSet;
 
 public class TileEntityAqueductWater extends TileEntityBase {
     private int distanceFromSource;
-    private static final HashSet<Block> WATER_SOURCES = new HashSet<>();
+    private static final HashSet<ResourceLocation> WATER_SOURCES = new HashSet<>();
     private static final HashSet<Biome> BIOMES = new HashSet<>();
 
     @Override
@@ -42,7 +42,7 @@ public class TileEntityAqueductWater extends TileEntityBase {
         return super.getCapability(capability, facing);
     }
 
-    public static void addWaterSource(Block block)
+    public static void addWaterSource(ResourceLocation block)
     {
         WATER_SOURCES.add(block);
     }
@@ -109,7 +109,7 @@ public class TileEntityAqueductWater extends TileEntityBase {
         if(!BIOMES.isEmpty())
             isValidBiome = BIOMES.contains(world.getBiome(pos)) == InteractionBWA.AQUEDUCT_BIOMES_IS_WHITELIST;
 
-        if(isValidBiome && ((state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0) || WATER_SOURCES.contains(state.getBlock())))
+        if(isValidBiome && ((state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0) || WATER_SOURCES.contains(state.getBlock().getRegistryName())))
         {
             return 0;
         }

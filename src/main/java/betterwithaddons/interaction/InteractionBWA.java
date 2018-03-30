@@ -63,6 +63,9 @@ public class InteractionBWA extends Interaction {
     public static int AQUEDUCT_MAX_LENGTH = 128;
     public static String[] AQUEDUCT_BIOME_STRINGS = new String[0];
     public static boolean AQUEDUCT_BIOMES_IS_WHITELIST = true;
+    public static String[] AQUEDUCT_SOURCE_WHITELIST = new String[] {
+            "streams:river"
+    };
 
     public static boolean GRASS_TO_CLAY = false;
     public static boolean GRASS_TO_SAND = false;
@@ -139,6 +142,9 @@ public class InteractionBWA extends Interaction {
         }
         if(STONEBRICKS_NEED_SMELTING)
             BetterWithAddons.removeCraftingRecipe(new ResourceLocation("minecraft","stonebrick"));
+
+        for(String s : AQUEDUCT_SOURCE_WHITELIST)
+            TileEntityAqueductWater.addWaterSource(new ResourceLocation(s));
     }
 
     @Override

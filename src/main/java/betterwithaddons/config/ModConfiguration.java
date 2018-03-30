@@ -30,6 +30,7 @@ public class ModConfiguration {
     ConfigOptionInteger BWA_MaxAqueductLength = new ConfigOptionInteger("addons.BetterWithAddons", "MaxAqueductLength", InteractionBWA.AQUEDUCT_MAX_LENGTH, "How long aqueducts can be.");
     ConfigOptionStringList BWA_AqueductBiomes = new ConfigOptionStringList("addons.BetterWithAddons", "AqueductBiomes", InteractionBWA.AQUEDUCT_BIOME_STRINGS, "Aqueducts can only draw water from sources in specific biomes.");
     ConfigOptionBool BWA_AqueductBiomeWhitelist = new ConfigOptionBool("addons.BetterWithAddons", "AqueductBiomesIsWhitelist", InteractionBWA.AQUEDUCT_BIOMES_IS_WHITELIST, "Whether aqueduct biomes should be whitelisted or blacklisted.");
+    ConfigOptionStringList BWA_AqueductSources = new ConfigOptionStringList("addons.BetterWithAddons", "AqueductSources", InteractionBWA.AQUEDUCT_SOURCE_WHITELIST, "Sources Aqueducts can pull from other than real source blocks.");
     ConfigOptionBool BWA_ConvenientIronTools = new ConfigOptionBool("addons.BetterWithAddons", "ConvenientIronTools", InteractionBWA.CONVENIENT_TOOLS_PRE_END, "Convenient tools can be made from iron, gold and diamond pre-soulsteel.");
 
     ConfigOptionBool BWA_RottenFood = new ConfigOptionBool("addons.BetterWithAddons", "RottenFood", InteractionBWA.ROTTEN_FOOD, "Whether food will rot after a certain number of days has passed.");
@@ -150,6 +151,7 @@ public class ModConfiguration {
         InteractionBWA.AQUEDUCT_MAX_LENGTH = BWA_MaxAqueductLength.init(configuration);
         InteractionBWA.AQUEDUCT_BIOME_STRINGS = BWA_AqueductBiomes.init(configuration);
         InteractionBWA.AQUEDUCT_BIOMES_IS_WHITELIST = BWA_AqueductBiomeWhitelist.init(configuration);
+        InteractionBWA.AQUEDUCT_SOURCE_WHITELIST = BWA_AqueductSources.init(configuration);
         InteractionBWA.ARMOR_SHARD_RENDER = BWA_ArmorShardRender.init(configuration);
         InteractionBWA.LEGENDARIUM_MIN_DAMAGE = BWA_LegendariumMinDamage.init(configuration);
         InteractionBWA.LEGENDARIUM_DAMAGE_PAD = BWA_LegendariumDamagePad.init(configuration);
