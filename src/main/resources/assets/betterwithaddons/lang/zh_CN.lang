@@ -15,6 +15,8 @@ inv.infuser.name=灵魂灌注器
 inv.infuser.throw.name=投掷
 inv.infuser.cost.name=%s
 inv.infuser.cost.description=需要%s先祖的灵魂
+inv.writing_table.name=写作台
+inv.writing_table.cost.name=重命名消耗：%1$s
 
 tile.banner_detector.name=旗帜检测器
 tile.world_scale_ore.name=世界守护矿石
@@ -49,6 +51,9 @@ tile.scaffold.name=脚手架
 
 tile.spindle.name=纺锤
 tile.loom.name=纺车
+
+tile.rail_rusted.name=生锈铁轨
+tile.writing_table.name=写作台
 
 tile.ancestry_sand.name=注魂灵魂沙
 tile.ancestry_sand.spirits=包含%s的灵魂
@@ -272,7 +277,8 @@ item.crate.cactus.name=装箱的仙人掌
 item.crate.inksac.name=装箱的墨囊
 
 item.tweakmat.ash.name=灰烬
-item.tweakmat.ink_and_quill.name=墨与羽毛
+item.tweakmat.ink_and_quill.name=墨与羽毛（旧版本）
+item.ink_and_quill.name=墨与羽毛
 
 item.seed_grain.name=干粮
 item.bag.grain.name=一袋干粮
