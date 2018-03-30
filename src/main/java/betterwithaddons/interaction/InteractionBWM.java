@@ -236,6 +236,7 @@ public class InteractionBWM extends Interaction {
         OreDictionary.registerOre("listAllExplosives", ModItems.materialBag.getMaterial("hellfire"));
 
         OreDictionary.registerOre("listAllmeat", Items.RABBIT);
+        OreDictionary.registerOre("listAllmeatcooked", ModItems.cookedClownfish);
         OreDictionary.registerOre("blockDung", BlockAesthetic.getStack(BlockAesthetic.EnumType.DUNG));
 
         OreDictionary.registerOre("book", Items.WRITTEN_BOOK);
