@@ -84,12 +84,16 @@ public class ContainerInfuser extends Container {
     {
         InfuserRecipe recipe = CraftingManagerInfuser.getInstance().findMatchingRecipe(this.craftMatrix, this.tileInfuser.getWorld());
 
-        requiredSpirit = recipe != null ? recipe.getRequiredSpirit(craftMatrix) : 0;
-        spiritMet = recipe != null && tileInfuser.getSpirits() >= requiredSpirit;
-        if(canCraft())
+        int required = recipe != null ? recipe.getRequiredSpirit(craftMatrix) : 0;
+        spiritMet = recipe != null && tileInfuser.getSpirits() >= required;
+        if(canCraft()) {
+            requiredSpirit = required;
             this.craftResult.setInventorySlotContents(0, recipe.internal.getCraftingResult(this.craftMatrix));
-        else
+        }
+        else {
+            requiredSpirit = 0;
             this.craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
+        }
     }
 
     public boolean canCraft() {
