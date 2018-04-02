@@ -3,7 +3,6 @@ package betterwithaddons.interaction;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
-import betterwithaddons.crafting.recipes.DisplaySawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.SoapHandler;
 import betterwithaddons.item.ModItems;
@@ -165,12 +164,12 @@ public class InteractionBTWTweak extends Interaction {
                 SawManager.WOOD_SAW.addRecipe(BWMBlocks.WOOD_TABLE,woodtype.getMetadata(),new ItemStack(BWMBlocks.WOOD_CORNER, 3, woodtype.getMetadata()));
             }
 
-            SawManager.WOOD_SAW.addRecipe(new DisplaySawRecipe(Blocks.OAK_DOOR,0,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.OAK.getMetadata())),new ItemStack(Items.OAK_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DisplaySawRecipe(Blocks.BIRCH_DOOR,0,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.BIRCH.getMetadata())),new ItemStack(Items.BIRCH_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DisplaySawRecipe(Blocks.SPRUCE_DOOR,0,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.SPRUCE.getMetadata())),new ItemStack(Items.SPRUCE_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DisplaySawRecipe(Blocks.JUNGLE_DOOR,0,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.JUNGLE.getMetadata())),new ItemStack(Items.JUNGLE_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DisplaySawRecipe(Blocks.ACACIA_DOOR,0,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.ACACIA.getMetadata())),new ItemStack(Items.ACACIA_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DisplaySawRecipe(Blocks.DARK_OAK_DOOR,0,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.DARK_OAK.getMetadata())),new ItemStack(Items.DARK_OAK_DOOR)));
+            /*SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.OAK_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.OAK.getMetadata())),new ItemStack(Items.OAK_DOOR)));
+            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.BIRCH_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.BIRCH.getMetadata())),new ItemStack(Items.BIRCH_DOOR)));
+            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.SPRUCE_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.SPRUCE.getMetadata())),new ItemStack(Items.SPRUCE_DOOR)));
+            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.JUNGLE_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.JUNGLE.getMetadata())),new ItemStack(Items.JUNGLE_DOOR)));
+            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.ACACIA_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.ACACIA.getMetadata())),new ItemStack(Items.ACACIA_DOOR)));
+            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.DARK_OAK_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.DARK_OAK.getMetadata())),new ItemStack(Items.DARK_OAK_DOOR)));*/
 
             SawManager.WOOD_SAW.addRecipe(Blocks.OAK_FENCE_GATE,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()));
             SawManager.WOOD_SAW.addRecipe(Blocks.BIRCH_FENCE_GATE,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.BIRCH.getMetadata()));
