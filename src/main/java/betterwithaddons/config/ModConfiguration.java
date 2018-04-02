@@ -82,8 +82,8 @@ public class ModConfiguration {
 
         configuration.load();
 
-        //configuration.getCategory("interaction").setComment("Enable or disable mod interactions.");
-        //configuration.getCategory("addons").setComment("Configure individual addons.");
+        configuration.getCategory("interaction").setComment("Enable or disable mod interactions.");
+        configuration.getCategory("addons").setComment("Configure individual addons.");
 
         MinecraftForge.EVENT_BUS.register(this);
 
