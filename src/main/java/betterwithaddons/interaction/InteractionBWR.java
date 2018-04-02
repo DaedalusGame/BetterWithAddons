@@ -103,7 +103,7 @@ public class InteractionBWR extends Interaction {
 
             BLAZE_BREEDING_DELAY = loadPropInt("BlazeBreedingDelay","Delay between successfully breeding blazes.", BLAZE_BREEDING_DELAY);
             BLAZE_BREEDING_RANGE = loadPropInt("BlazeBreedingRange","Range in blocks to look for fire to birth new blazes in.", BLAZE_BREEDING_RANGE);
-            
+
             REDSTONE_BOILING_CHANCE = loadPropDouble("BoilRedstoneChance","Chance for redstone to boil into glowstone.", REDSTONE_BOILING_CHANCE, 0, 1);
             QUARTZ_GROWING_THRESHOLD = loadPropInt("QuartzSynthesisThreshold","Affects the time sand piles must be cooked to make Quartz.", QUARTZ_GROWING_THRESHOLD);
             SOULSAND_INFUSION_THRESHOLD = loadPropInt("SoulsandInfusionThreshold","Amount of exp that must be pushed into a block of dung to create soulsand.", SOULSAND_INFUSION_THRESHOLD);
