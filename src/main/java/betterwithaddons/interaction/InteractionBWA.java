@@ -30,6 +30,7 @@ import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.gameplay.AnvilRecipes;
 import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
+import betterwithmods.module.hardcore.needs.HCCooking;
 import betterwithmods.module.hardcore.needs.HCTools;
 import betterwithmods.module.hardcore.needs.hunger.HCHunger;
 import betterwithmods.util.DirUtils;
@@ -343,7 +344,7 @@ public class InteractionBWA extends Interaction {
         GameRegistry.addSmelting(Blocks.BROWN_MUSHROOM,new ItemStack(ModItems.bakedMushroom),0.35f);
         GameRegistry.addSmelting(Blocks.RED_MUSHROOM,new ItemStack(ModItems.bakedAmanita),0.35f);
 
-        boolean hchunger = ModuleLoader.isFeatureEnabled(HCHunger.class);
+        boolean hchunger = ModuleLoader.isFeatureEnabled(HCCooking.class);
 
         KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.MELON.getMetadata(), new ItemStack(ModItems.pieMelon,hchunger ? 1 : 2));
         KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.MEAT.getMetadata(), new ItemStack(ModItems.pieMeat,hchunger ? 1 : 2));

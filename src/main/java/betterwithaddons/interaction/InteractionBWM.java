@@ -28,6 +28,7 @@ import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
+import betterwithmods.module.hardcore.needs.HCCooking;
 import betterwithmods.module.hardcore.needs.HCPiles;
 import betterwithmods.module.hardcore.needs.hunger.HCHunger;
 import net.minecraft.block.BlockDoublePlant;
@@ -128,7 +129,7 @@ public class InteractionBWM extends Interaction {
 
         ConditionModule.MODULES.put("HardcoreDiamond", () -> ModuleLoader.isFeatureEnabled(HCDiamond.class));
         ConditionModule.MODULES.put("HardcoreShearing", () -> HARDCORE_SHEARING);
-        ConditionModule.MODULES.put("HardcoreHunger", () -> ModuleLoader.isFeatureEnabled(HCHunger.class));
+        ConditionModule.MODULES.put("HardcoreHunger", () -> ModuleLoader.isFeatureEnabled(HCCooking.class));
 
         HardcoreWoolHandler.EXTRA_SHEARS = new HashSet<>(Arrays.asList(SHEARS_WHITELIST)); //Populate the set of extra shears.
     }
