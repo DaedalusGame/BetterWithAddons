@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "betterwithaddons:helmet_paper",
+    "data": 0
+  },
+  "pattern": [
+    "PPP",
+    "P P"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "betterwithaddons:japanmat",
+      "data": 14
+    }
+  }
+}

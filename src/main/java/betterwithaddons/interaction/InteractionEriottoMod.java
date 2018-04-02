@@ -44,15 +44,17 @@ public class InteractionEriottoMod extends Interaction {
     //public static boolean GRASS_DROPS_SEEDS = false;
     public static boolean INFUSER_REPAIRS = true;
     public static boolean ALTERNATE_INFUSER_RECIPE = false;
-    public static int MAX_SPIRITS = 128;
-    public static int SPIRIT_PER_BOTTLE = 8;
+    public static int SOULSAND_MAX_SPIRITS = 128;
+    public static int BOTTLE_MAX_SPIRITS = 8;
     public static boolean JAPANESE_RANDOM_SPAWN = true;
-    public static int JAPANESE_RANDOM_SPAWN_WEIGHT = 40;
-    public static int KARATE_ZOMBIE_MIN_SPIRITS = 5;
-    public static int KARATE_ZOMBIE_MAX_SPIRITS = 29;
+    public static int KARATE_ZOMBIE_SPAWN_WEIGHT = 40;
+    public static int KARATE_ZOMBIE_SPAWN_MIN_SPIRITS = 5;
+    public static int KARATE_ZOMBIE_SPAWN_MAX_SPIRITS = 29;
     public static int KARATE_ZOMBIE_SPIRIT_PER_LEVEL = 8;
     public static double KARATE_ZOMBIE_DROP_MULTIPLIER = 1.0f;
     public static int CHERRY_BOX_CRAFTING_TIME = 500;
+    public static int MAX_SPIRIT_AGE = 1200;
+    public static int KARATE_ZOMBIE_MAX_SPIRITS = 128;
     public ArrayList<Item> REPAIRABLE_TOOLS = new ArrayList<>();
 
     @Override
@@ -66,12 +68,14 @@ public class InteractionEriottoMod extends Interaction {
         INFUSER_REPAIRS = loadPropBool("InfuserRepairs","Infusers can repair japanese weapons and armors.",INFUSER_REPAIRS);
         ALTERNATE_INFUSER_RECIPE = loadPropBool("AlternateInfuserRecipe","Hardcore Structures pushes the Enchanting Table behind some exploration. This enables an alternate recipe if you want to start japanese culture before finding a Desert Temple.",ALTERNATE_INFUSER_RECIPE);
         JAPANESE_RANDOM_SPAWN = loadPropBool("RandomJapaneseMobs","Karate Zombies infused with ancestral spirit spawn randomly.",JAPANESE_RANDOM_SPAWN);
-        JAPANESE_RANDOM_SPAWN_WEIGHT = loadPropInt("RandomJapaneseMobsWeight","Weight for a karate zombie to spawn.",JAPANESE_RANDOM_SPAWN_WEIGHT);
+        KARATE_ZOMBIE_SPAWN_WEIGHT = loadPropInt("RandomJapaneseMobsWeight","Weight for a karate zombie to spawn.", KARATE_ZOMBIE_SPAWN_WEIGHT);
         doesNotNeedRestart(() -> {
-            MAX_SPIRITS = loadPropInt("MaxSpirits","Maximum amount of spirit to be stored in Infused Soul Sand.",MAX_SPIRITS);
-            SPIRIT_PER_BOTTLE = loadPropInt("SpiritsPerBottle","How much spirit is contained in one bottle.",SPIRIT_PER_BOTTLE);
-            KARATE_ZOMBIE_MIN_SPIRITS = loadPropInt("KarateZombieMinSpirits","How many spirits karate zombies at least spawn with.",KARATE_ZOMBIE_MIN_SPIRITS);
-            KARATE_ZOMBIE_MAX_SPIRITS = loadPropInt("KarateZombieMaxSpirits","How many spirits karate zombies at most spawn with.",KARATE_ZOMBIE_MAX_SPIRITS);
+            SOULSAND_MAX_SPIRITS = loadPropInt("MaxSpirits","Maximum amount of spirit to be stored in Infused Soul Sand.", SOULSAND_MAX_SPIRITS);
+            BOTTLE_MAX_SPIRITS = loadPropInt("SpiritsPerBottle","How much spirit is contained in one bottle.", BOTTLE_MAX_SPIRITS);
+            MAX_SPIRIT_AGE = loadPropInt("MaxSpiritAge","How long spirits can exist in world, in ticks.", MAX_SPIRIT_AGE);
+            KARATE_ZOMBIE_MAX_SPIRITS = loadPropInt("KarateZombieMaxSpirits","How many spirits can be infused into karate zombies.", KARATE_ZOMBIE_MAX_SPIRITS);
+            KARATE_ZOMBIE_SPAWN_MIN_SPIRITS = loadPropInt("KarateZombieSpawnMinSpirits","How many spirits karate zombies at least spawn with.", KARATE_ZOMBIE_SPAWN_MIN_SPIRITS);
+            KARATE_ZOMBIE_SPAWN_MAX_SPIRITS = loadPropInt("KarateZombieSpawnMaxSpirits","How many spirits karate zombies at most spawn with.", KARATE_ZOMBIE_SPAWN_MAX_SPIRITS);
             KARATE_ZOMBIE_SPIRIT_PER_LEVEL = loadPropInt("KarateZombiePerLevel","How much spirit is required for Karate Zombies to level up.",KARATE_ZOMBIE_SPIRIT_PER_LEVEL);
             KARATE_ZOMBIE_DROP_MULTIPLIER = loadPropDouble("KarateZombieDropMultiplier","How much spirit is dropped by Karate Zombies, as a ratio of how much they have.",KARATE_ZOMBIE_DROP_MULTIPLIER);
             CHERRY_BOX_CRAFTING_TIME = loadPropInt("CherryBoxCraftingTime","How long the drying and soaking units take to process one item, in ticks.",CHERRY_BOX_CRAFTING_TIME);
@@ -108,7 +112,7 @@ public class InteractionEriottoMod extends Interaction {
                     biomes.add(biome);
             }
 
-            EntityRegistry.addSpawn(EntityKarateZombie.class, JAPANESE_RANDOM_SPAWN_WEIGHT, 1, 4, EnumCreatureType.MONSTER, biomes.toArray(new Biome[biomes.size()]));
+            EntityRegistry.addSpawn(EntityKarateZombie.class, KARATE_ZOMBIE_SPAWN_WEIGHT, 1, 4, EnumCreatureType.MONSTER, biomes.toArray(new Biome[biomes.size()]));
         }
 
         ConditionModule.MODULES.put("EriottoMod", this::isActive);

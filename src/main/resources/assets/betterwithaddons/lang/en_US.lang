@@ -403,38 +403,15 @@ tea.type.houjicha=Houjicha
 tea.type.nether=Nether Tea
 tea.type.end=End Tea
 
-item.tea_leaves.white.name=White Tea Leaves
-item.tea_leaves.assam.name=Assam Tea Leaves
-item.tea_leaves.ceylon.name=Ceylon Tea Leaves
-item.tea_leaves.gyokuro.name=Gyokuro Tea Leaves
-item.tea_leaves.sencha.name=Sencha Tea Leaves
-item.tea_leaves.bancha.name=Bancha Tea Leaves
-item.tea_leaves.tencha.name=Tencha Tea Leaves
-item.tea_leaves.nether.name=Nether Tea Leaves
-item.tea_leaves.end.name=End Tea Leaves
+item.tea_leaves.name=%s Leaves
+item.tea_soaked.name=Soaked %s Leaves
+item.tea_wilted.name=Wilted %s Leaves
+item.tea_powder.name=%s
 
-item.tea_soaked.gyokuro.name=Soaked Gyokuro Tea Leaves
-item.tea_soaked.sencha.name=Soaked Sencha Tea Leaves
-item.tea_soaked.bancha.name=Soaked Bancha Tea Leaves
-item.tea_soaked.tencha.name=Soaked Tencha Tea Leaves
-
-item.tea_wilted.white.name=Wilted White Tea Leaves
-item.tea_wilted.assam.name=Wilted Assam Tea Leaves
-item.tea_wilted.ceylon.name=Wilted Ceylon Tea Leaves
-item.tea_wilted.nether.name=Wilted Nether Tea Leaves
-item.tea_wilted.end.name=Wilted End Tea Leaves
-
-item.tea_powder.white.name=White Tea
-item.tea_powder.assam.name=Assam Tea
-item.tea_powder.ceylon.name=Ceylon Tea
-item.tea_powder.gyokuro.name=Gyokuro Tea
-item.tea_powder.sencha.name=Sencha Tea
-item.tea_powder.bancha.name=Bancha Tea
-item.tea_powder.tencha.name=Tencha Tea
-item.tea_powder.matcha.name=Matcha
-item.tea_powder.houjicha.name=Houjicha
-item.tea_powder.nether.name=Nether Tea
-item.tea_powder.end.name=End Tea
+item.helmet_paper.name=Paper Helmet
+item.chest_paper.name=Paper Chestplate
+item.legs_paper.name=Paper Leggings
+item.boots_paper.name=Paper Boots
 
 item.helmet_samurai.name=Samurai Helmet [WIP]
 item.chest_samurai.name=Samurai Chestplate [WIP]

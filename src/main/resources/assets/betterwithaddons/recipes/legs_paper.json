@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "betterwithaddons:legs_paper",
+    "data": 0
+  },
+  "pattern": [
+    "PPP",
+    "P P",
+    "P P"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "P": {
+      "item": "betterwithaddons:japanmat",
+      "data": 14
+    }
+  }
+}

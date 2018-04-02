@@ -72,7 +72,7 @@ public class GuiInfuser extends GuiContainer {
         else if(currSouls > souls)
             currSouls = Math.max(souls,currSouls-0.1f);
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0f-quartEase(currSouls,0f,1f,InteractionEriottoMod.MAX_SPIRITS));
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0f-quartEase(currSouls,0f,1f,InteractionEriottoMod.SOULSAND_MAX_SPIRITS));
         this.drawTexturedModalRect(offsetLeft+21, offsetTop+8, 176, 0, 70, 70);
     }
 }

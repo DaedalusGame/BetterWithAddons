@@ -24,7 +24,7 @@ public class EntityAncestryBottle extends EntityExpBottle {
         if (!this.world.isRemote)
         {
             this.world.playEvent(2002, new BlockPos(this), PotionUtils.getPotionColor(PotionTypes.HEALING));
-            int i = InteractionEriottoMod.SPIRIT_PER_BOTTLE;
+            int i = InteractionEriottoMod.BOTTLE_MAX_SPIRITS;
 
             while (i > 0)
             {

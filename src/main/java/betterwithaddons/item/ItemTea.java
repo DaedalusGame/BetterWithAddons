@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.translation.I18n;
 
 import java.util.stream.Collectors;
 
@@ -68,9 +69,9 @@ public class ItemTea extends Item implements IColorable {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getItemStackDisplayName(ItemStack stack) {
         TeaType type = getType(stack);
-        return super.getUnlocalizedName(stack)+"."+type.getName();
+        return I18n.translateToLocalFormatted(super.getUnlocalizedName(stack)+".name", I18n.translateToLocal("tea.type."+type.getName()));
     }
 
     @Override

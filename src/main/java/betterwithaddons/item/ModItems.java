@@ -185,6 +185,14 @@ public class ModItems {
     public static ItemSamuraiArmor samuraiLeggings;
     @GameRegistry.ObjectHolder("betterwithaddons:boots_samurai")
     public static ItemSamuraiArmor samuraiBoots;
+    @GameRegistry.ObjectHolder("betterwithaddons:helmet_paper")
+    public static ItemPaperArmor paperHelm;
+    @GameRegistry.ObjectHolder("betterwithaddons:chest_paper")
+    public static ItemPaperArmor paperChestplate;
+    @GameRegistry.ObjectHolder("betterwithaddons:legs_paper")
+    public static ItemPaperArmor paperLeggings;
+    @GameRegistry.ObjectHolder("betterwithaddons:boots_paper")
+    public static ItemPaperArmor paperBoots;
 
     @GameRegistry.ObjectHolder("betterwithaddons:tool_shard")
     public static ItemToolShard brokenArtifact;
@@ -387,6 +395,11 @@ public class ModItems {
         samuraiLeggings = (ItemSamuraiArmor) registerItem("legs_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.LEGS));
         samuraiBoots = (ItemSamuraiArmor) registerItem("boots_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.FEET));
 
+        paperHelm = (ItemPaperArmor) registerItem("helmet_paper", new ItemPaperArmor(EntityEquipmentSlot.HEAD));
+        paperChestplate = (ItemPaperArmor) registerItem("chest_paper", new ItemPaperArmor(EntityEquipmentSlot.CHEST));
+        paperLeggings = (ItemPaperArmor) registerItem("legs_paper", new ItemPaperArmor(EntityEquipmentSlot.LEGS));
+        paperBoots = (ItemPaperArmor) registerItem("boots_paper", new ItemPaperArmor(EntityEquipmentSlot.FEET));
+
         materialBag = (ItemMaterial) registerItem("bag", new ItemMaterial(
                 new String[]{"seed", "seed_hemp", "seed_melon", "seed_pumpkin", "seed_beets", "cocoa", "redstone", "glowstone", "sugar", "gunpowder", "flour", "sulfur", "nitre", "sawdust", "sawdust_soul", "potash", "hellfire", "kibble"}
         ));
@@ -418,9 +431,7 @@ public class ModItems {
 
         explosion = registerItem("explosion", new Item() {
             @Override
-            public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-                return;
-            }
+            public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {}
         });
     }
 

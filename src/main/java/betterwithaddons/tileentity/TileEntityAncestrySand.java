@@ -43,7 +43,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
 
     public void setSpirits(int n)
     {
-        spirits = Math.min(n, InteractionEriottoMod.MAX_SPIRITS);
+        spirits = Math.min(n, InteractionEriottoMod.SOULSAND_MAX_SPIRITS);
         if(spirits <= 0)
             world.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
         shouldSync = true;
@@ -75,7 +75,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
     {
         IBlockState hopper = world.getBlockState(pos.down());
 
-        if(spirits <= InteractionEriottoMod.SPIRIT_PER_BOTTLE)
+        if(spirits <= InteractionEriottoMod.BOTTLE_MAX_SPIRITS)
             return;
 
         if(hopper.getBlock() != BWMBlocks.SINGLE_MACHINES || hopper.getValue(BlockMechMachines.TYPE) != BlockMechMachines.EnumType.HOPPER)
@@ -96,7 +96,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
                 if (tileHopper.getFilterStack().getItem() == Item.getItemFromBlock(Blocks.SOUL_SAND) && InvUtils.canInsert(handler, stack, 1) && InvUtils.getFirstOccupiedStackOfItem(handler, consumed) >= 0) {
                     InvUtils.consumeItemsInInventory(handler, consumed, 1, false);
                     InvUtils.insert(handler, stack, false);
-                    consumeSpirits(InteractionEriottoMod.SPIRIT_PER_BOTTLE);
+                    consumeSpirits(InteractionEriottoMod.BOTTLE_MAX_SPIRITS);
                 }
             }
         }
@@ -119,16 +119,16 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
         Vec3d middleOfBlock = new Vec3d(pos).addVector(0.5,0.5,0.5);
 
         //Can we even do this or is this awful?
-        if(spirits < InteractionEriottoMod.MAX_SPIRITS)
+        if(spirits < InteractionEriottoMod.SOULSAND_MAX_SPIRITS)
         for(EntitySpirit spirit : attractedSpirits)
         {
             double spiritdist = spirit.getDistanceSq(middleOfBlock.x,middleOfBlock.y+0.5,middleOfBlock.z);
 
             if(spiritdist < 1.2f)
             {
-                if(spirits < InteractionEriottoMod.MAX_SPIRITS) {
+                if(spirits < InteractionEriottoMod.SOULSAND_MAX_SPIRITS) {
                     int cachedSpirits = spirit.getSpiritValue();
-                    int consume = Math.min(InteractionEriottoMod.MAX_SPIRITS - spirits,cachedSpirits);
+                    int consume = Math.min(InteractionEriottoMod.SOULSAND_MAX_SPIRITS - spirits,cachedSpirits);
                     addSpirits(consume);
                     cachedSpirits -= consume;
                     if(cachedSpirits <= 0)

@@ -30,7 +30,7 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileEntityInfuser>
         float currentTime = te.getSpirits();
         float start = 0f;
         float delta = 1f;
-        float duration = InteractionEriottoMod.MAX_SPIRITS;
+        float duration = InteractionEriottoMod.SOULSAND_MAX_SPIRITS;
 
         int blockx = te.getPos().getX();
         int blocky = te.getPos().getY();

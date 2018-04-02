@@ -165,7 +165,7 @@ public class EntitySpirit extends Entity {
         ++this.xpColor;
         ++this.orbAge;
 
-        if (this.orbAge >= 6000)
+        if (this.orbAge >= InteractionEriottoMod.MAX_SPIRIT_AGE)
         {
             this.setDead();
         }
@@ -185,7 +185,7 @@ public class EntitySpirit extends Entity {
                 for(EntitySpirit spirit : spirits)
                     totalSpirit += spirit.getSpiritValue();
 
-                if (totalSpirit >= InteractionEriottoMod.SPIRIT_PER_BOTTLE)
+                if (totalSpirit >= InteractionEriottoMod.BOTTLE_MAX_SPIRITS)
                 {
                     for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
                         ItemStack itemstack = player.inventory.getStackInSlot(i);
@@ -193,7 +193,7 @@ public class EntitySpirit extends Entity {
                         itemstack.shrink(1);
                         player.inventory.setInventorySlotContents(i,itemstack);
                         InventoryUtil.addItemToPlayer(player,new ItemStack(ModItems.ancestryBottle));
-                        int consumed = InteractionEriottoMod.SPIRIT_PER_BOTTLE;
+                        int consumed = InteractionEriottoMod.BOTTLE_MAX_SPIRITS;
                         for(EntitySpirit spirit : spirits)
                         {
                             int spiritsCached = spirit.getSpiritValue();

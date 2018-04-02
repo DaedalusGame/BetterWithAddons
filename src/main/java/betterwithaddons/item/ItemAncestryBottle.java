@@ -27,7 +27,7 @@ public class ItemAncestryBottle extends Item {
             worldIn.setBlockState(pos, ModBlocks.ancestrySand.getDefaultState());
             TileEntity te = worldIn.getTileEntity(pos);
             if(te instanceof TileEntityAncestrySand)
-                ((TileEntityAncestrySand) te).addSpirits(InteractionEriottoMod.SPIRIT_PER_BOTTLE);
+                ((TileEntityAncestrySand) te).addSpirits(InteractionEriottoMod.BOTTLE_MAX_SPIRITS);
             stack.shrink(1);
             return EnumActionResult.SUCCESS;
         }
@@ -35,7 +35,7 @@ public class ItemAncestryBottle extends Item {
         {
             TileEntity te = worldIn.getTileEntity(pos);
             if(te instanceof TileEntityAncestrySand)
-                ((TileEntityAncestrySand) te).addSpirits(InteractionEriottoMod.SPIRIT_PER_BOTTLE);
+                ((TileEntityAncestrySand) te).addSpirits(InteractionEriottoMod.BOTTLE_MAX_SPIRITS);
             stack.shrink(1);
             return EnumActionResult.SUCCESS;
         }

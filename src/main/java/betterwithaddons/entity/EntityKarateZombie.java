@@ -55,7 +55,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
     public EntityKarateZombie(World worldIn) {
         super(worldIn);
-        spawnSpirits = InteractionEriottoMod.KARATE_ZOMBIE_MIN_SPIRITS + rand.nextInt(InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS - InteractionEriottoMod.KARATE_ZOMBIE_MIN_SPIRITS);
+        spawnSpirits = InteractionEriottoMod.KARATE_ZOMBIE_SPAWN_MIN_SPIRITS + rand.nextInt(InteractionEriottoMod.KARATE_ZOMBIE_SPAWN_MAX_SPIRITS - InteractionEriottoMod.KARATE_ZOMBIE_SPAWN_MIN_SPIRITS);
         setSpirits(spawnSpirits);
     }
 
@@ -64,7 +64,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     }
 
     public void setSpirits(int n) {
-        dataManager.set(SPIRITS, Math.min(n, InteractionEriottoMod.MAX_SPIRITS));
+        dataManager.set(SPIRITS, Math.min(n, InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS));
     }
 
     public MartialArts getMove() {
@@ -305,7 +305,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
         if(isARealAmerican())
         {
-            addSpirits(InteractionEriottoMod.MAX_SPIRITS - getSpirits());
+            addSpirits(InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS - getSpirits());
         }
 
         if (!world.isRemote && !isDead) {
@@ -354,14 +354,14 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
             int spirits = getSpirits();
 
-            if (spirits < InteractionEriottoMod.MAX_SPIRITS)
+            if (spirits < InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS)
                 for (EntitySpirit spirit : attractedSpirits) {
                     double spiritdist = spirit.getDistanceSq(pos.x, pos.y, pos.z);
 
                     if (spiritdist < 1.2f) {
-                        if (spirits < InteractionEriottoMod.MAX_SPIRITS) {
+                        if (spirits < InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS) {
                             int cachedSpirits = spirit.getSpiritValue();
-                            int consume = Math.min(InteractionEriottoMod.MAX_SPIRITS - spirits, cachedSpirits);
+                            int consume = Math.min(InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS - spirits, cachedSpirits);
                             addSpirits(consume);
                             cachedSpirits -= consume;
                             if (cachedSpirits <= 0)
@@ -403,7 +403,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     }
 
     private double getPower() {
-        return getSpirits() / (double) InteractionEriottoMod.MAX_SPIRITS;
+        return getSpirits() / (double) InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS;
     }
 
     public int getLevel() {
