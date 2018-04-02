@@ -54,9 +54,17 @@ public class InteractionBWR extends Interaction {
     public static boolean SOULSAND_INFUSION = true;
     public static boolean BLAZE_GOLEMS = true;
     public static boolean BLAZE_BREEDING = true;
+    public static int BLAZE_BREEDING_DELAY = 6000;
 
     public static int GOLD_PER_INGOT = 1;
     public static int REDSTONE_PER_SYNTHESIS = 7;
+    public static double REDSTONE_BOILING_CHANCE = 0.1;
+    public static int QUARTZ_GROWING_THRESHOLD = 20;
+    public static int SOULSAND_INFUSION_THRESHOLD = 50;
+    public static int DUNG_TO_DIRT_THRESHOLD = 300;
+    public static int DUNG_TO_DIRT_AMBIENT_TEMP = 26;
+    public static int MELT_HELLFIRE_THRESHOLD = 10;
+    public static int BLAZE_BREEDING_RANGE = 3;
 
     @Override
     protected String getName() {
@@ -65,30 +73,42 @@ public class InteractionBWR extends Interaction {
 
     @Override
     void setupConfig() {
-        loadPropBool("Enabled","Whether the Better With Renewables module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.",InteractionBWR.ENABLED);
-        loadPropBool("RedstoneSynthesis","Allows redstone to be farbricated from concentrated hellfire and gold.",InteractionBWR.REDSTONE_SYNTHESIS);
-        loadPropBool("RedstoneSynthesisEarly","Allows redstone to be synthesized earlier to create Hibachis.",InteractionBWR.REDSTONE_SYNTHESIS_EARLY);
-        loadPropInt("RedstonePerSynthesis","How much redstone is obtained per bar of concentrated hellfire.",InteractionBWR.REDSTONE_PER_SYNTHESIS);
-        loadPropBool("HellfireEarly","Allows hellfire dust to be created earlier in the tech tree.",InteractionBWR.HELLFIRE_EARLY);
-        loadPropBool("BoilingBushes","Allows dead bushes to be created from oak saplings.",InteractionBWR.BOILING_BUSHES);
-        loadPropBool("WeavingWebs","Allows webs to be created from string and slimeballs.",InteractionBWR.WEAVING_WEBS);
-        loadPropBool("LapisFromWool","Allows lapis to be created from blue wool and clay.",InteractionBWR.LAPIS_FROM_WOOL);
-        loadPropBool("DiamondSynthesis","Allows diamonds to be fabricated from ghast tears.",InteractionBWR.DIAMOND_SYNTHESIS);
-        loadPropBool("DiamondRecovery","Allows diamond ingots to be taken apart into diamonds and iron ingots using strong alkaline.",InteractionBWR.DIAMOND_RECOVERY);
-        loadPropBool("GoldGrinding","Allows only tools and armor made from gold to be milled into nuggets at a lower efficiency than when melted in a Crucible.",InteractionBWR.GOLD_GRINDING);
-        loadPropInt("GoldPerIngot","Gold nuggets returned when grinding gold tools or armor in a millstone.",InteractionBWR.GOLD_PER_INGOT);
-        loadPropBool("NetherrackSynthesis","Allows netherrack to be farbricated from a usable medium, a hellborn plant and some residents from the nether.",InteractionBWR.NETHERRACK_SYNTHESIS);
-        loadPropBool("SoulsandInfusion","Allows netherrack to be fabricated from dung and experience.",InteractionBWR.SOULSAND_INFUSION);
-        loadPropBool("BlazeGolems","Allows blazes to be created from a golem-like shape with appropriate blocks.",InteractionBWR.BLAZE_GOLEMS);
-        loadPropBool("BlazeBreeding","Allows blazes to replicate in fire when fed an appropriate item.",InteractionBWR.BLAZE_BREEDING);
-        loadPropBool("PlantBreeding","Allows plants to be crossbreed from other plants.",InteractionBWR.CROSSBREED_PLANTS);
-        loadPropBool("AnimalBreeding","Allows animals to be crossbreed from other animals. Disgusting.",InteractionBWR.CROSSBREED_ANIMALS);
-        loadPropBool("QuartzSynthesis","Allows quartz to be grown from silica in appropriate conditions.",InteractionBWR.QUARTZ_GROWING);
-        loadPropBool("DungToDirt","Allows dung to be turned into dirt by rinsing acids out.",InteractionBWR.DUNG_TO_DIRT);
-        loadPropBool("SandToClay","Allows sand to be turned into clay by adding acidic substances.",InteractionBWR.SAND_TO_CLAY);
-        loadPropBool("MeltHellfire","Allows Blocks of Hellfire to be melted into lava by proximity to it.",InteractionBWR.MELT_HELLFIRE);
-        loadPropBool("BoilRedstone","Allows redstone to be 'boiled' into glowstone by exposure to focused sunlight.",InteractionBWR.REDSTONE_BOILING);
-        loadPropBool("EmeraldPortal","Allows portals to be made from emerald blocks and sacrifice.",InteractionBWR.EMERALD_PORTAL);
+        ENABLED = loadPropBool("Enabled","Whether the Better With Renewables module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.", ENABLED);
+        REDSTONE_SYNTHESIS = loadPropBool("RedstoneSynthesis","Allows redstone to be farbricated from concentrated hellfire and gold.", REDSTONE_SYNTHESIS);
+        REDSTONE_SYNTHESIS_EARLY = loadPropBool("RedstoneSynthesisEarly","Allows redstone to be synthesized earlier to create Hibachis.", REDSTONE_SYNTHESIS_EARLY);
+        REDSTONE_PER_SYNTHESIS = loadPropInt("RedstonePerSynthesis","How much redstone is obtained per bar of concentrated hellfire.", REDSTONE_PER_SYNTHESIS);
+        HELLFIRE_EARLY = loadPropBool("HellfireEarly","Allows hellfire dust to be created earlier in the tech tree.", HELLFIRE_EARLY);
+        BOILING_BUSHES = loadPropBool("BoilingBushes","Allows dead bushes to be created from oak saplings.", BOILING_BUSHES);
+        WEAVING_WEBS = loadPropBool("WeavingWebs","Allows webs to be created from string and slimeballs.", WEAVING_WEBS);
+        LAPIS_FROM_WOOL = loadPropBool("LapisFromWool","Allows lapis to be created from blue wool and clay.", LAPIS_FROM_WOOL);
+        DIAMOND_SYNTHESIS = loadPropBool("DiamondSynthesis","Allows diamonds to be fabricated from ghast tears.", DIAMOND_SYNTHESIS);
+        DIAMOND_RECOVERY = loadPropBool("DiamondRecovery","Allows diamond ingots to be taken apart into diamonds and iron ingots using strong alkaline.", DIAMOND_RECOVERY);
+        GOLD_GRINDING = loadPropBool("GoldGrinding","Allows only tools and armor made from gold to be milled into nuggets at a lower efficiency than when melted in a Crucible.", GOLD_GRINDING);
+        GOLD_PER_INGOT = loadPropInt("GoldPerIngot","Gold nuggets returned when grinding gold tools or armor in a millstone.", GOLD_PER_INGOT);
+        NETHERRACK_SYNTHESIS = loadPropBool("NetherrackSynthesis","Allows netherrack to be farbricated from a usable medium, a hellborn plant and some residents from the nether.", NETHERRACK_SYNTHESIS);
+        SOULSAND_INFUSION = loadPropBool("SoulsandInfusion","Allows netherrack to be fabricated from dung and experience.", SOULSAND_INFUSION);
+        BLAZE_GOLEMS = loadPropBool("BlazeGolems","Allows blazes to be created from a golem-like shape with appropriate blocks.", BLAZE_GOLEMS);
+        BLAZE_BREEDING = loadPropBool("BlazeBreeding","Allows blazes to replicate in fire when fed an appropriate item.", BLAZE_BREEDING);
+        CROSSBREED_PLANTS = loadPropBool("PlantBreeding","Allows plants to be crossbreed from other plants.", CROSSBREED_PLANTS);
+        CROSSBREED_ANIMALS = loadPropBool("AnimalBreeding","Allows animals to be crossbreed from other animals. Disgusting.", CROSSBREED_ANIMALS);
+        QUARTZ_GROWING = loadPropBool("QuartzSynthesis","Allows quartz to be grown from silica in appropriate conditions.", QUARTZ_GROWING);
+        DUNG_TO_DIRT = loadPropBool("DungToDirt","Allows dung to be turned into dirt by rinsing acids out.", DUNG_TO_DIRT);
+        SAND_TO_CLAY = loadPropBool("SandToClay","Allows sand to be turned into clay by adding acidic substances.", SAND_TO_CLAY);
+        MELT_HELLFIRE = loadPropBool("MeltHellfire","Allows Blocks of Hellfire to be melted into lava by proximity to it.", MELT_HELLFIRE);
+        REDSTONE_BOILING = loadPropBool("BoilRedstone","Allows redstone to be 'boiled' into glowstone by exposure to focused sunlight.", REDSTONE_BOILING);
+        EMERALD_PORTAL = loadPropBool("EmeraldPortal","Allows portals to be made from emerald blocks and sacrifice.", EMERALD_PORTAL);
+        doesNotNeedRestart(() -> {
+            DUNG_TO_DIRT_THRESHOLD = loadPropInt("DungToDirtThreshold","The chance for a block of dung to turn into dirt from rinsing. The chance is rand(n) < heat", DUNG_TO_DIRT_THRESHOLD);
+            DUNG_TO_DIRT_AMBIENT_TEMP = loadPropInt("DungToDirtAmbientTemp","Amount of ambient temperature is added to the heat value.", DUNG_TO_DIRT_AMBIENT_TEMP);
+
+            BLAZE_BREEDING_DELAY = loadPropInt("BlazeBreedingDelay","Delay between successfully breeding blazes.", BLAZE_BREEDING_DELAY);
+            BLAZE_BREEDING_RANGE = loadPropInt("BlazeBreedingRange","Range in blocks to look for fire to birth new blazes in.", BLAZE_BREEDING_RANGE);
+            
+            REDSTONE_BOILING_CHANCE = loadPropDouble("BoilRedstoneChance","Chance for redstone to boil into glowstone.", REDSTONE_BOILING_CHANCE, 0, 1);
+            QUARTZ_GROWING_THRESHOLD = loadPropInt("QuartzSynthesisThreshold","Affects the time sand piles must be cooked to make Quartz.", QUARTZ_GROWING_THRESHOLD);
+            SOULSAND_INFUSION_THRESHOLD = loadPropInt("SoulsandInfusionThreshold","Amount of exp that must be pushed into a block of dung to create soulsand.", SOULSAND_INFUSION_THRESHOLD);
+            MELT_HELLFIRE_THRESHOLD = loadPropInt("MeltHellfireThreshold","The chance for a block of hellfire to melt into a block of lava. The chance is rand(n) < adjacent_lava_blocks", MELT_HELLFIRE_THRESHOLD);
+        });
 
     }
 

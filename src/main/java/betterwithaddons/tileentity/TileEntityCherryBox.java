@@ -1,6 +1,7 @@
 package betterwithaddons.tileentity;
 
 import betterwithaddons.crafting.manager.CraftingManagerCherryBox;
+import betterwithaddons.interaction.InteractionEriottoMod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -67,7 +68,7 @@ public class TileEntityCherryBox extends TileEntityBase implements ITickable {
     }
 
     public int getWorkTime(@Nullable ItemStack stack) {
-        return 500;
+        return InteractionEriottoMod.CHERRY_BOX_CRAFTING_TIME;
     }
 
     private boolean canWork() {

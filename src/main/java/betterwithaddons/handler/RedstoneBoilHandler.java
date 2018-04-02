@@ -1,5 +1,6 @@
 package betterwithaddons.handler;
 
+import betterwithaddons.interaction.InteractionBWR;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.util.DirUtils;
 import net.minecraft.block.Block;
@@ -96,7 +97,7 @@ public class RedstoneBoilHandler {
 
         world.playEvent(2001, pos, Block.getStateId(state));
 
-        if(world.rand.nextInt(10) < 1)
+        if(world.rand.nextDouble() < InteractionBWR.REDSTONE_BOILING_CHANCE)
         {
             EntityItem result = new EntityItem(world, pos.getX() + 0.5f, pos.getY() + 0.1f, pos.getZ() + 0.5f, new ItemStack(Items.GLOWSTONE_DUST));
             result.setDefaultPickupDelay();

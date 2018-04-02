@@ -68,7 +68,7 @@ public class RenewablesHandler {
             return;
         }
 
-        int fireIntensity = 26; //Ambient
+        int fireIntensity = InteractionBWR.DUNG_TO_DIRT_AMBIENT_TEMP; //Ambient
 
         for (int i = 1; i <= 3; i++) {
             if (!world.isBlockNormalCube(pos.down(i), true)) {
@@ -77,7 +77,7 @@ public class RenewablesHandler {
             }
         }
 
-        if (random.nextInt(300) < fireIntensity) {
+        if (random.nextInt(InteractionBWR.DUNG_TO_DIRT_THRESHOLD) < fireIntensity) {
             world.setBlockState(pos, Blocks.DIRT.getDefaultState());
             //TODO: Should we add minetweaker compat for other things to happen here?
             if (InteractionBWR.SAND_TO_CLAY && isSand(world, pos.down())) {
@@ -136,7 +136,7 @@ public class RenewablesHandler {
                     hasSource |= lavaState.getValue(BlockLiquid.LEVEL) == 0;
                 }
 
-        if(hasSource && rand.nextInt(10) < sources)
+        if(hasSource && rand.nextInt(InteractionBWR.MELT_HELLFIRE_THRESHOLD) < sources)
         {
             world.setBlockState(pos, Blocks.LAVA.getDefaultState());
             for(int i = 0; i < 3; i++)
@@ -204,13 +204,16 @@ public class RenewablesHandler {
 
             if(blazeCap.isArtificial)
             {
-                blaze.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE,60000));
+                PotionEffect effect = new PotionEffect(MobEffects.FIRE_RESISTANCE);
+                effect.setPotionDurationMax(true);
+                blaze.addPotionEffect(effect);
             }
 
-            BlockPos checkPos = pos.add(random.nextInt(7)-3,random.nextInt(7)-3,random.nextInt(7)-3);
+            int radius = InteractionBWR.BLAZE_BREEDING_RANGE;
+            BlockPos checkPos = pos.add(random.nextInt(radius*2+1)- radius,random.nextInt(radius*2+1)- radius,random.nextInt(radius*2+1)- radius);
 
             if(!BiomeDictionary.hasType(world.getBiome(checkPos), BiomeDictionary.Type.NETHER)) {
-                blazeCap.breedingDelay = 6000;
+                blazeCap.breedingDelay = InteractionBWR.BLAZE_BREEDING_DELAY;
                 return;
             }
 
@@ -223,7 +226,7 @@ public class RenewablesHandler {
             spawnArtificalBlaze(world,checkPos,blazeCap.isArtificial);
             world.setBlockToAir(checkPos);
 
-            blazeCap.breedingDelay = 6000;
+            blazeCap.breedingDelay = InteractionBWR.BLAZE_BREEDING_DELAY;
         }
     }
 
@@ -348,8 +351,6 @@ public class RenewablesHandler {
     public void renderQuartzTooltip(ItemTooltipEvent event)
     {
         ItemStack stack = event.getItemStack();
-        if(stack == null)
-            return;
         NBTTagCompound compound = stack.getTagCompound();
 
         if(!stack.isEmpty() && compound != null && compound.hasKey("QuartzCrystal"))

@@ -52,6 +52,7 @@ public class InteractionEriottoMod extends Interaction {
     public static int KARATE_ZOMBIE_MAX_SPIRITS = 29;
     public static int KARATE_ZOMBIE_SPIRIT_PER_LEVEL = 8;
     public static double KARATE_ZOMBIE_DROP_MULTIPLIER = 1.0f;
+    public static int CHERRY_BOX_CRAFTING_TIME = 500;
     public ArrayList<Item> REPAIRABLE_TOOLS = new ArrayList<>();
 
     @Override
@@ -73,6 +74,7 @@ public class InteractionEriottoMod extends Interaction {
             KARATE_ZOMBIE_MAX_SPIRITS = loadPropInt("KarateZombieMaxSpirits","How many spirits karate zombies at most spawn with.",KARATE_ZOMBIE_MAX_SPIRITS);
             KARATE_ZOMBIE_SPIRIT_PER_LEVEL = loadPropInt("KarateZombiePerLevel","How much spirit is required for Karate Zombies to level up.",KARATE_ZOMBIE_SPIRIT_PER_LEVEL);
             KARATE_ZOMBIE_DROP_MULTIPLIER = loadPropDouble("KarateZombieDropMultiplier","How much spirit is dropped by Karate Zombies, as a ratio of how much they have.",KARATE_ZOMBIE_DROP_MULTIPLIER);
+            CHERRY_BOX_CRAFTING_TIME = loadPropInt("CherryBoxCraftingTime","How long the drying and soaking units take to process one item, in ticks.",CHERRY_BOX_CRAFTING_TIME);
         });
     }
 

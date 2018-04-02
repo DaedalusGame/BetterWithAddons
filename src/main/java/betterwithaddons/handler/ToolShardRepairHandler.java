@@ -1,5 +1,6 @@
 package betterwithaddons.handler;
 
+import betterwithaddons.interaction.InteractionBWA;
 import betterwithaddons.item.ModItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -17,9 +18,9 @@ public class ToolShardRepairHandler {
         if (!artifact.isEmpty() && mat.getItem() == artifact.getItem() && !mat.isItemDamaged()) {
             ItemStack innercopy = artifact.copy();
             innercopy.setItemDamage(0);
-            innercopy.setRepairCost(innercopy.getRepairCost() / 2); //TODO: make this configurable??
+            innercopy.setRepairCost((int) (innercopy.getRepairCost() * InteractionBWA.LEGENDARIUM_REPAIR_COST_MULTIPLIER));
             event.setOutput(innercopy);
-            event.setCost(35);
+            event.setCost(InteractionBWA.LEGENDARIUM_SHARD_COST);
         }
     }
 

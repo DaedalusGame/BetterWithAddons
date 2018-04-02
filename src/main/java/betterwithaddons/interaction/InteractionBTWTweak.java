@@ -48,6 +48,7 @@ public class InteractionBTWTweak extends Interaction {
     public static boolean RUSTY_MINESHAFTS = true;
     public static boolean INFESTED_MINESHAFTS = true;
     public static int WRITING_TABLE_COST = 1;
+    public static int EGG_INCUBATION_TIME = 5400;
 
     @Override
     protected String getName() {
@@ -68,6 +69,7 @@ public class InteractionBTWTweak extends Interaction {
         INFESTED_MINESHAFTS = loadPropBool("InfestedMineshafts","Logs in Mineshafts are infested by Termites and crumble into sawdust when harvested.",INFESTED_MINESHAFTS);
         doesNotNeedRestart(() -> {
             WRITING_TABLE_COST = loadPropInt("WritingTableCost","How many levels it costs to rename an item or create a nametag.",WRITING_TABLE_COST);
+            EGG_INCUBATION_TIME = loadPropInt("EggIncubationTime","How long it takes for an egg to hatch using incubation, in ticks.",EGG_INCUBATION_TIME);
         });
     }
 

@@ -106,6 +106,8 @@ public class InteractionBWA extends Interaction {
             "betterwithaddons:rotten_food"
     };
     public static boolean ROTTEN_FOOD_COMBINING = true;
+    public static int LEGENDARIUM_SHARD_COST = 35;
+    public static double LEGENDARIUM_REPAIR_COST_MULTIPLIER = 0.5;
 
     @Override
     protected String getName() {
@@ -144,6 +146,8 @@ public class InteractionBWA extends Interaction {
             LEGENDARIUM_POSTER_RANGE = loadPropInt("LegendariumPosterRange", "How far away Display Frames are recognized. (in blocks; as a cubic radius)", LEGENDARIUM_POSTER_RANGE);
             LEGENDARIUM_MIN_QUEUE_SIZE = loadPropInt("LegendariumMinQueueSize", "How many artifacts must be in the Hall of Legends to take one out.", LEGENDARIUM_MIN_QUEUE_SIZE);
             LEGENDARIUM_TURN_IN_DELAY = loadPropInt("LegendariumTurnInDelay", "How long until the next artifact can be turned in. (in ticks; 1000 ticks is one Minecraft hour)", LEGENDARIUM_TURN_IN_DELAY);
+            LEGENDARIUM_REPAIR_COST_MULTIPLIER = loadPropDouble("LegendariumRepairCostMultiplier", "When repairing a shard on an anvil, the repair cost is modified by this multiplier.", LEGENDARIUM_REPAIR_COST_MULTIPLIER);
+            LEGENDARIUM_SHARD_COST = loadPropInt("LegendariumRepairCost", "How many levels it costs to repair a shard on an anvil.", LEGENDARIUM_SHARD_COST);
         });
     }
 

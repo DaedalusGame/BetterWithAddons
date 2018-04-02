@@ -1,5 +1,6 @@
 package betterwithaddons.handler;
 
+import betterwithaddons.interaction.InteractionBWR;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAesthetic;
 import net.minecraft.block.state.IBlockState;
@@ -90,7 +91,7 @@ public class SoulSandHandler {
                     orb.setDead();
                 }
 
-                if(world.rand.nextInt(50) < totalxp)
+                if(world.rand.nextInt(InteractionBWR.SOULSAND_INFUSION_THRESHOLD) < totalxp)
                 {
                     world.setBlockState(pos, Blocks.SOUL_SAND.getDefaultState());
                     for(int i = 0; i < 3; i++)

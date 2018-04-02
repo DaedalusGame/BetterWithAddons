@@ -1,5 +1,7 @@
 package betterwithaddons.crafting.recipes;
 
+import betterwithaddons.interaction.InteractionBWR;
+import betterwithaddons.interaction.ModInteractions;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.ItemUtil;
 import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
@@ -62,7 +64,7 @@ public class QuartzCrystalRecipe extends CauldronRecipe {
                     int souls = compound.getInteger("QuartzSouls");
 
                     if(lidOn) {
-                        if (growth >= 20) {//TODO: configurable
+                        if (growth >= InteractionBWR.QUARTZ_GROWING_THRESHOLD) {
                             result.add(new ItemStack(Items.QUARTZ, stack.getCount()));
                             stack.shrink(1);
                         } else {

@@ -1,5 +1,7 @@
 package betterwithaddons.handler;
 
+import betterwithaddons.interaction.InteractionBTWTweak;
+import betterwithaddons.interaction.InteractionBWR;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockLight;
@@ -78,15 +80,17 @@ public class EggIncubationHandler {
             boolean remove = false;
             if(entity.isDead || stack.isEmpty() || stack.getItem() != Items.EGG || stack.getCount() > 1)
                 remove = true;
-            else if((int) ReflectionHelper.getPrivateValue(EntityItem.class, entity, "d", "field_70292_b", "age") > 5400 && hasPadding(world,pos.down()) && hasLitLight(world,pos.up()))
-            {
-                world.playSound(null,entity.posX,entity.posY,entity.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.NEUTRAL,  0.25F, world.rand.nextFloat() * 1.5F + 1.0F);
-                EntityChicken chick = new EntityChicken(world);
-                chick.setGrowingAge(-24000);
-                chick.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, 0F, 0F);
-                world.spawnEntity(chick);
-                stack.shrink(1);
-                if (stack.isEmpty()) entity.setDead();
+            else {
+                if((int) ReflectionHelper.getPrivateValue(EntityItem.class, entity, "d", "field_70292_b", "age") > InteractionBTWTweak.EGG_INCUBATION_TIME && hasPadding(world,pos.down()) && hasLitLight(world,pos.up()))
+                {
+                    world.playSound(null,entity.posX,entity.posY,entity.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.NEUTRAL,  0.25F, world.rand.nextFloat() * 1.5F + 1.0F);
+                    EntityChicken chick = new EntityChicken(world);
+                    chick.setGrowingAge(-24000);
+                    chick.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, 0F, 0F);
+                    world.spawnEntity(chick);
+                    stack.shrink(1);
+                    if (stack.isEmpty()) entity.setDead();
+                }
             }
 
             if(remove)
