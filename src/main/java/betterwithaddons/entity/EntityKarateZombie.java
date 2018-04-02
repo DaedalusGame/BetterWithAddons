@@ -55,14 +55,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
     public EntityKarateZombie(World worldIn) {
         super(worldIn);
-
-        int spiritsPerLevel = InteractionEriottoMod.KARATE_ZOMBIE_SPIRIT_PER_LEVEL;
-        spawnSpirits = (spiritsPerLevel * 2) / 3;
-        if(rand.nextInt(100) < 30)
-            spawnSpirits += rand.nextInt(4) * spiritsPerLevel;
-        else
-            spawnSpirits += rand.nextInt(spiritsPerLevel);
-
+        spawnSpirits = InteractionEriottoMod.KARATE_ZOMBIE_MIN_SPIRITS + rand.nextInt(InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS - InteractionEriottoMod.KARATE_ZOMBIE_MIN_SPIRITS);
         setSpirits(spawnSpirits);
     }
 
@@ -130,7 +123,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     public void onDeath(DamageSource cause) {
         super.onDeath(cause);
 
-        int i = getSpirits();
+        int i = (int)(getSpirits()*InteractionEriottoMod.KARATE_ZOMBIE_DROP_MULTIPLIER);
 
         if(!isARealAmerican() && !world.isRemote)
         while (i > 0)
@@ -414,9 +407,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     }
 
     public int getLevel() {
-        int level = getSpirits() / InteractionEriottoMod.KARATE_ZOMBIE_SPIRIT_PER_LEVEL;
-
-        return level;
+        return getSpirits() / InteractionEriottoMod.KARATE_ZOMBIE_SPIRIT_PER_LEVEL;
     }
 
     @Override
