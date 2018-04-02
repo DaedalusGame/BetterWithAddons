@@ -1,7 +1,6 @@
 package betterwithaddons.crafting.recipes;
 
 import betterwithaddons.util.IHasSize;
-import betterwithaddons.util.ItemUtil;
 import com.google.common.collect.Lists;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;

@@ -37,7 +37,7 @@ public class ItemYumi extends ItemBow {
                     return 0.0F;
                 } else {
                     ItemStack itemstack = entityIn.getActiveItemStack();
-                    return !itemstack.isEmpty() && itemstack.getItem() instanceof ItemYumi ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 60.0F : 0.0F;
+                    return !itemstack.isEmpty() && itemstack.getItem() instanceof ItemYumi ? (float) (stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 40.0F : 0.0F;
                 }
             }
         });
@@ -83,7 +83,7 @@ public class ItemYumi extends ItemBow {
             boolean flag = entityplayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
             ItemStack itemstack = this.findAmmo(entityplayer);
 
-            int i = this.getMaxItemUseDuration(stack) - timeLeft;
+            int i = Math.max(0,(this.getMaxItemUseDuration(stack) - timeLeft) - 26);
             i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, (EntityPlayer)entityLiving, i, itemstack != null || flag);
             if (i < 0) return;
 
@@ -94,7 +94,7 @@ public class ItemYumi extends ItemBow {
                     itemstack = new ItemStack(Items.ARROW);
                 }
 
-                float f = getArrowVelocity(i);
+                float f = getArrowVelocity(i)*1.3f;
 
                 if ((double)f >= 0.1D)
                 {
@@ -106,7 +106,7 @@ public class ItemYumi extends ItemBow {
                         EntityYa entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
                         entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 
-                        if (f == 1.0F)
+                        if (f >= 1.0F)
                         {
                             entityarrow.setIsCritical(true);
                         }

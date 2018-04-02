@@ -136,6 +136,8 @@ public class ModItems {
     public static ItemTea teaWilted;
     @GameRegistry.ObjectHolder("betterwithaddons:tea_powder")
     public static ItemTea teaPowder;
+    @GameRegistry.ObjectHolder("betterwithaddons:teacup")
+    public static ItemTeaCup teaCup;
 
     @GameRegistry.ObjectHolder("betterwithaddons:brick_stained")
     public static ItemStainedBrick stainedBrick;
@@ -173,6 +175,8 @@ public class ModItems {
     public static ItemYumi yumi;
     @GameRegistry.ObjectHolder("betterwithaddons:ya")
     public static ItemYa ya;
+    @GameRegistry.ObjectHolder("betterwithaddons:poisoned_ya")
+    public static ItemPoisonedYa yaPoisoned;
     @GameRegistry.ObjectHolder("betterwithaddons:helmet_samurai")
     public static ItemSamuraiArmor samuraiHelm;
     @GameRegistry.ObjectHolder("betterwithaddons:chest_samurai")
@@ -365,7 +369,9 @@ public class ModItems {
         tanto = (ItemTanto) registerItem("tanto", new ItemTanto());
         yumi = (ItemYumi) registerItem("yumi", new ItemYumi());
         ya = (ItemYa) registerItem("ya", new ItemYa());
+        yaPoisoned = (ItemPoisonedYa) registerItem("poisoned_ya", new ItemPoisonedYa());
         ancestryBottle = (ItemAncestryBottle) registerItem("ancestry_bottle", new ItemAncestryBottle());
+        teaCup = (ItemTeaCup) registerItem("teacup", new ItemTeaCup());
 
         materialJapan = (ItemMaterial) registerItem("japanmat", new ItemMaterial(
                 new String[]{"rice", "soaked_rice", "rice_stalk", "rice_hay", "rice_ash", "rush",

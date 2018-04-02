@@ -34,7 +34,11 @@ public class ModInteractions {
         LIST.stream().filter(Interaction::isActive).forEach(interaction -> interaction.modifyRecipes(event));
     }
 
-    public static void preInit(FMLPreInitializationEvent event) {
+    public static void setupConfig() {
+        LIST.stream().forEach(Interaction::setupConfig);
+    }
+
+    public static void prePreInit(FMLPreInitializationEvent event){
         bwa = (InteractionBWA) addInteraction(new InteractionBWA());
         bwm = (InteractionBWM) addInteraction(new InteractionBWM());
         quark = (InteractionQuark) addInteraction(new InteractionQuark());
@@ -48,7 +52,9 @@ public class ModInteractions {
         craftTweaker = (InteractionCraftTweaker) addInteraction(new InteractionCraftTweaker());
 
         validate();
+    }
 
+    public static void preInit(FMLPreInitializationEvent event) {
         LIST.stream().filter(Interaction::isActive).forEach(Interaction::preInit);
     }
 

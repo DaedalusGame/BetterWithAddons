@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "betterwithaddons:items/teacup",
+    "layer1": "betterwithaddons:items/teacup_fill"
+  }
+}

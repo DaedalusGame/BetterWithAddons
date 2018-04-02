@@ -17,6 +17,17 @@ public class InteractionQuark extends Interaction {
     public static boolean MIDORI_BLOCKS_NEED_CHUNKS = true;
 
     @Override
+    protected String getName() {
+        return "interaction.Quark";
+    }
+
+    @Override
+    void setupConfig() {
+        ENABLED = loadPropBool("Enabled", "Whether the Quark compat module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.", ENABLED);
+        MIDORI_BLOCKS_NEED_CHUNKS = loadPropBool("MidoriBlocksNeedChunks", "Midori blocks require popped Midori chunks.", MIDORI_BLOCKS_NEED_CHUNKS);
+    }
+
+    @Override
     public boolean isActive() {
         return ENABLED && Loader.isModLoaded(modid);
     }

@@ -19,6 +19,7 @@ import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
 import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
+import betterwithmods.module.hardcore.needs.HCTools;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -56,6 +57,40 @@ public class InteractionBWR extends Interaction {
 
     public static int GOLD_PER_INGOT = 1;
     public static int REDSTONE_PER_SYNTHESIS = 7;
+
+    @Override
+    protected String getName() {
+        return "addons.BetterWithRenewables";
+    }
+
+    @Override
+    void setupConfig() {
+        loadPropBool("Enabled","Whether the Better With Renewables module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.",InteractionBWR.ENABLED);
+        loadPropBool("RedstoneSynthesis","Allows redstone to be farbricated from concentrated hellfire and gold.",InteractionBWR.REDSTONE_SYNTHESIS);
+        loadPropBool("RedstoneSynthesisEarly","Allows redstone to be synthesized earlier to create Hibachis.",InteractionBWR.REDSTONE_SYNTHESIS_EARLY);
+        loadPropInt("RedstonePerSynthesis","How much redstone is obtained per bar of concentrated hellfire.",InteractionBWR.REDSTONE_PER_SYNTHESIS);
+        loadPropBool("HellfireEarly","Allows hellfire dust to be created earlier in the tech tree.",InteractionBWR.HELLFIRE_EARLY);
+        loadPropBool("BoilingBushes","Allows dead bushes to be created from oak saplings.",InteractionBWR.BOILING_BUSHES);
+        loadPropBool("WeavingWebs","Allows webs to be created from string and slimeballs.",InteractionBWR.WEAVING_WEBS);
+        loadPropBool("LapisFromWool","Allows lapis to be created from blue wool and clay.",InteractionBWR.LAPIS_FROM_WOOL);
+        loadPropBool("DiamondSynthesis","Allows diamonds to be fabricated from ghast tears.",InteractionBWR.DIAMOND_SYNTHESIS);
+        loadPropBool("DiamondRecovery","Allows diamond ingots to be taken apart into diamonds and iron ingots using strong alkaline.",InteractionBWR.DIAMOND_RECOVERY);
+        loadPropBool("GoldGrinding","Allows only tools and armor made from gold to be milled into nuggets at a lower efficiency than when melted in a Crucible.",InteractionBWR.GOLD_GRINDING);
+        loadPropInt("GoldPerIngot","Gold nuggets returned when grinding gold tools or armor in a millstone.",InteractionBWR.GOLD_PER_INGOT);
+        loadPropBool("NetherrackSynthesis","Allows netherrack to be farbricated from a usable medium, a hellborn plant and some residents from the nether.",InteractionBWR.NETHERRACK_SYNTHESIS);
+        loadPropBool("SoulsandInfusion","Allows netherrack to be fabricated from dung and experience.",InteractionBWR.SOULSAND_INFUSION);
+        loadPropBool("BlazeGolems","Allows blazes to be created from a golem-like shape with appropriate blocks.",InteractionBWR.BLAZE_GOLEMS);
+        loadPropBool("BlazeBreeding","Allows blazes to replicate in fire when fed an appropriate item.",InteractionBWR.BLAZE_BREEDING);
+        loadPropBool("PlantBreeding","Allows plants to be crossbreed from other plants.",InteractionBWR.CROSSBREED_PLANTS);
+        loadPropBool("AnimalBreeding","Allows animals to be crossbreed from other animals. Disgusting.",InteractionBWR.CROSSBREED_ANIMALS);
+        loadPropBool("QuartzSynthesis","Allows quartz to be grown from silica in appropriate conditions.",InteractionBWR.QUARTZ_GROWING);
+        loadPropBool("DungToDirt","Allows dung to be turned into dirt by rinsing acids out.",InteractionBWR.DUNG_TO_DIRT);
+        loadPropBool("SandToClay","Allows sand to be turned into clay by adding acidic substances.",InteractionBWR.SAND_TO_CLAY);
+        loadPropBool("MeltHellfire","Allows Blocks of Hellfire to be melted into lava by proximity to it.",InteractionBWR.MELT_HELLFIRE);
+        loadPropBool("BoilRedstone","Allows redstone to be 'boiled' into glowstone by exposure to focused sunlight.",InteractionBWR.REDSTONE_BOILING);
+        loadPropBool("EmeraldPortal","Allows portals to be made from emerald blocks and sacrifice.",InteractionBWR.EMERALD_PORTAL);
+
+    }
 
     @Override
     public boolean isActive() {
@@ -112,6 +147,8 @@ public class InteractionBWR extends Interaction {
         OreDictionary.registerOre("pileSand",BWMItems.RED_SAND_PILE);
         OreDictionary.registerOre("pileSand",ModItems.soulSandPile);
 
+        int axeAmt = HCTools.changeAxeRecipe ? 2 : 3;
+
         //Tanning Leather with dung blocks
         //TODO: This is hacky.
         CauldronManager.getInstance().addRecipe(
@@ -167,7 +204,7 @@ public class InteractionBWR extends Interaction {
                 addDiamondRecovery(new OreStack("ingotDiamond",1),1);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_SWORD),2);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_PICKAXE),3);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_AXE),3);
+            addDiamondRecovery(new ItemStack(Items.DIAMOND_AXE),axeAmt);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_SHOVEL),1);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_HOE),2);
             addDiamondRecovery(new ItemStack(Items.DIAMOND_HELMET),5);
@@ -177,8 +214,8 @@ public class InteractionBWR extends Interaction {
             addDiamondRecovery(new ItemStack(ModItems.diamondSpade),2);
             addDiamondRecovery(new ItemStack(ModItems.diamondMatchPick),3);
             addDiamondRecovery(new ItemStack(ModItems.diamondMachete),4);
-            addDiamondRecovery(new ItemStack(ModItems.diamondKukri),5);
-            addDiamondRecovery(new ItemStack(ModItems.diamondCarpenterSaw),5);
+            addDiamondRecovery(new ItemStack(ModItems.diamondKukri),axeAmt+2);
+            addDiamondRecovery(new ItemStack(ModItems.diamondCarpenterSaw),axeAmt+2);
             addDiamondRecovery(new ItemStack(ModItems.diamondMasonPick),4);
         }
 
@@ -195,13 +232,20 @@ public class InteractionBWR extends Interaction {
         {
             addGoldGrinding(new ItemStack(Items.GOLDEN_SWORD),2);
             addGoldGrinding(new ItemStack(Items.GOLDEN_PICKAXE),3);
-            addGoldGrinding(new ItemStack(Items.GOLDEN_AXE),3);
+            addGoldGrinding(new ItemStack(Items.GOLDEN_AXE),axeAmt);
             addGoldGrinding(new ItemStack(Items.GOLDEN_SHOVEL),1);
             addGoldGrinding(new ItemStack(Items.GOLDEN_HOE),2);
             addGoldGrinding(new ItemStack(Items.GOLDEN_HELMET),5);
             addGoldGrinding(new ItemStack(Items.GOLDEN_CHESTPLATE),8);
             addGoldGrinding(new ItemStack(Items.GOLDEN_LEGGINGS),7);
             addGoldGrinding(new ItemStack(Items.GOLDEN_BOOTS),4);
+            addGoldGrinding(new ItemStack(ModItems.goldSpade),2);
+            addGoldGrinding(new ItemStack(ModItems.goldMatchPick),3);
+            addGoldGrinding(new ItemStack(ModItems.goldMachete),4);
+            addGoldGrinding(new ItemStack(ModItems.goldKukri),axeAmt+2);
+            addGoldGrinding(new ItemStack(ModItems.goldCarpenterSaw),axeAmt+2);
+            addGoldGrinding(new ItemStack(ModItems.goldMasonPick),4);
+
         }
 
         if(NETHERRACK_SYNTHESIS)

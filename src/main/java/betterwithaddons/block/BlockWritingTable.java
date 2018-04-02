@@ -5,7 +5,6 @@ import betterwithaddons.lib.GuiIds;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.IHasVariants;
 import betterwithmods.common.blocks.BlockWoodTable;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;

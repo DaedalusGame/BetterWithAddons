@@ -4,7 +4,6 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionBWA;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.util.DirUtils;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -121,7 +120,7 @@ public class TileEntityAqueductWater extends TileEntityBase {
             {
                 EnumFacing facing = pump.getValue(DirUtils.HORIZONTAL);
                 BlockPos pumpInput = pumppos.offset(facing);
-                return getBlockDistanceFromSource(world,pumpInput,world.getBlockState(pumpInput),true);
+                return getBlockDistanceFromSource(world,pumpInput,world.getBlockState(pumpInput),false);
             }
         }
         else if(state.getBlock() == ModBlocks.aqueduct && !recursed)

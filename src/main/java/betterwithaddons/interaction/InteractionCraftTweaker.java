@@ -27,4 +27,9 @@ public class InteractionCraftTweaker extends Interaction {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected String getName() {
+        return "interaction.CraftTweaker";
+    }
 }

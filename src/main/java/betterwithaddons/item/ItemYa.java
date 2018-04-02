@@ -16,10 +16,15 @@ public class ItemYa extends Item {
 
     public EntityYa createArrow(World worldIn, ItemStack stack, EntityLivingBase shooter) {
         EntityYa entityarrow = new EntityYa(worldIn, shooter);
+        entityarrow.setArrowStack(stack);
         return entityarrow;
     }
 
     public boolean isInfinite(ItemStack stack, ItemStack bow, EntityPlayer player) {
         return false;
+    }
+
+    public void hitEntity(EntityYa entityYa, EntityLivingBase living) {
+        //NOOP
     }
 }

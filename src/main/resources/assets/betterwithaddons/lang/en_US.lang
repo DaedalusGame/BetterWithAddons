@@ -75,6 +75,7 @@ tile.kera.name=Kera
 tile.tatara.name=Tatara
 tile.cherrybox.soaking.name=Cherrywood Soaking Unit
 tile.cherrybox.drying.name=Cherrywood Drying Unit
+tile.nabe.name=Nabe
 tile.crop_rice.name=Rice Seeds
 tile.crop_rush.name=Common Rush Seeds
 tile.crop_tea.name=Tea Seeds
@@ -328,6 +329,7 @@ item.wakizashi.name=Wakizashi
 item.tanto.name=Tanto
 item.yumi.name=Yumi
 item.ya.name=Ya
+item.poisoned_ya.name=Poisoned Ya
 item.japanmat.rice.name=Rice
 item.japanmat.soaked_rice.name=Soaked Rice
 item.japanmat.rice_stalk.name=Rice Stalk
@@ -365,6 +367,41 @@ item.japanmat.legs_undecorated.name=Undecorated Samurai Leggings
 item.japanmat.boots_undecorated.name=Undecorated Samurai Boots
 item.japanmat.bark_sakura.name=Sakura Bark
 item.japanmat.bark_mulberry.name=Mulberry Bark
+
+item.teacup.empty.name=Teacup
+item.teacup.poison.name=Cup of Poison
+item.teacup.tea.name=Cup of %1$s%2$s%3$s %4$s
+item.teacup.ceremonial.name=Cup of Ceremonial Green Tea
+
+tea.strength.0=Watery
+tea.strength.1=Weak
+tea.strength.2=Moderate
+tea.strength.3=Strong
+tea.strength.4=Very Strong
+
+tea.sugar.0=, Bitter
+tea.sugar.1=
+tea.sugar.2=, Sweet
+tea.sugar.3=, Very Sweet
+tea.sugar.4=, Very Sweet
+
+tea.milk.0=, Dry
+tea.milk.1=
+tea.milk.2=, Milky
+tea.milk.3=, Very Milky
+tea.milk.4=, Very Milky
+
+tea.type.white=White Tea
+tea.type.assam=Assam Tea
+tea.type.ceylon=Ceylon Tea
+tea.type.gyokuro=Gyokuro Tea
+tea.type.sencha=Sencha Tea
+tea.type.bancha=Bancha Tea
+tea.type.tencha=Tencha Tea
+tea.type.matcha=Matcha
+tea.type.houjicha=Houjicha
+tea.type.nether=Nether Tea
+tea.type.end=End Tea
 
 item.tea_leaves.white.name=White Tea Leaves
 item.tea_leaves.assam.name=Assam Tea Leaves

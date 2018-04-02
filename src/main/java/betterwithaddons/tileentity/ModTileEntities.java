@@ -26,6 +26,7 @@ public class ModTileEntities
         registerTE(TileEntityRopePost.class, "rope_post");
         registerTE(TileEntityInvertedGearbox.class, "inverted_gearbox");
         registerTE(TileEntityTea.class, "tea");
+        registerTE(TileEntityNabe.class, "nabe");
     }
 
     private static void registerTE(Class<? extends TileEntity> clazz, String name)

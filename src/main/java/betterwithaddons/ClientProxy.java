@@ -12,6 +12,7 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityAlchDragon;
 import betterwithaddons.tileentity.TileEntityInfuser;
+import betterwithaddons.tileentity.TileEntityNabe;
 import betterwithaddons.util.ResourceProxy;
 import betterwithmods.manual.api.ManualAPI;
 import betterwithmods.manual.api.prefab.manual.ItemStackTabIconRenderer;
@@ -34,6 +35,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -56,6 +58,12 @@ public class ClientProxy implements IProxy
         resourceProxy = new ResourceProxy();
     }
 
+    @SubscribeEvent
+    public void textureStitch(TextureStitchEvent.Pre event) {
+        event.getMap().registerSprite(new ResourceLocation(Reference.MOD_ID, "items/breakmask"));
+        event.getMap().registerSprite(new ResourceLocation(Reference.MOD_ID, "blocks/nabe_liquid"));
+    }
+
     @Override
     public void preInit() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -76,6 +84,7 @@ public class ClientProxy implements IProxy
         registerColorable(ModItems.teaSoaked);
         registerColorable(ModItems.teaWilted);
         registerColorable(ModItems.teaPowder);
+        registerColorable(ModItems.teaCup);
 
         MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
         //TODO definition provider
@@ -169,6 +178,7 @@ public class ClientProxy implements IProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityKarateZombie.class, RenderKarateZombie::new);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAlchDragon.class, new RenderAlchDragon());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInfuser.class, new RenderInfuser());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityNabe.class, new RenderNabe());
     }
 
     private void registerColorable(IColorable colorable)

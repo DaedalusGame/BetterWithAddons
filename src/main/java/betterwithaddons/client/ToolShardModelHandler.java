@@ -2,7 +2,6 @@ package betterwithaddons.client;
 
 import betterwithaddons.client.models.ModelToolShardInner;
 import betterwithaddons.interaction.InteractionBWA;
-import betterwithaddons.lib.Reference;
 import betterwithaddons.util.ItemUtil;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
@@ -13,7 +12,6 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -28,11 +26,6 @@ import java.util.List;
 
 public class ToolShardModelHandler {
     Method getVariantNames;
-
-    @SubscribeEvent
-    public void textureStitch(TextureStitchEvent.Pre event) {
-        event.getMap().registerSprite(new ResourceLocation(Reference.MOD_ID, "items/breakmask"));
-    }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onModelBake(ModelBakeEvent event)

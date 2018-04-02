@@ -76,6 +76,8 @@ public class ModBlocks {
     public static BlockTatara tatara;
     @ObjectHolder("betterwithaddons:cherrybox")
     public static BlockCherryBox cherrybox;
+    @ObjectHolder("betterwithaddons:nabe")
+    public static BlockNabe nabe;
     @ObjectHolder("betterwithaddons:world_scale_ore")
     public static BlockWorldScaleOre worldScaleOre;
     @ObjectHolder("betterwithaddons:bamboo")
@@ -238,6 +240,7 @@ public class ModBlocks {
         registerBlock(new BlockKera());
         registerBlock(new BlockTatara());
         registerBlock(new BlockCherryBox());
+        registerBlock(new BlockNabe());
         registerBlock(new BlockModPane("shoji", Material.WOOD).setHardness(1.0f));
         registerBlock(new BlockFusumaPainted("fusuma").setHardness(1.0f));
         registerBlock(new BlockTatami().setHardness(1.0f));

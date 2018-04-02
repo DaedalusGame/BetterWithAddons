@@ -4,6 +4,8 @@ import betterwithaddons.BetterWithAddons;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
+import java.awt.*;
+
 public class ModEntities
 {
     public static void init()
@@ -15,7 +17,7 @@ public class ModEntities
         EntityRegistry.registerModEntity(new ResourceLocation("betterwithaddons","spirit"),EntitySpirit.class, "spirit", 4, BetterWithAddons.instance, 80, 1, true);
         EntityRegistry.registerModEntity(new ResourceLocation("betterwithaddons","karate_zombie"),EntityKarateZombie.class, "karate_zombie", 5, BetterWithAddons.instance, 80, 1, true);
 
-        EntityRegistry.registerEgg(new ResourceLocation("betterwithaddons","karate_zombie"),1,1);
+        EntityRegistry.registerEgg(new ResourceLocation("betterwithaddons","karate_zombie"),new Color(230,230,230).getRGB(),new Color(240,50,50).getRGB());
     }
 }
 

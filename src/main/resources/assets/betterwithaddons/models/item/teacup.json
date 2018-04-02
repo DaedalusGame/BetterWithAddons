@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "betterwithaddons:items/teacup"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "fillmodel": 1
+      },
+      "model": "betterwithaddons:item/teacup_filled"
+    }
+  ]
+}

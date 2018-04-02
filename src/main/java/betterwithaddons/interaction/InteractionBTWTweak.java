@@ -15,7 +15,6 @@ import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.blockmeta.managers.SawManager;
 import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
 import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
-import betterwithmods.module.gameplay.CraftingRecipes;
 import betterwithmods.module.hardcore.world.HCBonemeal;
 import betterwithmods.module.tweaks.MineshaftGeneration;
 import net.minecraft.block.BlockPlanks;
@@ -49,6 +48,28 @@ public class InteractionBTWTweak extends Interaction {
     public static boolean RUSTY_MINESHAFTS = true;
     public static boolean INFESTED_MINESHAFTS = true;
     public static int WRITING_TABLE_COST = 1;
+
+    @Override
+    protected String getName() {
+        return "addons.BTWTweak";
+    }
+
+    @Override
+    void setupConfig() {
+        ENABLED = loadPropBool("Enabled","Whether the BTWTweak module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.",ENABLED);
+        SAW_RECYCLING = loadPropBool("SawRecycling","Many wooden blocks can be recycled by putting them infront of a saw, at a bit of a loss.",SAW_RECYCLING);
+        EGG_INCUBATION = loadPropBool("EggIncubation","Allows eggs to be incubated into chicken by placing them on a Block of Padding with a lit Light Block above.",EGG_INCUBATION);
+        SLIPPERY_WHEN_WET = loadPropBool("SlipperyWhenWet","Water running over blocks of soap will make them slippery.",SLIPPERY_WHEN_WET);
+        ASH_FERTILIZER = loadPropBool("AshFertilizer","Potash is a valid fertilizer.",ASH_FERTILIZER);
+        WOOL_RECYCLING = loadPropBool("WoolRecycling","Wool can be rendered back into it's components. You might want to disable this if you use mods that violate Hardcore Shearing.",WOOL_RECYCLING);
+        LOGS_SMELT_TO_ASH = loadPropBool("LogsSmeltToAsh","Logs burn into ash in a furnace. This only works if they wouldn't burn into anything else.",LOGS_SMELT_TO_ASH);
+        REPLACE_WRITABLE_BOOK_RECIPE = loadPropBool("ReplaceWritableBookRecipe","Changes writable books to require the Ink and Quill item.",REPLACE_WRITABLE_BOOK_RECIPE);
+        RUSTY_MINESHAFTS = loadPropBool("RustedMineshafts","Rails in Mineshafts are rusted and melt down into much less iron.",RUSTY_MINESHAFTS);
+        INFESTED_MINESHAFTS = loadPropBool("InfestedMineshafts","Logs in Mineshafts are infested by Termites and crumble into sawdust when harvested.",INFESTED_MINESHAFTS);
+        doesNotNeedRestart(() -> {
+            WRITING_TABLE_COST = loadPropInt("WritingTableCost","How many levels it costs to rename an item or create a nametag.",WRITING_TABLE_COST);
+        });
+    }
 
     @Override
     public boolean isActive() {

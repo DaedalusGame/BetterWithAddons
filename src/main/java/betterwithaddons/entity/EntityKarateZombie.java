@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -57,7 +56,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     public EntityKarateZombie(World worldIn) {
         super(worldIn);
 
-        int spiritsPerLevel = InteractionEriottoMod.SPIRIT_PER_LEVEL;
+        int spiritsPerLevel = InteractionEriottoMod.KARATE_ZOMBIE_SPIRIT_PER_LEVEL;
         spawnSpirits = (spiritsPerLevel * 2) / 3;
         if(rand.nextInt(100) < 30)
             spawnSpirits += rand.nextInt(4) * spiritsPerLevel;
@@ -224,7 +223,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
         IEntityLivingData data = super.onInitialSpawn(difficulty, livingdata);
 
         //TODO: bother primetoxinz lots
-        //int spiritsPerLevel = InteractionEriottoMod.SPIRIT_PER_LEVEL;
+        //int spiritsPerLevel = InteractionEriottoMod.KARATE_ZOMBIE_SPIRIT_PER_LEVEL;
         //int spirits = (spiritsPerLevel * 2) / 3;
         //if(rand.nextInt(100) < 30)
         //    spirits += rand.nextInt(4) * spiritsPerLevel;
@@ -415,7 +414,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     }
 
     public int getLevel() {
-        int level = getSpirits() / InteractionEriottoMod.SPIRIT_PER_LEVEL;
+        int level = getSpirits() / InteractionEriottoMod.KARATE_ZOMBIE_SPIRIT_PER_LEVEL;
 
         return level;
     }

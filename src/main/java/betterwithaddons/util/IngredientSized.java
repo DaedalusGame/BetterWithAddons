@@ -28,7 +28,7 @@ public class IngredientSized extends Ingredient implements IHasSize {
             cachedStacks = new ItemStack[stacks.length];
 
             for (int i = 0; i < stacks.length; i++) {
-                cachedStacks[i] = stacks[i];
+                cachedStacks[i] = stacks[i].copy();
                 cachedStacks[i].setCount(size);
             }
         }

@@ -107,6 +107,46 @@ public class InteractionBWA extends Interaction {
     public static boolean ROTTEN_FOOD_COMBINING = true;
 
     @Override
+    protected String getName() {
+        return "addons.BetterWithAddons";
+    }
+
+    @Override
+    void setupConfig() {
+        STONEBRICKS_NEED_SMELTING = loadPropBool("StoneBricksNeedSmelting", "Stonebricks need two extra steps in crafting.", STONEBRICKS_NEED_SMELTING);
+        GATED_AQUEDUCTS = loadPropBool("GatedAqueducts", "Aqueducts require white stone to craft. This means you need to go to the end to transport water over long distances without power usage.", GATED_AQUEDUCTS);
+
+        AQUEDUCT_BIOME_STRINGS = loadPropStringList("AqueductBiomes", "Aqueducts can only draw water from sources in specific biomes.", AQUEDUCT_BIOME_STRINGS);
+        AQUEDUCT_BIOMES_IS_WHITELIST = loadPropBool("AqueductBiomesIsWhitelist", "Whether aqueduct biomes should be whitelisted or blacklisted.", AQUEDUCT_BIOMES_IS_WHITELIST);
+        AQUEDUCT_SOURCE_WHITELIST = loadPropStringList("AqueductSources", "Sources Aqueducts can pull from other than real source blocks.", AQUEDUCT_SOURCE_WHITELIST);
+        CONVENIENT_TOOLS_PRE_END = loadPropBool("ConvenientIronTools", "Convenient tools can be made from iron, gold and diamond pre-soulsteel.", CONVENIENT_TOOLS_PRE_END);
+
+        ROTTEN_FOOD = loadPropBool("RottenFood", "Whether food will rot after a certain number of days has passed.", ROTTEN_FOOD);
+        ROTTEN_FOOD_COMBINING = loadPropBool("RottenFoodCombining", "Whether food can be combined in the crafting grid to stack.", ROTTEN_FOOD_COMBINING);
+        ROTTEN_FOOD_BLACKLIST = loadPropStringList("RottenFoodBlacklist", "These foods are excluded from rotting.", ROTTEN_FOOD_BLACKLIST);
+        MEAT_ROT_TIME = loadPropInt("RottenMeatTime", "How long meat takes to rot. (In ticks)", (int) MEAT_ROT_TIME);
+        FISH_ROT_TIME = loadPropInt("RottenFishTime", "How long fish takes to rot. (In ticks)", (int) FISH_ROT_TIME);
+        FRUIT_ROT_TIME = loadPropInt("RottenFruitTime", "How long fruit takes to rot. (In ticks)", (int) FRUIT_ROT_TIME);
+        MISC_ROT_TIME = loadPropInt("RottenMiscTime", "How long misc food takes to rot. (In ticks)", (int) MISC_ROT_TIME);
+
+        ARMOR_SHARD_RENDER = loadPropBool("ArmorShardRender", "Enables or disables the custom armor shard renderer, for when it causes crashes.", ARMOR_SHARD_RENDER);
+
+        doesNotNeedRestart(() -> {
+            RADIUS = loadPropInt("LureTreeRadius", "Radius in which the tree can spawn mobs.", RADIUS);
+            MAXCHARGE = loadPropInt("LureTreeTime", "Time it takes for the tree to do one spawning cycle.", MAXCHARGE);
+            MAXFOOD = loadPropInt("LureTreeMaxFood", "How much food the tree can hold.", MAXFOOD);
+
+            AQUEDUCT_MAX_LENGTH = loadPropInt("MaxAqueductLength", "How long aqueducts can be.", AQUEDUCT_MAX_LENGTH);
+
+            LEGENDARIUM_MIN_DAMAGE = loadPropDouble("LegendariumDamageMin", "How much durability the artifact you're turning in can have at max. (As a factor of max durability; 0.1 means 1/10 of max durability)", LEGENDARIUM_MIN_DAMAGE);
+            LEGENDARIUM_DAMAGE_PAD = loadPropInt("LegendariumDamagePad", "How much durability more than the minimum the artifact can have to still be considered broken. (As a static value)", LEGENDARIUM_DAMAGE_PAD);
+            LEGENDARIUM_POSTER_RANGE = loadPropInt("LegendariumPosterRange", "How far away Display Frames are recognized. (in blocks; as a cubic radius)", LEGENDARIUM_POSTER_RANGE);
+            LEGENDARIUM_MIN_QUEUE_SIZE = loadPropInt("LegendariumMinQueueSize", "How many artifacts must be in the Hall of Legends to take one out.", LEGENDARIUM_MIN_QUEUE_SIZE);
+            LEGENDARIUM_TURN_IN_DELAY = loadPropInt("LegendariumTurnInDelay", "How long until the next artifact can be turned in. (in ticks; 1000 ticks is one Minecraft hour)", LEGENDARIUM_TURN_IN_DELAY);
+        });
+    }
+
+    @Override
     public boolean isActive() {
         return true;
     }

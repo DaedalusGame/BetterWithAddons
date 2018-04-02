@@ -35,4 +35,9 @@ public class InteractionJEI extends Interaction {
     public void postInit() {
 
     }
+
+    @Override
+    protected String getName() {
+        return "interaction.JEI";
+    }
 }

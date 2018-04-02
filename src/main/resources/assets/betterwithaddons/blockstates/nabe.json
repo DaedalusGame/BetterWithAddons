@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "betterwithaddons:blocks/nabe_side",
+      "bottom": "betterwithaddons:blocks/nabe_bottom",
+      "side": "betterwithaddons:blocks/nabe_side",
+      "inside": "betterwithaddons:blocks/nabe_inside"
+    },
+    "model": "cauldron_empty",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

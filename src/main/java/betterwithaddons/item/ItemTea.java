@@ -34,12 +34,18 @@ public class ItemTea extends Item implements IColorable {
         return stack;
     }
 
-    public TeaType getType(ItemStack stack)
+    public static TeaType getType(ItemStack stack)
     {
         NBTTagCompound compound = stack.getTagCompound();
         if(compound != null)
             return TeaType.getType(compound.getString("type"));
         return TeaType.WHITE;
+    }
+
+    public static TeaType.ItemType getItemType(ItemStack stack)
+    {
+        Item item = stack.getItem();
+        return item instanceof ItemTea ? ((ItemTea) item).itemType : TeaType.ItemType.Leaves;
     }
 
     public int getColor(ItemStack stack)

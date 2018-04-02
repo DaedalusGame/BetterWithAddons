@@ -1,5 +1,6 @@
 package betterwithaddons.interaction;
 
+import betterwithaddons.config.ModConfiguration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.RegistryEvent;
@@ -23,6 +24,8 @@ public abstract class Interaction {
         return null;
     }
 
+    void setupConfig() {}
+
     void preInitClient() {}
 
     void preInit() {}
@@ -36,6 +39,37 @@ public abstract class Interaction {
     void loadComplete() {}
 
     void modifyRecipes(RegistryEvent.Register<IRecipe> event) {}
+
+    protected abstract String getName();
+
+    protected final int loadPropInt(String propName, String desc, int default_) {
+        return ModConfiguration.loadPropInt(propName, getName(), desc, default_);
+    }
+
+    protected final int loadPropInt(String propName, String desc, int default_, int min, int max) {
+        return ModConfiguration.loadPropInt(propName, getName(), desc, default_, min, max);
+    }
+
+    protected final double loadPropDouble(String propName, String desc, double default_, double min, double max) {
+        return ModConfiguration.loadPropDouble(propName, getName(), desc, default_, min, max);
+    }
+
+    protected final double loadPropDouble(String propName, String desc, double default_) {
+        return ModConfiguration.loadPropDouble(propName, getName(), desc, default_);
+    }
+
+    protected final boolean loadPropBool(String propName, String desc, boolean default_) {
+        return ModConfiguration.loadPropBool(propName, getName(), desc, default_);
+    }
+
+    protected final String[] loadPropStringList(String propName, String desc, String[] default_) {
+        return ModConfiguration.loadPropStringList(propName, getName(), desc, default_);
+    }
+
+    protected final void doesNotNeedRestart(Runnable op)
+    {
+        ModConfiguration.doesNotNeedRestart(op);
+    }
 
     protected void removeRecipeByOutput(ForgeRegistry<IRecipe> reg, ItemStack outputToRemove) {
         removeRecipeByOutput(reg,outputToRemove,null);

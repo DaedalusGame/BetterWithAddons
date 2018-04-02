@@ -3,11 +3,9 @@ package betterwithaddons.container;
 import betterwithaddons.block.BlockWritingTable;
 import betterwithaddons.interaction.InteractionBTWTweak;
 import betterwithaddons.item.ModItems;
-import betterwithaddons.tileentity.TileEntityChute;
 import betterwithaddons.util.IngredientSpecial;
 import betterwithaddons.util.ItemUtil;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemNameTag;
@@ -20,7 +18,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.oredict.OreIngredient;
 import org.apache.commons.lang3.StringUtils;
 
 public class ContainerRename extends Container {

@@ -74,6 +74,25 @@ public class InteractionBWM extends Interaction {
     };
 
     @Override
+    protected String getName() {
+        return "interaction.BetterWithMods";
+    }
+
+    @Override
+    void setupConfig() {
+        ENABLED = loadPropBool("Enabled", "Whether the Better With Mods compat module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.", ENABLED);
+        MILL_CLAY = loadPropBool("MillClay", "Hardened clay can be milled into bricks, saving fuel and allowing dyed bricks.", MILL_CLAY);
+        CHORUS_IN_CAULDRON = loadPropBool("ChorusInCauldron", "Chorus fruit (and Midori) can only be popped in a cauldron.", CHORUS_IN_CAULDRON);
+        BUTCHER_BLOCKS = loadPropBool("ButcherBlocks", "Striking an enemy on chopping blocks will bloody them and bestow a short strenth buff.", BUTCHER_BLOCKS);
+        CAULDRONS_EXPLODE = loadPropBool("CauldronsExplode", "Cooking hellfire or any other explosive in a stoked cauldron or crucible will result in a violent explosion.", CAULDRONS_EXPLODE);
+        HARDCORE_SHEARING = loadPropBool("HardcoreShearing", "Sheep will only be sheared into wool items, which must be crafted into wool blocks. This does not work with machines that use onSheared, but should work with Fake Players.", HARDCORE_SHEARING);
+        HARDCORE_PACKING = loadPropBool("HardcorePacking", "Items can be compressed in world with a piston pushing them into an enclosed space.", HARDCORE_PACKING);
+        WOOL_MULTIPLIER = loadPropInt("WoolMultiplier", "Adjusts how much wool a sheep drops if Hardcore Shearing is enabled.", WOOL_MULTIPLIER);
+        DYE_IN_CAULDRON = loadPropBool("DyeInCauldron", "Wool can be dyed in batches of 8 in a cauldron and bleached with potash.", DYE_IN_CAULDRON);
+        SHEARS_WHITELIST = loadPropStringList("ShearWhitelist", "Extra items that are functionally shears but don't extend ItemShears.", SHEARS_WHITELIST);
+    }
+
+    @Override
     public boolean isActive() {
         return ENABLED && Loader.isModLoaded(modid);
     }

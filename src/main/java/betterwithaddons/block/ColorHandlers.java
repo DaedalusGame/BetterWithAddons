@@ -7,7 +7,6 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.tileentity.TileEntityTea;
 import betterwithaddons.util.TeaType;
 import net.minecraft.block.BlockRedstoneWire;
-import net.minecraft.block.BlockStem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IBlockColor;
@@ -16,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -24,9 +24,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-import java.awt.*;
 
 public class ColorHandlers {
     public static final IBlockColor GRASS_COLORING = new IBlockColor()
@@ -99,5 +96,12 @@ public class ColorHandlers {
         if(item instanceof ItemTea)
             return ((ItemTea) item).getColor(stack);
         return TeaType.WHITE.getLeafColor();
+    };
+
+    public static final IItemColor TEACUP_COLORING = (stack, tintIndex) -> {
+        NBTTagCompound compound = stack.getTagCompound();
+        if(tintIndex == 1 && compound != null)
+            return compound.getInteger("color");
+        return 0xFFFFFFFF;
     };
 }

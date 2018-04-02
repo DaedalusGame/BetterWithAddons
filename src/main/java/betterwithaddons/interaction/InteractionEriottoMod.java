@@ -4,11 +4,13 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.crafting.recipes.ArmorDecorateRecipe;
+import betterwithaddons.crafting.recipes.TeaNabeRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.entity.EntityKarateZombie;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.IngredientSized;
+import betterwithaddons.util.NabeResultPoison;
 import betterwithaddons.util.TeaType;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWOreDictionary;
@@ -44,13 +46,34 @@ public class InteractionEriottoMod extends Interaction {
     public static boolean ALTERNATE_INFUSER_RECIPE = false;
     public static int MAX_SPIRITS = 128;
     public static int SPIRIT_PER_BOTTLE = 8;
-    public static int SPIRIT_PER_LEVEL = 8;
     public static boolean JAPANESE_RANDOM_SPAWN = true;
     public static int JAPANESE_RANDOM_SPAWN_WEIGHT = 40;
-    public final ArrayList<Item> REPAIRABLE_TOOLS;
+    public static int KARATE_ZOMBIE_MIN_SPIRITS = 5;
+    public static int KARATE_ZOMBIE_MAX_SPIRITS = 29;
+    public static int KARATE_ZOMBIE_SPIRIT_PER_LEVEL = 8;
+    public static double KARATE_ZOMBIE_DROP_MULTIPLIER = 1.0f;
+    public ArrayList<Item> REPAIRABLE_TOOLS = new ArrayList<>();
 
-    public InteractionEriottoMod() {
-        REPAIRABLE_TOOLS = Lists.newArrayList(ModItems.katana, ModItems.wakizashi, ModItems.tanto, ModItems.shinai, ModItems.yumi, ModItems.samuraiBoots, ModItems.samuraiLeggings, ModItems.samuraiHelm, ModItems.samuraiChestplate);
+    @Override
+    protected String getName() {
+        return "addons.EriottoMod";
+    }
+
+    @Override
+    void setupConfig() {
+        ENABLED = loadPropBool("Enabled","Whether the Japanese Culture module is on. DISABLING THIS WILL DISABLE THE WHOLE MODULE.",ENABLED);
+        INFUSER_REPAIRS = loadPropBool("InfuserRepairs","Infusers can repair japanese weapons and armors.",INFUSER_REPAIRS);
+        ALTERNATE_INFUSER_RECIPE = loadPropBool("AlternateInfuserRecipe","Hardcore Structures pushes the Enchanting Table behind some exploration. This enables an alternate recipe if you want to start japanese culture before finding a Desert Temple.",ALTERNATE_INFUSER_RECIPE);
+        JAPANESE_RANDOM_SPAWN = loadPropBool("RandomJapaneseMobs","Karate Zombies infused with ancestral spirit spawn randomly.",JAPANESE_RANDOM_SPAWN);
+        JAPANESE_RANDOM_SPAWN_WEIGHT = loadPropInt("RandomJapaneseMobsWeight","Weight for a karate zombie to spawn.",JAPANESE_RANDOM_SPAWN_WEIGHT);
+        doesNotNeedRestart(() -> {
+            MAX_SPIRITS = loadPropInt("MaxSpirits","Maximum amount of spirit to be stored in Infused Soul Sand.",MAX_SPIRITS);
+            SPIRIT_PER_BOTTLE = loadPropInt("SpiritsPerBottle","How much spirit is contained in one bottle.",SPIRIT_PER_BOTTLE);
+            KARATE_ZOMBIE_MIN_SPIRITS = loadPropInt("KarateZombieMinSpirits","How many spirits karate zombies at least spawn with.",KARATE_ZOMBIE_MIN_SPIRITS);
+            KARATE_ZOMBIE_MAX_SPIRITS = loadPropInt("KarateZombieMaxSpirits","How many spirits karate zombies at most spawn with.",KARATE_ZOMBIE_MAX_SPIRITS);
+            KARATE_ZOMBIE_SPIRIT_PER_LEVEL = loadPropInt("KarateZombiePerLevel","How much spirit is required for Karate Zombies to level up.",KARATE_ZOMBIE_SPIRIT_PER_LEVEL);
+            KARATE_ZOMBIE_DROP_MULTIPLIER = loadPropDouble("KarateZombieDropMultiplier","How much spirit is dropped by Karate Zombies, as a ratio of how much they have.",KARATE_ZOMBIE_DROP_MULTIPLIER);
+        });
     }
 
     @Override
@@ -92,6 +115,8 @@ public class InteractionEriottoMod extends Interaction {
 
     @Override
     public void init() {
+        REPAIRABLE_TOOLS = Lists.newArrayList(ModItems.katana, ModItems.wakizashi, ModItems.tanto, ModItems.shinai, ModItems.yumi, ModItems.samuraiBoots, ModItems.samuraiLeggings, ModItems.samuraiHelm, ModItems.samuraiChestplate);
+
         ModBlocks.mulberrySapling.setLeaves(ModBlocks.mulberryLeaves.getDefaultState()).setLog(ModBlocks.mulberryLog.getDefaultState());
         ModBlocks.mulberryLeaves.setSapling(new ItemStack(ModBlocks.mulberrySapling));
 
@@ -177,11 +202,11 @@ public class InteractionEriottoMod extends Interaction {
         addArmorFinishRecipe("samurai_leggings",new ItemStack(ModItems.samuraiLeggings), ModItems.materialJapan.getMaterial("legs_undecorated"), 7);
         addArmorFinishRecipe("samurai_boots",new ItemStack(ModItems.samuraiBoots), ModItems.materialJapan.getMaterial("boots_undecorated"), 4);
 
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"netted_screen"),new ItemStack(ModBlocks.nettedScreen), "bsb", "sss", "bsb", 's', new ItemStack(Items.STRING), 'b', ModItems.materialJapan.getMaterial("bamboo_slats")),2);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"tatara"),new ItemStack(ModBlocks.tatara), "idi", "g g", "ini", 'i', new ItemStack(Items.IRON_INGOT), 'g', new ItemStack(Items.GOLD_INGOT), 'd', new ItemStack(Items.DIAMOND), 'n', new ItemStack(Blocks.NETHERRACK)),4);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"netted_screen"),new ItemStack(ModBlocks.nettedScreen), "bsb", "sss", "bsb", 's', "string", 'b', ModItems.materialJapan.getMaterial("bamboo_slats")),2);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"tatara"),new ItemStack(ModBlocks.tatara), "idi", "g g", "ini", 'i', "ingotIron", 'g', "ingotGold", 'd', "gemDiamond", 'n', new ItemStack(Blocks.NETHERRACK)),4);
         CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"soaking_unit"),new ItemStack(ModBlocks.cherrybox, 1, 0), "pxp", "x x", "pxp", 'p', new ItemStack(ModBlocks.sakuraPlanks), 'x', new ItemStack(Blocks.IRON_BARS)),1);
         CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"drying_unit"),new ItemStack(ModBlocks.cherrybox, 1, 1), "pxp", "p p", "ppp", 'p', new ItemStack(ModBlocks.sakuraPlanks), 'x', new ItemStack(Blocks.GLASS_PANE)),1);
-
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"nabe"),new ItemStack(ModBlocks.nabe, 1), "i i", "i i", "lhl", 'i', "ingotIron", 'l', "ingotTamahagane", 'h', "ingotHochoTetsu"),1);
 
         //Random seeds
         CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreIngredient("seed"), 1, ItemStack.EMPTY) {
@@ -292,6 +317,10 @@ public class InteractionEriottoMod extends Interaction {
         CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("tamahagane")), ModItems.materialJapan.getMaterial("tamahagane_heated"));
         CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("tamahagane_wrapped")), ModItems.materialJapan.getMaterial("tamahagane_reheated"));
         CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("hocho_tetsu")), ModItems.materialJapan.getMaterial("hocho_tetsu_heated"));
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromItem(Items.CLAY_BALL), ModItems.teaCup.getEmpty());
+
+        CraftingManagerNabe.getInstance().addRecipe("poison",new NabeResultPoison(12,12),Lists.newArrayList(new OreIngredient("cropNetherWart"),new OreIngredient("gunpowder"),new OreIngredient("dustRedstone"),new OreIngredient("dustGlowstone"),Ingredient.fromItem(Items.SPIDER_EYE),new OreIngredient("cropRush")),1000);
+        CraftingManagerNabe.getInstance().addRecipe(new TeaNabeRecipe());
     }
 
     private boolean isRepairableTool(ItemStack stack) {

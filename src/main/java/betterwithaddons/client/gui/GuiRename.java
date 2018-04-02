@@ -1,24 +1,21 @@
 package betterwithaddons.client.gui;
 
-import betterwithaddons.container.ContainerChute;
 import betterwithaddons.container.ContainerRename;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.network.BWANetworkHandler;
 import betterwithaddons.network.MessageRenameItem;
-import betterwithaddons.tileentity.TileEntityChute;
-import io.netty.buffer.Unpooled;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.client.CPacketCustomPayload;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 
