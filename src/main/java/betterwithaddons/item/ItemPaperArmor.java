@@ -57,7 +57,7 @@ public class ItemPaperArmor extends ItemArmor implements ISpecialArmor {
             }
         }
 
-        if(entity.isWet()) {
+        if(entity.isWet() && equippedPieces > 0) {
             PotionEffect wetness = new PotionEffect(MobEffects.SLOWNESS,20*60,Math.max(0,equippedPieces-1),true,false);
             entity.addPotionEffect(wetness);
         }
