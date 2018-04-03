@@ -28,8 +28,7 @@ public class SoakingBox {
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        List<CherryBoxRecipe> recipes = CraftingManagerSoakingBox.instance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
-        CraftTweaker.LATE_ACTIONS.add(new Remove(recipes));
+        CraftTweaker.LATE_ACTIONS.add(new Remove(input));
     }
 
     public static class Add implements IAction
@@ -53,20 +52,22 @@ public class SoakingBox {
 
     public static class Remove implements IAction
     {
-        List<CherryBoxRecipe> recipes;
+        IItemStack input;
 
-        public Remove(List<CherryBoxRecipe> recipes) {
-            this.recipes = recipes;
+        public Remove(IItemStack input) {
+            this.input = input;
         }
 
         @Override
         public void apply() {
+
+            List<CherryBoxRecipe> recipes = CraftingManagerSoakingBox.instance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
             CraftingManagerSoakingBox.instance().getRecipes().removeAll(recipes);
         }
 
         @Override
         public String describe() {
-            return "Removing "+recipes.size()+" Soaking Unit recipes";
+            return "Removing Soaking Unit recipe for "+input;
         }
     }
 }

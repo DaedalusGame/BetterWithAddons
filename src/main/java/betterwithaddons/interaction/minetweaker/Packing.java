@@ -36,7 +36,8 @@ public class Packing {
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        CraftTweaker.LATE_ACTIONS.add(new Remove(CraftingManagerPacking.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input))));
+
+        CraftTweaker.LATE_ACTIONS.add(new Remove(input));
     }
 
     public static class Add implements IAction
@@ -60,20 +61,21 @@ public class Packing {
 
     public static class Remove implements IAction
     {
-        List<PackingRecipe> recipes;
+        private IItemStack input;
 
-        public Remove(List<PackingRecipe> recipes) {
-            this.recipes = recipes;
+        public Remove(IItemStack input) {
+            this.input = input;
         }
 
         @Override
         public void apply() {
+            List<PackingRecipe> recipes = CraftingManagerPacking.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
             CraftingManagerPacking.getInstance().getRecipes().removeAll(recipes);
         }
 
         @Override
         public String describe() {
-            return "Removing "+recipes.size()+" Hardcore Packing recipes";
+            return "Removing Hardcore Packing recipes for "+input.getDisplayName();
         }
     }
 }

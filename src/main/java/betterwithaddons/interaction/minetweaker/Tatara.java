@@ -27,8 +27,8 @@ public class Tatara {
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        List<SmeltingRecipe> recipes = CraftingManagerTatara.instance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
-        CraftTweaker.LATE_ACTIONS.add(new Remove(recipes));
+
+        CraftTweaker.LATE_ACTIONS.add(new Remove(input));
     }
 
     public static class Add implements IAction
@@ -52,20 +52,21 @@ public class Tatara {
 
     public static class Remove implements IAction
     {
-        List<SmeltingRecipe> recipes;
+        IItemStack input;
 
-        public Remove(List<SmeltingRecipe> recipes) {
-            this.recipes = recipes;
+        public Remove(IItemStack input) {
+            this.input = input;
         }
 
         @Override
         public void apply() {
+            List<SmeltingRecipe> recipes = CraftingManagerTatara.instance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
             CraftingManagerTatara.instance().getRecipes().removeAll(recipes);
         }
 
         @Override
         public String describe() {
-            return "Removing "+recipes.size()+" Tatara recipes";
+            return "Removing Tatara recipe for "+input.getDisplayName();
         }
     }
 }

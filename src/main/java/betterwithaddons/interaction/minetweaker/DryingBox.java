@@ -28,8 +28,7 @@ public class DryingBox {
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        List<CherryBoxRecipe> recipes = CraftingManagerDryingBox.instance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
-        CraftTweaker.LATE_ACTIONS.add(new Remove(recipes));
+        CraftTweaker.LATE_ACTIONS.add(new Remove(input));
     }
 
     public static class Add implements IAction
@@ -53,20 +52,21 @@ public class DryingBox {
 
     public static class Remove implements IAction
     {
-        List<CherryBoxRecipe> recipes;
+        private IItemStack input;
 
-        public Remove(List<CherryBoxRecipe> recipes) {
-            this.recipes = recipes;
+        public Remove(IItemStack input) {
+            this.input = input;
         }
 
         @Override
         public void apply() {
+            List<CherryBoxRecipe> recipes = CraftingManagerDryingBox.instance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
             CraftingManagerDryingBox.instance().getRecipes().removeAll(recipes);
         }
 
         @Override
         public String describe() {
-            return "Removing "+recipes.size()+" Drying Unit recipes";
+            return "Removing Drying Unit recipe for "+input.getDisplayName();
         }
     }
 }

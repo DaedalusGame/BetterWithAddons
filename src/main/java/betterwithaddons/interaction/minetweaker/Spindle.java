@@ -29,8 +29,7 @@ public class Spindle {
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        List<SpindleRecipe> recipes = CraftingManagerSpindle.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
-        CraftTweaker.LATE_ACTIONS.add(new Remove(recipes));
+        CraftTweaker.LATE_ACTIONS.add(new Remove(input));
     }
 
     public static class Add implements IAction
@@ -54,20 +53,21 @@ public class Spindle {
 
     public static class Remove implements IAction
     {
-        List<SpindleRecipe> recipes;
+        IItemStack stack;
 
-        public Remove(List<SpindleRecipe> recipes) {
-            this.recipes = recipes;
+        public Remove(IItemStack stack) {
+            this.stack = stack;
         }
 
         @Override
         public void apply() {
+            List<SpindleRecipe> recipes = CraftingManagerSpindle.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(stack));
             CraftingManagerSpindle.getInstance().getRecipes().removeAll(recipes);
         }
 
         @Override
         public String describe() {
-            return "Removing "+recipes.size()+" Drying Unit recipes";
+            return "Removing Spindle recipe for "+stack.getDisplayName();
         }
     }
 }

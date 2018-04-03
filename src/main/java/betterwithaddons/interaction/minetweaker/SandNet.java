@@ -30,8 +30,8 @@ public class SandNet {
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        List<NetRecipe> recipes = CraftingManagerSandNet.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
-        CraftTweaker.LATE_ACTIONS.add(new Remove(recipes));
+
+        CraftTweaker.LATE_ACTIONS.add(new Remove(input));
     }
 
     public static class Add implements IAction
@@ -55,20 +55,21 @@ public class SandNet {
 
     public static class Remove implements IAction
     {
-        List<NetRecipe> recipes;
+        private IItemStack input;
 
-        public Remove(List<NetRecipe> recipes) {
-            this.recipes = recipes;
+        public Remove(IItemStack input) {
+            this.input = input;
         }
 
         @Override
         public void apply() {
+            List<NetRecipe> recipes = CraftingManagerSandNet.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
             CraftingManagerSandNet.getInstance().getRecipes().removeAll(recipes);
         }
 
         @Override
         public String describe() {
-            return "Removing "+recipes.size()+" Sand Net recipes";
+            return "Removing Sand Net recipe for "+input.getDisplayName();
         }
     }
 }

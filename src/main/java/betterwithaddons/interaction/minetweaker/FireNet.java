@@ -30,8 +30,8 @@ public class FireNet {
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        List<NetRecipe> recipes = CraftingManagerFireNet.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
-        CraftTweaker.LATE_ACTIONS.add(new Remove(recipes));
+
+        CraftTweaker.LATE_ACTIONS.add(new Remove(input));
     }
 
     public static class Add implements IAction
@@ -55,20 +55,22 @@ public class FireNet {
 
     public static class Remove implements IAction
     {
-        List<NetRecipe> recipes;
+        private IItemStack input;
 
-        public Remove(List<NetRecipe> recipes) {
-            this.recipes = recipes;
+        public Remove(IItemStack input) {
+            this.input = input;
         }
 
         @Override
         public void apply() {
+
+            List<NetRecipe> recipes = CraftingManagerFireNet.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
             CraftingManagerFireNet.getInstance().getRecipes().removeAll(recipes);
         }
 
         @Override
         public String describe() {
-            return "Removing "+recipes.size()+" Fire Net recipes";
+            return "Removing Fire Net recipe for "+input.getDisplayName();
         }
     }
 }

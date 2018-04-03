@@ -30,8 +30,7 @@ public class WaterNet {
     @ZenMethod
     public static void remove(IItemStack input)
     {
-        List<NetRecipe> recipes = CraftingManagerWaterNet.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
-        CraftTweaker.LATE_ACTIONS.add(new Remove(recipes));
+        CraftTweaker.LATE_ACTIONS.add(new Remove(input));
     }
 
     public static class Add implements IAction
@@ -55,20 +54,21 @@ public class WaterNet {
 
     public static class Remove implements IAction
     {
-        List<NetRecipe> recipes;
+        private IItemStack input;
 
-        public Remove(List<NetRecipe> recipes) {
-            this.recipes = recipes;
+        public Remove(IItemStack input) {
+            this.input = input;
         }
 
         @Override
         public void apply() {
+            List<NetRecipe> recipes = CraftingManagerWaterNet.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
             CraftingManagerWaterNet.getInstance().getRecipes().removeAll(recipes);
         }
 
         @Override
         public String describe() {
-            return "Removing "+recipes.size()+" Water Net recipes";
+            return "Removing Water Net recipe for "+input.getDisplayName();
         }
     }
 }
