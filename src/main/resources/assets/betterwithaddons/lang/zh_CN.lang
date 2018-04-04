@@ -75,8 +75,10 @@ tile.kera.name=介良铁
 tile.tatara.name=玉钢炉
 tile.cherrybox.soaking.name=樱桃木浸泡器
 tile.cherrybox.drying.name=樱桃木干燥器
+tile.nabe.name=锅
 tile.crop_rice.name=水稻种子
 tile.crop_rush.name=灯心草种子
+tile.crop_tea.name=茶种子
 tile.shoji.name=障子
 tile.fusuma.name=障子门
 tile.tatami.name=榻榻米垫
@@ -327,6 +329,7 @@ item.wakizashi.name=胁差
 item.tanto.name=日式短刀
 item.yumi.name=和弓
 item.ya.name=日式箭
+item.poisoned_ya.name=日式毒箭
 item.japanmat.rice.name=米
 item.japanmat.soaked_rice.name=泡好的米
 item.japanmat.rice_stalk.name=秸秆
@@ -338,7 +341,7 @@ item.japanmat.bamboo_slats.name=干燥竹条
 item.japanmat.soaked_mulberry.name=浸泡桑树皮
 item.japanmat.mulberry_paste.name=桑树纤维浆
 item.japanmat.mulberry_sheet.name=桑树纤维片
-item.japanmat.washi.name=和紙
+item.japanmat.washi.name=和纸
 item.japanmat.iron_scales.name=小块铁甲片
 item.japanmat.lamellar.name=和甲片
 item.japanmat.paper_lamellar.name=纸甲片
@@ -365,10 +368,55 @@ item.japanmat.boots_undecorated.name=未修饰的武士足沓
 item.japanmat.bark_sakura.name=樱花树皮
 item.japanmat.bark_mulberry.name=桑树树皮
 
-item.helmet_samurai.name=武士兜鍪[WIP]
-item.chest_samurai.name=武士胴甲[WIP]
-item.legs_samurai.name=武士臑当[WIP]
-item.boots_samurai.name=武士足沓[WIP]
+item.teacup.empty.name=茶杯
+item.teacup.poison.name=毒茶杯
+item.teacup.tea.name=%1$s%2$s%3$s %4$s茶杯
+item.teacup.ceremonial.name=礼仪绿茶
+
+tea.strength.0=较淡
+tea.strength.1=清淡
+tea.strength.2=适中
+tea.strength.3=浓厚
+tea.strength.4=高浓
+
+tea.sugar.0=，苦涩
+tea.sugar.1=
+tea.sugar.2=，甘甜
+tea.sugar.3=，香甜
+tea.sugar.4=，香甜
+
+tea.milk.0=，干燥
+tea.milk.1=
+tea.milk.2=，乳白
+tea.milk.3=，洁白
+tea.milk.4=，洁白
+
+tea.type.white=白茶
+tea.type.assam=阿萨姆茶
+tea.type.ceylon=锡兰红茶
+tea.type.gyokuro=玉露茶
+tea.type.sencha=煎茶
+tea.type.bancha=番茶
+tea.type.tencha=藤茶
+tea.type.matcha=抹茶
+tea.type.houjicha=福吉茶
+tea.type.nether=下界茶
+tea.type.end=末影茶
+
+item.tea_leaves.name=%s叶
+item.tea_soaked.name=浸渍%s叶
+item.tea_wilted.name=干燥%s叶
+item.tea_powder.name=%s
+
+item.helmet_paper.name=纸甲头盔
+item.chest_paper.name=纸甲胸甲
+item.legs_paper.name=纸甲护腿
+item.boots_paper.name=纸甲靴子
+
+item.helmet_samurai.name=武士兜鍪[未完成]
+item.chest_samurai.name=武士胴甲[未完成]
+item.legs_samurai.name=武士臑当[未完成]
+item.boots_samurai.name=武士足沓[未完成]
 
 entity.karate_zombie.name=空手道僵尸
 
