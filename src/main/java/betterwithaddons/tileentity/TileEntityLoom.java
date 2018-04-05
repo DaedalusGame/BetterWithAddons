@@ -4,6 +4,7 @@ import betterwithaddons.block.BlockLoom;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionCondensedOutputs;
 import betterwithmods.api.BWMAPI;
+import betterwithmods.api.tile.ICrankable;
 import betterwithmods.api.tile.IMechanicalPower;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,7 +13,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityLoom extends TileEntityBase implements IMechanicalPower, ITickable {
+public class TileEntityLoom extends TileEntityBase implements IMechanicalPower, ITickable, ICrankable {
     private int spinupProcess = 0;
     private int power = 0;
 
