@@ -1,16 +1,16 @@
 package betterwithaddons.crafting.recipes;
 
 import betterwithaddons.interaction.InteractionBWR;
-import betterwithaddons.interaction.ModInteractions;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.util.ItemUtil;
-import betterwithmods.common.registry.bulk.recipes.CauldronRecipe;
+import betterwithmods.common.registry.bulk.recipes.CookingPotRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -19,11 +19,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Random;
 
-public class QuartzCrystalRecipe extends CauldronRecipe {
-    public QuartzCrystalRecipe(ItemStack output, ItemStack secondaryOutput, Object... inputs) {
-        super(output, secondaryOutput, inputs);
+public class QuartzCrystalRecipe extends CookingPotRecipe {
+    public QuartzCrystalRecipe(@Nonnull List<Ingredient> inputs, @Nonnull List<ItemStack> outputs, int heat) {
+        super(inputs, outputs, heat);
     }
 
     @Override

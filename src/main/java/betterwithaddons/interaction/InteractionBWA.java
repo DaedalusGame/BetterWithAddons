@@ -19,12 +19,10 @@ import betterwithaddons.util.ItemUtil;
 import betterwithaddons.util.PulleyUtil;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
+import betterwithmods.common.BWRegistry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.PulleyStructureManager;
-import betterwithmods.common.registry.blockmeta.managers.KilnManager;
-import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.common.registry.bulk.manager.MillManager;
-import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
 import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.gameplay.AnvilRecipes;
@@ -32,8 +30,8 @@ import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.HCCooking;
 import betterwithmods.module.hardcore.needs.HCTools;
-import betterwithmods.module.hardcore.needs.hunger.HCHunger;
 import betterwithmods.util.DirUtils;
+import com.google.common.collect.Lists;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -46,6 +44,7 @@ import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -350,21 +349,21 @@ public class InteractionBWA extends Interaction {
 
         boolean hchunger = ModuleLoader.isFeatureEnabled(HCCooking.class);
 
-        KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.MELON.getMetadata(), new ItemStack(ModItems.pieMelon,hchunger ? 1 : 2));
-        KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.MEAT.getMetadata(), new ItemStack(ModItems.pieMeat,hchunger ? 1 : 2));
-        KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.MUSHROOM.getMetadata(), new ItemStack(ModItems.pieMushroom,hchunger ? 1 : 2));
-        KilnManager.INSTANCE.addRecipe(ModBlocks.unbaked, BlockModUnbaked.EnumType.AMANITA.getMetadata(), new ItemStack(ModItems.pieAmanita,hchunger ? 1 : 2));
+        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MELON),new ItemStack(ModItems.pieMelon,hchunger ? 1 : 2));
+        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MEAT),new ItemStack(ModItems.pieMeat,hchunger ? 1 : 2));
+        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MUSHROOM),new ItemStack(ModItems.pieMushroom,hchunger ? 1 : 2));
+        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.AMANITA),new ItemStack(ModItems.pieAmanita,hchunger ? 1 : 2));
 
         if(STONEBRICKS_NEED_SMELTING) {
             GameRegistry.addSmelting(Blocks.STONE, ModItems.material.getMaterial("stone_brick", 4), 0.1f);
         }
 
-        CauldronManager.getInstance().addRecipe(new ItemStack(BWMItems.FERTILIZER), ItemStack.EMPTY, new Object[]{new ItemStack(ModItems.rottenFood)});
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(new ItemStack(ModItems.rottenFood)),new ItemStack(BWMItems.FERTILIZER));
 
         BlockRopeSideways.addFastenableBlock(ModBlocks.scaffold);
         BlockRopeSideways.addFastenableBlock(ModBlocks.ropePost);
 
-        CauldronManager.getInstance().addRecipe(new AdobeRecipe());
+        BWRegistry.CAULDRON.addRecipe(new AdobeRecipe());
     }
 
     int countPlatforms(World world, HashSet<BlockPos> platforms)
@@ -452,7 +451,7 @@ public class InteractionBWA extends Interaction {
         ItemStack nuggetStack = nugget.copy();
         nuggetStack.setCount(nuggets);
 
-        StokedCrucibleManager.getInstance().addRecipe(ingotStack,nuggetStack,new Object[]{input});
+        BWRegistry.CRUCIBLE.addStokedRecipe(Ingredient.fromStacks(input),Lists.newArrayList(ingotStack,nuggetStack));
     }
 
     @Override
@@ -493,7 +492,7 @@ public class InteractionBWA extends Interaction {
             ItemStack saltCluster = new ItemStack(ModItems.salts,1,0);
             ItemStack saltDust = saltDusts.get(0).copy();
             saltDust.setCount(3);
-            MillManager.getInstance().addRecipe(new MillRecipe(0, saltDust, ItemStack.EMPTY, new Object[]{saltCluster}));
+            BWRegistry.MILLSTONE.addMillRecipe(Ingredient.fromStacks(saltCluster),saltDust);
         }
     }
 

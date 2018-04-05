@@ -100,11 +100,7 @@ public class RenewablesHandler {
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
                 BlockPos target = pos.add(x, 0, z);
-                IBlockState targetState = world.getBlockState(target);
-                Block block = targetState.getBlock();
-                int meta = targetState.getBlock().damageDropped(targetState);
-                if (BWMHeatRegistry.get(block, meta) != null)
-                    fireFactor += BWMHeatRegistry.get(block, meta).getHeat();
+                fireFactor += BWMHeatRegistry.getHeat(world, target);
             }
         }
 

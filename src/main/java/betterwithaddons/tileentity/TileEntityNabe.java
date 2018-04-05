@@ -59,7 +59,7 @@ public class TileEntityNabe extends TileEntityBase implements ITickable {
     }
 
     public int getFireIntensity() {
-        return BWMHeatRegistry.getHeat(world.getBlockState(pos.down()));
+        return BWMHeatRegistry.getHeat(world,pos.down());
     }
 
     @Override
@@ -145,7 +145,7 @@ public class TileEntityNabe extends TileEntityBase implements ITickable {
     }
 
     private void validateFireIntensity() {
-        fireIntensity = BWMHeatRegistry.getHeat(world.getBlockState(pos.down()));
+        fireIntensity = BWMHeatRegistry.getHeat(world,pos.down());
     }
 
     @Override

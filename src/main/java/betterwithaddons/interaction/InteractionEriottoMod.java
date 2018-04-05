@@ -14,10 +14,11 @@ import betterwithaddons.util.NabeResultPoison;
 import betterwithaddons.util.TeaType;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWOreDictionary;
+import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.registry.Wood;
-import betterwithmods.common.registry.bulk.manager.CauldronManager;
 import betterwithmods.module.hardcore.crafting.HCLumber;
+import betterwithmods.util.StackIngredient;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityZombie;
@@ -172,8 +173,8 @@ public class InteractionEriottoMod extends Interaction {
         OreDictionary.registerOre("ingotTamahagane", ModItems.materialJapan.getMaterial("tamahagane_finished"));
         OreDictionary.registerOre("ingotHochoTetsu", ModItems.materialJapan.getMaterial("hocho_tetsu_finished"));
 
-        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.rice), new Object[]{ModItems.materialJapan.getMaterial("soaked_rice")});
-        CauldronManager.getInstance().addRecipe(new ItemStack(ModItems.laxative), new Object[]{new ItemStack(ModItems.mulberry,3),new ItemStack(Items.SUGAR),BlockRawPastry.getStack(BlockRawPastry.EnumType.BREAD)});
+        BWRegistry.CAULDRON.addUnstokedRecipe(ModItems.materialJapan.getMaterial("soaked_rice"),new ItemStack(ModItems.rice));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(ModItems.mulberry,3)),Ingredient.fromItem(Items.SUGAR),new OreIngredient("foodFlour")),new ItemStack(ModItems.laxative,2));
 
         GameRegistry.addSmelting(ModItems.teaPowder, ModItems.teaPowder.getStack(TeaType.HOUJICHA), 0.1f);
         GameRegistry.addSmelting(new ItemStack(ModItems.preparedPuffer), new ItemStack(ModItems.preparedCookedPuffer), 0.35f);

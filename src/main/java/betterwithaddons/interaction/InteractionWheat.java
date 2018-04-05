@@ -7,8 +7,10 @@ import betterwithaddons.handler.WheatHandler;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.registry.bulk.manager.MillManager;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -105,12 +107,12 @@ public class InteractionWheat extends Interaction {
         }
 
         if (MILL_GRAIN) {
-            MillManager.getInstance().removeRecipe(new ItemStack(BWMBlocks.RAW_PASTRY, 1, BlockRawPastry.EnumType.BREAD.getMetadata()), ItemStack.EMPTY);
-            MillManager.getInstance().addRecipe(0, new ItemStack(BWMBlocks.RAW_PASTRY, 1, BlockRawPastry.EnumType.BREAD.getMetadata()), ItemStack.EMPTY, new Object[]{new ItemStack(Items.WHEAT_SEEDS)});
+            BWRegistry.MILLSTONE.remove(Lists.newArrayList(BlockRawPastry.getStack(BlockRawPastry.EnumType.BREAD)));
+            BWRegistry.MILLSTONE.addMillRecipe(new ItemStack(Items.WHEAT_SEEDS),BlockRawPastry.getStack(BlockRawPastry.EnumType.BREAD));
         }
 
         if (THRESH_WHEAT_MILL) {
-            MillManager.getInstance().addRecipe(0, new ItemStack(Items.WHEAT_SEEDS), ModItems.materialWheat.getMaterial("hay"), new Object[]{new ItemStack(Items.WHEAT)});
+            BWRegistry.MILLSTONE.addMillRecipe(new ItemStack(Items.WHEAT),Lists.newArrayList(new ItemStack(Items.WHEAT_SEEDS), ModItems.materialWheat.getMaterial("hay")));
         }
     }
 

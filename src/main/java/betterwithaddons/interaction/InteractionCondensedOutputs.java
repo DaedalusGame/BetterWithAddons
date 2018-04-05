@@ -8,11 +8,13 @@ import betterwithaddons.lib.Reference;
 import betterwithaddons.util.IngredientSized;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
+import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.HopperInteractions;
-import betterwithmods.common.registry.bulk.manager.CauldronManager;
+import betterwithmods.util.StackIngredient;
+import com.google.common.collect.Lists;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -98,7 +100,7 @@ public class InteractionCondensedOutputs extends Interaction {
             ModItems.materialBundle.setContainer(bundleStack);
         }
 
-        CauldronManager.getInstance().addRecipe(new ItemStack(BWMBlocks.AESTHETIC, 1, BlockAesthetic.EnumType.DUNG.getMeta()), new Object[]{new betterwithmods.common.registry.OreStack("dung", 9)});
+        BWRegistry.CAULDRON.addUnstokedRecipe(StackIngredient.fromOre(9,"dung"),new ItemStack(BWMBlocks.AESTHETIC, 1, BlockAesthetic.EnumType.DUNG.getMeta()));
 
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH)}, IngredientSized.fromOredict("fiberHemp", 9), false);
         CraftingManagerSpindle.getInstance().addRecipe(new ItemStack[]{new ItemStack(BWMBlocks.AESTHETIC, 1, BlockAesthetic.EnumType.ROPE.getMeta())}, IngredientSized.fromStacks(new ItemStack(BWMBlocks.ROPE, 9)), false);
@@ -210,8 +212,12 @@ public class InteractionCondensedOutputs extends Interaction {
         if (CAULDRON_COMPRESSES_SLIME) {
             ItemStack material8 = material.copy();
             material8.setCount(8);
-            CauldronManager.getInstance().addRecipe(output, new Object[]{material8, congealedStack.copy()});
+            BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(getIngredient(congealedStack),getIngredient(material8)),Lists.newArrayList(output));
         }
+    }
+
+    private StackIngredient getIngredient(ItemStack stack) {
+        return StackIngredient.fromStacks(stack);
     }
 
     private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material) {

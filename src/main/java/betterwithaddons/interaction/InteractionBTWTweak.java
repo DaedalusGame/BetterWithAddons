@@ -3,19 +3,20 @@ package betterwithaddons.interaction;
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
+import betterwithaddons.crafting.recipes.DoorSawRecipe;
 import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.SoapHandler;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.mechanical.BlockMechMachines;
 import betterwithmods.common.items.ItemMaterial;
-import betterwithmods.common.registry.blockmeta.managers.SawManager;
-import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
-import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
+import betterwithmods.module.gameplay.CrucibleRecipes;
 import betterwithmods.module.hardcore.world.HCBonemeal;
 import betterwithmods.module.tweaks.MineshaftGeneration;
+import com.google.common.collect.Lists;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -127,56 +128,53 @@ public class InteractionBTWTweak extends Interaction {
             MineshaftGeneration.rail = piece -> ModBlocks.rustyRail.getDefaultState();
         if(INFESTED_MINESHAFTS)
             MineshaftGeneration.supports = piece -> ModBlocks.termiteLog.getDefaultState();
-        StokedCrucibleManager.getInstance().addRecipe(new ItemStack(Items.IRON_NUGGET),new Object[]{new ItemStack(ModBlocks.rustyRail)});
-        SawManager.WOOD_SAW.addRecipe(ModBlocks.termiteLog,OreDictionary.WILDCARD_VALUE, ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST,2));
+        BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(Items.IRON_NUGGET),new ItemStack(ModBlocks.rustyRail,2));
+        BWRegistry.WOOD_SAW.addRecipe(new ItemStack(ModBlocks.termiteLog), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST,2));
 
         if(WOOL_RECYCLING && InteractionBWM.HARDCORE_SHEARING)
         {
             for (EnumDyeColor color: EnumDyeColor.values()) {
-                StokedCauldronManager.getInstance().addRecipe(new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()), ModItems.wool.getByColor(color,4), new Object[]{ new ItemStack(Blocks.WOOL,1,color.getMetadata()) }).setPriority(-1);
+                BWRegistry.CAULDRON.addStokedRecipe(new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()), ModItems.wool.getByColor(color,4), new ItemStack(Blocks.WOOL,1,color.getMetadata())).setPriority(-1);
             }
         }
 
         if(SAW_RECYCLING)
         {
-            SawManager.WOOD_SAW.addRecipe(Blocks.BOOKSHELF,0,new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.BOOK,3));
-            SawManager.WOOD_SAW.addRecipe(Blocks.CHEST,0,new ItemStack(BWMBlocks.WOOD_SIDING, 6, BlockPlanks.EnumType.OAK.getMetadata()));
-            SawManager.WOOD_SAW.addRecipe(Blocks.JUKEBOX,0,new ItemStack(BWMBlocks.WOOD_SIDING, 6, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.DIAMOND,1));
-            SawManager.WOOD_SAW.addRecipe(Blocks.LADDER,0,new ItemStack(Items.STICK,2));
-            SawManager.WOOD_SAW.addRecipe(Blocks.NOTEBLOCK,0,new ItemStack(BWMBlocks.WOOD_SIDING, 6, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.REDSTONE,1));
-            SawManager.WOOD_SAW.addRecipe(Blocks.TRAPDOOR,0,new ItemStack(BWMBlocks.WOOD_SIDING, 2, BlockPlanks.EnumType.OAK.getMetadata()));
-            SawManager.WOOD_SAW.addRecipe(BWMBlocks.WOODEN_AXLE,0,new ItemStack(BWMBlocks.WOOD_CORNER, 2, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(BWMBlocks.ROPE,1));
-            SawManager.WOOD_SAW.addRecipe(BWMBlocks.BELLOWS,0,new ItemStack(BWMBlocks.WOOD_SIDING, 2, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER_CUT,3));
-            SawManager.WOOD_SAW.addRecipe(BWMBlocks.WOODEN_GEARBOX,0,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH));
-            SawManager.WOOD_SAW.addRecipe(BWMBlocks.SINGLE_MACHINES, BlockMechMachines.EnumType.HOPPER.getMeta(),new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,1), new ItemStack(Blocks.WOODEN_PRESSURE_PLATE,1));
-            SawManager.WOOD_SAW.addRecipe(BWMBlocks.PLATFORM,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(BWMBlocks.WICKER,2));
-            SawManager.WOOD_SAW.addRecipe(BWMBlocks.SINGLE_MACHINES, BlockMechMachines.EnumType.PULLEY.getMeta(),new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.IRON_INGOT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH));
-            SawManager.WOOD_SAW.addRecipe(BWMBlocks.SAW,0,new ItemStack(BWMBlocks.WOOD_SIDING, 1, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), new ItemStack(Items.IRON_INGOT, 2));
-            SawManager.WOOD_SAW.addRecipe(BWMBlocks.PUMP,0,new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCREW), new ItemStack(BWMBlocks.GRATE, 1, BlockPlanks.EnumType.OAK.getMetadata()));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.BOOKSHELF), Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.BOOK,3)));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.CHEST),new ItemStack(BWMBlocks.WOOD_SIDING, 6, BlockPlanks.EnumType.OAK.getMetadata()));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.JUKEBOX),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 6, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.DIAMOND,1)));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.LADDER),new ItemStack(Items.STICK,2));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.NOTEBLOCK),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 6, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(Items.REDSTONE,1)));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.TRAPDOOR),new ItemStack(BWMBlocks.WOOD_SIDING, 2, BlockPlanks.EnumType.OAK.getMetadata()));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.WOODEN_AXLE),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_CORNER, 2, BlockPlanks.EnumType.OAK.getMetadata()),new ItemStack(BWMBlocks.ROPE,1)));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.BELLOWS),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 2, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER_CUT,3)));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.WOODEN_GEARBOX),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH)));
+            BWRegistry.WOOD_SAW.addRecipe(BlockMechMachines.getStack(BlockMechMachines.EnumType.HOPPER),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,1), new ItemStack(Blocks.WOODEN_PRESSURE_PLATE,1)));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.PLATFORM),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(BWMBlocks.WICKER,2)));
+            BWRegistry.WOOD_SAW.addRecipe(BlockMechMachines.getStack(BlockMechMachines.EnumType.PULLEY),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), new ItemStack(Items.IRON_INGOT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH)));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.SAW),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 1, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), new ItemStack(Items.IRON_INGOT, 2)));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.PUMP),Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 3, BlockPlanks.EnumType.OAK.getMetadata()), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCREW), new ItemStack(BWMBlocks.GRATE, 1, BlockPlanks.EnumType.OAK.getMetadata())));
 
             BlockPlanks.EnumType[] woodtypes = BlockPlanks.EnumType.values();
-            int len = woodtypes.length;
 
-            for(int i = 0; i < len; ++i) {
-                BlockPlanks.EnumType woodtype = woodtypes[i];
-
-                SawManager.WOOD_SAW.addRecipe(BWMBlocks.WOOD_BENCH,woodtype.getMetadata(),new ItemStack(BWMBlocks.WOOD_CORNER, 2, woodtype.getMetadata()));
-                SawManager.WOOD_SAW.addRecipe(BWMBlocks.WOOD_TABLE,woodtype.getMetadata(),new ItemStack(BWMBlocks.WOOD_CORNER, 3, woodtype.getMetadata()));
+            for (BlockPlanks.EnumType woodtype : woodtypes) {
+                BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.WOOD_BENCH, 1, woodtype.getMetadata()), new ItemStack(BWMBlocks.WOOD_CORNER, 2, woodtype.getMetadata()));
+                BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.WOOD_TABLE, 1, woodtype.getMetadata()), new ItemStack(BWMBlocks.WOOD_CORNER, 3, woodtype.getMetadata()));
             }
 
-            /*SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.OAK_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.OAK.getMetadata())),new ItemStack(Items.OAK_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.BIRCH_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.BIRCH.getMetadata())),new ItemStack(Items.BIRCH_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.SPRUCE_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.SPRUCE.getMetadata())),new ItemStack(Items.SPRUCE_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.JUNGLE_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.JUNGLE.getMetadata())),new ItemStack(Items.JUNGLE_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.ACACIA_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.ACACIA.getMetadata())),new ItemStack(Items.ACACIA_DOOR)));
-            SawManager.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.DARK_OAK_DOOR,Arrays.asList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.DARK_OAK.getMetadata())),new ItemStack(Items.DARK_OAK_DOOR)));*/
+            BWRegistry.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.OAK_DOOR,Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.OAK.getMetadata())),new ItemStack(Items.OAK_DOOR)));
+            BWRegistry.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.BIRCH_DOOR,Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.BIRCH.getMetadata())),new ItemStack(Items.BIRCH_DOOR)));
+            BWRegistry.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.SPRUCE_DOOR,Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.SPRUCE.getMetadata())),new ItemStack(Items.SPRUCE_DOOR)));
+            BWRegistry.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.JUNGLE_DOOR,Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.JUNGLE.getMetadata())),new ItemStack(Items.JUNGLE_DOOR)));
+            BWRegistry.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.ACACIA_DOOR,Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.ACACIA.getMetadata())),new ItemStack(Items.ACACIA_DOOR)));
+            BWRegistry.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.DARK_OAK_DOOR,Lists.newArrayList(new ItemStack(BWMBlocks.WOOD_SIDING, 4, BlockPlanks.EnumType.DARK_OAK.getMetadata())),new ItemStack(Items.DARK_OAK_DOOR)));
 
-            SawManager.WOOD_SAW.addRecipe(Blocks.OAK_FENCE_GATE,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()));
-            SawManager.WOOD_SAW.addRecipe(Blocks.BIRCH_FENCE_GATE,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.BIRCH.getMetadata()));
-            SawManager.WOOD_SAW.addRecipe(Blocks.SPRUCE_FENCE_GATE,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.SPRUCE.getMetadata()));
-            SawManager.WOOD_SAW.addRecipe(Blocks.JUNGLE_FENCE_GATE,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.JUNGLE.getMetadata()));
-            SawManager.WOOD_SAW.addRecipe(Blocks.ACACIA_FENCE_GATE,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.ACACIA.getMetadata()));
-            SawManager.WOOD_SAW.addRecipe(Blocks.DARK_OAK_FENCE_GATE,0,new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.OAK_FENCE_GATE),new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.OAK.getMetadata()));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.BIRCH_FENCE_GATE),new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.BIRCH.getMetadata()));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.SPRUCE_FENCE_GATE),new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.SPRUCE.getMetadata()));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.JUNGLE_FENCE_GATE),new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.JUNGLE.getMetadata()));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.ACACIA_FENCE_GATE),new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.ACACIA.getMetadata()));
+            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.DARK_OAK_FENCE_GATE),new ItemStack(BWMBlocks.WOOD_MOULDING, 3, BlockPlanks.EnumType.DARK_OAK.getMetadata()));
         }
     }
 

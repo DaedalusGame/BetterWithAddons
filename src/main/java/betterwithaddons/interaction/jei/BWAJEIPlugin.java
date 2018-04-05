@@ -44,7 +44,6 @@ public class BWAJEIPlugin extends BlankModPlugin {
                 new SoakingBoxRecipeCategory(guiHelper),
                 new DryingBoxRecipeCategory(guiHelper),
                 new SpindleRecipeCategory(guiHelper),
-                new CrateRecipeCategory(guiHelper),
                 new PackingRecipeCategory(guiHelper),
                 new InfuserRecipeCategory(guiHelper),
                 new TransmutationRecipeCategory(guiHelper)
@@ -78,7 +77,6 @@ public class BWAJEIPlugin extends BlankModPlugin {
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 1), DryingBoxRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.nettedScreen), WaterNetRecipeCategory.UID, SandNetRecipeCategory.UID, FireNetRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.spindle), SpindleRecipeCategory.UID);
-        reg.addRecipeCatalyst(new ItemStack(ModBlocks.box), CrateRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(Blocks.PISTON), PackingRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), InfuserRecipeCategory.UID);
         reg.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), TransmutationRecipeCategory.UID);

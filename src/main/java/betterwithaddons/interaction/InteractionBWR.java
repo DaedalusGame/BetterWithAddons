@@ -1,32 +1,31 @@
 package betterwithaddons.interaction;
 
-import betterwithaddons.crafting.recipes.LapisRinsingRecipe;
 import betterwithaddons.crafting.recipes.QuartzCrystalRecipe;
 import betterwithaddons.handler.*;
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
+import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.BlockUrn;
 import betterwithmods.common.items.ItemMaterial;
-import betterwithmods.common.registry.OreStack;
-import betterwithmods.common.registry.bulk.manager.CauldronManager;
-import betterwithmods.common.registry.bulk.manager.MillManager;
-import betterwithmods.common.registry.bulk.manager.StokedCauldronManager;
-import betterwithmods.common.registry.bulk.manager.StokedCrucibleManager;
-import betterwithmods.common.registry.bulk.recipes.MillRecipe;
-import betterwithmods.common.registry.bulk.recipes.StokedCauldronRecipe;
-import betterwithmods.common.registry.bulk.recipes.StokedCrucibleRecipe;
+import betterwithmods.common.registry.heat.BWMHeatRegistry;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.HCTools;
+import betterwithmods.util.StackIngredient;
+import com.google.common.collect.Lists;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.OreIngredient;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -171,72 +170,56 @@ public class InteractionBWR extends Interaction {
 
         //Tanning Leather with dung blocks
         //TODO: This is hacky.
-        CauldronManager.getInstance().addRecipe(
-                ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER),
-                ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG,8),new Object[]{
-                        ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER),
-                        new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.DUNG.getMeta())});
-        CauldronManager.getInstance().addRecipe(
-                ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER_CUT,2),
-                ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG,8),new Object[]{
-                        ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER_CUT,2),
-                        new ItemStack(BWMBlocks.AESTHETIC,1, BlockAesthetic.EnumType.DUNG.getMeta())});
+        ItemStack dungBlock = new ItemStack(BWMBlocks.AESTHETIC, 1, BlockAesthetic.EnumType.DUNG.getMeta());
+        ItemStack splitDung = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG, 8);
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER)), Ingredient.fromStacks(dungBlock)),Lists.newArrayList(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER),splitDung));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCOURED_LEATHER_CUT,2)), Ingredient.fromStacks(dungBlock)),Lists.newArrayList(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER_CUT,2),splitDung));
 
         //Redstone synthesis
         ItemStack smallRedstone = new ItemStack(Items.REDSTONE, REDSTONE_PER_SYNTHESIS);
         ItemStack bigRedstone = new ItemStack(Items.REDSTONE, REDSTONE_PER_SYNTHESIS * 9);
         if(REDSTONE_SYNTHESIS) {
-            StokedCrucibleRecipe smallRecipe = new StokedCrucibleRecipe(smallRedstone, ItemStack.EMPTY, new Object[]{new OreStack("nuggetGold", 1), new OreStack("ingotConcentratedHellfire", 1)});
-            StokedCrucibleRecipe mediumRecipe = new StokedCrucibleRecipe(smallRedstone, new ItemStack(Items.GOLD_NUGGET,8), new Object[]{new OreStack("ingotGold", 1), new OreStack("ingotConcentratedHellfire", 1)});
-            StokedCrucibleRecipe bigRecipe = new StokedCrucibleRecipe(bigRedstone, ItemStack.EMPTY, new Object[]{new OreStack("ingotGold", 1), new OreStack("ingotConcentratedHellfire", 9)});
-            smallRecipe.setPriority(108);
-            mediumRecipe.setPriority(109);
-            bigRecipe.setPriority(110);
-            StokedCrucibleManager.getInstance().addRecipe(smallRecipe);
-            StokedCrucibleManager.getInstance().addRecipe(mediumRecipe);
-            StokedCrucibleManager.getInstance().addRecipe(bigRecipe);
+            BWRegistry.CRUCIBLE.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromOre(1,"nuggetGold"),StackIngredient.fromOre(1,"ingotConcentratedHellfire")),Lists.newArrayList(smallRedstone)).setPriority(108);
+            BWRegistry.CRUCIBLE.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromOre(1,"ingotGold"),StackIngredient.fromOre(1,"ingotConcentratedHellfire")),Lists.newArrayList(smallRedstone)).setPriority(109);
+            BWRegistry.CRUCIBLE.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromOre(1,"ingotGold"),StackIngredient.fromOre(9,"ingotConcentratedHellfire")),Lists.newArrayList(bigRedstone)).setPriority(110);
         }
 
         if(REDSTONE_SYNTHESIS_EARLY) {
-            MillManager.getInstance().addRecipe(2, smallRedstone,new Object[]{new OreStack("nuggetGold", 3), new OreStack("ingotConcentratedHellfire", 1)});
-            MillManager.getInstance().addRecipe(2, bigRedstone,new Object[]{new OreStack("ingotGold", 3), new OreStack("ingotConcentratedHellfire", 9)});
+            BWRegistry.MILLSTONE.addMillRecipe(Lists.newArrayList(StackIngredient.fromOre(3,"nuggetGold"),StackIngredient.fromOre(1,"ingotConcentratedHellfire")),Lists.newArrayList(smallRedstone), SoundEvents.ENTITY_GHAST_SCREAM);
+            BWRegistry.MILLSTONE.addMillRecipe(Lists.newArrayList(StackIngredient.fromOre(3,"ingotGold"),StackIngredient.fromOre(9,"ingotConcentratedHellfire")),Lists.newArrayList(bigRedstone), SoundEvents.ENTITY_GHAST_SCREAM);
         }
 
         ItemStack hellfireDust = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HELLFIRE_DUST);
         if(HELLFIRE_EARLY)
         {
-            MillRecipe withSawDust = new MillRecipe(2, hellfireDust.copy(),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOUL_DUST),new Object[]{new OreStack("dustNetherrack", 1),new OreStack("dustWood", 1)});
-            MillRecipe withoutSawDust = new MillRecipe(2, hellfireDust.copy(),ItemStack.EMPTY,new Object[]{new OreStack("dustNetherrack", 1)});
-            withSawDust.setPriority(11);
-            withoutSawDust.setPriority(10);
-            MillManager.getInstance().addRecipe(withSawDust);
-            MillManager.getInstance().addRecipe(withoutSawDust);
+            BWRegistry.MILLSTONE.addMillRecipe(Lists.newArrayList(new OreIngredient("dustNetherrack"),new OreIngredient("dustWood")), Lists.newArrayList(hellfireDust,ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOUL_DUST)), SoundEvents.ENTITY_GHAST_SCREAM).setPriority(11);
+            BWRegistry.MILLSTONE.addMillRecipe(Lists.newArrayList(new OreIngredient("dustNetherrack")), Lists.newArrayList(hellfireDust), SoundEvents.ENTITY_GHAST_SCREAM).setPriority(10);
         }
 
         if(BOILING_BUSHES)
-            StokedCauldronManager.getInstance().addRecipe(new ItemStack(Blocks.DEADBUSH),new Object[]{new ItemStack(Blocks.SAPLING)});
+            BWRegistry.CAULDRON.addStokedRecipe(new ItemStack(Blocks.SAPLING),new ItemStack(Blocks.DEADBUSH));
 
         if(WEAVING_WEBS)
-            CauldronManager.getInstance().addRecipe(new ItemStack(Blocks.WEB),new Object[]{new OreStack("string",3),new OreStack("slimeball",1)});
+            BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromOre(3,"string"),Ingredient.fromItem(Items.SLIME_BALL)),new ItemStack(Blocks.WEB));
 
         if(DIAMOND_RECOVERY) {
             if(ModuleLoader.isFeatureEnabled(HCDiamond.class))
-                addDiamondRecovery(new OreStack("ingotDiamond",1),1);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_SWORD),2);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_PICKAXE),3);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_AXE),axeAmt);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_SHOVEL),1);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_HOE),2);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_HELMET),5);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_CHESTPLATE),8);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_LEGGINGS),7);
-            addDiamondRecovery(new ItemStack(Items.DIAMOND_BOOTS),4);
-            addDiamondRecovery(new ItemStack(ModItems.diamondSpade),2);
-            addDiamondRecovery(new ItemStack(ModItems.diamondMatchPick),3);
-            addDiamondRecovery(new ItemStack(ModItems.diamondMachete),4);
-            addDiamondRecovery(new ItemStack(ModItems.diamondKukri),axeAmt+2);
-            addDiamondRecovery(new ItemStack(ModItems.diamondCarpenterSaw),axeAmt+2);
-            addDiamondRecovery(new ItemStack(ModItems.diamondMasonPick),4);
+                addDiamondRecovery(new OreIngredient("ingotDiamond"),1);
+            addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_SWORD),2);
+            addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_PICKAXE),3);
+            addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_AXE),axeAmt);
+            addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_SHOVEL),1);
+            addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_HOE),2);
+            addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_HELMET),5);
+            addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_CHESTPLATE),8);
+            addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_LEGGINGS),7);
+            addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_BOOTS),4);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondSpade),2);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondMatchPick),3);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondMachete),4);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondKukri),axeAmt+2);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondCarpenterSaw),axeAmt+2);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondMasonPick),4);
         }
 
         if(LAPIS_FROM_WOOL)
@@ -270,35 +253,25 @@ public class InteractionBWR extends Interaction {
 
         if(NETHERRACK_SYNTHESIS)
         {
-            ItemStack soulUrn = new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumType.FULL.getMeta());
-            CauldronManager.getInstance().addRecipe(new ItemStack(Blocks.NETHERRACK,8),new Object[]{new ItemStack(Blocks.COBBLESTONE,8),new ItemStack(Items.NETHER_WART,8),soulUrn});
-            CauldronManager.getInstance().addRecipe(
-                    new ItemStack(Blocks.NETHERRACK),
-                    ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST),
-                    new Object[]{
-                            new ItemStack(Blocks.COBBLESTONE),
-                            new ItemStack(Items.NETHER_WART),
-                            ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOUL_DUST)
-                    });
+            ItemStack soulUrn = BlockUrn.getStack(BlockUrn.EnumType.FULL,1);
+            BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromOre(8,"cobblestone"),StackIngredient.fromOre(8,"cropNetherWart"),Ingredient.fromStacks(soulUrn)),new ItemStack(Blocks.NETHERRACK,8));
+            BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(new OreIngredient("cobblestone"),new OreIngredient("cropNetherWart"),Ingredient.fromStacks(soulUrn)),Lists.newArrayList(new ItemStack(Blocks.NETHERRACK),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST)));
         }
 
         if(DIAMOND_SYNTHESIS)
-            StokedCrucibleManager.getInstance().addRecipe(new ItemStack(Items.DIAMOND), hellfireDust.copy(),new Object[]{new ItemStack(Items.GHAST_TEAR),new ItemStack(Items.DYE, 1, EnumDyeColor.CYAN.getDyeDamage()),new OreStack("dustNetherrack", 1)});
+            BWRegistry.CRUCIBLE.addStokedRecipe(Lists.newArrayList(Ingredient.fromItem(Items.GHAST_TEAR),Ingredient.fromStacks(new ItemStack(Items.DYE, 1, EnumDyeColor.CYAN.getDyeDamage())),new OreIngredient("dustNetherrack")),Lists.newArrayList(new ItemStack(Items.DIAMOND), hellfireDust.copy()));
 
-        if(QUARTZ_GROWING) {
-            CauldronManager.getInstance().addRecipe(new QuartzCrystalRecipe(new ItemStack(Items.QUARTZ), ItemStack.EMPTY, new Object[]{new OreStack("pileSand",1)}));
-        }
+        if(QUARTZ_GROWING)
+            BWRegistry.CAULDRON.addRecipe(new QuartzCrystalRecipe(Lists.newArrayList(new OreIngredient("pileSand")), Lists.newArrayList(new ItemStack(Items.QUARTZ)), BWMHeatRegistry.UNSTOKED_HEAT));
     }
 
-    private void addDiamondRecovery(Object input, int output)
+    private void addDiamondRecovery(Ingredient input, int output)
     {
-        ItemStack ironReturn = ItemStack.EMPTY;
+        ArrayList<ItemStack> outputs = Lists.newArrayList(new ItemStack(Items.DIAMOND,output));
         if(ModuleLoader.isFeatureEnabled(HCDiamond.class))
-            ironReturn = new ItemStack(Items.IRON_INGOT,output);
+            outputs.add(new ItemStack(Items.IRON_INGOT,output));
 
-        StokedCauldronRecipe diamondRecipe = new StokedCauldronRecipe(new ItemStack(Items.DIAMOND,output),ironReturn,new Object[]{input,new OreStack("ingotConcentratedHellfire", output),new OreStack("dustPotash", output*8)});
-        diamondRecipe.setPriority(110);
-        StokedCauldronManager.getInstance().addRecipe(diamondRecipe);
+        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(input,StackIngredient.fromOre(output,"ingotConcentratedHellfire"),StackIngredient.fromOre(output*8,"dustPotash")),outputs).setPriority(110);
     }
 
     private void addGoldGrinding(ItemStack input, int output)
@@ -306,21 +279,23 @@ public class InteractionBWR extends Interaction {
         int ingots = (output * GOLD_PER_INGOT) / 9;
         int nuggets = (output * GOLD_PER_INGOT) % 9;
 
-        ItemStack output1 = new ItemStack(Items.GOLD_INGOT,ingots);
-        ItemStack output2 = new ItemStack(Items.GOLD_NUGGET,nuggets);
-        if(output1.isEmpty()) {
-            output1 = output2;
-            output2 = ItemStack.EMPTY;
-        }
-        MillManager.getInstance().addRecipe(0,output1,output2,new Object[]{input});
+        ArrayList<ItemStack> outputs = new ArrayList<>();
+        if(ingots > 0)
+            outputs.add(new ItemStack(Items.GOLD_INGOT,ingots));
+        if(nuggets > 0)
+            outputs.add(new ItemStack(Items.GOLD_NUGGET,nuggets));
+        BWRegistry.MILLSTONE.addMillRecipe(input,outputs);
     }
 
-    private void addLapisRinsing(EnumDyeColor input, int quantity, EnumDyeColor... outputs)
+    private void addLapisRinsing(EnumDyeColor inputColor, int quantity, EnumDyeColor... outputColors)
     {
-        ItemStack wool1 = new ItemStack(Blocks.WOOL,(quantity * 8) / outputs.length,outputs[0].getMetadata());
-        ItemStack wool2 = outputs.length == 1 ? ItemStack.EMPTY : new ItemStack(Blocks.WOOL,(quantity * 8) / outputs.length,outputs[1].getMetadata());
+        Ingredient inputWool = StackIngredient.fromStacks(new ItemStack(Blocks.WOOL,quantity * 8,inputColor.getMetadata()));
+        ArrayList<ItemStack> outputStacks = new ArrayList<>();
+        for (EnumDyeColor color : outputColors)
+            outputStacks.add(new ItemStack(Blocks.WOOL,(quantity * 8) / outputColors.length,color.getMetadata()));
 
-        LapisRinsingRecipe recipe = new LapisRinsingRecipe(wool1,wool2,new Object[]{new ItemStack(Blocks.WOOL,quantity * 8,input.getMetadata()),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOAP,quantity * 2)});
-        StokedCauldronManager.getInstance().addRecipe(recipe);
+        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(inputWool), new ArrayList<>(outputStacks)).setPriority(10);
+        outputStacks.add(new ItemStack(Items.DYE,1,EnumDyeColor.BLUE.getDyeDamage()));
+        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(inputWool,Ingredient.fromItem(Items.CLAY_BALL)),outputStacks).setPriority(11);
     }
 }
