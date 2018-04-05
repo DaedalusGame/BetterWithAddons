@@ -107,6 +107,9 @@ public class InteractionBWA extends Interaction {
     public static boolean ROTTEN_FOOD_COMBINING = true;
     public static int LEGENDARIUM_SHARD_COST = 35;
     public static double LEGENDARIUM_REPAIR_COST_MULTIPLIER = 0.5;
+    public static boolean HORSES_IGNORE_GOLD = true;
+    public static boolean HORSES_SET_HOME = true;
+    public static boolean HORSES_BREED_HAYBALES = true;
 
     @Override
     protected String getName() {
@@ -137,6 +140,10 @@ public class InteractionBWA extends Interaction {
             RADIUS = loadPropInt("LureTreeRadius", "Radius in which the tree can spawn mobs.", RADIUS);
             MAXCHARGE = loadPropInt("LureTreeTime", "Time it takes for the tree to do one spawning cycle.", MAXCHARGE);
             MAXFOOD = loadPropInt("LureTreeMaxFood", "How much food the tree can hold.", MAXFOOD);
+
+            HORSES_IGNORE_GOLD = loadPropBool("HorsesIgnoreGold", "Horses can't be fed golden food. It gives them a tummy ache.", HORSES_IGNORE_GOLD);
+            HORSES_BREED_HAYBALES = loadPropBool("HorsesBreedHaybales", "Horeses can breed from eating haybales in world.", HORSES_BREED_HAYBALES);
+            HORSES_SET_HOME = loadPropBool("HorsesSetHome", "Horses set their home location if they're in a safe spot when dismounting.", HORSES_SET_HOME);
 
             AQUEDUCT_MAX_LENGTH = loadPropInt("MaxAqueductLength", "How long aqueducts can be.", AQUEDUCT_MAX_LENGTH);
 
@@ -177,6 +184,7 @@ public class InteractionBWA extends Interaction {
 
         MinecraftForge.EVENT_BUS.register(new AssortedHandler());
         MinecraftForge.EVENT_BUS.register(new ToolShardRepairHandler());
+        MinecraftForge.EVENT_BUS.register(new HorseFoodHandler());
         //MinecraftForge.EVENT_BUS.register(new TerratorialHandler()); //TODO: Make this do something
         MinecraftForge.EVENT_BUS.register(new ElytraUpdriftHandler());
         MinecraftForge.EVENT_BUS.register(new HarvestHandler());
