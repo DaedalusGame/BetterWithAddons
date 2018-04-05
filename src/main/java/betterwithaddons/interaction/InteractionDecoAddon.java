@@ -2,6 +2,7 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.BlockWhiteBrick;
+import betterwithaddons.block.BlockWhiteBrick.EnumType;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.item.ModItems;
@@ -11,6 +12,7 @@ import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWRegistry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.module.gameplay.AnvilRecipes;
+import betterwithmods.module.tweaks.MossGeneration;
 import betterwithmods.util.StackIngredient;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
@@ -110,13 +112,15 @@ public class InteractionDecoAddon extends Interaction {
             AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "wrought_bars"), new ItemStack(ModBlocks.wroughtBars, 10), "b b ", "bbbb", "b b ", "b b ", 'b', "ingotIron");
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "chandelier"), new ItemStack(ModBlocks.chandelier), " ss ", " bb ", "tbbt", "tbbt", 's', "stone", 'b', "nuggetGold", 't', "blockCandle");
 
-        ItemStack whiteBrick = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata());
-        ItemStack whiteBrick_mossy = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.MOSSY.getMetadata());
-        ItemStack whiteBrick_cracked = new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.CRACKED.getMetadata());
+        ItemStack whiteBrick = new ItemStack(ModBlocks.whiteBrick, 1, EnumType.DEFAULT.getMetadata());
+        ItemStack whiteBrick_mossy = new ItemStack(ModBlocks.whiteBrick, 1, EnumType.MOSSY.getMetadata());
+        ItemStack whiteBrick_cracked = new ItemStack(ModBlocks.whiteBrick, 1, EnumType.CRACKED.getMetadata());
+
+        MossGeneration.addBlockConversion(ModBlocks.whiteBrick, ModBlocks.whiteBrick.getDefaultState().withProperty(BlockWhiteBrick.VARIANT, EnumType.MOSSY));
 
         if (CHISEL_BRICKS_IN_ANVIL) {
             AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "stone_brick_chiseled"), new ItemStack(Blocks.STONEBRICK, 3, BlockStoneBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.DEFAULT.getMetadata()));
-            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "white_brick_chiseled"), new ItemStack(ModBlocks.whiteBrick, 3, BlockWhiteBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(ModBlocks.whiteBrick, 1, BlockWhiteBrick.EnumType.DEFAULT.getMetadata()));
+            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "white_brick_chiseled"), new ItemStack(ModBlocks.whiteBrick, 3, EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(ModBlocks.whiteBrick, 1, EnumType.DEFAULT.getMetadata()));
         }
         FurnaceRecipes.instance().addSmeltingRecipe(whiteBrick, whiteBrick_cracked, 0.1f);
 

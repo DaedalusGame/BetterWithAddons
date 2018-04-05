@@ -15,6 +15,7 @@ public class DoorSawRecipe extends SawRecipe {
 
     public DoorSawRecipe(BlockDoor door, List<ItemStack> outputs, ItemStack doorStack) {
         super(new MappedBlockIngredient((world, pos, state) -> state.getBlock() == door, doorStack), outputs);
+        this.door = door;
     }
 
     @Override
@@ -26,11 +27,11 @@ public class DoorSawRecipe extends SawRecipe {
 
         if (state.getValue(BlockDoor.HALF) == BlockDoor.EnumDoorHalf.UPPER && world.getBlockState(lower).getBlock() == door) {
             success = world.setBlockToAir(lower);
-            success &= world.setBlockToAir(pos);
+            world.setBlockToAir(pos);
         }
         else if (state.getValue(BlockDoor.HALF) == BlockDoor.EnumDoorHalf.LOWER && world.getBlockState(upper).getBlock() == door) {
             success = world.setBlockToAir(pos);
-            success &= world.setBlockToAir(upper);
+            world.setBlockToAir(upper);
         }
         else
             success = false;

@@ -90,7 +90,7 @@ public class BlockModSapling extends BlockBush implements IGrowable, IPlantable 
 
     public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
-        WorldGenerator worldgenerator = isBig ? new WorldGenBigTrees(true,log,leaves,this) : new WorldGenTrees(true,3,log,leaves,false);
+        WorldGenerator worldgenerator = isBig ? new WorldGenBigTrees(true,log,leaves,this) : new WorldGenTrees(true,5,log,leaves,false);
         int i = 0;
         int j = 0;
 

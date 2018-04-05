@@ -179,9 +179,9 @@ public class InteractionBWR extends Interaction {
         ItemStack smallRedstone = new ItemStack(Items.REDSTONE, REDSTONE_PER_SYNTHESIS);
         ItemStack bigRedstone = new ItemStack(Items.REDSTONE, REDSTONE_PER_SYNTHESIS * 9);
         if(REDSTONE_SYNTHESIS) {
-            BWRegistry.CRUCIBLE.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromOre(1,"nuggetGold"),StackIngredient.fromOre(1,"ingotConcentratedHellfire")),Lists.newArrayList(smallRedstone)).setPriority(108);
-            BWRegistry.CRUCIBLE.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromOre(1,"ingotGold"),StackIngredient.fromOre(1,"ingotConcentratedHellfire")),Lists.newArrayList(smallRedstone)).setPriority(109);
-            BWRegistry.CRUCIBLE.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromOre(1,"ingotGold"),StackIngredient.fromOre(9,"ingotConcentratedHellfire")),Lists.newArrayList(bigRedstone)).setPriority(110);
+            BWRegistry.CRUCIBLE.addStokedRecipe(Lists.newArrayList(StackIngredient.fromOre(1,"nuggetGold"),StackIngredient.fromOre(1,"ingotConcentratedHellfire")),Lists.newArrayList(smallRedstone)).setPriority(108);
+            BWRegistry.CRUCIBLE.addStokedRecipe(Lists.newArrayList(StackIngredient.fromOre(1,"ingotGold"),StackIngredient.fromOre(1,"ingotConcentratedHellfire")),Lists.newArrayList(smallRedstone)).setPriority(109);
+            BWRegistry.CRUCIBLE.addStokedRecipe(Lists.newArrayList(StackIngredient.fromOre(1,"ingotGold"),StackIngredient.fromOre(9,"ingotConcentratedHellfire")),Lists.newArrayList(bigRedstone)).setPriority(110);
         }
 
         if(REDSTONE_SYNTHESIS_EARLY) {

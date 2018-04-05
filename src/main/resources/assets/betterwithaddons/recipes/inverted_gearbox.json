@@ -11,12 +11,10 @@
   "type": "forge:ore_shaped",
   "key": {
     "S": {
-	  "type": "forge:ore_dict",
-	  "ore": "sidingWood"
+      "item": "#SIDING_WOOD"
     },
 	"M": {
-	  "type": "forge:ore_dict",
-	  "ore": "mouldingWood"
+      "item": "#MOULDING_WOOD"
 	},
 	"G": {
 	  "item": "betterwithmods:wooden_gearbox",

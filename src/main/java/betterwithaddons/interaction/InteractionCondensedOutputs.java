@@ -1,5 +1,6 @@
 package betterwithaddons.interaction;
 
+import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.manager.CraftingManagerSpindle;
 import betterwithaddons.crafting.recipes.HopperCratingRecipe;
@@ -21,6 +22,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -118,7 +120,7 @@ public class InteractionCondensedOutputs extends Interaction {
         bagStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH, 1);
         crateStack = new ItemStack(Blocks.PLANKS, 1);
         congealedStack = new ItemStack(Items.SLIME_BALL, 1);
-        boltStack = new ItemStack(BWMBlocks.WOOD_MOULDING, 1);
+        boltStack = new ItemStack(ModBlocks.spindle, 1);
         bundleStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_FIBERS, 1);
 
         addBaggingRecipe(registry, "seed", new ItemStack(Items.WHEAT_SEEDS));
@@ -197,9 +199,7 @@ public class InteractionCondensedOutputs extends Interaction {
         addUncondensingRecipe(registry, id, output, material);
 
         if (HOPPER_COMPRESSES_CRATES) {
-            ItemStack material8 = material.copy();
-            material8.setCount(8);
-            HopperInteractions.addHopperRecipe(new HopperCratingRecipe(material8, output));
+            HopperInteractions.addHopperRecipe(new HopperCratingRecipe(Ingredient.fromStacks(material), output));
         }
     }
 
