@@ -185,6 +185,10 @@ public class InteractionBWM extends Interaction {
         //Temporary until we PR soulsand piles
         HCPiles.registerPile(Blocks.SOUL_SAND,new ItemStack(ModItems.soulSandPile,3));
 
+        OreDictionary.getOres("cookedCarrot").clear();
+        OreDictionary.registerOre("cookedCarrot", new ItemStack(ModItems.cookedCarrot));
+        OreDictionary.registerOre("cookedPotato", new ItemStack(ModItems.cookedPotato));
+
         OreDictionary.registerOre("listAllExplosives", new ItemStack(Blocks.TNT));
         OreDictionary.registerOre("listAllExplosives", new ItemStack(Items.GUNPOWDER));
         OreDictionary.registerOre("listAllExplosives", new ItemStack(BWMItems.DYNAMITE));

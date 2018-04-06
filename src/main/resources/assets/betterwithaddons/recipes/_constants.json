@@ -13,8 +13,12 @@
         "ore": "plankWood"
       },
       {
-        "type": "forge:ore_dict",
-        "ore": "sidingWood"
+        "type": "betterwithmods:minitype",
+        "baseIngredient": {
+          "ore": "plankWood",
+          "type": "forge:ore_dict"
+        },
+        "minitype": "siding"
       }
     ]
   },
@@ -74,6 +78,63 @@
       {
 		"type": "forge:ore_dict",
 		"ore": "ingotDiamond"
+      }
+    ]
+  },
+  {
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "betterwithmods"
+      }
+    ],
+    "name": "SIDING_WOOD",
+    "ingredient": [
+      {
+        "type": "betterwithmods:minitype",
+        "baseIngredient": {
+          "ore": "plankWood",
+          "type": "forge:ore_dict"
+        },
+        "minitype": "siding"
+      }
+    ]
+  },
+  {
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "betterwithmods"
+      }
+    ],
+    "name": "MOULDING_WOOD",
+    "ingredient": [
+      {
+        "type": "betterwithmods:minitype",
+        "baseIngredient": {
+          "ore": "plankWood",
+          "type": "forge:ore_dict"
+        },
+        "minitype": "moulding"
+      }
+    ]
+  },
+  {
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "betterwithmods"
+      }
+    ],
+    "name": "CORNER_WOOD",
+    "ingredient": [
+      {
+        "type": "betterwithmods:minitype",
+        "baseIngredient": {
+          "ore": "plankWood",
+          "type": "forge:ore_dict"
+        },
+        "minitype": "corner"
       }
     ]
   }

@@ -30,6 +30,7 @@ import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.HCCooking;
 import betterwithmods.module.hardcore.needs.HCTools;
+import betterwithmods.module.tweaks.EasyBreeding;
 import betterwithmods.util.DirUtils;
 import com.google.common.collect.Lists;
 import net.minecraft.block.BlockCauldron;
@@ -37,6 +38,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.passive.AbstractHorse;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -109,7 +112,9 @@ public class InteractionBWA extends Interaction {
     public static double LEGENDARIUM_REPAIR_COST_MULTIPLIER = 0.5;
     public static boolean HORSES_IGNORE_GOLD = true;
     public static boolean HORSES_SET_HOME = true;
-    public static boolean HORSES_BREED_HAYBALES = true;
+    public static boolean HORSES_BREED_HAYBALE_PLACED = true;
+    public static boolean HORSES_BREED_HAYBALES = false;
+
 
     @Override
     protected String getName() {
@@ -134,6 +139,8 @@ public class InteractionBWA extends Interaction {
         FRUIT_ROT_TIME = loadPropInt("RottenFruitTime", "How long fruit takes to rot. (In ticks)", (int) FRUIT_ROT_TIME);
         MISC_ROT_TIME = loadPropInt("RottenMiscTime", "How long misc food takes to rot. (In ticks)", (int) MISC_ROT_TIME);
 
+        HORSES_BREED_HAYBALES = loadPropBool("HorsesBreedHaybales", "Horeses can breed from eating dropped haybales.", HORSES_BREED_HAYBALES);
+
         ARMOR_SHARD_RENDER = loadPropBool("ArmorShardRender", "Enables or disables the custom armor shard renderer, for when it causes crashes.", ARMOR_SHARD_RENDER);
 
         doesNotNeedRestart(() -> {
@@ -142,8 +149,8 @@ public class InteractionBWA extends Interaction {
             MAXFOOD = loadPropInt("LureTreeMaxFood", "How much food the tree can hold.", MAXFOOD);
 
             HORSES_IGNORE_GOLD = loadPropBool("HorsesIgnoreGold", "Horses can't be fed golden food. It gives them a tummy ache.", HORSES_IGNORE_GOLD);
-            HORSES_BREED_HAYBALES = loadPropBool("HorsesBreedHaybales", "Horeses can breed from eating haybales in world.", HORSES_BREED_HAYBALES);
             HORSES_SET_HOME = loadPropBool("HorsesSetHome", "Horses set their home location if they're in a safe spot when dismounting.", HORSES_SET_HOME);
+            HORSES_BREED_HAYBALE_PLACED = loadPropBool("HorsesBreedHaybales", "Horses can breed from eating haybales placed in world.", HORSES_BREED_HAYBALE_PLACED);
 
             AQUEDUCT_MAX_LENGTH = loadPropInt("MaxAqueductLength", "How long aqueducts can be.", AQUEDUCT_MAX_LENGTH);
 
@@ -181,6 +188,25 @@ public class InteractionBWA extends Interaction {
         ConditionModule.MODULES.put("ConvenientToolsPreEnd", () -> CONVENIENT_TOOLS_PRE_END);
         ConditionModule.MODULES.put("StoneBricksNeedSmelting", () -> STONEBRICKS_NEED_SMELTING);
         ConditionModule.MODULES.put("GatedAqueducts", () -> GATED_AQUEDUCTS);
+
+        if(HORSES_BREED_HAYBALES)
+        EasyBreeding.EXTRA_FOOD_ITEMS.put(Item.getItemFromBlock(Blocks.HAY_BLOCK), new EasyBreeding.IExtraFoodItem() {
+            @Override
+            public boolean canEat(ItemStack item, EntityLivingBase eater) {
+                return eater instanceof AbstractHorse && HorseFoodHandler.canHorseBreed((EntityHorse) eater);
+            }
+
+            @Override
+            public boolean eat(ItemStack item, EntityLivingBase eater) {
+                EntityHorse horse = (EntityHorse) eater;
+                if(eater != null && HorseFoodHandler.canHorseBreed(horse)) {
+                    horse.setEatingHaystack(true);
+                    horse.setInLove(null);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         MinecraftForge.EVENT_BUS.register(new AssortedHandler());
         MinecraftForge.EVENT_BUS.register(new ToolShardRepairHandler());

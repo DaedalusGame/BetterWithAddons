@@ -131,7 +131,7 @@ public class InteractionDecoAddon extends Interaction {
 
         if (GLASS_PANE_REBALANCE) {
             modifyPaneRecipe();
-            BWRegistry.CRUCIBLE.remove(Lists.newArrayList(new ItemStack(Blocks.GLASS, 3)));
+            BWRegistry.CRUCIBLE.remove(BWRegistry.CRUCIBLE.getRecipes().stream().filter(recipe -> recipe.getOutputs().stream().anyMatch(stack -> stack.getItem() == ItemMaterial.getItemFromBlock(Blocks.GLASS) && stack.getCount() == 3)).findFirst().orElse(null));
         }
 
         BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(BWMItems.SAND_PILE, 1),ModItems.materialDeco.getMaterial("glass_chunk"));

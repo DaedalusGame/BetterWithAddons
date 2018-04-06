@@ -15,17 +15,23 @@ public class ItemLaxative extends ItemFood {
 
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
-        if(target.hasCapability(Dung.DUNG_PRODUCER_CAP,null))
-        {
-            DungProducer poopCapability = target.getCapability(Dung.DUNG_PRODUCER_CAP,null);
-            if(poopCapability.nextPoop > 4000)
-            {
-                poopCapability.nextPoop = poopCapability.nextPoop / 3;
-            }
+        if (feedLaxative(target)) {
             stack.shrink(1);
             return true;
         }
 
         return super.itemInteractionForEntity(stack, playerIn, target, hand);
+    }
+
+    public static boolean feedLaxative(EntityLivingBase target) {
+        if(target.hasCapability(Dung.DUNG_PRODUCER_CAP,null))
+        {
+            DungProducer poopCapability = target.getCapability(Dung.DUNG_PRODUCER_CAP,null);
+            if(poopCapability.nextPoop > 4000) {
+                poopCapability.nextPoop = poopCapability.nextPoop / 3;
+            }
+            return true;
+        }
+        return false;
     }
 }

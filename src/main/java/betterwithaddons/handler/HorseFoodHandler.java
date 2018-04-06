@@ -1,15 +1,19 @@
 package betterwithaddons.handler;
 
 import betterwithaddons.interaction.InteractionBWA;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -20,37 +24,57 @@ import java.util.Random;
 public class HorseFoodHandler {
     @SubscribeEvent
     public void onHorseEat(LivingEvent.LivingUpdateEvent event) {
-        if(!InteractionBWA.HORSES_BREED_HAYBALES)
+        if(!InteractionBWA.HORSES_BREED_HAYBALE_PLACED)
             return;
         EntityLivingBase entity = event.getEntityLiving();
-        if(!entity.world.isRemote && entity instanceof AbstractHorse) {
+        World world = entity.world;
+        if(!world.isRemote && entity instanceof AbstractHorse) {
             AbstractHorse horse = (AbstractHorse) entity;
             Random random = horse.getRNG();
-            if(canHorseBreed(horse) && horse.isEatingHaystack() && random.nextDouble() < 0.01) {
-                horse.setInLove(null);
+            BlockPos randPos = horse.getPosition().add(random.nextInt(3)-1,random.nextInt(2)-1,random.nextInt(3)-1);
+            IBlockState state = world.getBlockState(randPos);
+            double distance = 16.0;
+            boolean hasPotentialMate = !world.getEntitiesInAABBexcluding(horse, horse.getEntityBoundingBox().expand(distance, distance, distance), otherEntity -> {
+                if(otherEntity instanceof AbstractHorse)
+                {
+                    AbstractHorse otherHorse = (AbstractHorse) otherEntity;
+                    if(otherHorse.isInLove())
+                        return true;
+                }
+                return false;
+            }).isEmpty();
+            if(state.getBlock() == Blocks.HAY_BLOCK) {
+                if(canHorseBreed(horse) && horse.isEatingHaystack() && (random.nextDouble() < 0.1 || hasPotentialMate)) {
+                    horse.setInLove(null);
+                    world.playEvent(2001, randPos, Block.getStateId(state));
+                    world.setBlockToAir(randPos);
+                }
+                else if(!horse.isEatingHaystack() && !horse.isBeingRidden() && (random.nextDouble() < 0.01 || hasPotentialMate)) {
+                    horse.setEatingHaystack(true);
+                }
             }
         }
     }
 
     @SubscribeEvent
     public void onHorseUnmount(EntityMountEvent event) {
-        if(!InteractionBWA.HORSES_SET_HOME)
-            return;
         Entity ridden = event.getEntityBeingMounted();
         if(!ridden.world.isRemote && ridden instanceof AbstractHorse) {
             AbstractHorse horse = (AbstractHorse) ridden;
             Entity rider = event.getEntityMounting();
-            if(event.isDismounting() && horse.isTame() && isHorseSafe(horse, rider)) {
-                horse.setHomePosAndDistance(horse.getPosition(),3);
+            if(InteractionBWA.HORSES_SET_HOME && event.isDismounting() && horse.isTame() && isHorseSafe(horse, rider)) {
+                horse.setHomePosAndDistance(horse.getPosition(),5);
                 if(rider instanceof EntityPlayer) {
-                    ((EntityPlayer) rider).sendStatusMessage(new TextComponentTranslation("info.horse.will_wait",horse.hasCustomName() ? horse.getCustomNameTag() : "info.horse.your_horse"),true);
+                    ((EntityPlayer) rider).sendStatusMessage(!horse.hasCustomName() ?
+                            new TextComponentTranslation("info.horse.will_wait") :
+                            new TextComponentTranslation("info.horse.your_horse_will_wait",horse.getCustomNameTag()),true);
                 }
             }
         }
     }
 
     public static boolean isHorseSafe(AbstractHorse horse, Entity rider) {
-        return !horse.isBurning() && !horse.isWet() && rider.hurtResistantTime <= 0 && horse.getRevengeTarget() != null;
+        return !horse.isBurning() && !horse.isWet() && rider.hurtResistantTime <= 0 && horse.getRevengeTarget() == null;
     }
 
     @SubscribeEvent
@@ -65,7 +89,9 @@ public class HorseFoodHandler {
 
     public void onFeed(Entity entity, PlayerInteractEvent event) {
         if(entity instanceof AbstractHorse) {
-            ItemStack stack = event.getEntityPlayer().getHeldItem(event.getHand());
+            AbstractHorse horse = (AbstractHorse) entity;
+            EntityPlayer player = event.getEntityPlayer();
+            ItemStack stack = player.getHeldItem(event.getHand());
 
             if(InteractionBWA.HORSES_IGNORE_GOLD && (stack.getItem() == Items.GOLDEN_APPLE || stack.getItem() == Items.GOLDEN_CARROT)) {
                 event.setCancellationResult(EnumActionResult.FAIL);

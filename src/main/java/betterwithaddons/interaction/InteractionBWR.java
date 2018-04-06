@@ -255,7 +255,7 @@ public class InteractionBWR extends Interaction {
         {
             ItemStack soulUrn = BlockUrn.getStack(BlockUrn.EnumType.FULL,1);
             BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromOre(8,"cobblestone"),StackIngredient.fromOre(8,"cropNetherWart"),Ingredient.fromStacks(soulUrn)),new ItemStack(Blocks.NETHERRACK,8));
-            BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(new OreIngredient("cobblestone"),new OreIngredient("cropNetherWart"),Ingredient.fromStacks(soulUrn)),Lists.newArrayList(new ItemStack(Blocks.NETHERRACK),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST)));
+            BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(new OreIngredient("cobblestone"),new OreIngredient("cropNetherWart"),new OreIngredient("dustSoul")),Lists.newArrayList(new ItemStack(Blocks.NETHERRACK),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST)));
         }
 
         if(DIAMOND_SYNTHESIS)
