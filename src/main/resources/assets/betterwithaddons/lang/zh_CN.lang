@@ -1,4 +1,4 @@
-itemGroup.bwa.name=Better With Addons
+#itemGroup.bwa.name=Better With Addons
 
 inv.soakingbox.name=浸泡器
 inv.dryingbox.name=干燥器
@@ -9,7 +9,7 @@ inv.sandnet.name=压沙网格筛
 inv.packing.name=压缩
 inv.spindle.name=纺锤
 inv.spindle.throw.name=投掷物
-inv.crating.name=Boxing
+inv.crating.name=装箱
 inv.crating.throw.name=投掷物品
 inv.infuser.name=灵魂灌注器
 inv.infuser.throw.name=投掷
@@ -424,6 +424,9 @@ death.attack.lightningArrow=%1$s死于%2$s
 death.attack.lightningArrow.item=%1$s在逃离%2$s的过程中被%3$s杀死
 
 #bwm.manual.bwa=Better With Addons
+
+info.horse.will_wait=你的马会在此等候你。
+info.horse.your_horse_will_wait=%s会在此等候你。
 
 tooltip.adobe.crafting=混合物
 tooltip.adobe.description=需要在阳光下晾晒。
