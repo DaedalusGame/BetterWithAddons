@@ -35,7 +35,7 @@ public class HardcorePackingHandler {
     public void hardcorePackingCompress(TickEvent.WorldTickEvent event) {
         if(event.world == null || event.world.isRemote)
             return;
-        HashSet<TileEntityPiston> toIterate = new HashSet<>(activePistons);
+        TileEntityPiston[] toIterate = activePistons.toArray(new TileEntityPiston[activePistons.size()]);
         HashSet<TileEntityPiston> toRemove = new HashSet<>();
         for (TileEntityPiston piston: toIterate) {
             World world = piston.getWorld();
