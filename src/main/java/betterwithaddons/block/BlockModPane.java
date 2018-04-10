@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -153,5 +154,11 @@ public class BlockModPane extends BlockBase {
     @Override
     public int getMetaFromState(IBlockState state) {
         return 0;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        boolean connects = this.canConnectTo(worldIn,pos.offset(face),face);
+        return face != EnumFacing.UP && face != EnumFacing.DOWN ? (connects ? BlockFaceShape.MIDDLE_POLE_THIN : BlockFaceShape.UNDEFINED) : BlockFaceShape.CENTER_SMALL;
     }
 }

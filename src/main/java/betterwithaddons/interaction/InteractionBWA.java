@@ -114,6 +114,7 @@ public class InteractionBWA extends Interaction {
     public static boolean HORSES_SET_HOME = true;
     public static boolean HORSES_BREED_HAYBALE_PLACED = true;
     public static boolean HORSES_BREED_HAYBALES = false;
+    public static int ROPE_LIMIT = 30;
 
 
     @Override
@@ -147,6 +148,7 @@ public class InteractionBWA extends Interaction {
             RADIUS = loadPropInt("LureTreeRadius", "Radius in which the tree can spawn mobs.", RADIUS);
             MAXCHARGE = loadPropInt("LureTreeTime", "Time it takes for the tree to do one spawning cycle.", MAXCHARGE);
             MAXFOOD = loadPropInt("LureTreeMaxFood", "How much food the tree can hold.", MAXFOOD);
+            ROPE_LIMIT = loadPropInt("RopeBridgeLimit", "How far rope can be spanned horizontally between two posts or other attachments.", ROPE_LIMIT);
 
             HORSES_IGNORE_GOLD = loadPropBool("HorsesIgnoreGold", "Horses can't be fed golden food. It gives them a tummy ache.", HORSES_IGNORE_GOLD);
             HORSES_SET_HOME = loadPropBool("HorsesSetHome", "Horses set their home location if they're in a safe spot when dismounting.", HORSES_SET_HOME);
@@ -303,7 +305,10 @@ public class InteractionBWA extends Interaction {
             }
         }
 
-        TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),450);
+        TileEntityLureTree.addTreeFood(new ItemStack(ModItems.rottenFood),250);
+        TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),500);
+        TileEntityLureTree.addTreeFood(ModItems.material.getMaterial("thornrose"),1000);
+        TileEntityLureTree.addTreeFood(new ItemStack(BWMItems.MYSTERY_MEAT),6000);
 
         //TODO: Make this more sensible holy shit
         TileEntityAqueductWater.reloadBiomeList();
@@ -387,6 +392,11 @@ public class InteractionBWA extends Interaction {
         BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MEAT),new ItemStack(ModItems.pieMeat,hchunger ? 1 : 2));
         BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MUSHROOM),new ItemStack(ModItems.pieMushroom,hchunger ? 1 : 2));
         BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.AMANITA),new ItemStack(ModItems.pieAmanita,hchunger ? 1 : 2));
+
+        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MELON),new ItemStack(ModItems.pieMelon),0.35f);
+        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MEAT),new ItemStack(ModItems.pieMeat),0.35f);
+        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MUSHROOM),new ItemStack(ModItems.pieMushroom),0.35f);
+        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.AMANITA),new ItemStack(ModItems.pieAmanita),0.35f);
 
         if(STONEBRICKS_NEED_SMELTING) {
             GameRegistry.addSmelting(Blocks.STONE, ModItems.material.getMaterial("stone_brick", 4), 0.1f);

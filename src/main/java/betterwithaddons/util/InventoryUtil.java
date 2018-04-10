@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.IItemHandler;
@@ -147,6 +148,34 @@ public class InventoryUtil
                 {
                     inventory.setInventorySlotContents(i, new ItemStack(stackNBT));
                 }
+            }
+        }
+    }
+
+    public static int countItemInPlayer(Ingredient item, EntityPlayer player)
+    {
+        int count = 0;
+        for (int i = 0; i < player.inventory.getSizeInventory(); i++)
+        {
+            ItemStack is = player.inventory.getStackInSlot(i);
+            if (item.apply(is))
+                count += is.getCount();
+        }
+        return count;
+    }
+
+    public static void consumeItemFromPlayer(Ingredient item, int consumed, EntityPlayer player)
+    {
+        for (int i = 0; i < player.inventory.getSizeInventory(); i++)
+        {
+            ItemStack is = player.inventory.getStackInSlot(i);
+            if (item.apply(is)) {
+                int removed = Math.min(is.getCount(), consumed);
+                if (removed <= 0)
+                    break;
+                consumed -= removed;
+                is.shrink(removed);
+                player.inventory.setInventorySlotContents(i, is);
             }
         }
     }

@@ -5,6 +5,7 @@ import betterwithaddons.block.BlockLattice;
 import betterwithaddons.block.BlockRopeSideways;
 import betterwithaddons.block.BlockRopeSideways.EnumRopeShape;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.interaction.InteractionBWA;
 import betterwithaddons.interaction.InteractionBWM;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.item.rbdtools.IConvenientTool;
@@ -28,18 +29,19 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.BossInfo.Color;
 import net.minecraft.world.BossInfo.Overlay;
 import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -71,7 +73,6 @@ public class AssortedHandler {
     private final int BossCleanupThreshold = 10;
     private final float HardnessThreshold = 5.0f;
     private HashMap<UUID, BossInfoServer> BossList = new HashMap<>();
-    private final int ropeLimit = 9;
 
     public static boolean doScaleQuarriesExist() {
         return ScaleQuarryAmt > 0 && ScaleQuarries[0] != null;
@@ -87,17 +88,21 @@ public class AssortedHandler {
         EnumFacing facing = event.getFace();
         EntityPlayer player = event.getEntityPlayer();
 
-        if(facing.getAxis() == EnumFacing.Axis.Y)
+        if(facing == null || facing.getAxis() == EnumFacing.Axis.Y)
             return;
 
-        if(stack.getItem() == Item.getItemFromBlock(BWMBlocks.ROPE) && BlockRopeSideways.canFastenBlock(state.getBlock()))
+        Ingredient rope = Ingredient.fromItem(Item.getItemFromBlock(BWMBlocks.ROPE));
+        if(rope.apply(stack) && BlockRopeSideways.canFastenBlock(state.getBlock()))
         {
-            int consumedRope = attachRope(world, pos, facing, Math.min(stack.getCount(),ropeLimit));
+            int totalRope = !player.isCreative() ? InventoryUtil.countItemInPlayer(rope,player) : InteractionBWA.ROPE_LIMIT;
+            int consumedRope = attachRope(world, pos, facing, Math.min(totalRope, InteractionBWA.ROPE_LIMIT));
             if (consumedRope > 0) {
                 if(!player.isCreative())
-                    stack.shrink(consumedRope);
+                    InventoryUtil.consumeItemFromPlayer(rope,consumedRope,player);
                 event.setCancellationResult(EnumActionResult.SUCCESS);
                 event.setCanceled(true);
+            } else {
+                player.sendStatusMessage(new TextComponentTranslation("info.rope.too_far"),true);
             }
         }
     }
@@ -106,7 +111,7 @@ public class AssortedHandler {
         BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos(pos);
         int consumedRope = 0;
         int i;
-        for(i = 0; i < limit; i++)
+        for(i = 0; i <= limit; i++)
         {
             checkPos.move(facing);
             IBlockState checkState = world.getBlockState(checkPos);
@@ -116,7 +121,7 @@ public class AssortedHandler {
                 return 0;
         }
 
-        if(i >= limit)
+        if(i > limit)
             return 0;
 
         while(i > 0)
@@ -147,34 +152,23 @@ public class AssortedHandler {
         EnumFacing facing = event.getFace();
         EntityPlayer player = event.getEntityPlayer();
 
-        if(stack.getItem() == Item.getItemFromBlock(BWMBlocks.ROPE) && state.getBlock() instanceof BlockFence && state.getBlock() != ModBlocks.ropePost)
+        Ingredient rope = Ingredient.fromItem(Item.getItemFromBlock(BWMBlocks.ROPE));
+        if(rope.apply(stack) && state.getBlock() instanceof BlockFence && state.getBlock() != ModBlocks.ropePost)
         {
             ModBlocks.ropePost.placeFencePost(world,pos);
             state = world.getBlockState(pos);
 
+            int totalRope = !player.isCreative() ? InventoryUtil.countItemInPlayer(rope,player) : InteractionBWA.ROPE_LIMIT +1;
             int consumedRope = 1;
             if(BlockRopeSideways.canFastenBlock(state.getBlock())) {
-                consumedRope += attachRope(world, pos, facing, Math.min(stack.getCount()-1,ropeLimit));
+                consumedRope += attachRope(world, pos, facing, Math.min(totalRope-1, InteractionBWA.ROPE_LIMIT));
             }
             if(!player.isCreative())
-                stack.shrink(consumedRope);
+                InventoryUtil.consumeItemFromPlayer(rope,consumedRope,player);
 
             event.setCancellationResult(EnumActionResult.SUCCESS);
             event.setCanceled(true);
         }
-    }
-
-    @SubscribeEvent
-    public void onDismount(EntityMountEvent event)
-    {
-        Entity rider = event.getEntityMounting();
-        Entity mount = event.getEntityBeingMounted();
-        /*if(!rider.isDead && !mount.isDead) {
-            //if (event.isDismounting() && mount instanceof EntityHorse)
-            //    event.setCanceled(true);
-            if (event.isDismounting() && mount instanceof EntityKarateZombie && !((EntityKarateZombie) mount).tryDismount())
-                event.setCanceled(true);
-        }*/
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

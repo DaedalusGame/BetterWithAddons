@@ -64,7 +64,7 @@ public class BlockBox extends BlockBase {
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
-        return BlockFaceShape.UNDEFINED;
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
+        return face == EnumFacing.UP ? BlockFaceShape.BOWL : BlockFaceShape.SOLID;
     }
 }

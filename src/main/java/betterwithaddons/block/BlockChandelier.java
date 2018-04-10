@@ -3,12 +3,14 @@ package betterwithaddons.block;
 import betterwithmods.common.BWMBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -99,5 +101,10 @@ public class BlockChandelier extends BlockBase {
     {
         IBlockState top = worldIn.getBlockState(pos.up());
         return top.isSideSolid(worldIn, pos.up(), EnumFacing.DOWN) || top.getBlock() == BWMBlocks.ROPE;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
+        return BlockFaceShape.UNDEFINED;
     }
 }

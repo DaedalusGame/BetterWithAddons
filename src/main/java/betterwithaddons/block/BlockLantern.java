@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -87,7 +89,21 @@ public class BlockLantern extends BlockBase {
     public boolean canBlockStay(World worldIn, BlockPos pos, EnumFacing attachDir)
     {
         IBlockState attach = worldIn.getBlockState(pos.offset(attachDir));
-        return attach.isSideSolid(worldIn,pos, attachDir.getOpposite());
+        return isSuitableAttachment(attach.getBlockFaceShape(worldIn,pos,attachDir.getOpposite()),attachDir);
+    }
+
+    private boolean isSuitableAttachment(BlockFaceShape shape, EnumFacing attachDir) {
+        switch (shape) {
+            case SOLID:
+            case CENTER_BIG:
+                return true;
+            case CENTER_SMALL:
+                return attachDir == EnumFacing.DOWN;
+            case CENTER:
+                return attachDir.getAxis() == EnumFacing.Axis.Y;
+            default:
+                return false;
+        }
     }
 
     @Override
@@ -147,5 +163,10 @@ public class BlockLantern extends BlockBase {
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, LIT, FACING);
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        return face == EnumFacing.DOWN && state.getValue(FACING) == EnumFacing.DOWN ? BlockFaceShape.CENTER_BIG : BlockFaceShape.UNDEFINED;
     }
 }

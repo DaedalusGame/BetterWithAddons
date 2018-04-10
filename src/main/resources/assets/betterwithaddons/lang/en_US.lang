@@ -425,6 +425,7 @@ death.attack.lightningArrow.item=%1$s was shot by %2$s using %3$s
 
 bwm.manual.bwa=Better With Addons
 
+info.rope.too_far=The other post is too far away.
 info.horse.will_wait=Your steed will wait for you.
 info.horse.your_horse_will_wait=%s will wait for you.
 

@@ -6,6 +6,7 @@ import betterwithaddons.tileentity.TileEntityBannerDetector;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -161,5 +162,10 @@ public class BlockBannerDetector extends BlockContainerBase
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[] { FACING });
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
+        return face.getAxis() == state.getValue(FACING).getAxis() ? BlockFaceShape.BOWL : BlockFaceShape.SOLID;
     }
 }
