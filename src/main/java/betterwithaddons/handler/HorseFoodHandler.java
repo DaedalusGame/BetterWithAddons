@@ -30,6 +30,8 @@ public class HorseFoodHandler {
         World world = entity.world;
         if(!world.isRemote && entity instanceof AbstractHorse) {
             AbstractHorse horse = (AbstractHorse) entity;
+            if(!canHorseBreed(horse))
+                return;
             Random random = horse.getRNG();
             BlockPos randPos = horse.getPosition().add(random.nextInt(3)-1,random.nextInt(2)-1,random.nextInt(3)-1);
             IBlockState state = world.getBlockState(randPos);
@@ -38,19 +40,20 @@ public class HorseFoodHandler {
                 if(otherEntity instanceof AbstractHorse)
                 {
                     AbstractHorse otherHorse = (AbstractHorse) otherEntity;
-                    if(otherHorse.isInLove())
+                    if(otherHorse.isInLove() && !otherHorse.isBreeding())
                         return true;
                 }
                 return false;
             }).isEmpty();
             if(state.getBlock() == Blocks.HAY_BLOCK) {
-                if(canHorseBreed(horse) && horse.isEatingHaystack() && (random.nextDouble() < 0.1 || hasPotentialMate)) {
+                if(horse.isEatingHaystack() && (random.nextDouble() < 0.1 || hasPotentialMate)) {
                     horse.setInLove(null);
                     world.playEvent(2001, randPos, Block.getStateId(state));
                     world.setBlockToAir(randPos);
                 }
                 else if(!horse.isEatingHaystack() && !horse.isBeingRidden() && (random.nextDouble() < 0.01 || hasPotentialMate)) {
                     horse.setEatingHaystack(true);
+                    horse.getLookHelper().setLookPosition(randPos.getX()+0.5,randPos.getY()+0.5,randPos.getZ()+0.5,30.0F,30.0F);
                 }
             }
         }
