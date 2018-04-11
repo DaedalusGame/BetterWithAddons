@@ -306,9 +306,10 @@ public class InteractionBWA extends Interaction {
         }
 
         TileEntityLureTree.addTreeFood(new ItemStack(ModItems.rottenFood),250);
+        TileEntityLureTree.addTreeFood(new ItemStack(Items.ROTTEN_FLESH),250);
         TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),500);
         TileEntityLureTree.addTreeFood(ModItems.material.getMaterial("thornrose"),1000);
-        TileEntityLureTree.addTreeFood(new ItemStack(BWMItems.MYSTERY_MEAT),6000);
+        TileEntityLureTree.addTreeFood(new ItemStack(BWMItems.MYSTERY_MEAT),4000);
 
         //TODO: Make this more sensible holy shit
         TileEntityAqueductWater.reloadBiomeList();

@@ -177,7 +177,7 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
         return false;
     }
 
-    public boolean onActivated(EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing facing) {
+    public boolean onActivated(EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing facing) {
         if(isDead())
             return false;
 
@@ -189,7 +189,7 @@ public class TileEntityLureTree extends TileEntityBase implements ITickable {
         if (flag && state.getValue(BlockLureTree.FACING) == facing) {
             if (!playerIn.isCreative()) {
                 heldItem.shrink(1);
-                playerIn.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, heldItem.getCount() == 0 ? null : heldItem);
+                playerIn.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, heldItem.getCount() == 0 ? ItemStack.EMPTY : heldItem);
             }
             this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
                     SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F,

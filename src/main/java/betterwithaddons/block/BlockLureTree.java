@@ -9,13 +9,17 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BlockLureTree extends BlockContainerBase {
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -26,6 +30,14 @@ public class BlockLureTree extends BlockContainerBase {
 
         this.setHardness(2.0F);
         this.setHarvestLevel("axe", 0);
+        this.setTickRandomly(true);
+    }
+
+    @Override
+    public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+        worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
+                SoundEvents.ENTITY_WITHER_AMBIENT, SoundCategory.PLAYERS, 0.6F,
+                ((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.7F + 1.0F));
     }
 
     @Override
