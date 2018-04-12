@@ -187,6 +187,7 @@ public class InteractionBWM extends Interaction {
 
         OreDictionary.getOres("cookedCarrot").clear();
         OreDictionary.registerOre("cookedCarrot", new ItemStack(ModItems.cookedCarrot));
+        OreDictionary.registerOre("cookedCarrot", new ItemStack(ModItems.bakedCarrot));
         OreDictionary.registerOre("cookedPotato", new ItemStack(ModItems.cookedPotato));
 
         OreDictionary.registerOre("listAllExplosives", new ItemStack(Blocks.TNT));
