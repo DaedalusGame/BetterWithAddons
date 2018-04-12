@@ -305,6 +305,10 @@ public class InteractionBWA extends Interaction {
             }
         }
 
+        OreDictionary.registerOre("logWood", new ItemStack(ModBlocks.luretreeLog));
+
+        BWRegistry.CAULDRON.addStokedRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.luretreeLog),new ItemStack(ModBlocks.luretreeFace)),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH,2)).setPriority(10);
+
         TileEntityLureTree.addTreeFood(new ItemStack(ModItems.rottenFood),250);
         TileEntityLureTree.addTreeFood(new ItemStack(Items.ROTTEN_FLESH),250);
         TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),500);
