@@ -11,10 +11,9 @@ import betterwithaddons.crafting.recipes.infuser.InfuserRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.interaction.jei.category.*;
 import betterwithaddons.interaction.jei.wrapper.*;
-import mezz.jei.api.BlankModPlugin;
-import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.IJeiHelpers;
-import mezz.jei.api.IModRegistry;
+import betterwithaddons.item.ModItems;
+import mezz.jei.api.*;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.plugins.vanilla.crafting.ShapedOreRecipeWrapper;
 import mezz.jei.plugins.vanilla.crafting.ShapedRecipesWrapper;
@@ -30,14 +29,21 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import javax.annotation.Nonnull;
 
 @mezz.jei.api.JEIPlugin
-public class BWAJEIPlugin extends BlankModPlugin {
+public class BWAJEIPlugin implements IModPlugin {
     @Override
-    public void register(@Nonnull IModRegistry reg) {
-        IJeiHelpers helper = reg.getJeiHelpers();
+    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
+        subtypeRegistry.useNbtForSubtypes(ModItems.teaLeaves);
+        subtypeRegistry.useNbtForSubtypes(ModItems.teaSoaked);
+        subtypeRegistry.useNbtForSubtypes(ModItems.teaWilted);
+        subtypeRegistry.useNbtForSubtypes(ModItems.teaPowder);
+    }
+
+    @Override
+    public void registerCategories(IRecipeCategoryRegistration registry) {
+        IJeiHelpers helper = registry.getJeiHelpers();
         IGuiHelper guiHelper = helper.getGuiHelper();
 
-        reg.addRecipeCategories(
-                new TataraRecipeCategory(guiHelper),
+        registry.addRecipeCategories(new TataraRecipeCategory(guiHelper),
                 new FireNetRecipeCategory(guiHelper),
                 new WaterNetRecipeCategory(guiHelper),
                 new SandNetRecipeCategory(guiHelper),
@@ -46,45 +52,50 @@ public class BWAJEIPlugin extends BlankModPlugin {
                 new SpindleRecipeCategory(guiHelper),
                 new PackingRecipeCategory(guiHelper),
                 new InfuserRecipeCategory(guiHelper),
-                new TransmutationRecipeCategory(guiHelper)
-        );
+                new TransmutationRecipeCategory(guiHelper));
+    }
 
-        reg.handleRecipes(SpindleRecipe.class, SpindleRecipeWrapper::new, SpindleRecipeCategory.UID);
-        reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, SandNetRecipeCategory.UID);
-        reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, WaterNetRecipeCategory.UID);
-        reg.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, FireNetRecipeCategory.UID);
-        reg.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, SoakingBoxRecipeCategory.UID);
-        reg.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, DryingBoxRecipeCategory.UID);
-        reg.handleRecipes(SmeltingRecipe.class, SmeltingRecipeWrapper::new, TataraRecipeCategory.UID);
-        reg.handleRecipes(TransmutationRecipe.class, TransmutationRecipeWrapper::new, TransmutationRecipeCategory.UID);
-        reg.handleRecipes(PackingRecipe.class, PackingRecipeWrapper::new, PackingRecipeCategory.UID);
+    @Override
+    public void register(@Nonnull IModRegistry registry) {
+        IJeiHelpers helper = registry.getJeiHelpers();
+        IGuiHelper guiHelper = helper.getGuiHelper();
 
-        reg.handleRecipes(InfuserRecipe.class, recipe -> new InfuserRecipeWrapper(getCraftingRecipeWrapper(helper, recipe.internal),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
+        registry.handleRecipes(SpindleRecipe.class, SpindleRecipeWrapper::new, SpindleRecipeCategory.UID);
+        registry.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, SandNetRecipeCategory.UID);
+        registry.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, WaterNetRecipeCategory.UID);
+        registry.handleRecipes(NetRecipe.class, NetRecipeWrapper::new, FireNetRecipeCategory.UID);
+        registry.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, SoakingBoxRecipeCategory.UID);
+        registry.handleRecipes(CherryBoxRecipe.class, CherryBoxRecipeWrapper::new, DryingBoxRecipeCategory.UID);
+        registry.handleRecipes(SmeltingRecipe.class, SmeltingRecipeWrapper::new, TataraRecipeCategory.UID);
+        registry.handleRecipes(TransmutationRecipe.class, TransmutationRecipeWrapper::new, TransmutationRecipeCategory.UID);
+        registry.handleRecipes(PackingRecipe.class, PackingRecipeWrapper::new, PackingRecipeCategory.UID);
 
-        reg.addRecipes(CraftingManagerSpindle.getInstance().getRecipes(),SpindleRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerSandNet.getInstance().getRecipes(),SandNetRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerWaterNet.getInstance().getRecipes(),WaterNetRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerFireNet.getInstance().getRecipes(),FireNetRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerDryingBox.instance().getRecipes(),DryingBoxRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerSoakingBox.instance().getRecipes(),SoakingBoxRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerTatara.instance().getRecipes(),TataraRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerInfuser.getInstance().getRecipeList(),InfuserRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerInfuserTransmutation.getInstance().getRecipes(),TransmutationRecipeCategory.UID);
-        reg.addRecipes(CraftingManagerPacking.getInstance().getRecipes(),PackingRecipeCategory.UID);
+        registry.handleRecipes(InfuserRecipe.class, recipe -> new InfuserRecipeWrapper(getCraftingRecipeWrapper(helper, recipe.internal),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
 
-        reg.addRecipeCatalyst(new ItemStack(ModBlocks.tatara), TataraRecipeCategory.UID);
-        reg.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 0), SoakingBoxRecipeCategory.UID);
-        reg.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 1), DryingBoxRecipeCategory.UID);
-        reg.addRecipeCatalyst(new ItemStack(ModBlocks.nettedScreen), WaterNetRecipeCategory.UID, SandNetRecipeCategory.UID, FireNetRecipeCategory.UID);
-        reg.addRecipeCatalyst(new ItemStack(ModBlocks.spindle), SpindleRecipeCategory.UID);
-        reg.addRecipeCatalyst(new ItemStack(Blocks.PISTON), PackingRecipeCategory.UID);
-        reg.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), InfuserRecipeCategory.UID);
-        reg.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), TransmutationRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerSpindle.getInstance().getRecipes(),SpindleRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerSandNet.getInstance().getRecipes(),SandNetRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerWaterNet.getInstance().getRecipes(),WaterNetRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerFireNet.getInstance().getRecipes(),FireNetRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerDryingBox.instance().getRecipes(),DryingBoxRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerSoakingBox.instance().getRecipes(),SoakingBoxRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerTatara.instance().getRecipes(),TataraRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerInfuser.getInstance().getRecipeList(),InfuserRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerInfuserTransmutation.getInstance().getRecipes(),TransmutationRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerPacking.getInstance().getRecipes(),PackingRecipeCategory.UID);
 
-        reg.addRecipeClickArea(GuiTatara.class, 78, 32, 28, 23, TataraRecipeCategory.UID);
-        reg.addRecipeClickArea(GuiSoakingBox.class, 78, 32, 28, 23, SoakingBoxRecipeCategory.UID);
-        reg.addRecipeClickArea(GuiDryingBox.class, 78, 32, 28, 23, DryingBoxRecipeCategory.UID);
-        reg.addRecipeClickArea(GuiInfuser.class, 94, 35, 19, 16, InfuserRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.tatara), TataraRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 0), SoakingBoxRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 1), DryingBoxRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.nettedScreen), WaterNetRecipeCategory.UID, SandNetRecipeCategory.UID, FireNetRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.spindle), SpindleRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(Blocks.PISTON), PackingRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), InfuserRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), TransmutationRecipeCategory.UID);
+
+        registry.addRecipeClickArea(GuiTatara.class, 78, 32, 28, 23, TataraRecipeCategory.UID);
+        registry.addRecipeClickArea(GuiSoakingBox.class, 78, 32, 28, 23, SoakingBoxRecipeCategory.UID);
+        registry.addRecipeClickArea(GuiDryingBox.class, 78, 32, 28, 23, DryingBoxRecipeCategory.UID);
+        registry.addRecipeClickArea(GuiInfuser.class, 94, 35, 19, 16, InfuserRecipeCategory.UID);
     }
 
     private IRecipeWrapper getCraftingRecipeWrapper(IJeiHelpers helper, IRecipe recipe)

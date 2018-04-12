@@ -131,7 +131,7 @@ public class InteractionBTWTweak extends Interaction {
         if(INFESTED_MINESHAFTS)
             MineshaftGeneration.supports = piece -> ModBlocks.termiteLog.getDefaultState();
         BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(ModBlocks.rustyRail,2),new ItemStack(Items.IRON_NUGGET));
-        BWRegistry.WOOD_SAW.addRecipe(new ItemStack(ModBlocks.termiteLog), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST,2));
+        BWRegistry.WOOD_SAW.addRecipe(new ItemStack(ModBlocks.termiteLog,1,OreDictionary.WILDCARD_VALUE), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST,2));
 
         if(WOOL_RECYCLING && InteractionBWM.HARDCORE_SHEARING)
         {
