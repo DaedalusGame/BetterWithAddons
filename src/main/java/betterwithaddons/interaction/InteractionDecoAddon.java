@@ -10,14 +10,25 @@ import betterwithaddons.lib.Reference;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWRegistry;
+import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.module.gameplay.AnvilRecipes;
+import betterwithmods.module.gameplay.miniblocks.ItemMini;
+import betterwithmods.module.gameplay.miniblocks.MiniBlockIngredient;
+import betterwithmods.module.gameplay.miniblocks.MiniBlocks;
+import betterwithmods.module.gameplay.miniblocks.MiniType;
+import betterwithmods.module.gameplay.miniblocks.blocks.BlockCorner;
+import betterwithmods.module.gameplay.miniblocks.blocks.BlockMini;
+import betterwithmods.module.gameplay.miniblocks.blocks.BlockMoulding;
+import betterwithmods.module.gameplay.miniblocks.blocks.BlockSiding;
 import betterwithmods.module.tweaks.MossGeneration;
 import betterwithmods.util.StackIngredient;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockStoneBrick;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -28,11 +39,10 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.oredict.OreIngredient;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class InteractionDecoAddon extends Interaction {
     public static boolean ENABLED = true;
@@ -45,6 +55,9 @@ public class InteractionDecoAddon extends Interaction {
     public static boolean GLASS_FURNACE = false;
     public static boolean CHEAPER_BOTTLES = true;
     public static boolean RECYCLE_BOTTLES = true;
+
+    public static boolean MASON_MINIBLOCKS = true;
+    public static boolean CLAY_MINIBLOCKS = true;
 
     @Override
     protected String getName() {
@@ -87,6 +100,10 @@ public class InteractionDecoAddon extends Interaction {
 
     @Override
     public void preInit() {
+        if(CLAY_MINIBLOCKS || MASON_MINIBLOCKS) {
+            //TODO: Hook in BWM for adding materials
+        }
+
         ConditionModule.MODULES.put("DecoAddon", this::isActive);
         ConditionModule.MODULES.put("ChiselBricksInAnvil", () -> CHISEL_BRICKS_IN_ANVIL);
         ConditionModule.MODULES.put("CheaperBottles", () -> CHEAPER_BOTTLES);
@@ -94,6 +111,21 @@ public class InteractionDecoAddon extends Interaction {
             BetterWithAddons.removeCraftingRecipe(new ResourceLocation("minecraft", "glass_bottle"));
         if (CHISEL_BRICKS_IN_ANVIL)
             BetterWithAddons.removeCraftingRecipe(new ResourceLocation("minecraft", "chiseled_stonebrick"));
+
+        if (CLAY_MINIBLOCKS) {
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("minecraft:clay"));
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("betterwithmods:nether_clay"));
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("minecraft:hardened_clay"));
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("minecraft:stained_hardened_clay"));
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("betterwithmods:aesthetic"),2); //nether clay
+        }
+        if (MASON_MINIBLOCKS) {
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("minecraft:obsidian")); //obsidian
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("betterwithmods:steel_block"),0); //steel
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("betterwithmods:aesthetic"),3); //hellfire
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("betterwithmods:aesthetic"),10); //soap
+            MiniBlocks.addWhitelistedBlock(new ResourceLocation("betterwithmods:aesthetic"),11); //dung
+        }
     }
 
     @Override
@@ -168,6 +200,26 @@ public class InteractionDecoAddon extends Interaction {
             addStainingRecipe(jungle_wood, acacia);
             addStainingRecipe(acacia, spruce);
             addStainingRecipe(spruce, darkoak);
+        }
+
+        if (CLAY_MINIBLOCKS) {
+            addMiniBlockKilnRecipe(Blocks.CLAY.getDefaultState(),Blocks.HARDENED_CLAY.getDefaultState());
+            addMiniBlockKilnRecipe(BWMBlocks.NETHER_CLAY.getDefaultState(), BlockAesthetic.getVariant(BlockAesthetic.EnumType.NETHERCLAY));
+        }
+
+        if (MASON_MINIBLOCKS) {
+            MiniBlocks.MATERIALS.put(Material.IRON,BWMBlocks.STEEL_BLOCK.getDefaultState()); //It has onBlockActivated which disallows it to become a miniblock
+            BWRegistry.CRUCIBLE.addStokedRecipe(new MiniBlockIngredient("siding",new ItemStack(BWMBlocks.STEEL_BLOCK)),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.INGOT_STEEL,8));
+            BWRegistry.CRUCIBLE.addStokedRecipe(new MiniBlockIngredient("moulding",new ItemStack(BWMBlocks.STEEL_BLOCK)),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.INGOT_STEEL,4));
+            BWRegistry.CRUCIBLE.addStokedRecipe(new MiniBlockIngredient("corner",new ItemStack(BWMBlocks.STEEL_BLOCK)),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.INGOT_STEEL,2));
+        }
+    }
+
+    private void addMiniBlockKilnRecipe(IBlockState stateIn, IBlockState stateOut) {
+        for(MiniType type : MiniType.VALUES) {
+            HashMap<Material, BlockMini> materialBlocks = MiniBlocks.MINI_MATERIAL_BLOCKS.get(type);
+            if(materialBlocks != null)
+                BWRegistry.KILN.addStokedRecipe(MiniBlocks.fromParent(materialBlocks.get(Material.GROUND), stateIn, 1),MiniBlocks.fromParent(materialBlocks.get(Material.GROUND), stateOut, 1));
         }
     }
 

@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-	deobfCompile "betterwithmods:BetterWithMods:1.12-2.1.5-442"
+	deobfCompile "betterwithmods:BetterWithMods:1.12-2.1.5-448"
 	deobfCompile "mezz.jei:jei_1.12.2:4.8.3.128"
     //deobfCompile "com.blamejared:MTLib:3.+"
 	compile files('libs/')
