@@ -109,12 +109,7 @@ public class ClientProxy implements IProxy
         ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.chute)), "bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
         String imagePattern = "!\\[([^\\[]*)\\]\\(([^\\)]+)\\)";
         Document.SEGMENT_TYPES.removeIf(mapping -> mapping.pattern.pattern().equals(imagePattern));
-        try {
-            Constructor<Document.PatternMapping> constructor = ReflectionHelper.findConstructor(Document.PatternMapping.class, String.class, SegmentRefiner.class);
-            Document.SEGMENT_TYPES.add(1,constructor.newInstance(imagePattern, (SegmentRefiner) ClientProxy::JEIorVariableSegment));
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | ReflectionHelper.UnknownConstructorException e) {
-            e.printStackTrace();
-        }
+        Document.SEGMENT_TYPES.add(1,new Document.PatternMapping(imagePattern, ClientProxy::JEIorVariableSegment));
     }
 
     private static Segment JEIorVariableSegment(final Segment s, final Matcher m) {
