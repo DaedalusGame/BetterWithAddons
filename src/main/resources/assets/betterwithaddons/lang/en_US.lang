@@ -1,5 +1,14 @@
 itemGroup.bwa.name=Better With Addons
 
+tile.bwm:siding_clay.name=Siding
+tile.bwm:siding_ground.name=Siding
+
+tile.bwm:moulding_clay.name=Moulding
+tile.bwm:moulding_ground.name=Moulding
+
+tile.bwm:corner_clay.name=Corner
+tile.bwm:corner_ground.name=Corner
+
 inv.soakingbox.name=Soaking Unit
 inv.dryingbox.name=Drying Unit
 inv.tatara.name=Tatara

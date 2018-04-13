@@ -234,6 +234,11 @@ public class InteractionBWA extends Interaction {
     }
 
     @Override
+    void oreDictRegistration() {
+        OreDictionary.registerOre("logWood", new ItemStack(ModBlocks.luretreeLog));
+    }
+
+    @Override
     public void init() {
         if(PatientiaHandler.shouldRegister())
             MinecraftForge.EVENT_BUS.register(new PatientiaHandler());
@@ -304,8 +309,6 @@ public class InteractionBWA extends Interaction {
                 addReclaimRecipe(new ItemStack(ModItems.diamondMasonPick),ingotDiamond,nuggetDiamond,9*4);
             }
         }
-
-        OreDictionary.registerOre("logWood", new ItemStack(ModBlocks.luretreeLog));
 
         BWRegistry.CAULDRON.addStokedRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.luretreeLog),new ItemStack(ModBlocks.luretreeFace)),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH,2)).setPriority(10);
 

@@ -79,6 +79,10 @@ public class ModInteractions {
         LIST.stream().filter(Interaction::isActive).forEach(Interaction::loadComplete);
     }
 
+    public static void oreDictRegistration() {
+        LIST.stream().filter(Interaction::isActive).forEach(Interaction::oreDictRegistration);
+    }
+
     private static Interaction addInteraction(Interaction interaction) {
         LIST.add(interaction);
         return interaction;

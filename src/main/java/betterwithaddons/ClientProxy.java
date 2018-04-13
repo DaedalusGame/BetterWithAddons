@@ -14,13 +14,21 @@ import betterwithaddons.tileentity.TileEntityAlchDragon;
 import betterwithaddons.tileentity.TileEntityInfuser;
 import betterwithaddons.tileentity.TileEntityNabe;
 import betterwithaddons.util.ResourceProxy;
+import betterwithaddons.util.VariableSegment;
 import betterwithmods.manual.api.ManualAPI;
+import betterwithmods.manual.api.manual.ImageRenderer;
 import betterwithmods.manual.api.prefab.manual.ItemStackTabIconRenderer;
 import betterwithmods.manual.api.prefab.manual.ResourceContentProvider;
+import betterwithmods.manual.client.manual.Document;
 import betterwithmods.manual.client.manual.provider.BlockImageProvider;
 import betterwithmods.manual.client.manual.provider.ItemImageProvider;
 import betterwithmods.manual.client.manual.provider.OreDictImageProvider;
 import betterwithmods.manual.client.manual.provider.TextureImageProvider;
+import betterwithmods.manual.client.manual.segment.JEIRenderSegment;
+import betterwithmods.manual.client.manual.segment.JEISegment;
+import betterwithmods.manual.client.manual.segment.Segment;
+import betterwithmods.manual.client.manual.segment.SegmentRefiner;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -43,8 +51,12 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClientProxy implements IProxy
 {
@@ -53,6 +65,7 @@ public class ClientProxy implements IProxy
     public static ModelResourceLocation ropePostLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "rope_post_knot"), "normal");
 
     static ResourceProxy resourceProxy;
+    private static Pattern varPattern = Pattern.compile("var:([^\\)]+)");
 
     static {
         resourceProxy = new ResourceProxy();
@@ -94,6 +107,32 @@ public class ClientProxy implements IProxy
         ManualAPI.addProvider("block", new BlockImageProvider());
         ManualAPI.addProvider("oredict", new OreDictImageProvider());
         ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.chute)), "bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
+        String imagePattern = "!\\[([^\\[]*)\\]\\(([^\\)]+)\\)";
+        Document.SEGMENT_TYPES.removeIf(mapping -> mapping.pattern.pattern().equals(imagePattern));
+        try {
+            Constructor<Document.PatternMapping> constructor = ReflectionHelper.findConstructor(Document.PatternMapping.class, String.class, SegmentRefiner.class);
+            Document.SEGMENT_TYPES.add(1,constructor.newInstance(imagePattern, (SegmentRefiner) ClientProxy::JEIorVariableSegment));
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | ReflectionHelper.UnknownConstructorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Segment JEIorVariableSegment(final Segment s, final Matcher m) {
+        Matcher varMatch = varPattern.matcher(m.group(2));
+        if(varMatch.matches()) {
+            return new VariableSegment(s,varMatch.group(1));
+        }
+
+        try {
+            final ImageRenderer renderer = ManualAPI.imageFor(m.group(2));
+            if (renderer != null) {
+                return new JEIRenderSegment(s, m.group(1), m.group(2), renderer);
+            } else {
+                return new JEISegment(s, "No renderer found for: " + m.group(2));
+            }
+        } catch (final Throwable t) {
+            return new JEISegment(s, Strings.isNullOrEmpty(t.toString()) ? "Unknown error." : t.toString(), m.group(2));
+        }
     }
 
     @Override

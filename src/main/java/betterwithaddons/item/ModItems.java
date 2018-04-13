@@ -1,6 +1,7 @@
 package betterwithaddons.item;
 
 import betterwithaddons.BetterWithAddons;
+import betterwithaddons.interaction.ModInteractions;
 import betterwithaddons.item.rbdtools.*;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.ItemUtil;
@@ -440,6 +441,8 @@ public class ModItems {
         for (Item item : LIST) {
             event.getRegistry().register(item);
         }
+
+        ModInteractions.oreDictRegistration();
     }
 
     public static Item registerItem(String name, Item item) {

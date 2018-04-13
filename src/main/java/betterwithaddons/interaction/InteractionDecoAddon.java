@@ -12,6 +12,9 @@ import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.block.recipe.BlockDropIngredient;
+import betterwithmods.common.registry.block.recipe.KilnRecipe;
+import betterwithmods.common.registry.heat.BWMHeatRegistry;
 import betterwithmods.module.gameplay.AnvilRecipes;
 import betterwithmods.module.gameplay.miniblocks.ItemMini;
 import betterwithmods.module.gameplay.miniblocks.MiniBlockIngredient;
@@ -74,7 +77,8 @@ public class InteractionDecoAddon extends Interaction {
         GLASS_FURNACE = loadPropBool("GlassFurnace", "Glass chunks can be smelted in a furnace.", GLASS_FURNACE);
         CHEAPER_BOTTLES = loadPropBool("CheaperBottles", "Glass bottles are made from half as much glass as normal.", CHEAPER_BOTTLES);
         RECYCLE_BOTTLES = loadPropBool("RecycleBottles", "Glass bottles can melted into chunks in a crucible. This allows you to make glass from a witch farm.", RECYCLE_BOTTLES);
-
+        MASON_MINIBLOCKS = loadPropBool("MasonMiniblocks", "Add some odd materials to miniblocks whitelist (WIP)", MASON_MINIBLOCKS);
+        CLAY_MINIBLOCKS = loadPropBool("ClayMiniblocks", "Add all kinds of clay to miniblocks whitelist (WIP)", CLAY_MINIBLOCKS);
     }
 
     @Override
@@ -101,7 +105,8 @@ public class InteractionDecoAddon extends Interaction {
     @Override
     public void preInit() {
         if(CLAY_MINIBLOCKS || MASON_MINIBLOCKS) {
-            //TODO: Hook in BWM for adding materials
+            MiniBlocks.addMaterial(Material.CLAY,"clay");
+            MiniBlocks.addMaterial(Material.GROUND,"ground");
         }
 
         ConditionModule.MODULES.put("DecoAddon", this::isActive);
@@ -203,8 +208,8 @@ public class InteractionDecoAddon extends Interaction {
         }
 
         if (CLAY_MINIBLOCKS) {
-            addMiniBlockKilnRecipe(Blocks.CLAY.getDefaultState(),Blocks.HARDENED_CLAY.getDefaultState());
-            addMiniBlockKilnRecipe(BWMBlocks.NETHER_CLAY.getDefaultState(), BlockAesthetic.getVariant(BlockAesthetic.EnumType.NETHERCLAY));
+            addMiniBlockKilnRecipe(new ItemStack(Blocks.CLAY),Blocks.HARDENED_CLAY.getDefaultState());
+            addMiniBlockKilnRecipe(new ItemStack(BWMBlocks.NETHER_CLAY), BlockAesthetic.getVariant(BlockAesthetic.EnumType.NETHERCLAY));
         }
 
         if (MASON_MINIBLOCKS) {
@@ -215,11 +220,13 @@ public class InteractionDecoAddon extends Interaction {
         }
     }
 
-    private void addMiniBlockKilnRecipe(IBlockState stateIn, IBlockState stateOut) {
+    private void addMiniBlockKilnRecipe(ItemStack stackIn, IBlockState stateOut) {
         for(MiniType type : MiniType.VALUES) {
             HashMap<Material, BlockMini> materialBlocks = MiniBlocks.MINI_MATERIAL_BLOCKS.get(type);
-            if(materialBlocks != null)
-                BWRegistry.KILN.addStokedRecipe(MiniBlocks.fromParent(materialBlocks.get(Material.GROUND), stateIn, 1),MiniBlocks.fromParent(materialBlocks.get(Material.GROUND), stateOut, 1));
+            if(materialBlocks != null) {
+                ItemStack output = MiniBlocks.fromParent(materialBlocks.get(stateOut.getMaterial()), stateOut, 1);
+                BWRegistry.KILN.addRecipe(new KilnRecipe(new MiniBlockIngredient(type.name(),stackIn), Lists.newArrayList(output), BWMHeatRegistry.STOKED_HEAT));
+            }
         }
     }
 

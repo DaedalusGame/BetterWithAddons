@@ -38,6 +38,8 @@ public abstract class Interaction {
 
     void loadComplete() {}
 
+    void oreDictRegistration() {}
+
     void modifyRecipes(RegistryEvent.Register<IRecipe> event) {}
 
     protected abstract String getName();
