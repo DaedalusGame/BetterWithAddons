@@ -44,7 +44,7 @@ public class BlockWirePCB extends Block implements IColorable {
 
     public BlockWirePCB() {
         super(Material.CIRCUITS);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(NORTH, EnumAttachPosition.NONE).withProperty(EAST, EnumAttachPosition.NONE).withProperty(SOUTH, EnumAttachPosition.NONE).withProperty(WEST, EnumAttachPosition.NONE).withProperty(BlockRedstoneWire.POWER, Integer.valueOf(0)));
+        this.setDefaultState(getDefaultState().withProperty(NORTH, EnumAttachPosition.NONE).withProperty(EAST, EnumAttachPosition.NONE).withProperty(SOUTH, EnumAttachPosition.NONE).withProperty(WEST, EnumAttachPosition.NONE).withProperty(BlockRedstoneWire.POWER, Integer.valueOf(0)));
 
         this.setUnlocalizedName("pcb_wire");
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "pcb_wire"));

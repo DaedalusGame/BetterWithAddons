@@ -43,7 +43,7 @@ public class BlockModLeaves extends BlockLeaves {
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "leaves_"+woodVariant.getName()));
         this.setUnlocalizedName("leaves_"+woodVariant.getName());
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
+        this.setDefaultState(getDefaultState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
     }
 
     public void setSapling(ItemStack sapling) {
@@ -154,6 +154,11 @@ public class BlockModLeaves extends BlockLeaves {
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
     {
         return Blocks.LEAVES.shouldSideBeRendered(state, world, pos, side);
+    }
+
+    @Override
+    protected ItemStack getSilkTouchDrop(IBlockState state) {
+        return new ItemStack(this);
     }
 
     @Override

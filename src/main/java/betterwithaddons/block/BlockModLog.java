@@ -31,7 +31,7 @@ public class BlockModLog extends BlockLog
         super();
         woodVariant = variant;
 
-        this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+        this.setDefaultState(getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
         this.setHarvestLevel("axe", 0);
 
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "log_"+woodVariant.getName()));

@@ -41,7 +41,7 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
         super("thorn_rose", Material.WOOD);
         this.setHardness(4.0F);
         this.setHarvestLevel("axe", 0);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)));
+        this.setDefaultState(getDefaultState().withProperty(AGE, Integer.valueOf(0)));
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
         this.setTickRandomly(true);
     }

@@ -34,7 +34,7 @@ public abstract class BlockWeight extends BlockBase {
         super(name, Material.WOOD);
         this.setHardness(1.5F);
         this.setTickRandomly(true);
-        this.setDefaultState(blockState.getBaseState().withProperty(ACTIVE,false));
+        this.setDefaultState(getDefaultState().withProperty(ACTIVE,false));
     }
 
     public static void addSpecialMeasuringBehavior(Block block,ISpecialMeasuringBehavior behavior)

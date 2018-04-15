@@ -33,7 +33,7 @@ public class BlockAlchDragon extends BlockContainerBase {
 
     protected BlockAlchDragon() {
         super("alchemical_dragon",Material.CIRCUITS);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(NODROP, Boolean.valueOf(false)));
+        this.setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(NODROP, Boolean.valueOf(false)));
     }
 
     @Override

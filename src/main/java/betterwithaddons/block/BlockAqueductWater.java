@@ -37,7 +37,7 @@ public class BlockAqueductWater extends BlockFluidClassic {
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, name));
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
         this.setTickRandomly(true);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(LEVEL, 0));
+        this.setDefaultState(getDefaultState().withProperty(LEVEL, 0));
     }
 
     @Override

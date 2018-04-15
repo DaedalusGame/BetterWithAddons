@@ -22,7 +22,7 @@ public class BlockWhiteBrick extends BlockBase implements IHasVariants {
     public BlockWhiteBrick() {
         super("whitebrick", Material.ROCK);
 
-        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumType.DEFAULT));
+        this.setDefaultState(getDefaultState().withProperty(VARIANT, EnumType.DEFAULT));
         this.setHardness(3.0f);
     }
 

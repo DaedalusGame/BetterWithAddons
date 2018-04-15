@@ -74,7 +74,7 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
         this.setHardness(0.6F);
         this.setHarvestLevel("shovel", 0);
         this.setSoundType(SoundType.PLANT);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(SNOWY, Boolean.valueOf(false)).withProperty(VARIANT, ExtraGrassType.FARM));
+        this.setDefaultState(getDefaultState().withProperty(SNOWY, Boolean.valueOf(false)).withProperty(VARIANT, ExtraGrassType.FARM));
 
         this.setUnlocalizedName("extra_grass");
         this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "extra_grass"));

@@ -52,7 +52,7 @@ public class BlockRopePost extends BlockFence {
         this.setUnlocalizedName(name);
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
 
-        setDefaultState(blockState.getBaseState().withProperty(HAS_PLANKS,false).withProperty(HAS_POST,false));
+        setDefaultState(getDefaultState().withProperty(HAS_PLANKS,false).withProperty(HAS_POST,false));
         this.setHardness(0.5F);
     }
 

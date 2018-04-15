@@ -30,7 +30,7 @@ public class BlockModUnbaked extends BlockBase implements IHasVariants {
 
     public BlockModUnbaked() {
         super("unbaked", Material.GROUND);
-        this.setDefaultState(blockState.getBaseState().withProperty(TYPE,EnumType.MELON));
+        this.setDefaultState(getDefaultState().withProperty(TYPE,EnumType.MELON));
     }
 
     public static ItemStack getStack(EnumType type) {

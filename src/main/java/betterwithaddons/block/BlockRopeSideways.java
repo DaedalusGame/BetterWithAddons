@@ -59,7 +59,7 @@ public class BlockRopeSideways extends BlockContainerBase {
 
     protected BlockRopeSideways(String name) {
         super(name, Material.WOOD);
-        setDefaultState(blockState.getBaseState().withProperty(HAS_PLANKS,false));
+        setDefaultState(getDefaultState().withProperty(HAS_PLANKS,false));
         this.setHardness(0.5F);
     }
 

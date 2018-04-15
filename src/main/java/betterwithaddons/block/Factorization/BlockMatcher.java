@@ -25,7 +25,7 @@ public class BlockMatcher extends BlockBase {
         super("block_matcher", Material.ROCK);
         this.setHardness(3.5f);
         this.setTickRandomly(true);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(ACTIVE, false));
+        this.setDefaultState(getDefaultState().withProperty(ACTIVE, false));
     }
 
     @Override

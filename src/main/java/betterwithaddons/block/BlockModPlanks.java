@@ -18,7 +18,6 @@ public class BlockModPlanks extends Block {
     public BlockModPlanks(ModWoods variant)
     {
         super(Material.WOOD);
-        this.setDefaultState(this.blockState.getBaseState());
         this.setHardness(2.0F).setResistance(5.0F);
         this.setSoundType(SoundType.WOOD);
         this.setHarvestLevel("axe", 0);
