@@ -88,8 +88,9 @@ public class BlockLantern extends BlockBase {
 
     public boolean canBlockStay(World worldIn, BlockPos pos, EnumFacing attachDir)
     {
-        IBlockState attach = worldIn.getBlockState(pos.offset(attachDir));
-        return isSuitableAttachment(attach.getBlockFaceShape(worldIn,pos,attachDir.getOpposite()),attachDir);
+        BlockPos attachPos = pos.offset(attachDir);
+        IBlockState attach = worldIn.getBlockState(attachPos);
+        return isSuitableAttachment(attach.getBlockFaceShape(worldIn, attachPos,attachDir.getOpposite()),attachDir);
     }
 
     private boolean isSuitableAttachment(BlockFaceShape shape, EnumFacing attachDir) {

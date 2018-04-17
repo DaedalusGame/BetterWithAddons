@@ -73,8 +73,9 @@ public class HardcorePackingHandler {
         for (EnumFacing facing : EnumFacing.VALUES) {
             if(facing == except)
                 continue;
-            IBlockState wallState = world.getBlockState(pos.offset(facing));
-            if(wallState.getBlockFaceShape(world,pos,facing.getOpposite()) != BlockFaceShape.SOLID)
+            BlockPos wallPos = pos.offset(facing);
+            IBlockState wallState = world.getBlockState(wallPos);
+            if(wallState.getBlockFaceShape(world, wallPos,facing.getOpposite()) != BlockFaceShape.SOLID)
                 return false;
         }
 
