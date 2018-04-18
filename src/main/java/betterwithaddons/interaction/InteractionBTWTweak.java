@@ -4,6 +4,7 @@ import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.recipes.DoorSawRecipe;
+import betterwithaddons.handler.BurnHandler;
 import betterwithaddons.handler.EggIncubationHandler;
 import betterwithaddons.handler.SoapHandler;
 import betterwithaddons.item.ModItems;
@@ -46,6 +47,7 @@ public class InteractionBTWTweak extends Interaction {
     public static boolean ASH_FERTILIZER = true;
     public static boolean WOOL_RECYCLING = true;
     public static boolean LOGS_SMELT_TO_ASH = true;
+    public static boolean LOGS_BURN_TO_ASH = true;
     public static boolean REPLACE_WRITABLE_BOOK_RECIPE = true;
     public static boolean RUSTY_MINESHAFTS = true;
     public static boolean INFESTED_MINESHAFTS = true;
@@ -66,6 +68,7 @@ public class InteractionBTWTweak extends Interaction {
         ASH_FERTILIZER = loadPropBool("AshFertilizer","Potash is a valid fertilizer.",ASH_FERTILIZER);
         WOOL_RECYCLING = loadPropBool("WoolRecycling","Wool can be rendered back into it's components. You might want to disable this if you use mods that violate Hardcore Shearing.",WOOL_RECYCLING);
         LOGS_SMELT_TO_ASH = loadPropBool("LogsSmeltToAsh","Logs burn into ash in a furnace. This only works if they wouldn't burn into anything else.",LOGS_SMELT_TO_ASH);
+        LOGS_BURN_TO_ASH = loadPropBool("LogsBurnToAsh","Logs burn into ash in world.",LOGS_BURN_TO_ASH);
         REPLACE_WRITABLE_BOOK_RECIPE = loadPropBool("ReplaceWritableBookRecipe","Changes writable books to require the Ink and Quill item.",REPLACE_WRITABLE_BOOK_RECIPE);
         RUSTY_MINESHAFTS = loadPropBool("RustedMineshafts","Rails in Mineshafts are rusted and melt down into much less iron.",RUSTY_MINESHAFTS);
         INFESTED_MINESHAFTS = loadPropBool("InfestedMineshafts","Logs in Mineshafts are infested by Termites and crumble into sawdust when harvested.",INFESTED_MINESHAFTS);
@@ -104,6 +107,8 @@ public class InteractionBTWTweak extends Interaction {
             MinecraftForge.EVENT_BUS.register(new EggIncubationHandler());
         if(REPLACE_WRITABLE_BOOK_RECIPE)
             BetterWithAddons.removeCraftingRecipe(new ResourceLocation("minecraft","writable_book"));
+        if(LOGS_BURN_TO_ASH)
+            MinecraftForge.EVENT_BUS.register(BurnHandler.class);
 
         ConditionModule.MODULES.put("ReplaceWritableBookRecipe",() -> REPLACE_WRITABLE_BOOK_RECIPE);
     }

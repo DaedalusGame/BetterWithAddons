@@ -127,11 +127,8 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
 
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        if(willHarvest)
-            if(player.isCreative() || (isBroken(state) && exposedToElements(world,pos)))
-                return super.removedByPlayer(state,world,pos,player,willHarvest);
+        return (player.isCreative() || (isBroken(state) && exposedToElements(world, pos))) && super.removedByPlayer(state, world, pos, player, willHarvest);
 
-        return false;
     }
 
     public boolean exposedToElements(World world, BlockPos pos) {
