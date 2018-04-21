@@ -55,6 +55,11 @@ public class InteractionEriottoMod extends Interaction {
     public static double KARATE_ZOMBIE_DROP_MULTIPLIER = 1.0f;
     public static int CHERRY_BOX_CRAFTING_TIME = 500;
     public static int MAX_SPIRIT_AGE = 1200;
+    public static int IRON_PER_IRONSAND = 3;
+    public static int SAND_PER_IRONSAND = 8;
+    public static double KERA_TAMAHAGANE_CHANCE = 0.30;
+    public static double KERA_HOCHOTETSU_CHANCE = 0.20;
+    public static double KERA_IRON_CHANCE = 0.20;
     public static int KARATE_ZOMBIE_MAX_SPIRITS = 128;
     public ArrayList<Item> REPAIRABLE_TOOLS = new ArrayList<>();
 
@@ -70,6 +75,8 @@ public class InteractionEriottoMod extends Interaction {
         ALTERNATE_INFUSER_RECIPE = loadPropBool("AlternateInfuserRecipe","Hardcore Structures pushes the Enchanting Table behind some exploration. This enables an alternate recipe if you want to start japanese culture before finding a Desert Temple.",ALTERNATE_INFUSER_RECIPE);
         JAPANESE_RANDOM_SPAWN = loadPropBool("RandomJapaneseMobs","Karate Zombies infused with ancestral spirit spawn randomly.",JAPANESE_RANDOM_SPAWN);
         KARATE_ZOMBIE_SPAWN_WEIGHT = loadPropInt("RandomJapaneseMobsWeight","Weight for a karate zombie to spawn.", KARATE_ZOMBIE_SPAWN_WEIGHT);
+        IRON_PER_IRONSAND = loadPropInt("IronPerIronSand","How much iron should be required per block of iron sand", IRON_PER_IRONSAND);
+        SAND_PER_IRONSAND = loadPropInt("SandPerIronSand","How much sand should be required per block of iron sand", SAND_PER_IRONSAND);
         doesNotNeedRestart(() -> {
             SOULSAND_MAX_SPIRITS = loadPropInt("MaxSpirits","Maximum amount of spirit to be stored in Infused Soul Sand.", SOULSAND_MAX_SPIRITS);
             BOTTLE_MAX_SPIRITS = loadPropInt("SpiritsPerBottle","How much spirit is contained in one bottle.", BOTTLE_MAX_SPIRITS);
@@ -80,6 +87,9 @@ public class InteractionEriottoMod extends Interaction {
             KARATE_ZOMBIE_SPIRIT_PER_LEVEL = loadPropInt("KarateZombiePerLevel","How much spirit is required for Karate Zombies to level up.",KARATE_ZOMBIE_SPIRIT_PER_LEVEL);
             KARATE_ZOMBIE_DROP_MULTIPLIER = loadPropDouble("KarateZombieDropMultiplier","How much spirit is dropped by Karate Zombies, as a ratio of how much they have.",KARATE_ZOMBIE_DROP_MULTIPLIER);
             CHERRY_BOX_CRAFTING_TIME = loadPropInt("CherryBoxCraftingTime","How long the drying and soaking units take to process one item, in ticks.",CHERRY_BOX_CRAFTING_TIME);
+            KERA_TAMAHAGANE_CHANCE = loadPropDouble("KeraTamahaganeChance","Chance to obtain Tamahagane from breaking Kera.",KERA_TAMAHAGANE_CHANCE);
+            KERA_HOCHOTETSU_CHANCE = loadPropDouble("KeraHochoTetsuChance","Chance to obtain Hocho-Tetsu from breaking Kera.",KERA_HOCHOTETSU_CHANCE);
+            KERA_IRON_CHANCE = loadPropDouble("KeraIronChance","Chance to obtain Iron from breaking Kera.",KERA_IRON_CHANCE);
         });
     }
 
@@ -169,11 +179,14 @@ public class InteractionEriottoMod extends Interaction {
         OreDictionary.registerOre("ingotTamahagane", ModItems.MATERIAL_JAPAN.getMaterial("tamahagane_finished"));
         OreDictionary.registerOre("ingotHochoTetsu", ModItems.MATERIAL_JAPAN.getMaterial("hocho_tetsu_finished"));
 
-        CraftingManagerSandNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModBlocks.IRON_SAND, 1)}, new OreIngredient("blockIron"), 8);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.SAND, 8)}, IngredientSized.fromBlock(ModBlocks.IRON_SAND, 1), 0);
+        Ingredient ironSandInput = IRON_PER_IRONSAND % 9 == 0 ? IngredientSized.fromOredict("blockIron",IRON_PER_IRONSAND/9) : IngredientSized.fromOredict("ingotIron",IRON_PER_IRONSAND);
+        ItemStack ironSandOutput = IRON_PER_IRONSAND % 9 == 0 ? new ItemStack(Blocks.IRON_BLOCK,IRON_PER_IRONSAND/9) : new ItemStack(Items.IRON_INGOT,IRON_PER_IRONSAND);
+
+        CraftingManagerSandNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModBlocks.IRON_SAND, 1)}, ironSandInput, SAND_PER_IRONSAND);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ironSandOutput, new ItemStack(Blocks.SAND, SAND_PER_IRONSAND)}, IngredientSized.fromBlock(ModBlocks.IRON_SAND, 1), 0);
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, new ItemStack(ModItems.SASHIMI, 3)}, IngredientSized.fromStacks(new ItemStack(Items.FISH, 1)), 0);
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModItems.FUGU_SAC, 1), new ItemStack(ModItems.PREPARED_PUFFER, 3)}, Ingredient.fromStacks(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata())), 0);
-        CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.MATERIAL_JAPAN.getMaterial("iron_scales", 27)}, Ingredient.fromStacks(new ItemStack(ModBlocks.IRON_SAND, 1)));
+        CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.MATERIAL_JAPAN.getMaterial("iron_scales", IRON_PER_IRONSAND * 3)}, Ingredient.fromStacks(new ItemStack(ModBlocks.IRON_SAND, 1)));
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.MATERIAL_JAPAN.getMaterial("washi", 9)}, Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("mulberry_sheet")), 0);
         TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(tea)}, Ingredient.fromStacks(ModItems.TEA_WILTED.getStack(tea)), 0));
         TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(tea)}, Ingredient.fromStacks(ModItems.TEA_SOAKED.getStack(tea)), 0));
