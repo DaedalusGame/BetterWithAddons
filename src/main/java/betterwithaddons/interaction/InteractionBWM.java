@@ -141,9 +141,9 @@ public class InteractionBWM extends Interaction {
     public static ItemStack convertOneWool(ItemStack stack)
     {
         if(stack.getItem() == Item.getItemFromBlock(Blocks.WOOL))
-            return new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,stack.getMetadata());
+            return new ItemStack(ModItems.WOOL,stack.getCount() * WOOL_MULTIPLIER,stack.getMetadata());
         else if(ItemUtil.matchesOreDict(stack,"blockWool"))
-            return new ItemStack(ModItems.wool,stack.getCount() * WOOL_MULTIPLIER,0);
+            return new ItemStack(ModItems.WOOL,stack.getCount() * WOOL_MULTIPLIER,0);
         else
             return stack;
     }
@@ -163,10 +163,6 @@ public class InteractionBWM extends Interaction {
                     return convertShearedWool(sheep.onSheared(new ItemStack(Items.SHEARS), world, pos, 0));
                 }
                 return NonNullList.create();});
-
-            for (EnumDyeColor color : EnumDyeColor.values()) {
-                ItemStack wool = ModItems.wool.getByColor(color);
-            }
         }
         if(DYE_IN_CAULDRON) {
             //Dyeing
@@ -182,13 +178,22 @@ public class InteractionBWM extends Interaction {
                 }
         }
 
+        ModBlocks.ZEN_SAND.setBaseState(Blocks.SAND.getDefaultState());
+        ModBlocks.ZEN_RED_SAND.setBaseState(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND));
+        ModBlocks.ZEN_SOUL_SAND.setBaseState(Blocks.SOUL_SAND.getDefaultState());
+        ModBlocks.ZEN_IRON_SAND.setBaseState(ModBlocks.IRON_SAND.getDefaultState());
+
+        HCPiles.registerPile(ModBlocks.ZEN_SAND,new ItemStack(BWMItems.SAND_PILE,3));
+        HCPiles.registerPile(ModBlocks.ZEN_RED_SAND,new ItemStack(BWMItems.RED_SAND_PILE,3));
+        HCPiles.registerPile(ModBlocks.ZEN_SOUL_SAND,new ItemStack(ModItems.SOUL_SAND_PILE,3));
+
         //Temporary until we PR soulsand piles
-        HCPiles.registerPile(Blocks.SOUL_SAND,new ItemStack(ModItems.soulSandPile,3));
+        HCPiles.registerPile(Blocks.SOUL_SAND,new ItemStack(ModItems.SOUL_SAND_PILE,3));
 
         OreDictionary.getOres("cookedCarrot").clear();
-        OreDictionary.registerOre("cookedCarrot", new ItemStack(ModItems.cookedCarrot));
-        OreDictionary.registerOre("cookedCarrot", new ItemStack(ModItems.bakedCarrot));
-        OreDictionary.registerOre("cookedPotato", new ItemStack(ModItems.cookedPotato));
+        OreDictionary.registerOre("cookedCarrot", new ItemStack(ModItems.COOKED_CARROT));
+        OreDictionary.registerOre("cookedCarrot", new ItemStack(ModItems.BAKED_CARROT));
+        OreDictionary.registerOre("cookedPotato", new ItemStack(ModItems.COOKED_POTATO));
 
         OreDictionary.registerOre("listAllExplosives", new ItemStack(Blocks.TNT));
         OreDictionary.registerOre("listAllExplosives", new ItemStack(Items.GUNPOWDER));
@@ -198,11 +203,11 @@ public class InteractionBWM extends Interaction {
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BLASTING_OIL));
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HELLFIRE_DUST));
         OreDictionary.registerOre("listAllExplosives", ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE));
-        OreDictionary.registerOre("listAllExplosives", ModItems.materialBag.getMaterial("gunpowder"));
-        OreDictionary.registerOre("listAllExplosives", ModItems.materialBag.getMaterial("hellfire"));
+        OreDictionary.registerOre("listAllExplosives", ModItems.MATERIAL_BAG.getMaterial("gunpowder"));
+        OreDictionary.registerOre("listAllExplosives", ModItems.MATERIAL_BAG.getMaterial("hellfire"));
 
         OreDictionary.registerOre("listAllmeat", Items.RABBIT);
-        OreDictionary.registerOre("listAllmeatcooked", ModItems.cookedClownfish);
+        OreDictionary.registerOre("listAllmeatcooked", ModItems.COOKED_CLOWNFISH);
         OreDictionary.registerOre("blockDung", BlockAesthetic.getStack(BlockAesthetic.EnumType.DUNG));
 
         OreDictionary.registerOre("book", Items.WRITTEN_BOOK);
@@ -214,7 +219,7 @@ public class InteractionBWM extends Interaction {
             CraftingManagerPacking.getInstance().addRecipe(Blocks.SAND.getDefaultState(), new ItemStack(Blocks.SAND), IngredientSized.fromItem(BWMItems.SAND_PILE, 4));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND), new ItemStack(Blocks.SAND, 1, 1), IngredientSized.fromItem(BWMItems.RED_SAND_PILE, 4));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.GRAVEL.getDefaultState(), new ItemStack(Blocks.GRAVEL), IngredientSized.fromItem(BWMItems.GRAVEL_PILE, 4));
-            CraftingManagerPacking.getInstance().addRecipe(Blocks.SOUL_SAND.getDefaultState(), new ItemStack(Blocks.SOUL_SAND), IngredientSized.fromItem(ModItems.soulSandPile, 4));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.SOUL_SAND.getDefaultState(), new ItemStack(Blocks.SOUL_SAND), IngredientSized.fromItem(ModItems.SOUL_SAND_PILE, 4));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.CLAY.getDefaultState(), new ItemStack(Blocks.CLAY), IngredientSized.fromItem(Items.CLAY_BALL, 4));
             CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.NETHERCLAY), BlockAesthetic.getStack(BlockAesthetic.EnumType.NETHERCLAY), IngredientSized.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHER_SLUDGE, 4)));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.SNOW.getDefaultState(), new ItemStack(Blocks.SNOW), IngredientSized.fromItem(Items.SNOWBALL, 4));
@@ -225,47 +230,47 @@ public class InteractionBWM extends Interaction {
             CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.SOAP), BlockAesthetic.getStack(BlockAesthetic.EnumType.SOAP), IngredientSized.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOAP, 9)));
         }
 
-        BlockBUD.addBlacklistBlock(ModBlocks.pcbwire);
+        BlockBUD.addBlacklistBlock(ModBlocks.PCB_WIRE);
 
-        ItemStack arrowhead = ModItems.material.getMaterial("arrowhead");
+        ItemStack arrowhead = ModItems.MATERIAL.getMaterial("arrowhead");
         ItemStack haft = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT);
         ItemStack string = new ItemStack(BWMBlocks.ROPE);
         ItemStack feather = new ItemStack(Items.FEATHER);
         String oreIronIngot = "ingotIron";
-        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(Ingredient.fromItem(Items.FERMENTED_SPIDER_EYE),Ingredient.fromStacks(new ItemStack(Blocks.STONEBRICK)),new OreIngredient("dustPotash")),Lists.newArrayList(new ItemStack(ModBlocks.pcbblock)));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(Items.BEETROOT),new ItemStack(ModItems.cookedBeetroot));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(Items.CARROT),new ItemStack(ModItems.cookedCarrot));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(Items.POTATO),new ItemStack(ModItems.cookedPotato));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(Items.EGG),new ItemStack(ModItems.cookedEgg));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata())),new ItemStack(ModItems.cookedClownfish));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata())),new ItemStack(ModItems.cookedPuffer));
+        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(Ingredient.fromItem(Items.FERMENTED_SPIDER_EYE),Ingredient.fromStacks(new ItemStack(Blocks.STONEBRICK)),new OreIngredient("dustPotash")),Lists.newArrayList(new ItemStack(ModBlocks.PCB_BLOCK)));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(Items.BEETROOT),new ItemStack(ModItems.COOKED_BEETROOT));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(Items.CARROT),new ItemStack(ModItems.COOKED_CARROT));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(Items.POTATO),new ItemStack(ModItems.COOKED_POTATO));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(Items.EGG),new ItemStack(ModItems.COOKED_EGG));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata())),new ItemStack(ModItems.COOKED_CLOWNFISH));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata())),new ItemStack(ModItems.COOKED_PUFFER));
 
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(Items.BONE,2)), getIngredient(new ItemStack(Items.DYE, 8, 15))),ModItems.material.getMaterial("bone_ingot"));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(ModItems.material.getMaterial("midori")),ModItems.material.getMaterial("midori_popped"));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(ModItems.groundMeat),new ItemStack(ModItems.meatballs, 1));
-        BWRegistry.MILLSTONE.addMillRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.worldScaleOre, 1, 1)),new ItemStack(ModBlocks.worldScale, 1));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(Items.BONE,2)), getIngredient(new ItemStack(Items.DYE, 8, 15))),ModItems.MATERIAL.getMaterial("bone_ingot"));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(ModItems.MATERIAL.getMaterial("midori")),ModItems.MATERIAL.getMaterial("midori_popped"));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(ModItems.GROUND_MEAT),new ItemStack(ModItems.MEATBALLS, 1));
+        BWRegistry.MILLSTONE.addMillRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.WORLD_SCALE_ORE, 1, 1)),new ItemStack(ModBlocks.WORLD_SCALE, 1));
 
         //Bark
-        ModBlocks.mulberryLog.barkStack = ModItems.materialJapan.getMaterial("bark_mulberry");
-        ModBlocks.sakuraLog.barkStack = ModItems.materialJapan.getMaterial("bark_sakura");
+        ModBlocks.MULBERRY_LOG.barkStack = ModItems.MATERIAL_JAPAN.getMaterial("bark_mulberry");
+        ModBlocks.SAKURA_LOG.barkStack = ModItems.MATERIAL_JAPAN.getMaterial("bark_sakura");
 
         //Thorn Vines
         ItemStack rosebush = new ItemStack(Blocks.DOUBLE_PLANT, 4, BlockDoublePlant.EnumPlantType.ROSE.getMeta());
-        ItemStack thornrose = ModItems.material.getMaterial("thornrose", 2);
+        ItemStack thornrose = ModItems.MATERIAL.getMaterial("thornrose", 2);
         ItemStack soulUrn = new ItemStack(BWMBlocks.URN, 1, BlockUrn.EnumType.FULL.getMeta());
         ItemStack cactus = new ItemStack(Items.DYE,1, EnumDyeColor.GREEN.getDyeDamage());
         ItemStack dung = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG, 1);
-        ItemStack midori = ModItems.material.getMaterial("midori",8);
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(getIngredient(cactus), getIngredient(rosebush), getIngredient(dung), getIngredient(soulUrn)),Lists.newArrayList(new ItemStack(ModBlocks.thornrose)));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(getIngredient(midori), getIngredient(thornrose), getIngredient(dung), getIngredient(soulUrn)),Lists.newArrayList(new ItemStack(ModBlocks.thornrose)));
-        BWRegistry.MILLSTONE.addMillRecipe(ModItems.material.getMaterial("midori",1),cactus);
+        ItemStack midori = ModItems.MATERIAL.getMaterial("midori",8);
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(getIngredient(cactus), getIngredient(rosebush), getIngredient(dung), getIngredient(soulUrn)),Lists.newArrayList(new ItemStack(ModBlocks.THORN_ROSE)));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(getIngredient(midori), getIngredient(thornrose), getIngredient(dung), getIngredient(soulUrn)),Lists.newArrayList(new ItemStack(ModBlocks.THORN_ROSE)));
+        BWRegistry.MILLSTONE.addMillRecipe(ModItems.MATERIAL.getMaterial("midori",1),cactus);
 
         //Alicio Sapling
         ItemStack wheat = new ItemStack(Items.WHEAT, 16);
         ItemStack flesh = new ItemStack(Items.ROTTEN_FLESH, 4);
         ItemStack red = new ItemStack(Items.DYE, 8, EnumDyeColor.RED.getDyeDamage());
         ItemStack tree = new ItemStack(Blocks.SAPLING, 1, BlockPlanks.EnumType.BIRCH.getMetadata());
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(getIngredient(tree), getIngredient(wheat), getIngredient(red), getIngredient(flesh)),new ItemStack(ModBlocks.luretreeSapling));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(getIngredient(tree), getIngredient(wheat), getIngredient(red), getIngredient(flesh)),new ItemStack(ModBlocks.LURETREE_SAPLING));
 
         if (MILL_CLAY) {
             BWRegistry.MILLSTONE.addMillRecipe(new ItemStack(Blocks.HARDENED_CLAY, 1),new ItemStack(Items.BRICK, 4));
@@ -275,14 +280,14 @@ public class InteractionBWM extends Interaction {
 
             for (int i = 0; i < len; ++i) {
                 EnumDyeColor dye = dyes[i];
-                ItemStack brick = new ItemStack(ModItems.stainedBrick, 1, dye.getMetadata());
-                BWRegistry.MILLSTONE.addMillRecipe(new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata()),new ItemStack(ModItems.stainedBrick, 4, dye.getMetadata()));
+                ItemStack brick = new ItemStack(ModItems.STAINED_BRICK, 1, dye.getMetadata());
+                BWRegistry.MILLSTONE.addMillRecipe(new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata()),new ItemStack(ModItems.STAINED_BRICK, 4, dye.getMetadata()));
                 //GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.coloredBrick, 1, dye.getMetadata()), "bb", "bb", 'b', brick);
             }
         }
 
         if (!CHORUS_IN_CAULDRON)
-            GameRegistry.addSmelting(ModItems.material.getMaterial("midori"), ModItems.material.getMaterial("midori_popped"), 0.1f);
+            GameRegistry.addSmelting(ModItems.MATERIAL.getMaterial("midori"), ModItems.MATERIAL.getMaterial("midori_popped"), 0.1f);
     }
 
     private StackIngredient getIngredient(ItemStack stack) {
@@ -293,18 +298,18 @@ public class InteractionBWM extends Interaction {
     public void postInit() {
         //Fixes baked stuff showing up in the cauldron
         removeCauldronRecipe(new ItemStack(Items.BAKED_POTATO));
-        removeCauldronRecipe(new ItemStack(ModItems.bakedCarrot));
-        removeCauldronRecipe(new ItemStack(ModItems.bakedBeetroot));
+        removeCauldronRecipe(new ItemStack(ModItems.BAKED_CARROT));
+        removeCauldronRecipe(new ItemStack(ModItems.BAKED_BEETROOT));
 
         if (CHORUS_IN_CAULDRON)
             BetterWithAddons.removeSmeltingRecipe(new ItemStack(Items.CHORUS_FRUIT_POPPED));
 
         for(ItemStack stack : OreDictionary.getOres("listAllmeat")) {
-            ItemStack groundMeat = new ItemStack(ModItems.groundMeat);
+            ItemStack groundMeat = new ItemStack(ModItems.GROUND_MEAT);
             ItemStack meatStack = stack.copy();
             meatStack.setCount(1);
             if(meatStack.getItem() instanceof ItemFood) {
-                int amount = ((ItemFood) meatStack.getItem()).getHealAmount(meatStack) / ModItems.groundMeat.getHealAmount(groundMeat);
+                int amount = ((ItemFood) meatStack.getItem()).getHealAmount(meatStack) / ModItems.GROUND_MEAT.getHealAmount(groundMeat);
                 groundMeat.setCount(Math.max(amount,1));
             }
             BWRegistry.MILLSTONE.addMillRecipe(meatStack,groundMeat);

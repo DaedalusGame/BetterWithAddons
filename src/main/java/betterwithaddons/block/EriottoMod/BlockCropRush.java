@@ -114,13 +114,13 @@ public class BlockCropRush extends BlockCrops implements IPlantable, IHasVariant
     @Override
     protected Item getSeed()
     {
-        return Item.getItemFromBlock(ModBlocks.rush);
+        return Item.getItemFromBlock(ModBlocks.RUSH);
     }
 
     @Override
     protected Item getCrop()
     {
-        return ModItems.materialJapan;
+        return ModItems.MATERIAL_JAPAN;
     }
 
     @Override

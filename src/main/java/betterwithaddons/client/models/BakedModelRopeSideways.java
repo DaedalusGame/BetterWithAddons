@@ -28,7 +28,7 @@ import java.util.List;
 public class BakedModelRopeSideways implements IBakedModel {
     @Override
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
-        if(state.getBlock() != ModBlocks.ropeSideways)
+        if(state.getBlock() != ModBlocks.ROPE_SIDEWAYS)
             return Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager().getMissingModel().getQuads(state, side, rand);
 
         Minecraft mc = Minecraft.getMinecraft();

@@ -30,140 +30,164 @@ import java.util.ArrayList;
 public class ModBlocks {
     public static ArrayList<Block> LIST = new ArrayList<Block>();
 
-    @ObjectHolder("betterwithaddons:banner_detector")
-    public static BlockBannerDetector bannerDetector;
-    @ObjectHolder("betterwithaddons:world_scale")
-    public static BlockWorldScale worldScale;
-    @ObjectHolder("betterwithaddons:world_scale_active")
-    public static BlockWorldScaleActive worldScaleActive;
-    @ObjectHolder("betterwithaddons:elytra_magma")
-    public static BlockElytraMagma elytraMagma;
-    @ObjectHolder("betterwithaddons:extra_grass")
-    public static BlockExtraGrass grass;
-    @ObjectHolder("betterwithaddons:pcb_wire")
-    public static BlockWirePCB pcbwire;
-    @ObjectHolder("betterwithaddons:pcb_block")
-    public static BlockPCB pcbblock;
-    @ObjectHolder("betterwithaddons:lattice")
-    public static BlockLattice lattice;
-    @ObjectHolder("betterwithaddons:alchemical_dragon")
-    public static BlockAlchDragon alchDragon;
-    @ObjectHolder("betterwithaddons:log_mulberry")
-    public static BlockModLog mulberryLog;
-    @ObjectHolder("betterwithaddons:log_sakura")
-    public static BlockModLog sakuraLog;
-    @ObjectHolder("betterwithaddons:planks_mulberry")
-    public static BlockModPlanks mulberryPlanks;
-    @ObjectHolder("betterwithaddons:planks_sakura")
-    public static BlockModPlanks sakuraPlanks;
-    @ObjectHolder("betterwithaddons:crop_rush")
-    public static BlockCropRush rush;
-    @ObjectHolder("betterwithaddons:crop_rice")
-    public static BlockCropRice rice;
-    @ObjectHolder("betterwithaddons:crop_tea")
-    public static BlockCropTea tea;
-    @ObjectHolder("betterwithaddons:bricks_stained")
-    public static BlockColoredBrick coloredBrick;
-    @ObjectHolder("betterwithaddons:slat")
-    public static BlockSlat bambooSlats;
-    @ObjectHolder("betterwithaddons:iron_sand")
-    public static BlockIronSand ironSand;
-    @ObjectHolder("betterwithaddons:kera")
-    public static BlockKera kera;
-    @ObjectHolder("betterwithaddons:netted_screen")
-    public static BlockNettedScreen nettedScreen;
-    @ObjectHolder("betterwithaddons:tatara")
-    public static BlockTatara tatara;
-    @ObjectHolder("betterwithaddons:cherrybox")
-    public static BlockCherryBox cherrybox;
-    @ObjectHolder("betterwithaddons:nabe")
-    public static BlockNabe nabe;
     @ObjectHolder("betterwithaddons:world_scale_ore")
-    public static BlockWorldScaleOre worldScaleOre;
-    @ObjectHolder("betterwithaddons:bamboo")
-    public static BlockBamboo bamboo;
-    @ObjectHolder("betterwithaddons:leaves_sakura")
-    public static BlockModLeaves sakuraLeaves;
-    @ObjectHolder("betterwithaddons:sapling_sakura")
-    public static BlockModSapling sakuraSapling;
-    @ObjectHolder("betterwithaddons:leaves_mulberry")
-    public static BlockModLeaves mulberryLeaves;
-    @ObjectHolder("betterwithaddons:sapling_mulberry")
-    public static BlockModSapling mulberrySapling;
-    @ObjectHolder("betterwithaddons:leafpile_sakura")
-    public static BlockCherryLeafPile sakuraLeafPile;
-    @ObjectHolder("betterwithaddons:thorn_rose")
-    public static BlockThornRose thornrose;
-    @ObjectHolder("betterwithaddons:thorns")
-    public static BlockThorns thorns;
-    @ObjectHolder("betterwithaddons:leaves_luretree")
-    public static BlockModLeaves luretreeLeaves;
-    @ObjectHolder("betterwithaddons:sapling_luretree")
-    public static BlockLureTreeSapling luretreeSapling;
-    @ObjectHolder("betterwithaddons:log_luretree")
-    public static BlockModLog luretreeLog;
-    @ObjectHolder("betterwithaddons:log_luretree_face")
-    public static BlockLureTree luretreeFace;
-    @ObjectHolder("betterwithaddons:paper_wall")
-    public static BlockModPane paperWall;
-    @ObjectHolder("betterwithaddons:wrought_bars")
-    public static BlockModPane wroughtBars;
-    @ObjectHolder("betterwithaddons:shoji")
-    public static BlockModPane shoji;
-    @ObjectHolder("betterwithaddons:fusuma")
-    public static BlockFusumaPainted fusuma;
-    @ObjectHolder("betterwithaddons:chandelier")
-    public static BlockChandelier chandelier;
-    @ObjectHolder("betterwithaddons:wood_lamp")
-    public static BlockLantern paperLantern;
-    @ObjectHolder("betterwithaddons:wrought_lamp")
-    public static BlockLantern wroughtLantern;
-    @ObjectHolder("betterwithaddons:tatami")
-    public static BlockTatami tatami;
-    @ObjectHolder("betterwithaddons:pavement")
-    public static BlockPavement pavement;
-    @ObjectHolder("betterwithaddons:wet_soap")
-    public static BlockSoap wetSoap;
-    @ObjectHolder("betterwithaddons:whitebrick")
-    public static BlockWhiteBrick whiteBrick;
-    @ObjectHolder("betterwithaddons:chute")
-    public static BlockChute chute;
-    @ObjectHolder("betterwithaddons:ecksie_sapling")
-    public static BlockEcksieSapling ecksieSapling;
-    @ObjectHolder("betterwithaddons:aqueduct_water")
-    public static BlockAqueductWater aqueductWater;
-    @ObjectHolder("betterwithaddons:aqueduct")
-    public static BlockAqueduct aqueduct;
-    @ObjectHolder("betterwithaddons:greatbow")
-    public static BlockLegendarium legendarium;
-    @ObjectHolder("betterwithaddons:spindle")
-    public static BlockSpindle spindle;
-    @ObjectHolder("betterwithaddons:loom")
-    public static BlockLoom loom;
-    @ObjectHolder("betterwithaddons:ancestry_sand")
-    public static BlockAncestrySand ancestrySand;
-    @ObjectHolder("betterwithaddons:ancestry_infuser")
-    public static BlockInfuser infuser;
-    @ObjectHolder("betterwithaddons:unbaked")
-    public static BlockModUnbaked unbaked;
-    @ObjectHolder("betterwithaddons:scaffold")
-    public static BlockScaffold scaffold;
-    @ObjectHolder("betterwithaddons:rope_sideways")
-    public static BlockRopeSideways ropeSideways;
-    @ObjectHolder("betterwithaddons:rope_post")
-    public static BlockRopePost ropePost;
+    public static BlockWorldScaleOre WORLD_SCALE_ORE;
+    @ObjectHolder("betterwithaddons:world_scale")
+    public static BlockWorldScale WORLD_SCALE;
+    @ObjectHolder("betterwithaddons:world_scale_active")
+    public static BlockWorldScaleActive WORLD_SCALE_ACTIVE;
+    @ObjectHolder("betterwithaddons:lattice")
+    public static BlockLattice LATTICE;
+
+    @ObjectHolder("betterwithaddons:bricks_stained")
+    public static BlockColoredBrick COLORED_BRICKS;
     @ObjectHolder("betterwithaddons:adobe")
-    public static BlockAdobe adobe;
-    @ObjectHolder("betterwithaddons:pond_replacement")
-    public static BlockReplacement pondReplacement;
-    @ObjectHolder("betterwithaddons:redstone_emitter")
-    public static BlockRedstoneEmitter redstoneEmitter;
+    public static BlockAdobe ADOBE;
+    @ObjectHolder("betterwithaddons:scaffold")
+    public static BlockScaffold SCAFFOLD;
+    @ObjectHolder("betterwithaddons:rope_sideways")
+    public static BlockRopeSideways ROPE_SIDEWAYS;
+    @ObjectHolder("betterwithaddons:rope_post")
+    public static BlockRopePost ROPE_POST;
+    @ObjectHolder("betterwithaddons:elytra_magma")
+    public static BlockElytraMagma ELYTRA_MAGMA;
+    @ObjectHolder("betterwithaddons:extra_grass")
+    public static BlockExtraGrass GRASS;
+
+    @ObjectHolder("betterwithaddons:thorn_rose")
+    public static BlockThornRose THORN_ROSE;
+    @ObjectHolder("betterwithaddons:thorns")
+    public static BlockThorns THORNS;
+    @ObjectHolder("betterwithaddons:leaves_luretree")
+    public static BlockModLeaves LURETREE_LEAVES;
+    @ObjectHolder("betterwithaddons:sapling_luretree")
+    public static BlockLureTreeSapling LURETREE_SAPLING;
+    @ObjectHolder("betterwithaddons:log_luretree")
+    public static BlockModLog LURETREE_LOG;
+    @ObjectHolder("betterwithaddons:log_luretree_face")
+    public static BlockLureTree LURETREE_FACE;
+
+    @ObjectHolder("betterwithaddons:unbaked")
+    public static BlockModUnbaked UNBAKED;
+
+    @ObjectHolder("betterwithaddons:chute")
+    public static BlockChute CHUTE;
+    @ObjectHolder("betterwithaddons:spindle")
+    public static BlockSpindle SPINDLE;
+    @ObjectHolder("betterwithaddons:loom")
+    public static BlockLoom LOOM;
     @ObjectHolder("betterwithaddons:box")
-    public static BlockBox box;
+    public static BlockBox BOX;
+    @ObjectHolder("betterwithaddons:redstone_emitter")
+    public static BlockRedstoneEmitter REDSTONE_EMITTER;
+    @ObjectHolder("betterwithaddons:alchemical_dragon")
+    public static BlockAlchDragon ALCHEMICAL_DRAGON;
+    @ObjectHolder("betterwithaddons:banner_detector")
+    public static BlockBannerDetector BANNER_DETECTOR;
+
+    @ObjectHolder("betterwithaddons:aqueduct_water")
+    public static BlockAqueductWater AQUEDUCT_WATER;
+    @ObjectHolder("betterwithaddons:aqueduct")
+    public static BlockAqueduct AQUEDUCT;
+
+    @ObjectHolder("betterwithaddons:pcb_wire")
+    public static BlockWirePCB PCB_WIRE;
+    @ObjectHolder("betterwithaddons:pcb_block")
+    public static BlockPCB PCB_BLOCK;
+
+    @ObjectHolder("betterwithaddons:log_mulberry")
+    public static BlockModLog MULBERRY_LOG;
+    @ObjectHolder("betterwithaddons:log_sakura")
+    public static BlockModLog SAKURA_LOG;
+    @ObjectHolder("betterwithaddons:planks_mulberry")
+    public static BlockModPlanks MULBERRY_PLANKS;
+    @ObjectHolder("betterwithaddons:planks_sakura")
+    public static BlockModPlanks SAKURA_PLANKS;
+    @ObjectHolder("betterwithaddons:sapling_mulberry")
+    public static BlockModSapling MULBERRY_SAPLING;
+    @ObjectHolder("betterwithaddons:sapling_sakura")
+    public static BlockModSapling SAKURA_SAPLING;
+    @ObjectHolder("betterwithaddons:leaves_mulberry")
+    public static BlockModLeaves MULBERRY_LEAVES;
+    @ObjectHolder("betterwithaddons:leaves_sakura")
+    public static BlockModLeaves SAKURA_LEAVES;
+    @ObjectHolder("betterwithaddons:leafpile_sakura")
+    public static BlockCherryLeafPile SAKURA_LEAFPILE;
+    @ObjectHolder("betterwithaddons:bamboo")
+    public static BlockBamboo BAMBOO;
+    @ObjectHolder("betterwithaddons:crop_rush")
+    public static BlockCropRush RUSH;
+    @ObjectHolder("betterwithaddons:crop_rice")
+    public static BlockCropRice RICE;
+    @ObjectHolder("betterwithaddons:crop_tea")
+    public static BlockCropTea TEA;
+    @ObjectHolder("betterwithaddons:slat")
+    public static BlockSlat BAMBOO_SLATS;
+    @ObjectHolder("betterwithaddons:shoji")
+    public static BlockModPane SHOJI;
+    @ObjectHolder("betterwithaddons:fusuma")
+    public static BlockFusumaPainted FUSUMA;
+    @ObjectHolder("betterwithaddons:tatami")
+    public static BlockTatami TATAMI;
+    @ObjectHolder("betterwithaddons:tatami_full")
+    public static BlockTatami TATAMI_RECESSED;
+    @ObjectHolder("betterwithaddons:zen_sand")
+    public static BlockZenSand ZEN_SAND;
+    @ObjectHolder("betterwithaddons:zen_redsand")
+    public static BlockZenSand ZEN_RED_SAND;
+    @ObjectHolder("betterwithaddons:zen_soulsand")
+    public static BlockZenSand ZEN_SOUL_SAND;
+    @ObjectHolder("betterwithaddons:zen_ironsand")
+    public static BlockZenSand ZEN_IRON_SAND;
+    @ObjectHolder("betterwithaddons:iron_sand")
+    public static BlockIronSand IRON_SAND;
+    @ObjectHolder("betterwithaddons:kera")
+    public static BlockKera KERA;
+    @ObjectHolder("betterwithaddons:ancestry_sand")
+    public static BlockAncestrySand ANCESTRY_SAND;
+    @ObjectHolder("betterwithaddons:ancestry_infuser")
+    public static BlockInfuser INFUSER;
+    @ObjectHolder("betterwithaddons:netted_screen")
+    public static BlockNettedScreen NETTED_SCREEN;
+    @ObjectHolder("betterwithaddons:tatara")
+    public static BlockTatara TATARA;
+    @ObjectHolder("betterwithaddons:cherrybox")
+    public static BlockCherryBox CHERRY_BOX;
+    @ObjectHolder("betterwithaddons:nabe")
+    public static BlockNabe NABE;
+
+    @ObjectHolder("betterwithaddons:whitebrick")
+    public static BlockWhiteBrick WHITE_BRICK;
+    @ObjectHolder("betterwithaddons:pavement")
+    public static BlockPavement PAVEMENT;
+    @ObjectHolder("betterwithaddons:paper_wall")
+    public static BlockModPane PAPER_WALL;
+    @ObjectHolder("betterwithaddons:wrought_bars")
+    public static BlockModPane WROUGHT_BARS;
+    @ObjectHolder("betterwithaddons:chandelier")
+    public static BlockChandelier CHANDELIER;
+    @ObjectHolder("betterwithaddons:wood_lamp")
+    public static BlockLantern PAPER_LANTERN;
+    @ObjectHolder("betterwithaddons:wrought_lamp")
+    public static BlockLantern WROUGHT_LANTERN;
+
+    @ObjectHolder("betterwithaddons:wet_soap")
+    public static BlockSoap WET_SOAP;
     @ObjectHolder("betterwithaddons:rail_rusted")
-    public static BlockRustyRail rustyRail;
+    public static BlockRustyRail RUSTY_RAIL;
     @ObjectHolder("betterwithaddons:log_termite")
-    public static BlockTermiteLog termiteLog;
+    public static BlockTermiteLog TERMITE_LOG;
+
+    @ObjectHolder("betterwithaddons:ecksie_sapling")
+    public static BlockEcksieSapling ECKSIE_SAPLING;
+
+    @ObjectHolder("betterwithaddons:block_matcher")
+    public static BlockMatcher BLOCK_MATCHER;
+    @ObjectHolder("betterwithaddons:legendarium")
+    public static BlockLegendarium LEGENDARIUM;
+
+    @ObjectHolder("betterwithaddons:pond_replacement")
+    public static BlockReplacement POND_REPLACEMENT;
 
     public static void load(FMLPreInitializationEvent event) {
         //FluidRegistry.registerFluid(new Fluid("brine", new ResourceLocation(Reference.MOD_ID, "blocks/brine_still"), new ResourceLocation(Reference.MOD_ID, "blocks/brine_flow")));
@@ -243,7 +267,13 @@ public class ModBlocks {
         registerBlock(new BlockNabe());
         registerBlock(new BlockModPane("shoji", Material.WOOD).setHardness(1.0f));
         registerBlock(new BlockFusumaPainted("fusuma").setHardness(1.0f));
-        registerBlock(new BlockTatami().setHardness(1.0f));
+        registerBlock(new BlockTatami("tatami").setHardness(1.0f));
+        registerBlock(new BlockTatamiRecessed("tatami_full").setHardness(1.0f));
+
+        registerBlock(new BlockZenSand("zen_sand").setShouldFall().setHardness(0.5F));
+        registerBlock(new BlockZenSand("zen_redsand").setShouldFall().setHardness(0.5F));
+        registerBlock(new BlockZenSand("zen_soulsand").setShouldSlow().setHardness(0.5F));
+        registerBlock(new BlockZenSand("zen_ironsand").setHardness(0.7F).setResistance(5.0F));
 
         registerBlock(new BlockSoap());
 
@@ -275,10 +305,10 @@ public class ModBlocks {
                 {
                     case(0):
                     case(1):
-                        drops.add(new ItemStack(adobe, 1,1));
+                        drops.add(new ItemStack(ADOBE, 1,1));
                         break;
                     case(2):
-                        drops.add(new ItemStack(adobe, 1,9));
+                        drops.add(new ItemStack(ADOBE, 1,9));
                         break;
                 }
             }
@@ -301,11 +331,11 @@ public class ModBlocks {
                     case (5):
                         return Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.DECAYABLE, false);
                     case (6):
-                        return ModBlocks.sakuraLeaves.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
+                        return ModBlocks.SAKURA_LEAVES.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
                     case (7):
-                        return ModBlocks.mulberryLeaves.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
+                        return ModBlocks.MULBERRY_LEAVES.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
                     case (8):
-                        return ModBlocks.luretreeLeaves.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
+                        return ModBlocks.LURETREE_LEAVES.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
                     default:
                         return null;
                 }

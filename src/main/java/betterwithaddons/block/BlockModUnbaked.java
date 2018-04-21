@@ -34,7 +34,7 @@ public class BlockModUnbaked extends BlockBase implements IHasVariants {
     }
 
     public static ItemStack getStack(EnumType type) {
-        return new ItemStack(ModBlocks.unbaked, 1, type.getMetadata());
+        return new ItemStack(ModBlocks.UNBAKED, 1, type.getMetadata());
     }
 
     @Override

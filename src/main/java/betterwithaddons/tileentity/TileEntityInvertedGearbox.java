@@ -18,10 +18,13 @@ public class TileEntityInvertedGearbox extends TileGearbox {
     }
 
     public void onChanged() {
-        if (this.getBlockWorld().getTotalWorldTime() % 20L != 0L)
+        tick++;
+        if (tick < 20)
             return;
+        tick = 0;
 
         EnumFacing gearfacing = getFacing();
+        int inputPower = this.getMechanicalInput(getFacing());
         int findPower = 0;
         for (EnumFacing facing : EnumFacing.values()) {
             if(facing == gearfacing || facing.getOpposite() == gearfacing)
@@ -31,17 +34,20 @@ public class TileEntityInvertedGearbox extends TileGearbox {
                 findPower = power;
             }
         }
-        if (overpowerChance() && findPower > getMaximumInput(EnumFacing.UP)) {
+        if(findPower > 0)
+            inputPower = 0;
+
+        if (inputPower != this.power) {
+            setPower(inputPower);
+            unchanged = 0;
+        } else {
+            unchanged++;
+        }
+
+        if (isOverpowered() && unchanged > 30) {
             overpower();
-            return;
         }
 
-        if (findPower > 0) {
-            setPower(0);
-            markDirty();
-            return;
-        }
-
-        super.onChanged();
+        markDirty();
     }
 }

@@ -81,7 +81,7 @@ public class ContainerRename extends Container {
         bindPlayerInventory(player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,null));
 
         paperMatch = new IngredientSpecial(stack -> stack.getItem() instanceof ItemNameTag || ItemUtil.matchesOreDict(stack,"paper"));
-        inkMatch = Ingredient.fromItem(ModItems.inkAndQuill);
+        inkMatch = Ingredient.fromItem(ModItems.INK_AND_QUILL);
     }
 
     protected void bindPlayerInventory(IItemHandler inventoryPlayer) {

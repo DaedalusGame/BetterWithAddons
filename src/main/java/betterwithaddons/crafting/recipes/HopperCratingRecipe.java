@@ -29,7 +29,7 @@ public class HopperCratingRecipe extends HopperRecipe {
 
     @Override
     public List<ItemStack> getContainers() {
-        return Lists.newArrayList(new ItemStack(ModBlocks.box));
+        return Lists.newArrayList(new ItemStack(ModBlocks.BOX));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class HopperCratingRecipe extends HopperRecipe {
 
     public boolean isCrate(IBlockState state)
     {
-        return state.getBlock() == ModBlocks.box;
+        return state.getBlock() == ModBlocks.BOX;
     }
 
     @Override

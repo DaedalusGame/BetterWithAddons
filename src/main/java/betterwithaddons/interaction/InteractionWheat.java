@@ -6,10 +6,8 @@ import betterwithaddons.crafting.recipes.ThreshingRecipe;
 import betterwithaddons.handler.WheatHandler;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
-import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockRawPastry;
-import betterwithmods.common.registry.bulk.manager.MillManager;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -66,7 +64,7 @@ public class InteractionWheat extends Interaction {
     public void preInit() {
         if (TEXTURE_CHANGES) {
             Items.WHEAT_SEEDS.setUnlocalizedName("seed_grain"); //Keep compatible with Botania's stupid way of checking for seeds >_>
-            ModItems.materialBag.subItemUnlocalizedNames[0] = "grain"; //Very ugly but y'know
+            ModItems.MATERIAL_BAG.subItemUnlocalizedNames[0] = "grain"; //Very ugly but y'know
         }
 
         MinecraftForge.EVENT_BUS.register(WheatHandler.class);
@@ -98,7 +96,7 @@ public class InteractionWheat extends Interaction {
 
     @Override
     void init() {
-        OreDictionary.registerOre("hay", ModItems.materialWheat.getMaterial("hay"));
+        OreDictionary.registerOre("hay", ModItems.MATERIAL_WHEAT.getMaterial("hay"));
 
         if (DIG_UP_CROPS) {
             Blocks.POTATOES.setHardness(1.0f).setHarvestLevel("hoe", 0);
@@ -112,7 +110,7 @@ public class InteractionWheat extends Interaction {
         }
 
         if (THRESH_WHEAT_MILL) {
-            BWRegistry.MILLSTONE.addMillRecipe(new ItemStack(Items.WHEAT),Lists.newArrayList(new ItemStack(Items.WHEAT_SEEDS), ModItems.materialWheat.getMaterial("hay")));
+            BWRegistry.MILLSTONE.addMillRecipe(new ItemStack(Items.WHEAT),Lists.newArrayList(new ItemStack(Items.WHEAT_SEEDS), ModItems.MATERIAL_WHEAT.getMaterial("hay")));
         }
     }
 

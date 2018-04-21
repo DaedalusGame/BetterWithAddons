@@ -12,18 +12,13 @@ import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.items.ItemMaterial;
-import betterwithmods.common.registry.block.recipe.BlockDropIngredient;
 import betterwithmods.common.registry.block.recipe.KilnRecipe;
 import betterwithmods.common.registry.heat.BWMHeatRegistry;
 import betterwithmods.module.gameplay.AnvilRecipes;
-import betterwithmods.module.gameplay.miniblocks.ItemMini;
 import betterwithmods.module.gameplay.miniblocks.MiniBlockIngredient;
 import betterwithmods.module.gameplay.miniblocks.MiniBlocks;
 import betterwithmods.module.gameplay.miniblocks.MiniType;
-import betterwithmods.module.gameplay.miniblocks.blocks.BlockCorner;
 import betterwithmods.module.gameplay.miniblocks.blocks.BlockMini;
-import betterwithmods.module.gameplay.miniblocks.blocks.BlockMoulding;
-import betterwithmods.module.gameplay.miniblocks.blocks.BlockSiding;
 import betterwithmods.module.tweaks.MossGeneration;
 import betterwithmods.util.StackIngredient;
 import com.google.common.collect.Lists;
@@ -42,7 +37,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.oredict.OreIngredient;
 
 import java.util.*;
@@ -135,33 +129,33 @@ public class InteractionDecoAddon extends Interaction {
 
     @Override
     public void init() {
-        BWRegistry.MILLSTONE.addMillRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(BWMBlocks.HEMP, 1)),Ingredient.fromItem(Items.GLASS_BOTTLE)),Lists.newArrayList(ModItems.materialDeco.getMaterial("hemp_oil")));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(ModItems.materialDeco.getMaterial("hemp_oil", 4)),new OreIngredient("dyeWhite")),Lists.newArrayList(ModItems.materialDeco.getMaterial("wood_bleach", 4)));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(ModItems.materialDeco.getMaterial("hemp_oil", 4)),new OreIngredient("dyeBlack")),Lists.newArrayList(ModItems.materialDeco.getMaterial("wood_stain", 4)));
+        BWRegistry.MILLSTONE.addMillRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(BWMBlocks.HEMP, 1)),Ingredient.fromItem(Items.GLASS_BOTTLE)),Lists.newArrayList(ModItems.MATERIAL_DECO.getMaterial("hemp_oil")));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(ModItems.MATERIAL_DECO.getMaterial("hemp_oil", 4)),new OreIngredient("dyeWhite")),Lists.newArrayList(ModItems.MATERIAL_DECO.getMaterial("wood_bleach", 4)));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(ModItems.MATERIAL_DECO.getMaterial("hemp_oil", 4)),new OreIngredient("dyeBlack")),Lists.newArrayList(ModItems.MATERIAL_DECO.getMaterial("wood_stain", 4)));
 
         ItemStack chandelierLight = new ItemStack(Blocks.TORCH); //TODO: candles
-        ItemStack ironLanternLight = ModItems.materialDeco.getMaterial("hemp_oil");
-        ItemStack woodLanternLight = ModItems.materialDeco.getMaterial("hemp_oil"); //TODO: fireflies, candles
+        ItemStack ironLanternLight = ModItems.MATERIAL_DECO.getMaterial("hemp_oil");
+        ItemStack woodLanternLight = ModItems.MATERIAL_DECO.getMaterial("hemp_oil"); //TODO: fireflies, candles
 
          if (ALTERNATE_WROUGHT_BARS)
-            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "wrought_bars"), new ItemStack(ModBlocks.wroughtBars, 8), "bbbb", "bbbb", 'b', new ItemStack(Blocks.IRON_BARS));
+            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "wrought_bars"), new ItemStack(ModBlocks.WROUGHT_BARS, 8), "bbbb", "bbbb", 'b', new ItemStack(Blocks.IRON_BARS));
         else
-            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "wrought_bars"), new ItemStack(ModBlocks.wroughtBars, 10), "b b ", "bbbb", "b b ", "b b ", 'b', "ingotIron");
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "chandelier"), new ItemStack(ModBlocks.chandelier), " ss ", " bb ", "tbbt", "tbbt", 's', "stone", 'b', "nuggetGold", 't', "blockCandle");
+            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "wrought_bars"), new ItemStack(ModBlocks.WROUGHT_BARS, 10), "b b ", "bbbb", "b b ", "b b ", 'b', "ingotIron");
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "chandelier"), new ItemStack(ModBlocks.CHANDELIER), " ss ", " bb ", "tbbt", "tbbt", 's', "stone", 'b', "nuggetGold", 't', "blockCandle");
 
-        ItemStack whiteBrick = new ItemStack(ModBlocks.whiteBrick, 1, EnumType.DEFAULT.getMetadata());
-        ItemStack whiteBrick_mossy = new ItemStack(ModBlocks.whiteBrick, 1, EnumType.MOSSY.getMetadata());
-        ItemStack whiteBrick_cracked = new ItemStack(ModBlocks.whiteBrick, 1, EnumType.CRACKED.getMetadata());
+        ItemStack whiteBrick = new ItemStack(ModBlocks.WHITE_BRICK, 1, EnumType.DEFAULT.getMetadata());
+        ItemStack whiteBrick_mossy = new ItemStack(ModBlocks.WHITE_BRICK, 1, EnumType.MOSSY.getMetadata());
+        ItemStack whiteBrick_cracked = new ItemStack(ModBlocks.WHITE_BRICK, 1, EnumType.CRACKED.getMetadata());
 
-        MossGeneration.addBlockConversion(ModBlocks.whiteBrick, ModBlocks.whiteBrick.getDefaultState().withProperty(BlockWhiteBrick.VARIANT, EnumType.MOSSY));
+        MossGeneration.addBlockConversion(ModBlocks.WHITE_BRICK, ModBlocks.WHITE_BRICK.getDefaultState().withProperty(BlockWhiteBrick.VARIANT, EnumType.MOSSY));
 
         if (CHISEL_BRICKS_IN_ANVIL) {
             AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "stone_brick_chiseled"), new ItemStack(Blocks.STONEBRICK, 3, BlockStoneBrick.EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(Blocks.STONEBRICK, 1, BlockStoneBrick.EnumType.DEFAULT.getMetadata()));
-            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "white_brick_chiseled"), new ItemStack(ModBlocks.whiteBrick, 3, EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(ModBlocks.whiteBrick, 1, EnumType.DEFAULT.getMetadata()));
+            AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID, "white_brick_chiseled"), new ItemStack(ModBlocks.WHITE_BRICK, 3, EnumType.CHISELED.getMetadata()), "bbbb", "b  b", "b  b", "bbbb", 'b', new ItemStack(ModBlocks.WHITE_BRICK, 1, EnumType.DEFAULT.getMetadata()));
         }
         FurnaceRecipes.instance().addSmeltingRecipe(whiteBrick, whiteBrick_cracked, 0.1f);
 
-        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(Ingredient.fromStacks(new ItemStack(Blocks.GRAVEL)),Ingredient.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHER_SLUDGE))),Lists.newArrayList(new ItemStack(ModBlocks.pavement)));
+        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(Ingredient.fromStacks(new ItemStack(Blocks.GRAVEL)),Ingredient.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHER_SLUDGE))),Lists.newArrayList(new ItemStack(ModBlocks.PAVEMENT)));
 
         int glasspanein = GLASS_PANE_REBALANCE ? 2 : 8;
         int glassout = GLASS_PANE_REBALANCE ? 1 : 3;
@@ -171,15 +165,15 @@ public class InteractionDecoAddon extends Interaction {
             BWRegistry.CRUCIBLE.remove(Lists.newArrayList(new ItemStack(Blocks.GLASS,3)));
         }
 
-        BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(BWMItems.SAND_PILE, 1),ModItems.materialDeco.getMaterial("glass_chunk"));
-        BWRegistry.CRUCIBLE.addStokedRecipe(ModItems.materialDeco.getMaterial("glass_chunk", 4),new ItemStack(Blocks.GLASS, 1));
+        BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(BWMItems.SAND_PILE, 1),ModItems.MATERIAL_DECO.getMaterial("glass_chunk"));
+        BWRegistry.CRUCIBLE.addStokedRecipe(ModItems.MATERIAL_DECO.getMaterial("glass_chunk", 4),new ItemStack(Blocks.GLASS, 1));
         if (GLASS_FURNACE) {
-            GameRegistry.addSmelting(new ItemStack(BWMItems.SAND_PILE, 1), ModItems.materialDeco.getMaterial("glass_chunk"), 0.02f);
-            GameRegistry.addSmelting(ModItems.materialDeco.getMaterial("glass_chunk", 4), new ItemStack(Blocks.GLASS, 1), 0.05f);
+            GameRegistry.addSmelting(new ItemStack(BWMItems.SAND_PILE, 1), ModItems.MATERIAL_DECO.getMaterial("glass_chunk"), 0.02f);
+            GameRegistry.addSmelting(ModItems.MATERIAL_DECO.getMaterial("glass_chunk", 4), new ItemStack(Blocks.GLASS, 1), 0.05f);
         }
 
         if (RECYCLE_BOTTLES)
-            BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(Items.GLASS_BOTTLE, 1),ModItems.materialDeco.getMaterial("glass_chunk", CHEAPER_BOTTLES ? 2 : 4));
+            BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(Items.GLASS_BOTTLE, 1),ModItems.MATERIAL_DECO.getMaterial("glass_chunk", CHEAPER_BOTTLES ? 2 : 4));
 
         BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(Blocks.GLASS_PANE, glasspanein),new ItemStack(Blocks.GLASS, glassout));
         EnumDyeColor[] dyes = EnumDyeColor.values();
@@ -247,7 +241,7 @@ public class InteractionDecoAddon extends Interaction {
 
     public void addStainingRecipe(ItemStack lighter, ItemStack darker) {
         ItemStack emptyBottle = new ItemStack(Items.GLASS_BOTTLE, 1);
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(lighter), Ingredient.fromStacks(ModItems.materialDeco.getMaterial("wood_stain"))),Lists.newArrayList(darker, emptyBottle));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(darker), Ingredient.fromStacks(ModItems.materialDeco.getMaterial("wood_bleach"))),Lists.newArrayList(lighter, emptyBottle));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(lighter), Ingredient.fromStacks(ModItems.MATERIAL_DECO.getMaterial("wood_stain"))),Lists.newArrayList(darker, emptyBottle));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(darker), Ingredient.fromStacks(ModItems.MATERIAL_DECO.getMaterial("wood_bleach"))),Lists.newArrayList(lighter, emptyBottle));
     }
 }

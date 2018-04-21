@@ -97,13 +97,13 @@ public class BlockCropRice extends BlockCrops implements IPlantable, IHasVariant
     @Override
     protected Item getSeed()
     {
-        return Item.getItemFromBlock(ModBlocks.rice);
+        return Item.getItemFromBlock(ModBlocks.RICE);
     }
 
     @Override
     protected Item getCrop()
     {
-        return ModItems.materialJapan;
+        return ModItems.MATERIAL_JAPAN;
     }
 
     @Override
@@ -138,7 +138,7 @@ public class BlockCropRice extends BlockCrops implements IPlantable, IHasVariant
             {
                 if (rand.nextInt(2 * getMaxAge()) <= age)
                 {
-                    ret.add(ModItems.materialJapan.getMaterial("rice_stalk",1));
+                    ret.add(ModItems.MATERIAL_JAPAN.getMaterial("rice_stalk",1));
                 }
             }
         }

@@ -46,7 +46,7 @@ public class TileEntityInfuser extends TileEntityBase implements ITickable {
 
     public boolean isValid()
     {
-        return ModBlocks.infuser.isValid(world,pos);
+        return ModBlocks.INFUSER.isValid(world,pos);
     }
 
     public int getSpirits()

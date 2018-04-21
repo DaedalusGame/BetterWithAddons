@@ -43,7 +43,7 @@ public class BlockCherryLeaves extends BlockModLeaves {
                 {
                     IBlockState checkstate = world.getBlockState(checkpos.up());
                     if(world.isAirBlock(checkpos.up()) || checkstate.getBlock().isReplaceable(world,checkpos.up()) && !(checkstate.getBlock() instanceof BlockLiquid || checkstate.getBlock() instanceof BlockFluidBase))
-                        world.setBlockState(checkpos.up(), ModBlocks.sakuraLeafPile.getDefaultState(), 3);
+                        world.setBlockState(checkpos.up(), ModBlocks.SAKURA_LEAFPILE.getDefaultState(), 3);
                     break;
                 }
             }

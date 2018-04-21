@@ -24,14 +24,14 @@ public class ItemAncestryBottle extends Item {
 
         if(state.getBlock() == Blocks.SOUL_SAND)
         {
-            worldIn.setBlockState(pos, ModBlocks.ancestrySand.getDefaultState());
+            worldIn.setBlockState(pos, ModBlocks.ANCESTRY_SAND.getDefaultState());
             TileEntity te = worldIn.getTileEntity(pos);
             if(te instanceof TileEntityAncestrySand)
                 ((TileEntityAncestrySand) te).addSpirits(InteractionEriottoMod.BOTTLE_MAX_SPIRITS);
             stack.shrink(1);
             return EnumActionResult.SUCCESS;
         }
-        else if(state.getBlock() == ModBlocks.ancestrySand)
+        else if(state.getBlock() == ModBlocks.ANCESTRY_SAND)
         {
             TileEntity te = worldIn.getTileEntity(pos);
             if(te instanceof TileEntityAncestrySand)

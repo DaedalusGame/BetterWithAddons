@@ -28,361 +28,361 @@ import java.util.ArrayList;
 
 @Mod.EventBusSubscriber
 public class ModItems {
-    public static ArrayList<Item> LIST = new ArrayList<Item>();
+    public static ArrayList<Item> LIST = new ArrayList<>();
 
     public static Item.ToolMaterial bambooToolMaterial = EnumHelper.addToolMaterial("bamboo", 0, 51, 0.5f, -4.0f, 1);
 
     {
-        bambooToolMaterial.setRepairItem(materialJapan.getMaterial("bamboo_slats"));
+        bambooToolMaterial.setRepairItem(MATERIAL_JAPAN.getMaterial("bamboo_slats"));
     }
 
     public static Item.ToolMaterial tamahaganeToolMaterial = EnumHelper.addToolMaterial("tamahagane", 3, 1210, 8.0f, 2.5f, 9);
 
     {
-        tamahaganeToolMaterial.setRepairItem(materialJapan.getMaterial("tamahagane_finished"));
+        tamahaganeToolMaterial.setRepairItem(MATERIAL_JAPAN.getMaterial("tamahagane_finished"));
     }
 
     public static Item.ToolMaterial japansteelToolMaterial = EnumHelper.addToolMaterial("japansteel", 3, 1710, 8.0f, 4.0f, 10);
 
     {
-        japansteelToolMaterial.setRepairItem(materialJapan.getMaterial("tamahagane_finished"));
+        japansteelToolMaterial.setRepairItem(MATERIAL_JAPAN.getMaterial("tamahagane_finished"));
     }
 
     public static ItemArmor.ArmorMaterial samuraiArmorMaterial = EnumHelper.addArmorMaterial("SAMURAI", "samurai", 16,
             new int[]{2, 6, 5, 2}, 18, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0);
 
     @GameRegistry.ObjectHolder("betterwithaddons:greatbow")
-    public static ItemGreatbow greatbow;
+    public static ItemGreatbow GREATBOW;
     @GameRegistry.ObjectHolder("betterwithaddons:greatarrow")
-    public static ItemGreatarrow greatarrow;
+    public static ItemGreatarrow GREATARROW;
     @GameRegistry.ObjectHolder("betterwithaddons:greatarrow_lightning")
-    public static ItemGreatarrow greatarrowLightning;
+    public static ItemGreatarrow GREATARROW_LIGHTNING;
     @GameRegistry.ObjectHolder("betterwithaddons:greatarrow_destruction")
-    public static ItemGreatarrow greatarrowDestruction;
+    public static ItemGreatarrow GREATARROW_DESTRUCTION;
     @GameRegistry.ObjectHolder("betterwithaddons:monument")
-    public static ItemMonument monument;
+    public static ItemMonument MONUMENT;
     @GameRegistry.ObjectHolder("betterwithaddons:artifact_frame")
-    public static ItemArtifactFrame artifactFrame;
+    public static ItemArtifactFrame ARTIFACT_FRAME;
     @GameRegistry.ObjectHolder("betterwithaddons:food_mushroom_baked")
-    public static ItemFood bakedMushroom;
+    public static ItemFood BAKED_MUSHROOM;
     @GameRegistry.ObjectHolder("betterwithaddons:food_amanita_baked")
-    public static ItemFood bakedAmanita;
+    public static ItemFood BAKED_AMANITA;
     @GameRegistry.ObjectHolder("betterwithaddons:food_beetroot_cooked")
-    public static ItemFood cookedBeetroot;
+    public static ItemFood COOKED_BEETROOT;
     @GameRegistry.ObjectHolder("betterwithaddons:food_beetroot_baked")
-    public static ItemFood bakedBeetroot;
+    public static ItemFood BAKED_BEETROOT;
     @GameRegistry.ObjectHolder("betterwithaddons:food_carrot_cooked")
-    public static ItemFood cookedCarrot;
+    public static ItemFood COOKED_CARROT;
     @GameRegistry.ObjectHolder("betterwithaddons:food_carrot_baked")
-    public static ItemFood bakedCarrot;
+    public static ItemFood BAKED_CARROT;
     @GameRegistry.ObjectHolder("betterwithaddons:food_potato_cooked")
-    public static ItemFood cookedPotato;
+    public static ItemFood COOKED_POTATO;
     @GameRegistry.ObjectHolder("betterwithaddons:food_pie_melon")
-    public static ItemFood pieMelon;
+    public static ItemFood PIE_MELON;
     @GameRegistry.ObjectHolder("betterwithaddons:food_pie_meat")
-    public static ItemFood pieMeat;
+    public static ItemFood PIE_MEAT;
     @GameRegistry.ObjectHolder("betterwithaddons:food_pie_mushroom")
-    public static ItemFood pieMushroom;
+    public static ItemFood PIE_MUSHROOM;
     @GameRegistry.ObjectHolder("betterwithaddons:food_pie_amanita")
-    public static ItemFood pieAmanita;
+    public static ItemFood PIE_AMANITA;
     @GameRegistry.ObjectHolder("betterwithaddons:food_meatballs")
-    public static ItemFood meatballs;
+    public static ItemFood MEATBALLS;
     @GameRegistry.ObjectHolder("betterwithaddons:food_egg_cooked")
-    public static ItemFood cookedEgg;
+    public static ItemFood COOKED_EGG;
     @GameRegistry.ObjectHolder("betterwithaddons:food_ground_meat")
-    public static ItemFood groundMeat;
+    public static ItemFood GROUND_MEAT;
 
     @GameRegistry.ObjectHolder("betterwithaddons:soulsand_pile")
-    public static Item soulSandPile;
+    public static Item SOUL_SAND_PILE;
     @GameRegistry.ObjectHolder("betterwithaddons:wool")
-    public static ItemColored wool;
+    public static ItemColored WOOL;
     @GameRegistry.ObjectHolder("betterwithaddons:rotten_food")
-    public static ItemFood rottenFood;
+    public static ItemFood ROTTEN_FOOD;
 
     @GameRegistry.ObjectHolder("betterwithaddons:salt")
-    public static ItemMaterial salts;
+    public static ItemMaterial SALTS;
 
     @GameRegistry.ObjectHolder("betterwithaddons:food_clownfish_cooked")
-    public static ItemFood cookedClownfish;
+    public static ItemFood COOKED_CLOWNFISH;
     @GameRegistry.ObjectHolder("betterwithaddons:food_pufferfish_baked")
-    public static ItemFood cookedPuffer;
+    public static ItemFood COOKED_PUFFER;
     @GameRegistry.ObjectHolder("betterwithaddons:food_pufferfish_prepared")
-    public static ItemFood preparedPuffer;
+    public static ItemFood PREPARED_PUFFER;
     @GameRegistry.ObjectHolder("betterwithaddons:food_pufferfish_cooked")
-    public static ItemFood preparedCookedPuffer;
+    public static ItemFood PREPARED_COOKED_PUFFER;
     @GameRegistry.ObjectHolder("betterwithaddons:food_fugu_sac")
-    public static ItemFood fuguSac;
+    public static ItemFood FUGU_SAC;
     @GameRegistry.ObjectHolder("betterwithaddons:worldshard")
-    public static ItemWorldScale worldShard;
+    public static ItemWorldScale WORLD_SHARD;
 
     @GameRegistry.ObjectHolder("betterwithaddons:ancestry_bottle")
-    public static ItemAncestryBottle ancestryBottle;
+    public static ItemAncestryBottle ANCESTRY_BOTTLE;
     @GameRegistry.ObjectHolder("betterwithaddons:food_sashimi")
-    public static ItemFood sashimi;
+    public static ItemFood SASHIMI;
     @GameRegistry.ObjectHolder("betterwithaddons:food_mulberry")
-    public static ItemFood mulberry;
+    public static ItemFood MULBERRY;
     @GameRegistry.ObjectHolder("betterwithaddons:food_cooked_rice")
-    public static ItemFood rice;
+    public static ItemFood RICE;
     @GameRegistry.ObjectHolder("betterwithaddons:food_bowl_rice")
-    public static ItemFood riceBowl;
+    public static ItemFood RICE_BOWL;
     @GameRegistry.ObjectHolder("betterwithaddons:laxative")
-    public static Item laxative;
+    public static Item LAXATIVE;
     @GameRegistry.ObjectHolder("betterwithaddons:japanmat")
-    public static ItemMaterial materialJapan;
+    public static ItemMaterial MATERIAL_JAPAN;
     @GameRegistry.ObjectHolder("betterwithaddons:tea_leaves")
-    public static ItemTea teaLeaves;
+    public static ItemTea TEA_LEAVES;
     @GameRegistry.ObjectHolder("betterwithaddons:tea_soaked")
-    public static ItemTea teaSoaked;
+    public static ItemTea TEA_SOAKED;
     @GameRegistry.ObjectHolder("betterwithaddons:tea_wilted")
-    public static ItemTea teaWilted;
+    public static ItemTea TEA_WILTED;
     @GameRegistry.ObjectHolder("betterwithaddons:tea_powder")
-    public static ItemTea teaPowder;
+    public static ItemTea TEA_POWDER;
     @GameRegistry.ObjectHolder("betterwithaddons:teacup")
-    public static ItemTeaCup teaCup;
+    public static ItemTeaCup TEA_CUP;
 
     @GameRegistry.ObjectHolder("betterwithaddons:brick_stained")
-    public static ItemStainedBrick stainedBrick;
+    public static ItemStainedBrick STAINED_BRICK;
     @GameRegistry.ObjectHolder("betterwithaddons:material")
-    public static ItemMaterial material;
+    public static ItemMaterial MATERIAL;
     @GameRegistry.ObjectHolder("betterwithaddons:bolt")
-    public static ItemMaterial materialBolt;
+    public static ItemMaterial MATERIAL_BOLT;
     @GameRegistry.ObjectHolder("betterwithaddons:congealed")
-    public static ItemMaterial materialCongealed;
+    public static ItemMaterial MATERIAL_CONGEALED;
     @GameRegistry.ObjectHolder("betterwithaddons:crate")
-    public static ItemMaterial materialCrate;
+    public static ItemMaterial MATERIAL_CRATE;
     @GameRegistry.ObjectHolder("betterwithaddons:bag")
-    public static ItemMaterial materialBag;
+    public static ItemMaterial MATERIAL_BAG;
     @GameRegistry.ObjectHolder("betterwithaddons:bundle")
-    public static ItemMaterial materialBundle;
+    public static ItemMaterial MATERIAL_BUNDLE;
     @GameRegistry.ObjectHolder("betterwithaddons:decomat")
-    public static ItemMaterial materialDeco;
+    public static ItemMaterial MATERIAL_DECO;
     @GameRegistry.ObjectHolder("betterwithaddons:wheatmat")
-    public static ItemMaterial materialWheat;
+    public static ItemMaterial MATERIAL_WHEAT;
 
     @GameRegistry.ObjectHolder("betterwithaddons:tweakmat")
-    public static ItemMaterial materialTweak;
+    public static ItemMaterial MATERIAL_TWEAK;
     @GameRegistry.ObjectHolder("betterwithaddons:ink_and_quill")
-    public static ItemInkAndQuill inkAndQuill;
+    public static ItemInkAndQuill INK_AND_QUILL;
 
     @GameRegistry.ObjectHolder("betterwithaddons:katana")
-    public static ItemKatana katana;
+    public static ItemKatana KATANA;
     @GameRegistry.ObjectHolder("betterwithaddons:wakizashi")
-    public static ItemWakizashi wakizashi;
+    public static ItemWakizashi WAKIZASHI;
     @GameRegistry.ObjectHolder("betterwithaddons:tanto")
-    public static ItemTanto tanto;
+    public static ItemTanto TANTO;
     @GameRegistry.ObjectHolder("betterwithaddons:shinai")
-    public static ItemShinai shinai;
+    public static ItemShinai SHINAI;
     @GameRegistry.ObjectHolder("betterwithaddons:yumi")
-    public static ItemYumi yumi;
+    public static ItemYumi YUMI;
     @GameRegistry.ObjectHolder("betterwithaddons:ya")
-    public static ItemYa ya;
+    public static ItemYa YA;
     @GameRegistry.ObjectHolder("betterwithaddons:poisoned_ya")
-    public static ItemPoisonedYa yaPoisoned;
+    public static ItemPoisonedYa YA_POISONED;
     @GameRegistry.ObjectHolder("betterwithaddons:helmet_samurai")
-    public static ItemSamuraiArmor samuraiHelm;
+    public static ItemSamuraiArmor SAMURAI_HELMET;
     @GameRegistry.ObjectHolder("betterwithaddons:chest_samurai")
-    public static ItemSamuraiArmor samuraiChestplate;
+    public static ItemSamuraiArmor SAMURAI_CHESTPLATE;
     @GameRegistry.ObjectHolder("betterwithaddons:legs_samurai")
-    public static ItemSamuraiArmor samuraiLeggings;
+    public static ItemSamuraiArmor SAMURAI_LEGGINGS;
     @GameRegistry.ObjectHolder("betterwithaddons:boots_samurai")
-    public static ItemSamuraiArmor samuraiBoots;
+    public static ItemSamuraiArmor SAMURAI_BOOTS;
     @GameRegistry.ObjectHolder("betterwithaddons:helmet_paper")
-    public static ItemPaperArmor paperHelm;
+    public static ItemPaperArmor PAPER_HELMET;
     @GameRegistry.ObjectHolder("betterwithaddons:chest_paper")
-    public static ItemPaperArmor paperChestplate;
+    public static ItemPaperArmor PAPER_CHESTPLATE;
     @GameRegistry.ObjectHolder("betterwithaddons:legs_paper")
-    public static ItemPaperArmor paperLeggings;
+    public static ItemPaperArmor PAPER_LEGGINGS;
     @GameRegistry.ObjectHolder("betterwithaddons:boots_paper")
-    public static ItemPaperArmor paperBoots;
+    public static ItemPaperArmor PAPER_BOOTS;
 
     @GameRegistry.ObjectHolder("betterwithaddons:tool_shard")
-    public static ItemToolShard brokenArtifact;
+    public static ItemToolShard BROKEN_ARTIFACT;
 
     @GameRegistry.ObjectHolder("betterwithaddons:iron_spade")
-    public static ItemSpade ironSpade;
+    public static ItemSpade IRON_SPADE;
     @GameRegistry.ObjectHolder("betterwithaddons:iron_machete")
-    public static ItemMachete ironMachete;
+    public static ItemMachete IRON_MACHETE;
     @GameRegistry.ObjectHolder("betterwithaddons:iron_matchpick")
-    public static ItemMatchPick ironMatchPick;
+    public static ItemMatchPick IRON_MATCHPICK;
     @GameRegistry.ObjectHolder("betterwithaddons:iron_kukri")
-    public static ItemKukri ironKukri;
+    public static ItemKukri IRON_KUKRI;
     @GameRegistry.ObjectHolder("betterwithaddons:iron_carpentersaw")
-    public static ItemCarpenterSaw ironCarpenterSaw;
+    public static ItemCarpenterSaw IRON_CARPENTER_SAW;
     @GameRegistry.ObjectHolder("betterwithaddons:iron_masonpick")
-    public static ItemMasonPick ironMasonPick;
+    public static ItemMasonPick IRON_MASON_PICK;
 
     @GameRegistry.ObjectHolder("betterwithaddons:gold_spade")
-    public static ItemSpade goldSpade;
+    public static ItemSpade GOLD_SPADE;
     @GameRegistry.ObjectHolder("betterwithaddons:gold_machete")
-    public static ItemMachete goldMachete;
+    public static ItemMachete GOLD_MACHETE;
     @GameRegistry.ObjectHolder("betterwithaddons:gold_matchpick")
-    public static ItemMatchPick goldMatchPick;
+    public static ItemMatchPick GOLD_MATCHPICK;
     @GameRegistry.ObjectHolder("betterwithaddons:gold_kukri")
-    public static ItemKukri goldKukri;
+    public static ItemKukri GOLD_KUKRI;
     @GameRegistry.ObjectHolder("betterwithaddons:gold_carpentersaw")
-    public static ItemCarpenterSaw goldCarpenterSaw;
+    public static ItemCarpenterSaw GOLD_CARPENTER_SAW;
     @GameRegistry.ObjectHolder("betterwithaddons:gold_masonpick")
-    public static ItemMasonPick goldMasonPick;
+    public static ItemMasonPick GOLD_MASON_PICK;
 
     @GameRegistry.ObjectHolder("betterwithaddons:diamond_spade")
-    public static ItemSpade diamondSpade;
+    public static ItemSpade DIAMOND_SPADE;
     @GameRegistry.ObjectHolder("betterwithaddons:diamond_machete")
-    public static ItemMachete diamondMachete;
+    public static ItemMachete DIAMOND_MACHETE;
     @GameRegistry.ObjectHolder("betterwithaddons:diamond_matchpick")
-    public static ItemMatchPick diamondMatchPick;
+    public static ItemMatchPick DIAMOND_MATCHPICK;
     @GameRegistry.ObjectHolder("betterwithaddons:diamond_kukri")
-    public static ItemKukri diamondKukri;
+    public static ItemKukri DIAMOND_KUKRI;
     @GameRegistry.ObjectHolder("betterwithaddons:diamond_carpentersaw")
-    public static ItemCarpenterSaw diamondCarpenterSaw;
+    public static ItemCarpenterSaw DIAMOND_CARPENTER_SAW;
     @GameRegistry.ObjectHolder("betterwithaddons:diamond_masonpick")
-    public static ItemMasonPick diamondMasonPick;
+    public static ItemMasonPick DIAMOND_MASON_PICK;
 
     @GameRegistry.ObjectHolder("betterwithaddons:steel_spade")
-    public static ItemSpade steelSpade;
+    public static ItemSpade STEEL_SPADE;
     @GameRegistry.ObjectHolder("betterwithaddons:steel_machete")
-    public static ItemMachete steelMachete;
+    public static ItemMachete STEEL_MACHETE;
     @GameRegistry.ObjectHolder("betterwithaddons:steel_matchpick")
-    public static ItemMatchPick steelMatchPick;
+    public static ItemMatchPick STEEL_MATCHPICK;
     @GameRegistry.ObjectHolder("betterwithaddons:steel_kukri")
-    public static ItemKukri steelKukri;
+    public static ItemKukri STEEL_KUKRI;
     @GameRegistry.ObjectHolder("betterwithaddons:steel_carpentersaw")
-    public static ItemCarpenterSaw steelCarpenterSaw;
+    public static ItemCarpenterSaw STEEL_CARPENTER_SAW;
     @GameRegistry.ObjectHolder("betterwithaddons:steel_masonpick")
-    public static ItemMasonPick steelMasonPick;
+    public static ItemMasonPick STEEL_MASON_PICK;
 
     @GameRegistry.ObjectHolder("betterwithaddons:explosion")
-    public static Item explosion;
+    public static Item EXPLOSION;
 
     public static void load(FMLPreInitializationEvent event) {
-        ironSpade = (ItemSpade) registerItem("iron_spade", new ItemSpade(Item.ToolMaterial.IRON));
-        ironMatchPick = (ItemMatchPick) registerItem("iron_matchpick", new ItemMatchPick(Item.ToolMaterial.IRON));
-        ironMachete = (ItemMachete) registerItem("iron_machete", new ItemMachete(Item.ToolMaterial.IRON));
-        ironKukri = (ItemKukri) registerItem("iron_kukri", new ItemKukri(Item.ToolMaterial.IRON, 8.0f, -3.1f));
-        ironCarpenterSaw = (ItemCarpenterSaw) registerItem("iron_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.IRON, 8.0f, -3.1f));
-        ironMasonPick = (ItemMasonPick) registerItem("iron_masonpick", new ItemMasonPick(Item.ToolMaterial.IRON));
+        registerItem("iron_spade", new ItemSpade(Item.ToolMaterial.IRON));
+        registerItem("iron_matchpick", new ItemMatchPick(Item.ToolMaterial.IRON));
+        registerItem("iron_machete", new ItemMachete(Item.ToolMaterial.IRON));
+        registerItem("iron_kukri", new ItemKukri(Item.ToolMaterial.IRON, 8.0f, -3.1f));
+        registerItem("iron_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.IRON, 8.0f, -3.1f));
+        registerItem("iron_masonpick", new ItemMasonPick(Item.ToolMaterial.IRON));
 
-        goldSpade = (ItemSpade) registerItem("gold_spade", new ItemSpade(Item.ToolMaterial.GOLD));
-        goldMatchPick = (ItemMatchPick) registerItem("gold_matchpick", new ItemMatchPick(Item.ToolMaterial.GOLD));
-        goldMachete = (ItemMachete) registerItem("gold_machete", new ItemMachete(Item.ToolMaterial.GOLD));
-        goldKukri = (ItemKukri) registerItem("gold_kukri", new ItemKukri(Item.ToolMaterial.GOLD, 6.0f, -3.0f));
-        goldCarpenterSaw = (ItemCarpenterSaw) registerItem("gold_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.GOLD, 6.0f, -3.0f));
-        goldMasonPick = (ItemMasonPick) registerItem("gold_masonpick", new ItemMasonPick(Item.ToolMaterial.GOLD));
+        registerItem("gold_spade", new ItemSpade(Item.ToolMaterial.GOLD));
+        registerItem("gold_matchpick", new ItemMatchPick(Item.ToolMaterial.GOLD));
+        registerItem("gold_machete", new ItemMachete(Item.ToolMaterial.GOLD));
+        registerItem("gold_kukri", new ItemKukri(Item.ToolMaterial.GOLD, 6.0f, -3.0f));
+        registerItem("gold_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.GOLD, 6.0f, -3.0f));
+        registerItem("gold_masonpick", new ItemMasonPick(Item.ToolMaterial.GOLD));
 
-        diamondSpade = (ItemSpade) registerItem("diamond_spade", new ItemSpade(Item.ToolMaterial.DIAMOND));
-        diamondMatchPick = (ItemMatchPick) registerItem("diamond_matchpick", new ItemMatchPick(Item.ToolMaterial.DIAMOND));
-        diamondMachete = (ItemMachete) registerItem("diamond_machete", new ItemMachete(Item.ToolMaterial.DIAMOND));
-        diamondKukri = (ItemKukri) registerItem("diamond_kukri", new ItemKukri(Item.ToolMaterial.DIAMOND, 8.0f, -3.0f));
-        diamondCarpenterSaw = (ItemCarpenterSaw) registerItem("diamond_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.DIAMOND, 8.0f, -3.0f));
-        diamondMasonPick = (ItemMasonPick) registerItem("diamond_masonpick", new ItemMasonPick(Item.ToolMaterial.DIAMOND));
+        registerItem("diamond_spade", new ItemSpade(Item.ToolMaterial.DIAMOND));
+        registerItem("diamond_matchpick", new ItemMatchPick(Item.ToolMaterial.DIAMOND));
+        registerItem("diamond_machete", new ItemMachete(Item.ToolMaterial.DIAMOND));
+        registerItem("diamond_kukri", new ItemKukri(Item.ToolMaterial.DIAMOND, 8.0f, -3.0f));
+        registerItem("diamond_carpentersaw", new ItemCarpenterSaw(Item.ToolMaterial.DIAMOND, 8.0f, -3.0f));
+        registerItem("diamond_masonpick", new ItemMasonPick(Item.ToolMaterial.DIAMOND));
 
-        steelSpade = (ItemSpade) registerItem("steel_spade", new ItemSpade(BWMItems.SOULFORGED_STEEL) {
+        registerItem("steel_spade", new ItemSpade(BWMItems.SOULFORGED_STEEL) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
                 return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        steelMatchPick = (ItemMatchPick) registerItem("steel_matchpick", new ItemMatchPick(BWMItems.SOULFORGED_STEEL) {
+        registerItem("steel_matchpick", new ItemMatchPick(BWMItems.SOULFORGED_STEEL) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
                 return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        steelMachete = (ItemMachete) registerItem("steel_machete", new ItemMachete(BWMItems.SOULFORGED_STEEL) {
+        registerItem("steel_machete", new ItemMachete(BWMItems.SOULFORGED_STEEL) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
                 return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        steelKukri = (ItemKukri) registerItem("steel_kukri", new ItemKukri(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
+        registerItem("steel_kukri", new ItemKukri(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
                 return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        steelCarpenterSaw = (ItemCarpenterSaw) registerItem("steel_carpentersaw", new ItemCarpenterSaw(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
+        registerItem("steel_carpentersaw", new ItemCarpenterSaw(BWMItems.SOULFORGED_STEEL, 8.0F, -3.0F) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
                 return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
-        steelMasonPick = (ItemMasonPick) registerItem("steel_masonpick", new ItemMasonPick(BWMItems.SOULFORGED_STEEL) {
+        registerItem("steel_masonpick", new ItemMasonPick(BWMItems.SOULFORGED_STEEL) {
             @Override
             public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
                 return ItemUtil.matchesOreDict(repair, "ingotSoulforgedSteel") || super.getIsRepairable(toRepair, repair);
             }
         });
 
-        material = (ItemMaterial) registerItem("material", new ItemMaterial(
+        registerItem("material", new ItemMaterial(
                 new String[]{"arrowhead", "midori", "midori_popped", "thornrose", "stone_brick", "bone_ingot", "ender_cream"}
         ));
 
-        worldShard = (ItemWorldScale) registerItem("worldshard", new ItemWorldScale());
-        greatbow = (ItemGreatbow) registerItem("greatbow", new ItemGreatbow());
-        greatarrow = (ItemGreatarrow) registerItem("greatarrow", new ItemGreatarrow());
-        greatarrowLightning = (ItemGreatarrow) registerItem("greatarrow_lightning", new ItemGreatarrowLightning());
-        greatarrowDestruction = (ItemGreatarrow) registerItem("greatarrow_destruction", new ItemGreatarrowDestruction());
-        monument = (ItemMonument) registerItem("monument", new ItemMonument());
+        registerItem("worldshard", new ItemWorldScale());
+        registerItem("greatbow", new ItemGreatbow());
+        registerItem("greatarrow", new ItemGreatarrow());
+        registerItem("greatarrow_lightning", new ItemGreatarrowLightning());
+        registerItem("greatarrow_destruction", new ItemGreatarrowDestruction());
+        registerItem("monument", new ItemMonument());
         //Food
-        bakedMushroom = (ItemFood) registerItem("food_mushroom_baked", new ItemFood(3, 0.2F, false));
-        bakedAmanita = (ItemFood) registerItem("food_amanita_baked", new ItemFood(3, 0.2F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
-        cookedBeetroot = (ItemFood) registerItem("food_beetroot_cooked", new ItemFood(4, 0.5F, false));
-        bakedBeetroot = (ItemFood) registerItem("food_beetroot_baked", new ItemFood(5, 0.4F, false));
-        cookedCarrot = (ItemFood) registerItem("food_carrot_cooked", new ItemFood(3, 0.6F, false));
-        bakedCarrot = (ItemFood) registerItem("food_carrot_baked", new ItemFood(4, 0.5F, false));
-        cookedPotato = (ItemFood) registerItem("food_potato_cooked", new ItemFood(4, 0.7F, false));
-        cookedEgg = (ItemFood) registerItem("food_egg_cooked", new ItemFood(4, 0.3F, false));
-        meatballs = (ItemFood) registerItem("food_meatballs", new ItemFood(3, 0.6F, true));
+        registerItem("food_mushroom_baked", new ItemFood(3, 0.2F, false));
+        registerItem("food_amanita_baked", new ItemFood(3, 0.2F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
+        registerItem("food_beetroot_cooked", new ItemFood(4, 0.5F, false));
+        registerItem("food_beetroot_baked", new ItemFood(5, 0.4F, false));
+        registerItem("food_carrot_cooked", new ItemFood(3, 0.6F, false));
+        registerItem("food_carrot_baked", new ItemFood(4, 0.5F, false));
+        registerItem("food_potato_cooked", new ItemFood(4, 0.7F, false));
+        registerItem("food_egg_cooked", new ItemFood(4, 0.3F, false));
+        registerItem("food_meatballs", new ItemFood(3, 0.6F, true));
 
-        groundMeat = (ItemFood) registerItem("food_ground_meat", new ItemFood(1, 0.1F, true));
+        registerItem("food_ground_meat", new ItemFood(1, 0.1F, true));
 
-        pieMushroom = (ItemFood) registerItem("food_pie_mushroom", new ItemFood(8, 0.3F, false));
-        pieAmanita = (ItemFood) registerItem("food_pie_amanita", new ItemFood(8, 0.3F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
-        pieMeat = (ItemFood) registerItem("food_pie_meat", new ItemFood(9, 0.5F, true));
-        pieMelon = (ItemFood) registerItem("food_pie_melon", new ItemFood(8, 0.4F, false));
+        registerItem("food_pie_mushroom", new ItemFood(8, 0.3F, false));
+        registerItem("food_pie_amanita", new ItemFood(8, 0.3F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0), 1.0F));
+        registerItem("food_pie_meat", new ItemFood(9, 0.5F, true));
+        registerItem("food_pie_melon", new ItemFood(8, 0.4F, false));
 
-        cookedClownfish = (ItemFood) registerItem("food_clownfish_cooked", new ItemFood(6, 0.5F, false));
-        cookedPuffer = (ItemFood) registerItem("food_pufferfish_baked", new ItemFood(6, 0.6F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 500, 1), 0.1F));
-        preparedPuffer = (ItemFood) registerItem("food_pufferfish_prepared", new ItemFood(2, 0.1F, false));
-        preparedCookedPuffer = (ItemFood) registerItem("food_pufferfish_cooked", new ItemFood(4, 0.5F, false));
-        fuguSac = (ItemFood) registerItem("food_fugu_sac", new ItemFood(2, 0.1F, false).setPotionEffect(new PotionEffect(MobEffects.WITHER, 2000, 1), 1.0F));
+        registerItem("food_clownfish_cooked", new ItemFood(6, 0.5F, false));
+        registerItem("food_pufferfish_baked", new ItemFood(6, 0.6F, false).setPotionEffect(new PotionEffect(MobEffects.POISON, 500, 1), 0.1F));
+        registerItem("food_pufferfish_prepared", new ItemFood(2, 0.1F, false));
+        registerItem("food_pufferfish_cooked", new ItemFood(4, 0.5F, false));
+        registerItem("food_fugu_sac", new ItemFood(2, 0.1F, false).setPotionEffect(new PotionEffect(MobEffects.WITHER, 2000, 1), 1.0F));
 
-        sashimi = (ItemFood) registerItem("food_sashimi", new ItemFood(2, 0.1F, false));
-        mulberry = (ItemFood) registerItem("food_mulberry", new ItemFood(1, 0.2F, false));
-        rice = (ItemFood) registerItem("food_cooked_rice", new ItemFood(2, 0.3F, false));
-        riceBowl = (ItemFood) registerItem("food_bowl_rice", new ItemFood(9, 0.6F, false).setMaxStackSize(1));
-        laxative = registerItem("laxative", new ItemLaxative(0,0,false));
-        teaLeaves = (ItemTea) registerItem("tea_leaves", new ItemTea(TeaType.ItemType.Leaves));
-        teaSoaked = (ItemTea) registerItem("tea_soaked", new ItemTea(TeaType.ItemType.Soaked));
-        teaWilted = (ItemTea) registerItem("tea_wilted", new ItemTea(TeaType.ItemType.Wilted));
-        teaPowder = (ItemTea) registerItem("tea_powder", new ItemTea(TeaType.ItemType.Powder));
+        registerItem("food_sashimi", new ItemFood(2, 0.1F, false));
+        registerItem("food_mulberry", new ItemFood(1, 0.2F, false));
+        registerItem("food_cooked_rice", new ItemFood(2, 0.3F, false));
+        registerItem("food_bowl_rice", new ItemFood(9, 0.6F, false).setMaxStackSize(1));
+        registerItem("laxative", new ItemLaxative(0, 0, false));
+        registerItem("tea_leaves", new ItemTea(TeaType.ItemType.Leaves));
+        registerItem("tea_soaked", new ItemTea(TeaType.ItemType.Soaked));
+        registerItem("tea_wilted", new ItemTea(TeaType.ItemType.Wilted));
+        registerItem("tea_powder", new ItemTea(TeaType.ItemType.Powder));
 
-        soulSandPile = registerItem("soulsand_pile", new Item());
-        rottenFood = (ItemFood)registerItem("rotten_food", new ItemFood(1,0.1f,false).setPotionEffect(new PotionEffect(MobEffects.HUNGER, 2000, 1), 1.0F));
-        wool = (ItemColored)registerItem("wool",new ItemColored());
+        registerItem("soulsand_pile", new Item());
+        registerItem("rotten_food", new ItemFood(1, 0.1f, false).setPotionEffect(new PotionEffect(MobEffects.HUNGER, 2000, 1), 1.0F));
+        registerItem("wool", new ItemColored());
 
         /*bowls = (ItemMaterial) registerItem("bowl", new ItemMaterial(
                 new String[]{"salt"}
         ));*/
-        salts = (ItemMaterial) registerItem("salt", new ItemMaterial(
+        registerItem("salt", new ItemMaterial(
                 new String[]{"crystal"}
         ));
 
-        artifactFrame = (ItemArtifactFrame) registerItem("artifact_frame", new ItemArtifactFrame());
-        brokenArtifact = (ItemToolShard) registerItem("tool_shard", new ItemToolShard().setMaxStackSize(1));
+        registerItem("artifact_frame", new ItemArtifactFrame());
+        registerItem("tool_shard", new ItemToolShard().setMaxStackSize(1));
 
-        stainedBrick = (ItemStainedBrick) registerItem("brick_stained", new ItemStainedBrick());
+        registerItem("brick_stained", new ItemStainedBrick());
 
-        shinai = (ItemShinai) registerItem("shinai", new ItemShinai());
-        katana = (ItemKatana) registerItem("katana", new ItemKatana());
-        wakizashi = (ItemWakizashi) registerItem("wakizashi", new ItemWakizashi());
-        tanto = (ItemTanto) registerItem("tanto", new ItemTanto());
-        yumi = (ItemYumi) registerItem("yumi", new ItemYumi());
-        ya = (ItemYa) registerItem("ya", new ItemYa());
-        yaPoisoned = (ItemPoisonedYa) registerItem("poisoned_ya", new ItemPoisonedYa());
-        ancestryBottle = (ItemAncestryBottle) registerItem("ancestry_bottle", new ItemAncestryBottle());
-        teaCup = (ItemTeaCup) registerItem("teacup", new ItemTeaCup());
+        registerItem("shinai", new ItemShinai());
+        registerItem("katana", new ItemKatana());
+        registerItem("wakizashi", new ItemWakizashi());
+        registerItem("tanto", new ItemTanto());
+        registerItem("yumi", new ItemYumi());
+        registerItem("ya", new ItemYa());
+        registerItem("poisoned_ya", new ItemPoisonedYa());
+        registerItem("ancestry_bottle", new ItemAncestryBottle());
+        registerItem("teacup", new ItemTeaCup());
 
-        materialJapan = (ItemMaterial) registerItem("japanmat", new ItemMaterial(
+        registerItem("japanmat", new ItemMaterial(
                 new String[]{"rice", "soaked_rice", "rice_stalk", "rice_hay", "rice_ash", "rush",
                         "soaked_bamboo", "bamboo_slats", "soaked_mulberry", "mulberry_paste", "mulberry_sheet", "washi",
                         "iron_scales", "lamellar", "paper_lamellar", "tsuka", "half_katana_blade", "ya_head", "yumi_top", "yumi_bottom",
@@ -391,48 +391,49 @@ public class ModItems {
                         "helmet_undecorated", "chest_undecorated", "legs_undecorated", "boots_undecorated", "bark_sakura", "bark_mulberry"}
         ));
 
-        samuraiHelm = (ItemSamuraiArmor) registerItem("helmet_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.HEAD));
-        samuraiChestplate = (ItemSamuraiArmor) registerItem("chest_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.CHEST));
-        samuraiLeggings = (ItemSamuraiArmor) registerItem("legs_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.LEGS));
-        samuraiBoots = (ItemSamuraiArmor) registerItem("boots_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.FEET));
+        registerItem("helmet_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.HEAD));
+        registerItem("chest_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.CHEST));
+        registerItem("legs_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.LEGS));
+        registerItem("boots_samurai", new ItemSamuraiArmor(EntityEquipmentSlot.FEET));
 
-        paperHelm = (ItemPaperArmor) registerItem("helmet_paper", new ItemPaperArmor(EntityEquipmentSlot.HEAD));
-        paperChestplate = (ItemPaperArmor) registerItem("chest_paper", new ItemPaperArmor(EntityEquipmentSlot.CHEST));
-        paperLeggings = (ItemPaperArmor) registerItem("legs_paper", new ItemPaperArmor(EntityEquipmentSlot.LEGS));
-        paperBoots = (ItemPaperArmor) registerItem("boots_paper", new ItemPaperArmor(EntityEquipmentSlot.FEET));
+        registerItem("helmet_paper", new ItemPaperArmor(EntityEquipmentSlot.HEAD));
+        registerItem("chest_paper", new ItemPaperArmor(EntityEquipmentSlot.CHEST));
+        registerItem("legs_paper", new ItemPaperArmor(EntityEquipmentSlot.LEGS));
+        registerItem("boots_paper", new ItemPaperArmor(EntityEquipmentSlot.FEET));
 
-        materialBag = (ItemMaterial) registerItem("bag", new ItemMaterial(
+        registerItem("bag", new ItemMaterial(
                 new String[]{"seed", "seed_hemp", "seed_melon", "seed_pumpkin", "seed_beets", "cocoa", "redstone", "glowstone", "sugar", "gunpowder", "flour", "sulfur", "nitre", "sawdust", "sawdust_soul", "potash", "hellfire", "kibble"}
         ));
-        materialCrate = (ItemMaterial) registerItem("crate", new ItemMaterial(
+        registerItem("crate", new ItemMaterial(
                 new String[]{"pork", "pork_raw", "chicken", "chicken_raw", "steak", "steak_raw", "mutton", "mutton_raw", "rabbit", "rabbit_raw", "egg", "slime", "enderpearl", "cactus", "inksac"}
         ));
-        materialCongealed = (ItemMaterial) registerItem("congealed", new ItemMaterial(
+        registerItem("congealed", new ItemMaterial(
                 new String[]{"bone", "flesh", "eye", "amanita", "mushroom", "wart"}
         ));
-        materialBolt = (ItemMaterial) registerItem("bolt", new ItemMaterial(
+        registerItem("bolt", new ItemMaterial(
                 new String[]{"fabric", "vine", "paper", "leather", "scoured_leather", "tanned_leather", "string"}
         ));
-        materialBundle = (ItemMaterial) registerItem("bundle", new ItemMaterial(
+        registerItem("bundle", new ItemMaterial(
                 new String[]{"feather", "arrows", "blazerods", "oak", "birch", "spruce", "jungle", "acacia", "darkoak"}
         ));
 
-        materialDeco = (ItemMaterial) registerItem("decomat", new ItemMaterial(
+        registerItem("decomat", new ItemMaterial(
                 new String[]{"hemp_oil", "wood_bleach", "wood_stain", "glass_chunk"}
         ));
 
-        materialTweak = (ItemMaterial) registerItem("tweakmat", new ItemMaterial(
+        registerItem("tweakmat", new ItemMaterial(
                 new String[]{"ash", "ink_and_quill"}
         ));
-        inkAndQuill = (ItemInkAndQuill) registerItem("ink_and_quill", new ItemInkAndQuill());
+        registerItem("ink_and_quill", new ItemInkAndQuill());
 
-        materialWheat = (ItemMaterial) registerItem("wheatmat", new ItemMaterial(
+        registerItem("wheatmat", new ItemMaterial(
                 new String[]{"hay"}
         ));
 
-        explosion = registerItem("explosion", new Item() {
+        registerItem("explosion", new Item() {
             @Override
-            public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {}
+            public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+            }
         });
     }
 
@@ -446,8 +447,8 @@ public class ModItems {
     }
 
     public static Item registerItem(String name, Item item) {
-        if(item.getRegistryName() == null)
-            item.setRegistryName(Reference.MOD_ID,name);
+        if (item.getRegistryName() == null)
+            item.setRegistryName(Reference.MOD_ID, name);
         item.setUnlocalizedName(name);
         item.setCreativeTab(BetterWithAddons.instance.creativeTab);
         LIST.add(item);

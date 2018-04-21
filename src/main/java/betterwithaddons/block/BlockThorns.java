@@ -126,7 +126,7 @@ public class BlockThorns extends BlockBase {
 
     public boolean isProperSoil(IBlockAccess world, BlockPos pos, EnumFacing facing)
     {
-        return ModBlocks.thornrose.isProperSoil(world,pos,facing);
+        return ModBlocks.THORN_ROSE.isProperSoil(world,pos,facing);
     }
 
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
@@ -181,7 +181,7 @@ public class BlockThorns extends BlockBase {
 
     private boolean isVine(Block block)
     {
-        return block == this || block == ModBlocks.thornrose;
+        return block == this || block == ModBlocks.THORN_ROSE;
     }
 
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
@@ -252,7 +252,7 @@ public class BlockThorns extends BlockBase {
 
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        return Lists.newArrayList(ModItems.material.getMaterial("midori"));
+        return Lists.newArrayList(ModItems.MATERIAL.getMaterial("midori"));
     }
 
     @SideOnly(Side.CLIENT)

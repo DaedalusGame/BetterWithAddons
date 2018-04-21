@@ -37,11 +37,11 @@ public class GrassHandler {
                         if(world.getLightFromNeighbors(growthpos.up()) >= 4 && topstate.getLightOpacity(world, pos.up()) <= 2) {
                             if (InteractionBWA.GRASS_TO_SAND && growthstate.getBlock() == Blocks.SAND) {
                                 if(growthstate.getValue(BlockSand.VARIANT) == BlockSand.EnumType.SAND)
-                                    world.setBlockState(growthpos, ModBlocks.grass.getDefaultState().withProperty(BlockExtraGrass.VARIANT,BlockExtraGrass.ExtraGrassType.SAND));
+                                    world.setBlockState(growthpos, ModBlocks.GRASS.getDefaultState().withProperty(BlockExtraGrass.VARIANT,BlockExtraGrass.ExtraGrassType.SAND));
                                 else
-                                    world.setBlockState(growthpos, ModBlocks.grass.getDefaultState().withProperty(BlockExtraGrass.VARIANT,BlockExtraGrass.ExtraGrassType.REDSAND));
+                                    world.setBlockState(growthpos, ModBlocks.GRASS.getDefaultState().withProperty(BlockExtraGrass.VARIANT,BlockExtraGrass.ExtraGrassType.REDSAND));
                             } else if(InteractionBWA.GRASS_TO_CLAY && growthstate.getBlock() == Blocks.CLAY)
-                                world.setBlockState(growthpos, ModBlocks.grass.getDefaultState().withProperty(BlockExtraGrass.VARIANT,BlockExtraGrass.ExtraGrassType.CLAY));
+                                world.setBlockState(growthpos, ModBlocks.GRASS.getDefaultState().withProperty(BlockExtraGrass.VARIANT,BlockExtraGrass.ExtraGrassType.CLAY));
                         }
                     }
             }

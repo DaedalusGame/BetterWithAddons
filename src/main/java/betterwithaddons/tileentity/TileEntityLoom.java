@@ -46,7 +46,7 @@ public class TileEntityLoom extends TileEntityBase implements IMechanicalPower, 
 
     @Override
     public BlockLoom getBlock() {
-        return ModBlocks.loom;
+        return ModBlocks.LOOM;
     }
 
     @Override

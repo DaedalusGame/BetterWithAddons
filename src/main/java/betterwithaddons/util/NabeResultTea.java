@@ -5,13 +5,10 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NabeResultTea extends NabeResult {
     public int doses;
@@ -48,10 +45,10 @@ public class NabeResultTea extends NabeResult {
     public ItemStack take(ItemStack container) {
         if(doses <= 0)
             return ItemStack.EMPTY;
-        if(container.getItem() == ModItems.teaCup && !ItemTeaCup.isFilled(container)) {
+        if(container.getItem() == ModItems.TEA_CUP && !ItemTeaCup.isFilled(container)) {
             container.shrink(1);
             doses--;
-            return ModItems.teaCup.getFilled(this);
+            return ModItems.TEA_CUP.getFilled(this);
         }
         return ItemStack.EMPTY;
     }

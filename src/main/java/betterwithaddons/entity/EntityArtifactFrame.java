@@ -69,7 +69,7 @@ public class EntityArtifactFrame extends EntityItemFrame implements IEntityAddit
     }
 
     protected void dropFrame() {
-        entityDropItem(new ItemStack(ModItems.artifactFrame, 1), 0.0F);
+        entityDropItem(new ItemStack(ModItems.ARTIFACT_FRAME, 1), 0.0F);
     }
 
     @Override

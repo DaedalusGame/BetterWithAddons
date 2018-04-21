@@ -55,7 +55,7 @@ public class RotHandler {
 
         public RotInfo(ItemStack matchStack)
         {
-            this(matchStack, InteractionBWA.MISC_ROT_TIME, "food", new ItemStack(ModItems.rottenFood));
+            this(matchStack, InteractionBWA.MISC_ROT_TIME, "food", new ItemStack(ModItems.ROTTEN_FOOD));
         }
 
         public RotInfo(ItemStack matchStack, long spoilTime, String baseName, ItemStack rotStack)
@@ -108,12 +108,12 @@ public class RotHandler {
 
     public static void addRottingItem(ItemStack matchItem)
     {
-        addRottingItem(matchItem, InteractionBWA.MISC_ROT_TIME, "food", new ItemStack(ModItems.rottenFood));
+        addRottingItem(matchItem, InteractionBWA.MISC_ROT_TIME, "food", new ItemStack(ModItems.ROTTEN_FOOD));
     }
 
     public static void addRottingItem(ItemStack matchItem, long timeToRot)
     {
-        addRottingItem(matchItem, timeToRot, "food", new ItemStack(ModItems.rottenFood));
+        addRottingItem(matchItem, timeToRot, "food", new ItemStack(ModItems.ROTTEN_FOOD));
     }
 
     public static void addRottingItem(ItemStack matchItem, long timeToRot, String baseName, ItemStack rottedItem)

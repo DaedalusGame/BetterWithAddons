@@ -60,7 +60,7 @@ public class BlockAqueduct extends BlockBase implements IHasVariants {
         {
             int dist = TileEntityAqueductWater.getMinDistance(worldIn,pos.up())+1;
             if(dist <= InteractionBWA.AQUEDUCT_MAX_LENGTH) {
-                worldIn.setBlockState(pos.up(), ModBlocks.aqueductWater.getDefaultState().withProperty(BlockLiquid.LEVEL,8));
+                worldIn.setBlockState(pos.up(), ModBlocks.AQUEDUCT_WATER.getDefaultState().withProperty(BlockLiquid.LEVEL,8));
                 TileEntity te = worldIn.getTileEntity(pos.up());
                 if(te instanceof TileEntityAqueductWater)
                     ((TileEntityAqueductWater) te).setDistanceFromSource(dist);

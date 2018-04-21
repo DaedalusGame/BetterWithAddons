@@ -34,8 +34,8 @@ public class BlockKera extends BlockBase {
         int irondrop = rand.nextInt(2);
 
         if(hochodrop == 0 && tamadrop == 0) tamadrop = hochodrop = 1;
-        if(hochodrop > 0) ret.add(ModItems.materialJapan.getMaterial("hocho_tetsu",hochodrop));
-        if(tamadrop > 0) ret.add(ModItems.materialJapan.getMaterial("tamahagane",tamadrop));
+        if(hochodrop > 0) ret.add(ModItems.MATERIAL_JAPAN.getMaterial("hocho_tetsu",hochodrop));
+        if(tamadrop > 0) ret.add(ModItems.MATERIAL_JAPAN.getMaterial("tamahagane",tamadrop));
         if(irondrop > 0) ret.add(new ItemStack(Items.IRON_INGOT,irondrop));
 
         return ret;

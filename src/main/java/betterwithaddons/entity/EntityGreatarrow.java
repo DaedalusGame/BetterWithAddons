@@ -41,7 +41,7 @@ public class EntityGreatarrow extends EntityArrow {
     protected void entityInit()
     {
         super.entityInit();
-        this.dataManager.register(ARROW_TYPE, new ItemStack(ModItems.greatarrow));
+        this.dataManager.register(ARROW_TYPE, new ItemStack(ModItems.GREATARROW));
         this.dataManager.register(BLOCK_BREAK_POWER, 3.0f);
     }
 
@@ -145,7 +145,7 @@ public class EntityGreatarrow extends EntityArrow {
 
     private ItemGreatarrow getArrowType() {
         ItemStack arrowstack = getArrowStack();
-        ItemGreatarrow arrowtype = ModItems.greatarrow;
+        ItemGreatarrow arrowtype = ModItems.GREATARROW;
         if(!arrowstack.isEmpty() && arrowstack.getItem() instanceof ItemGreatarrow) //I don't trust people like you.
             arrowtype = (ItemGreatarrow) arrowstack.getItem();
         return arrowtype;

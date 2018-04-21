@@ -326,7 +326,7 @@ public class TileEntityChute extends TileEntityBase implements ITickable, IMecha
 
     @Override
     public Block getBlock() {
-        return ModBlocks.chute;
+        return ModBlocks.CHUTE;
     }
 
     @Override

@@ -91,6 +91,11 @@ tile.crop_tea.name=Tea Seeds
 tile.shoji.name=Shoji
 tile.fusuma.name=Fusuma
 tile.tatami.name=Tatami Mat
+tile.tatami_full.name=Recessed Tatami Mat
+tile.zen_sand.name=Zen Garden Sand
+tile.zen_redsand.name=Zen Garden Red Sand
+tile.zen_soulsand.name=Zen Garden Soul Sand
+tile.zen_ironsand.name=Zen Garden Iron Sand
 
 tile.block_matcher.name=Block Matcher
 tile.legendarium.name=Hall of Legends
@@ -437,6 +442,9 @@ bwm.manual.bwa=Better With Addons
 info.rope.too_far=The other post is too far away.
 info.horse.will_wait=Your steed will wait for you.
 info.horse.your_horse_will_wait=%s will wait for you.
+
+tooltip.zen_sand=Apply a hoe to sand.
+tooltip.tatami_full=Apply a hoe to a tatami mat placed on bamboo slats.
 
 tooltip.adobe.crafting=Depends on mixture
 tooltip.adobe.description=Leave in the sun to dry.

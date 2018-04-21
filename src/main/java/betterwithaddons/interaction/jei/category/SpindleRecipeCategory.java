@@ -73,7 +73,7 @@ public class SpindleRecipeCategory extends BlankRecipeCategory<SpindleRecipeWrap
 
         guiItemStacks.set(0, recipeWrapper.getInputs());
         guiItemStacks.set(1, recipeWrapper.getOutputs());
-        guiItemStacks.set(2, new ItemStack(ModBlocks.spindle));
+        guiItemStacks.set(2, new ItemStack(ModBlocks.SPINDLE));
     }
 
 }

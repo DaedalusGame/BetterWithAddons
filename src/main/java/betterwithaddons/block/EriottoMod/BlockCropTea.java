@@ -105,7 +105,7 @@ public class BlockCropTea extends BlockCrops implements IHasVariants, IColorable
     @Override
     protected Item getSeed()
     {
-        return Item.getItemFromBlock(ModBlocks.tea);
+        return Item.getItemFromBlock(ModBlocks.TEA);
     }
 
     @Override
@@ -164,7 +164,7 @@ public class BlockCropTea extends BlockCrops implements IHasVariants, IColorable
             TeaType type = getType(tile);
             if (rand.nextInt(3) == 0 && type != TeaType.END && type != TeaType.NETHER)
                 type = TeaType.WHITE;
-            drops.add(ModItems.teaLeaves.getStack(type, rand.nextInt(3) + 1));
+            drops.add(ModItems.TEA_LEAVES.getStack(type, rand.nextInt(3) + 1));
             for (int i = 0; i < 3 + fortune; ++i)
                 if (rand.nextInt(2) == 0)
                     drops.add(new ItemStack(this.getSeed(), 1, 0));

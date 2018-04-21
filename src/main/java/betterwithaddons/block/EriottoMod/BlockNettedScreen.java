@@ -67,7 +67,7 @@ public class BlockNettedScreen extends BlockContainerBase {
 
         if(!(uppertype.getBlock() instanceof BlockSlat))
             return NONE;
-        if(lowertype.getBlock() == ModBlocks.sakuraPlanks && bottom.getMaterial() == Material.WATER)
+        if(lowertype.getBlock() == ModBlocks.SAKURA_PLANKS && bottom.getMaterial() == Material.WATER)
             return WATER;
         if(lowertype.getBlock() == Blocks.STONEBRICK && (bottom.getMaterial() == Material.LAVA || bottom.getMaterial() == Material.FIRE))
             return FIRE;

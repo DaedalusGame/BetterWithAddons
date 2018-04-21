@@ -32,10 +32,10 @@ import javax.annotation.Nonnull;
 public class BWAJEIPlugin implements IModPlugin {
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
-        subtypeRegistry.useNbtForSubtypes(ModItems.teaLeaves);
-        subtypeRegistry.useNbtForSubtypes(ModItems.teaSoaked);
-        subtypeRegistry.useNbtForSubtypes(ModItems.teaWilted);
-        subtypeRegistry.useNbtForSubtypes(ModItems.teaPowder);
+        subtypeRegistry.useNbtForSubtypes(ModItems.TEA_LEAVES);
+        subtypeRegistry.useNbtForSubtypes(ModItems.TEA_SOAKED);
+        subtypeRegistry.useNbtForSubtypes(ModItems.TEA_WILTED);
+        subtypeRegistry.useNbtForSubtypes(ModItems.TEA_POWDER);
     }
 
     @Override
@@ -83,14 +83,14 @@ public class BWAJEIPlugin implements IModPlugin {
         registry.addRecipes(CraftingManagerInfuserTransmutation.getInstance().getRecipes(),TransmutationRecipeCategory.UID);
         registry.addRecipes(CraftingManagerPacking.getInstance().getRecipes(),PackingRecipeCategory.UID);
 
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.tatara), TataraRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 0), SoakingBoxRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.cherrybox, 1, 1), DryingBoxRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.nettedScreen), WaterNetRecipeCategory.UID, SandNetRecipeCategory.UID, FireNetRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.spindle), SpindleRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.TATARA), TataraRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.CHERRY_BOX, 1, 0), SoakingBoxRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.CHERRY_BOX, 1, 1), DryingBoxRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.NETTED_SCREEN), WaterNetRecipeCategory.UID, SandNetRecipeCategory.UID, FireNetRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.SPINDLE), SpindleRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(Blocks.PISTON), PackingRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), InfuserRecipeCategory.UID);
-        registry.addRecipeCatalyst(new ItemStack(ModBlocks.infuser), TransmutationRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSER), InfuserRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSER), TransmutationRecipeCategory.UID);
 
         registry.addRecipeClickArea(GuiTatara.class, 78, 32, 28, 23, TataraRecipeCategory.UID);
         registry.addRecipeClickArea(GuiSoakingBox.class, 78, 32, 28, 23, SoakingBoxRecipeCategory.UID);

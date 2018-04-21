@@ -21,9 +21,9 @@ public class BlockLureTreeSapling extends BlockModSapling {
         BlockPos checkpos = pos.up();
         IBlockState checkstate = worldIn.getBlockState(checkpos);
 
-        if(checkstate.getBlock() == ModBlocks.luretreeLog)
+        if(checkstate.getBlock() == ModBlocks.LURETREE_LOG)
         {
-            worldIn.setBlockState(checkpos,ModBlocks.luretreeFace.getDefaultState().withProperty(BlockLureTree.FACING, EnumFacing.getHorizontal(rand.nextInt(4))).withProperty(BlockLureTree.ACTIVE,true));
+            worldIn.setBlockState(checkpos,ModBlocks.LURETREE_FACE.getDefaultState().withProperty(BlockLureTree.FACING, EnumFacing.getHorizontal(rand.nextInt(4))).withProperty(BlockLureTree.ACTIVE,true));
         }
 
         worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(),

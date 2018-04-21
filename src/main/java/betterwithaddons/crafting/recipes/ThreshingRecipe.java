@@ -51,7 +51,7 @@ public class ThreshingRecipe extends ToolDamageRecipe {
             return;
         if (isMatch(event.craftMatrix, event.player.world)) {
             if (!event.player.getEntityWorld().isRemote) {
-                event.player.entityDropItem(ModItems.materialWheat.getMaterial("hay"), 0);
+                event.player.entityDropItem(ModItems.MATERIAL_WHEAT.getMaterial("hay"), 0);
             }
         }
     }

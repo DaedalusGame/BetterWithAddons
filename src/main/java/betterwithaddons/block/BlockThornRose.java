@@ -63,8 +63,8 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
                     EnumFacing growdir = EnumFacing.random(rand);
                     BlockPos checkpos = pos.offset(growdir);
 
-                    if (ModBlocks.thorns.canSurvive(worldIn, pos) && canPlaceBlockAt(worldIn, checkpos) && isGoodPlaceToGrow(worldIn, checkpos)) {
-                        worldIn.setBlockState(pos, ModBlocks.thorns.setStem(ModBlocks.thorns.getDefaultState(),stemfacing), 2);
+                    if (ModBlocks.THORNS.canSurvive(worldIn, pos) && canPlaceBlockAt(worldIn, checkpos) && isGoodPlaceToGrow(worldIn, checkpos)) {
+                        worldIn.setBlockState(pos, ModBlocks.THORNS.setStem(ModBlocks.THORNS.getDefaultState(),stemfacing), 2);
                         growFlower(worldIn, checkpos, age, growdir.getOpposite(), rand);
                         grownflowers++;
                     }
@@ -76,8 +76,8 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
                 if (grownflowers == 0) {
                     EnumFacing growdir = EnumFacing.random(rand);
                     BlockPos checkpos = pos.offset(growdir);
-                    if (ModBlocks.thorns.canSurvive(worldIn, pos) && canPlaceBlockAt(worldIn, checkpos)) {
-                        worldIn.setBlockState(pos, ModBlocks.thorns.setStem(ModBlocks.thorns.getDefaultState(),stemfacing), 2);
+                    if (ModBlocks.THORNS.canSurvive(worldIn, pos) && canPlaceBlockAt(worldIn, checkpos)) {
+                        worldIn.setBlockState(pos, ModBlocks.THORNS.setStem(ModBlocks.THORNS.getDefaultState(),stemfacing), 2);
                         growFlower(worldIn, checkpos, age, growdir.getOpposite(), rand);
                         grownflowers++;
                     }
@@ -92,8 +92,8 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
             }
             else if(hasAdjacentFlower(worldIn,pos))
             {
-                if (ModBlocks.thorns.canSurvive(worldIn, pos))
-                    worldIn.setBlockState(pos, ModBlocks.thorns.setStem(ModBlocks.thorns.getDefaultState(),stemfacing), 2);
+                if (ModBlocks.THORNS.canSurvive(worldIn, pos))
+                    worldIn.setBlockState(pos, ModBlocks.THORNS.setStem(ModBlocks.THORNS.getDefaultState(),stemfacing), 2);
                 else
                     worldIn.destroyBlock(pos, true);
             }
@@ -108,7 +108,7 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
             BlockPos checkpos = pos.offset(enumfacing);
             IBlockState blockstate = world.getBlockState(checkpos);
 
-            if(blockstate.getBlock() == ModBlocks.thorns || isProperSoil(world,checkpos,enumfacing))
+            if(blockstate.getBlock() == ModBlocks.THORNS || isProperSoil(world,checkpos,enumfacing))
             {
                 facings.add(enumfacing);
             }
@@ -161,7 +161,7 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
         int age = state.getValue(AGE);
 
         if(age == MAX_AGE)
-            list.add(ModItems.material.getMaterial("thornrose",1));
+            list.add(ModItems.MATERIAL.getMaterial("thornrose",1));
         else if(age == 0)
             list.add(new ItemStack(this,1));
 
@@ -170,7 +170,7 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
 
     private boolean isVine(Block block)
     {
-        return block == this || block == ModBlocks.thorns;
+        return block == this || block == ModBlocks.THORNS;
     }
 
     private void growFlower(World world, BlockPos pos, int age, EnumFacing stem, Random rand)
@@ -178,8 +178,8 @@ public class BlockThornRose extends BlockBase implements IPlantable, IHasVariant
         if(age >= MAX_AGE-1) {
             if(rand.nextInt(5) == 0)
                 placeDeadFlower(world, pos);
-            else if (ModBlocks.thorns.canPlaceBlockAt(world,pos))
-                world.setBlockState(pos, ModBlocks.thorns.setStem(ModBlocks.thorns.getDefaultState(),stem), 2);
+            else if (ModBlocks.THORNS.canPlaceBlockAt(world,pos))
+                world.setBlockState(pos, ModBlocks.THORNS.setStem(ModBlocks.THORNS.getDefaultState(),stem), 2);
         }
         else if(rand.nextInt(5) == 0)
             placeGrownFlower(world,pos,age);

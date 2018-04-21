@@ -35,16 +35,16 @@ public class NabeResultPoison extends NabeResult {
 
     @Override
     public ItemStack take(ItemStack container) {
-        if(doses >= 1 && container.getItem() == ModItems.ya) {
+        if(doses >= 1 && container.getItem() == ModItems.YA) {
             int consumed = Math.min(container.getCount(),doses);
             doses -= consumed;
             container.shrink(consumed);
-            return new ItemStack(ModItems.yaPoisoned,consumed);
+            return new ItemStack(ModItems.YA_POISONED,consumed);
         }
-        if(doses >= 4 && container.getItem() == ModItems.teaCup && !ItemTeaCup.isFilled(container)) {
+        if(doses >= 4 && container.getItem() == ModItems.TEA_CUP && !ItemTeaCup.isFilled(container)) {
             container.shrink(1);
             doses -= 4;
-            return ModItems.teaCup.getFilled(this);
+            return ModItems.TEA_CUP.getFilled(this);
         }
         return ItemStack.EMPTY;
     }

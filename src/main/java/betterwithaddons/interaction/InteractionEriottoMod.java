@@ -7,7 +7,6 @@ import betterwithaddons.crafting.recipes.ArmorDecorateRecipe;
 import betterwithaddons.crafting.recipes.TeaNabeRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.entity.EntityKarateZombie;
-import betterwithaddons.item.ItemLaxative;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.IngredientSized;
@@ -17,15 +16,10 @@ import betterwithaddons.util.VariableSegment;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWOreDictionary;
 import betterwithmods.common.BWRegistry;
-import betterwithmods.common.blocks.BlockRawPastry;
 import betterwithmods.common.registry.Wood;
 import betterwithmods.module.hardcore.crafting.HCLumber;
-import betterwithmods.module.tweaks.Dung;
-import betterwithmods.module.tweaks.EasyBreeding;
 import betterwithmods.util.StackIngredient;
-import com.google.common.base.Supplier;
 import com.google.common.collect.Lists;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Blocks;
@@ -130,102 +124,102 @@ public class InteractionEriottoMod extends Interaction {
 
     @Override
     void oreDictRegistration() {
-        OreDictionary.registerOre("seed", new ItemStack(Items.WHEAT_SEEDS)); //I'll beat the shit out of HarvestCraft
-        OreDictionary.registerOre("seed", new ItemStack(Items.PUMPKIN_SEEDS));
-        OreDictionary.registerOre("seed", new ItemStack(Items.MELON_SEEDS));
-        OreDictionary.registerOre("seed", new ItemStack(Items.BEETROOT_SEEDS));
-        OreDictionary.registerOre("seed", new ItemStack(ModBlocks.rice));
-        OreDictionary.registerOre("seed", new ItemStack(ModBlocks.rush));
-        OreDictionary.registerOre("seed", new ItemStack(ModBlocks.tea));
-
-        OreDictionary.registerOre("cropRice", ModItems.materialJapan.getMaterial("rice"));
-        OreDictionary.registerOre("seedRice", new ItemStack(ModBlocks.rice));
-        OreDictionary.registerOre("cropRush", ModItems.materialJapan.getMaterial("rush"));
-        OreDictionary.registerOre("seedRush", new ItemStack(ModBlocks.rush));
-        TeaType.getTypesByItem(TeaType.ItemType.Leaves).stream().forEach(teaType -> OreDictionary.registerOre("cropTea", ModItems.teaLeaves.getStack(teaType)));
-        OreDictionary.registerOre("seedTea", new ItemStack(ModBlocks.tea));
-        OreDictionary.registerOre("materialBamboo", new ItemStack(ModBlocks.bamboo));
-
-        OreDictionary.registerOre("treeSapling", ModBlocks.sakuraSapling);
-        OreDictionary.registerOre("treeSapling", ModBlocks.mulberrySapling);
-        OreDictionary.registerOre("logWood", ModBlocks.sakuraLog);
-        OreDictionary.registerOre("logWood", ModBlocks.mulberryLog);
-        OreDictionary.registerOre("plankWood", ModBlocks.sakuraPlanks);
-        OreDictionary.registerOre("plankWood", ModBlocks.mulberryPlanks);
-
-        OreDictionary.registerOre("barkWood", ModItems.materialJapan.getMaterial("bark_mulberry"));
-        OreDictionary.registerOre("barkWood", ModItems.materialJapan.getMaterial("bark_sakura"));
-
-        OreDictionary.registerOre("ingotTamahagane", ModItems.materialJapan.getMaterial("tamahagane_finished"));
-        OreDictionary.registerOre("ingotHochoTetsu", ModItems.materialJapan.getMaterial("hocho_tetsu_finished"));
+        OreDictionary.registerOre("treeSapling", ModBlocks.SAKURA_SAPLING);
+        OreDictionary.registerOre("treeSapling", ModBlocks.MULBERRY_SAPLING);
+        OreDictionary.registerOre("logWood", ModBlocks.SAKURA_LOG);
+        OreDictionary.registerOre("logWood", ModBlocks.MULBERRY_LOG);
+        OreDictionary.registerOre("plankWood", ModBlocks.SAKURA_PLANKS);
+        OreDictionary.registerOre("plankWood", ModBlocks.MULBERRY_PLANKS);
     }
 
     @Override
     public void init() {
-        REPAIRABLE_TOOLS = Lists.newArrayList(ModItems.katana, ModItems.wakizashi, ModItems.tanto, ModItems.shinai, ModItems.yumi, ModItems.samuraiBoots, ModItems.samuraiLeggings, ModItems.samuraiHelm, ModItems.samuraiChestplate);
+        REPAIRABLE_TOOLS = Lists.newArrayList(ModItems.KATANA, ModItems.WAKIZASHI, ModItems.TANTO, ModItems.SHINAI, ModItems.YUMI, ModItems.SAMURAI_BOOTS, ModItems.SAMURAI_LEGGINGS, ModItems.SAMURAI_HELMET, ModItems.SAMURAI_CHESTPLATE);
 
-        ModBlocks.mulberrySapling.setLeaves(ModBlocks.mulberryLeaves.getDefaultState()).setLog(ModBlocks.mulberryLog.getDefaultState());
-        ModBlocks.mulberryLeaves.setSapling(new ItemStack(ModBlocks.mulberrySapling));
+        ModBlocks.MULBERRY_SAPLING.setLeaves(ModBlocks.MULBERRY_LEAVES.getDefaultState()).setLog(ModBlocks.MULBERRY_LOG.getDefaultState());
+        ModBlocks.MULBERRY_LEAVES.setSapling(new ItemStack(ModBlocks.MULBERRY_SAPLING));
 
-        ModBlocks.sakuraSapling.setLeaves(ModBlocks.sakuraLeaves.getDefaultState()).setLog(ModBlocks.sakuraLog.getDefaultState()).setBig(true);
-        ModBlocks.sakuraLeaves.setSapling(new ItemStack(ModBlocks.sakuraSapling));
+        ModBlocks.SAKURA_SAPLING.setLeaves(ModBlocks.SAKURA_LEAVES.getDefaultState()).setLog(ModBlocks.SAKURA_LOG.getDefaultState()).setBig(true);
+        ModBlocks.SAKURA_LEAVES.setSapling(new ItemStack(ModBlocks.SAKURA_SAPLING));
 
-        ModBlocks.connectPanes(ModBlocks.shoji, ModBlocks.fusuma);
+        ModBlocks.connectPanes(ModBlocks.SHOJI, ModBlocks.FUSUMA);
 
+        OreDictionary.registerOre("seed", new ItemStack(Items.WHEAT_SEEDS)); //I'll beat the shit out of HarvestCraft
+        OreDictionary.registerOre("seed", new ItemStack(Items.PUMPKIN_SEEDS));
+        OreDictionary.registerOre("seed", new ItemStack(Items.MELON_SEEDS));
+        OreDictionary.registerOre("seed", new ItemStack(Items.BEETROOT_SEEDS));
+        OreDictionary.registerOre("seed", new ItemStack(ModBlocks.RICE));
+        OreDictionary.registerOre("seed", new ItemStack(ModBlocks.RUSH));
+        OreDictionary.registerOre("seed", new ItemStack(ModBlocks.TEA));
         if (ModInteractions.bwm.isActive())
             OreDictionary.registerOre("seed", new ItemStack(BWMBlocks.HEMP));
 
-        CraftingManagerSandNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModBlocks.ironSand, 1)}, new OreIngredient("blockIron"), 8);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.SAND, 8)}, IngredientSized.fromBlock(ModBlocks.ironSand, 1), 0);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, new ItemStack(ModItems.sashimi, 3)}, IngredientSized.fromStacks(new ItemStack(Items.FISH, 1)), 0);
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModItems.fuguSac, 1), new ItemStack(ModItems.preparedPuffer, 3)}, Ingredient.fromStacks(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata())), 0);
-        CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.materialJapan.getMaterial("iron_scales", 27)}, Ingredient.fromStacks(new ItemStack(ModBlocks.ironSand, 1)));
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.materialJapan.getMaterial("washi", 9)}, Ingredient.fromStacks(ModItems.materialJapan.getMaterial("mulberry_sheet")), 0);
-        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.teaPowder.getStack(tea)}, Ingredient.fromStacks(ModItems.teaWilted.getStack(tea)), 0));
-        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.teaPowder.getStack(tea)}, Ingredient.fromStacks(ModItems.teaSoaked.getStack(tea)), 0));
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.teaPowder.getStack(TeaType.MATCHA)}, Ingredient.fromStacks(ModItems.teaPowder.getStack(TeaType.TENCHA)),0);
+        OreDictionary.registerOre("cropRice", ModItems.MATERIAL_JAPAN.getMaterial("rice"));
+        OreDictionary.registerOre("seedRice", new ItemStack(ModBlocks.RICE));
+        OreDictionary.registerOre("cropRush", ModItems.MATERIAL_JAPAN.getMaterial("rush"));
+        OreDictionary.registerOre("seedRush", new ItemStack(ModBlocks.RUSH));
+        TeaType.getTypesByItem(TeaType.ItemType.Leaves).stream().forEach(teaType -> OreDictionary.registerOre("cropTea", ModItems.TEA_LEAVES.getStack(teaType)));
+        OreDictionary.registerOre("seedTea", new ItemStack(ModBlocks.TEA));
+        OreDictionary.registerOre("materialBamboo", new ItemStack(ModBlocks.BAMBOO));
 
-        BWRegistry.CAULDRON.addUnstokedRecipe(ModItems.materialJapan.getMaterial("soaked_rice"),new ItemStack(ModItems.rice));
-        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(ModItems.mulberry,3)),Ingredient.fromItem(Items.SUGAR),new OreIngredient("foodFlour")),new ItemStack(ModItems.laxative,2));
 
-        GameRegistry.addSmelting(ModItems.teaPowder, ModItems.teaPowder.getStack(TeaType.HOUJICHA), 0.1f);
-        GameRegistry.addSmelting(new ItemStack(ModItems.preparedPuffer), new ItemStack(ModItems.preparedCookedPuffer), 0.35f);
-        GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("soaked_rice"), new ItemStack(ModItems.rice), 0.35f);
+        OreDictionary.registerOre("barkWood", ModItems.MATERIAL_JAPAN.getMaterial("bark_mulberry"));
+        OreDictionary.registerOre("barkWood", ModItems.MATERIAL_JAPAN.getMaterial("bark_sakura"));
+
+        OreDictionary.registerOre("ingotTamahagane", ModItems.MATERIAL_JAPAN.getMaterial("tamahagane_finished"));
+        OreDictionary.registerOre("ingotHochoTetsu", ModItems.MATERIAL_JAPAN.getMaterial("hocho_tetsu_finished"));
+
+        CraftingManagerSandNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModBlocks.IRON_SAND, 1)}, new OreIngredient("blockIron"), 8);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.SAND, 8)}, IngredientSized.fromBlock(ModBlocks.IRON_SAND, 1), 0);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, new ItemStack(ModItems.SASHIMI, 3)}, IngredientSized.fromStacks(new ItemStack(Items.FISH, 1)), 0);
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModItems.FUGU_SAC, 1), new ItemStack(ModItems.PREPARED_PUFFER, 3)}, Ingredient.fromStacks(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata())), 0);
+        CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.MATERIAL_JAPAN.getMaterial("iron_scales", 27)}, Ingredient.fromStacks(new ItemStack(ModBlocks.IRON_SAND, 1)));
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.MATERIAL_JAPAN.getMaterial("washi", 9)}, Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("mulberry_sheet")), 0);
+        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(tea)}, Ingredient.fromStacks(ModItems.TEA_WILTED.getStack(tea)), 0));
+        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(tea)}, Ingredient.fromStacks(ModItems.TEA_SOAKED.getStack(tea)), 0));
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(TeaType.MATCHA)}, Ingredient.fromStacks(ModItems.TEA_POWDER.getStack(TeaType.TENCHA)),0);
+
+        BWRegistry.CAULDRON.addUnstokedRecipe(ModItems.MATERIAL_JAPAN.getMaterial("soaked_rice"),new ItemStack(ModItems.RICE));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(ModItems.MULBERRY,3)),Ingredient.fromItem(Items.SUGAR),new OreIngredient("foodFlour")),new ItemStack(ModItems.LAXATIVE,2));
+
+        GameRegistry.addSmelting(ModItems.TEA_POWDER, ModItems.TEA_POWDER.getStack(TeaType.HOUJICHA), 0.1f);
+        GameRegistry.addSmelting(new ItemStack(ModItems.PREPARED_PUFFER), new ItemStack(ModItems.PREPARED_COOKED_PUFFER), 0.35f);
+        GameRegistry.addSmelting(ModItems.MATERIAL_JAPAN.getMaterial("soaked_rice"), new ItemStack(ModItems.RICE), 0.35f);
 
         //if (GRASS_DROPS_SEEDS) {
         //    MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rice), 2);
         //    MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rush), 2);
         //}
 
-        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.sakuraLog),new ItemStack(ModBlocks.sakuraPlanks),ModItems.materialJapan.getMaterial("bark_sakura")));
-        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.mulberryLog),new ItemStack(ModBlocks.mulberryPlanks),ModItems.materialJapan.getMaterial("bark_mulberry")){
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.SAKURA_LOG),new ItemStack(ModBlocks.SAKURA_PLANKS),ModItems.MATERIAL_JAPAN.getMaterial("bark_sakura")));
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.MULBERRY_LOG),new ItemStack(ModBlocks.MULBERRY_PLANKS),ModItems.MATERIAL_JAPAN.getMaterial("bark_mulberry")){
             @Override
             public ItemStack getPlank(int count) {
-                ItemStack copy = new ItemStack(ModBlocks.mulberryPlanks);
+                ItemStack copy = new ItemStack(ModBlocks.MULBERRY_PLANKS);
                 copy.setCount((int)Math.ceil(count / (float) HCLumber.axePlankAmount));
                 return copy;
             }
         });
 
-        GameRegistry.addSmelting(ModItems.materialJapan.getMaterial("rice_stalk"), ModItems.materialJapan.getMaterial("rice_ash"), 0.1f);
+        GameRegistry.addSmelting(ModItems.MATERIAL_JAPAN.getMaterial("rice_stalk"), ModItems.MATERIAL_JAPAN.getMaterial("rice_ash"), 0.1f);
 
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"katana"),new ItemStack(ModItems.katana), "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("half_katana_blade"), 'w', ModItems.materialJapan.getMaterial("tsuka")),8);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"wakizashi"),new ItemStack(ModItems.wakizashi), "l", "l", "w", 'l', "ingotTamahagane", 'w', ModItems.materialJapan.getMaterial("tsuka")),6);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"tanto"),new ItemStack(ModItems.tanto), "l", "w", 'l', "ingotTamahagane", 'w', ModItems.materialJapan.getMaterial("tsuka")),4);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"shinai"),new ItemStack(ModItems.shinai), "l", "l", "w", 'l', ModItems.materialJapan.getMaterial("bamboo_slats"), 'w', ModItems.materialJapan.getMaterial("tsuka")),2);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"ya"),new ItemStack(ModItems.ya, 12), "h", "l", "f", 'h', ModItems.materialJapan.getMaterial("ya_head"), 'l', ModItems.materialJapan.getMaterial("bamboo_slats"), 'f', new ItemStack(Items.FEATHER)),2);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"yumi"),new ItemStack(ModItems.yumi), " ns", "l s", " us", 'n', ModItems.materialJapan.getMaterial("yumi_top"), 'u', ModItems.materialJapan.getMaterial("yumi_bottom"), 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STRING)),5);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"katana"),new ItemStack(ModItems.KATANA), "l", "l", "w", 'l', ModItems.MATERIAL_JAPAN.getMaterial("half_katana_blade"), 'w', ModItems.MATERIAL_JAPAN.getMaterial("tsuka")),8);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"wakizashi"),new ItemStack(ModItems.WAKIZASHI), "l", "l", "w", 'l', "ingotTamahagane", 'w', ModItems.MATERIAL_JAPAN.getMaterial("tsuka")),6);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"tanto"),new ItemStack(ModItems.TANTO), "l", "w", 'l', "ingotTamahagane", 'w', ModItems.MATERIAL_JAPAN.getMaterial("tsuka")),4);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"shinai"),new ItemStack(ModItems.SHINAI), "l", "l", "w", 'l', ModItems.MATERIAL_JAPAN.getMaterial("bamboo_slats"), 'w', ModItems.MATERIAL_JAPAN.getMaterial("tsuka")),2);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"ya"),new ItemStack(ModItems.YA, 12), "h", "l", "f", 'h', ModItems.MATERIAL_JAPAN.getMaterial("ya_head"), 'l', ModItems.MATERIAL_JAPAN.getMaterial("bamboo_slats"), 'f', new ItemStack(Items.FEATHER)),2);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"yumi"),new ItemStack(ModItems.YUMI), " ns", "l s", " us", 'n', ModItems.MATERIAL_JAPAN.getMaterial("yumi_top"), 'u', ModItems.MATERIAL_JAPAN.getMaterial("yumi_bottom"), 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STRING)),5);
 
-        addArmorFinishRecipe("samurai_helmet",new ItemStack(ModItems.samuraiHelm), ModItems.materialJapan.getMaterial("helmet_undecorated"), 5);
-        addArmorFinishRecipe("samurai_chestplate",new ItemStack(ModItems.samuraiChestplate), ModItems.materialJapan.getMaterial("chest_undecorated"), 8);
-        addArmorFinishRecipe("samurai_leggings",new ItemStack(ModItems.samuraiLeggings), ModItems.materialJapan.getMaterial("legs_undecorated"), 7);
-        addArmorFinishRecipe("samurai_boots",new ItemStack(ModItems.samuraiBoots), ModItems.materialJapan.getMaterial("boots_undecorated"), 4);
+        addArmorFinishRecipe("samurai_helmet",new ItemStack(ModItems.SAMURAI_HELMET), ModItems.MATERIAL_JAPAN.getMaterial("helmet_undecorated"), 5);
+        addArmorFinishRecipe("samurai_chestplate",new ItemStack(ModItems.SAMURAI_CHESTPLATE), ModItems.MATERIAL_JAPAN.getMaterial("chest_undecorated"), 8);
+        addArmorFinishRecipe("samurai_leggings",new ItemStack(ModItems.SAMURAI_LEGGINGS), ModItems.MATERIAL_JAPAN.getMaterial("legs_undecorated"), 7);
+        addArmorFinishRecipe("samurai_boots",new ItemStack(ModItems.SAMURAI_BOOTS), ModItems.MATERIAL_JAPAN.getMaterial("boots_undecorated"), 4);
 
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"netted_screen"),new ItemStack(ModBlocks.nettedScreen), "bsb", "sss", "bsb", 's', "string", 'b', ModItems.materialJapan.getMaterial("bamboo_slats")),2);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"tatara"),new ItemStack(ModBlocks.tatara), "idi", "g g", "ini", 'i', "ingotIron", 'g', "ingotGold", 'd', "gemDiamond", 'n', new ItemStack(Blocks.NETHERRACK)),4);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"soaking_unit"),new ItemStack(ModBlocks.cherrybox, 1, 0), "pxp", "x x", "pxp", 'p', new ItemStack(ModBlocks.sakuraPlanks), 'x', new ItemStack(Blocks.IRON_BARS)),1);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"drying_unit"),new ItemStack(ModBlocks.cherrybox, 1, 1), "pxp", "p p", "ppp", 'p', new ItemStack(ModBlocks.sakuraPlanks), 'x', new ItemStack(Blocks.GLASS_PANE)),1);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"nabe"),new ItemStack(ModBlocks.nabe, 1), "i i", "i i", "lhl", 'i', "ingotIron", 'l', "ingotTamahagane", 'h', "ingotHochoTetsu"),1);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"netted_screen"),new ItemStack(ModBlocks.NETTED_SCREEN), "bsb", "sss", "bsb", 's', "string", 'b', ModItems.MATERIAL_JAPAN.getMaterial("bamboo_slats")),2);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"tatara"),new ItemStack(ModBlocks.TATARA), "idi", "g g", "ini", 'i', "ingotIron", 'g', "ingotGold", 'd', "gemDiamond", 'n', new ItemStack(Blocks.NETHERRACK)),4);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"soaking_unit"),new ItemStack(ModBlocks.CHERRY_BOX, 1, 0), "pxp", "x x", "pxp", 'p', new ItemStack(ModBlocks.SAKURA_PLANKS), 'x', new ItemStack(Blocks.IRON_BARS)),1);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"drying_unit"),new ItemStack(ModBlocks.CHERRY_BOX, 1, 1), "pxp", "p p", "ppp", 'p', new ItemStack(ModBlocks.SAKURA_PLANKS), 'x', new ItemStack(Blocks.GLASS_PANE)),1);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"nabe"),new ItemStack(ModBlocks.NABE, 1), "i i", "i i", "lhl", 'i', "ingotIron", 'l', "ingotTamahagane", 'h', "ingotHochoTetsu"),1);
 
         //Random seeds
         CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreIngredient("seed"), 1, ItemStack.EMPTY) {
@@ -236,16 +230,16 @@ public class InteractionEriottoMod extends Interaction {
                 int i = random.nextInt(2);
                 switch(i)
                 {
-                    case(0):return new ItemStack(ModBlocks.rice);
-                    case(1):return new ItemStack(ModBlocks.rush);
-                    case(2):return new ItemStack(ModBlocks.tea);
+                    case(0):return new ItemStack(ModBlocks.RICE);
+                    case(1):return new ItemStack(ModBlocks.RUSH);
+                    case(2):return new ItemStack(ModBlocks.TEA);
                     default:return ItemStack.EMPTY;
                 }
             }
 
             @Override
             public boolean matchesInput(ItemStack item) {
-                if (item.getItem() == Item.getItemFromBlock(ModBlocks.rice) || item.getItem() == Item.getItemFromBlock(ModBlocks.rush) || item.getItem() == Item.getItemFromBlock(ModBlocks.tea))
+                if (item.getItem() == Item.getItemFromBlock(ModBlocks.RICE) || item.getItem() == Item.getItemFromBlock(ModBlocks.RUSH) || item.getItem() == Item.getItemFromBlock(ModBlocks.TEA))
                     return false;
 
                 return super.matchesInput(item);
@@ -253,7 +247,7 @@ public class InteractionEriottoMod extends Interaction {
 
             @Override
             public List<ItemStack> getRecipeOutputs() {
-                return Lists.newArrayList(new ItemStack(ModBlocks.rice), new ItemStack(ModBlocks.rush), new ItemStack(ModBlocks.tea));
+                return Lists.newArrayList(new ItemStack(ModBlocks.RICE), new ItemStack(ModBlocks.RUSH), new ItemStack(ModBlocks.TEA));
             }
         });
         //Random saplings
@@ -263,14 +257,14 @@ public class InteractionEriottoMod extends Interaction {
             @Override
             public ItemStack getOutput(ItemStack input) {
                 if (random.nextInt(2) == 0)
-                    return new ItemStack(ModBlocks.sakuraSapling);
+                    return new ItemStack(ModBlocks.SAKURA_SAPLING);
                 else
-                    return new ItemStack(ModBlocks.mulberrySapling);
+                    return new ItemStack(ModBlocks.MULBERRY_SAPLING);
             }
 
             @Override
             public boolean matchesInput(ItemStack item) {
-                if (item.getItem() == Item.getItemFromBlock(ModBlocks.sakuraSapling) || item.getItem() == Item.getItemFromBlock(ModBlocks.mulberrySapling))
+                if (item.getItem() == Item.getItemFromBlock(ModBlocks.SAKURA_SAPLING) || item.getItem() == Item.getItemFromBlock(ModBlocks.MULBERRY_SAPLING))
                     return false;
 
                 return super.matchesInput(item);
@@ -278,14 +272,14 @@ public class InteractionEriottoMod extends Interaction {
 
             @Override
             public List<ItemStack> getRecipeOutputs() {
-                return Lists.newArrayList(new ItemStack(ModBlocks.sakuraSapling), new ItemStack(ModBlocks.mulberrySapling));
+                return Lists.newArrayList(new ItemStack(ModBlocks.SAKURA_SAPLING), new ItemStack(ModBlocks.MULBERRY_SAPLING));
             }
         });
         //Bamboo
-        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new OreIngredient("sugarcane"), 1, new ItemStack(ModBlocks.bamboo));
+        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new OreIngredient("sugarcane"), 1, new ItemStack(ModBlocks.BAMBOO));
         //Repair tools and armor
         if (INFUSER_REPAIRS)
-            CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(Ingredient.fromItem(ModItems.katana), 2, ItemStack.EMPTY) {
+            CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(Ingredient.fromItem(ModItems.KATANA), 2, ItemStack.EMPTY) {
                 @Override
                 public boolean matchesInput(ItemStack item) {
                     return isRepairableTool(item);
@@ -318,25 +312,25 @@ public class InteractionEriottoMod extends Interaction {
                 }
             });
 
-        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.bamboo)), ModItems.materialJapan.getMaterial("soaked_bamboo"));
-        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("rice")), ModItems.materialJapan.getMaterial("soaked_rice"));
+        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.BAMBOO)), ModItems.MATERIAL_JAPAN.getMaterial("soaked_bamboo"));
+        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("rice")), ModItems.MATERIAL_JAPAN.getMaterial("soaked_rice"));
         if (ModInteractions.bwm.isActive())
-            CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("bark_mulberry")), ModItems.materialJapan.getMaterial("soaked_mulberry"));
-        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.mulberryLog)), ModItems.materialJapan.getMaterial("soaked_mulberry"));
+            CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("bark_mulberry")), ModItems.MATERIAL_JAPAN.getMaterial("soaked_mulberry"));
+        CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.MULBERRY_LOG)), ModItems.MATERIAL_JAPAN.getMaterial("soaked_mulberry"));
         CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(Blocks.SPONGE, 1, 0)), new ItemStack(Blocks.SPONGE, 1, 1));
-        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.teaLeaves.getStack(tea)), ModItems.teaSoaked.getStack(tea)));
+        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.TEA_LEAVES.getStack(tea)), ModItems.TEA_SOAKED.getStack(tea)));
 
-        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("rice_stalk")), ModItems.materialJapan.getMaterial("rice_hay"));
-        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("soaked_mulberry")), ModItems.materialJapan.getMaterial("mulberry_paste"));
-        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("soaked_bamboo")), ModItems.materialJapan.getMaterial("bamboo_slats"));
+        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("rice_stalk")), ModItems.MATERIAL_JAPAN.getMaterial("rice_hay"));
+        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("soaked_mulberry")), ModItems.MATERIAL_JAPAN.getMaterial("mulberry_paste"));
+        CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("soaked_bamboo")), ModItems.MATERIAL_JAPAN.getMaterial("bamboo_slats"));
         CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(Blocks.SPONGE, 1, 1)), new ItemStack(Blocks.SPONGE, 1, 0));
-        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.teaLeaves.getStack(tea)), ModItems.teaWilted.getStack(tea)));
+        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.TEA_LEAVES.getStack(tea)), ModItems.TEA_WILTED.getStack(tea)));
 
-        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.ironSand)), new ItemStack(ModBlocks.kera));
-        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("tamahagane")), ModItems.materialJapan.getMaterial("tamahagane_heated"));
-        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("tamahagane_wrapped")), ModItems.materialJapan.getMaterial("tamahagane_reheated"));
-        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.materialJapan.getMaterial("hocho_tetsu")), ModItems.materialJapan.getMaterial("hocho_tetsu_heated"));
-        CraftingManagerTatara.instance().addRecipe(Ingredient.fromItem(Items.CLAY_BALL), ModItems.teaCup.getEmpty());
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.IRON_SAND)), new ItemStack(ModBlocks.KERA));
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("tamahagane")), ModItems.MATERIAL_JAPAN.getMaterial("tamahagane_heated"));
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("tamahagane_wrapped")), ModItems.MATERIAL_JAPAN.getMaterial("tamahagane_reheated"));
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("hocho_tetsu")), ModItems.MATERIAL_JAPAN.getMaterial("hocho_tetsu_heated"));
+        CraftingManagerTatara.instance().addRecipe(Ingredient.fromItem(Items.CLAY_BALL), ModItems.TEA_CUP.getEmpty());
 
         CraftingManagerNabe.getInstance().addRecipe("poison",new NabeResultPoison(12,12),Lists.newArrayList(new OreIngredient("cropNetherWart"),new OreIngredient("gunpowder"),new OreIngredient("dustRedstone"),new OreIngredient("dustGlowstone"),Ingredient.fromItem(Items.SPIDER_EYE),new OreIngredient("cropRush")),1000);
         CraftingManagerNabe.getInstance().addRecipe(new TeaNabeRecipe());
@@ -349,9 +343,9 @@ public class InteractionEriottoMod extends Interaction {
     private void addArmorFinishRecipe(String group,ItemStack out, ItemStack in, int spirit) {
         ItemStack gold = new ItemStack(Items.GOLD_NUGGET);
         ItemStack dye = new ItemStack(Items.DYE,1,14);
-        ItemStack washi = ModItems.materialJapan.getMaterial("washi");
+        ItemStack washi = ModItems.MATERIAL_JAPAN.getMaterial("washi");
         //GameRegistry.addShapelessRecipe(out,gold,gold,gold,dye,in,dye,washi,washi,washi);
-        CraftingManagerInfuser.getInstance().addRecipe(new ArmorDecorateRecipe(new ResourceLocation(Reference.MOD_ID,group), out, "ggg", "dad", "www", 'g', "nuggetGold", 'd', "dye", 'a', in, 'w', ModItems.materialJapan.getMaterial("washi")),spirit);
+        CraftingManagerInfuser.getInstance().addRecipe(new ArmorDecorateRecipe(new ResourceLocation(Reference.MOD_ID,group), out, "ggg", "dad", "www", 'g', "nuggetGold", 'd', "dye", 'a', in, 'w', ModItems.MATERIAL_JAPAN.getMaterial("washi")),spirit);
     }
 
     private void addFoldingRecipe(ItemStack out, ItemStack in) {

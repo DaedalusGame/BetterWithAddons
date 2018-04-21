@@ -108,7 +108,7 @@ public class BlockInfuser extends BlockContainerBase {
         IBlockState state = world.getBlockState(pos);
         IBlockState bottomState = world.getBlockState(pos.down());
 
-        if(state.getBlock() != ModBlocks.infuser || bottomState.getBlock() != ModBlocks.ancestrySand)
+        if(state.getBlock() != ModBlocks.INFUSER || bottomState.getBlock() != ModBlocks.ANCESTRY_SAND)
             return false;
 
         int light = world.getLightFor(EnumSkyBlock.BLOCK, pos);

@@ -4,6 +4,7 @@ import betterwithaddons.block.BetterRedstone.BlockPCB;
 import betterwithaddons.block.BlockLattice;
 import betterwithaddons.block.BlockRopeSideways;
 import betterwithaddons.block.BlockRopeSideways.EnumRopeShape;
+import betterwithaddons.block.EriottoMod.BlockZenSand;
 import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionBWA;
 import betterwithaddons.interaction.InteractionBWM;
@@ -13,10 +14,7 @@ import betterwithaddons.potion.ModPotions;
 import betterwithaddons.util.BannerUtil;
 import betterwithaddons.util.InventoryUtil;
 import betterwithmods.common.BWMBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBanner;
-import net.minecraft.block.BlockFence;
-import net.minecraft.block.BlockRedstoneWire;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
@@ -28,6 +26,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
@@ -79,6 +78,38 @@ public class AssortedHandler {
     }
 
     @SubscribeEvent
+    public void tillZenGardenEvent(PlayerInteractEvent.RightClickBlock event) {
+        World world = event.getWorld();
+        BlockPos pos = event.getPos();
+        IBlockState state = world.getBlockState(pos);
+        ItemStack stack = event.getItemStack();
+        EnumFacing facing = event.getFace();
+        EntityPlayer player = event.getEntityPlayer();
+
+        EnumFacing tillDirection = player.getHorizontalFacing();
+        BlockZenSand replaceSand = null;
+
+        if(stack.getItem() instanceof ItemHoe && facing == EnumFacing.UP) {
+            if (state.getBlock() == Blocks.SAND) {
+                if(state.getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND)
+                    replaceSand = ModBlocks.ZEN_RED_SAND;
+                if(state.getValue(BlockSand.VARIANT) == BlockSand.EnumType.SAND)
+                    replaceSand = ModBlocks.ZEN_RED_SAND;
+            }
+            else if(state.getBlock() == Blocks.SOUL_SAND)
+                replaceSand = ModBlocks.ZEN_SOUL_SAND;
+            else if(state.getBlock() == ModBlocks.IRON_SAND)
+                replaceSand = ModBlocks.ZEN_IRON_SAND;
+        }
+
+        if(replaceSand != null) {
+            world.setBlockState(pos, replaceSand.getDefaultState().withProperty(BlockZenSand.SHAPE, BlockZenSand.SandDirection.getByDirections(tillDirection)));
+            event.setCancellationResult(EnumActionResult.SUCCESS);
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
     public void attachPergolaEvent(PlayerInteractEvent.RightClickBlock event)
     {
         World world = event.getWorld();
@@ -117,7 +148,7 @@ public class AssortedHandler {
             IBlockState checkState = world.getBlockState(checkPos);
             if(i > 0 && BlockRopeSideways.canFastenBlock(checkState.getBlock()))
                 break;
-            if(!checkState.getBlock().isReplaceable(world,checkPos) && !(checkState.getBlock() == ModBlocks.ropeSideways && !checkState.getValue(BlockRopeSideways.SHAPE).has(facing.getAxis())))
+            if(!checkState.getBlock().isReplaceable(world,checkPos) && !(checkState.getBlock() == ModBlocks.ROPE_SIDEWAYS && !checkState.getValue(BlockRopeSideways.SHAPE).has(facing.getAxis())))
                 return 0;
         }
 
@@ -129,8 +160,8 @@ public class AssortedHandler {
             checkPos.move(facing.getOpposite());
             IBlockState checkState = world.getBlockState(checkPos);
             EnumRopeShape placedRope = facing.getAxis() == EnumFacing.Axis.X ? EnumRopeShape.X : EnumRopeShape.Z;
-            IBlockState placedState = ModBlocks.ropeSideways.getDefaultState().withProperty(BlockRopeSideways.SHAPE,placedRope);
-            if(checkState.getBlock() == ModBlocks.ropeSideways)
+            IBlockState placedState = ModBlocks.ROPE_SIDEWAYS.getDefaultState().withProperty(BlockRopeSideways.SHAPE,placedRope);
+            if(checkState.getBlock() == ModBlocks.ROPE_SIDEWAYS)
             {
                 placedState = checkState.withProperty(BlockRopeSideways.SHAPE,checkState.getValue(BlockRopeSideways.SHAPE).add(placedRope));
             }
@@ -153,9 +184,9 @@ public class AssortedHandler {
         EntityPlayer player = event.getEntityPlayer();
 
         Ingredient rope = Ingredient.fromItem(Item.getItemFromBlock(BWMBlocks.ROPE));
-        if(rope.apply(stack) && state.getBlock() instanceof BlockFence && state.getBlock() != ModBlocks.ropePost)
+        if(rope.apply(stack) && state.getBlock() instanceof BlockFence && state.getBlock() != ModBlocks.ROPE_POST)
         {
-            ModBlocks.ropePost.placeFencePost(world,pos);
+            ModBlocks.ROPE_POST.placeFencePost(world,pos);
             state = world.getBlockState(pos);
 
             int totalRope = !player.isCreative() ? InventoryUtil.countItemInPlayer(rope,player) : InteractionBWA.ROPE_LIMIT +1;
@@ -192,7 +223,7 @@ public class AssortedHandler {
 
         if (living instanceof EntityShulker) {
             if (rand.nextFloat() < 1.0f) {
-                event.getEntityLiving().entityDropItem(ModItems.material.getMaterial("ender_cream", 1 + rand.nextInt(2)), 0);
+                event.getEntityLiving().entityDropItem(ModItems.MATERIAL.getMaterial("ender_cream", 1 + rand.nextInt(2)), 0);
             }
         }
     }
@@ -208,7 +239,7 @@ public class AssortedHandler {
         Block block = blockstate.getBlock();
         Block bottomblock = world.getBlockState(pos.down()).getBlock();
         if (!world.isRemote && block instanceof BlockRedstoneWire && bottomblock instanceof BlockPCB) {
-            world.setBlockState(pos, ModBlocks.pcbwire.getDefaultState());
+            world.setBlockState(pos, ModBlocks.PCB_WIRE.getDefaultState());
         }
     }
 
@@ -337,7 +368,7 @@ public class AssortedHandler {
                 return;
             else if (world.getBlockState(seeker).getBlock() == Blocks.STONE) {
                 if (rand.nextInt(maxdist - attempts) == 0) {
-                    world.setBlockState(seeker, ModBlocks.worldScaleOre.getDefaultState(), 2);
+                    world.setBlockState(seeker, ModBlocks.WORLD_SCALE_ORE.getDefaultState(), 2);
                     break;
                 }
             }

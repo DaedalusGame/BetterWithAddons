@@ -192,7 +192,7 @@ public class EntitySpirit extends Entity {
                         if (itemstack.getItem() != Items.GLASS_BOTTLE) continue;
                         itemstack.shrink(1);
                         player.inventory.setInventorySlotContents(i,itemstack);
-                        InventoryUtil.addItemToPlayer(player,new ItemStack(ModItems.ancestryBottle));
+                        InventoryUtil.addItemToPlayer(player,new ItemStack(ModItems.ANCESTRY_BOTTLE));
                         int consumed = InteractionEriottoMod.BOTTLE_MAX_SPIRITS;
                         for(EntitySpirit spirit : spirits)
                         {

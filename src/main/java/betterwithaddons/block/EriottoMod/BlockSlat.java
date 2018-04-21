@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockSlat extends BlockBase implements IHasVariants {
+public class BlockSlat extends BlockBase implements IHasVariants, ISlat {
     public static final PropertyInteger SANDFILL = PropertyInteger.create("sandfill",0,8);
 
     public BlockSlat() {
@@ -74,7 +74,7 @@ public class BlockSlat extends BlockBase implements IHasVariants {
         IBlockState otherstate = world.getBlockState(pos.offset(side));
         Block otherblock = otherstate.getBlock();
 
-        return otherblock instanceof BlockSlat?false:super.shouldSideBeRendered(state, world, pos, side);
+        return otherblock instanceof ISlat?false:super.shouldSideBeRendered(state, world, pos, side);
     }
 
     @Override

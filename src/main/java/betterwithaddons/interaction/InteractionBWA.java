@@ -22,8 +22,6 @@ import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWRegistry;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.PulleyStructureManager;
-import betterwithmods.common.registry.bulk.manager.MillManager;
-import betterwithmods.common.registry.bulk.recipes.MillRecipe;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.gameplay.AnvilRecipes;
 import betterwithmods.module.gameplay.MetalReclaming;
@@ -69,6 +67,7 @@ public class InteractionBWA extends Interaction {
     public static String[] AQUEDUCT_SOURCE_WHITELIST = new String[] {
             "streams:river"
     };
+    public static boolean AQUEDUCT_IS_TANK = false;
 
     public static boolean GRASS_TO_CLAY = false;
     public static boolean GRASS_TO_SAND = false;
@@ -155,6 +154,7 @@ public class InteractionBWA extends Interaction {
             HORSES_BREED_HAYBALE_PLACED = loadPropBool("HorsesBreedHaybales", "Horses can breed from eating haybales placed in world.", HORSES_BREED_HAYBALE_PLACED);
 
             AQUEDUCT_MAX_LENGTH = loadPropInt("MaxAqueductLength", "How long aqueducts can be.", AQUEDUCT_MAX_LENGTH);
+            AQUEDUCT_IS_TANK = loadPropBool("AqueductIsTank", "Aqueduct water counts as a fluid tank for modded pipes. Happy birthday Vyraal1", AQUEDUCT_IS_TANK);
 
             LEGENDARIUM_MIN_DAMAGE = loadPropDouble("LegendariumDamageMin", "How much durability the artifact you're turning in can have at max. (As a factor of max durability; 0.1 means 1/10 of max durability)", LEGENDARIUM_MIN_DAMAGE);
             LEGENDARIUM_DAMAGE_PAD = loadPropInt("LegendariumDamagePad", "How much durability more than the minimum the artifact can have to still be considered broken. (As a static value)", LEGENDARIUM_DAMAGE_PAD);
@@ -235,7 +235,7 @@ public class InteractionBWA extends Interaction {
 
     @Override
     void oreDictRegistration() {
-        OreDictionary.registerOre("logWood", new ItemStack(ModBlocks.luretreeLog));
+        OreDictionary.registerOre("logWood", new ItemStack(ModBlocks.LURETREE_LOG));
     }
 
     @Override
@@ -245,25 +245,25 @@ public class InteractionBWA extends Interaction {
 
         //ModItems.bowls.setContainer(new ItemStack(Items.BOWL));
 
-        ModBlocks.luretreeSapling.setLeaves(ModBlocks.luretreeLeaves.getDefaultState()).setLog(ModBlocks.luretreeLog.getDefaultState()).setBig(true);
-        ModBlocks.luretreeLeaves.setSapling(new ItemStack(ModBlocks.luretreeSapling));
+        ModBlocks.LURETREE_SAPLING.setLeaves(ModBlocks.LURETREE_LEAVES.getDefaultState()).setLog(ModBlocks.LURETREE_LOG.getDefaultState()).setBig(true);
+        ModBlocks.LURETREE_LEAVES.setSapling(new ItemStack(ModBlocks.LURETREE_SAPLING));
 
         //OreDictionary.registerOre("foodSalt", ModItems.bowls.getMaterial("salt"));
 
-        ItemStack greatarrowhead = ModItems.material.getMaterial("arrowhead");
+        ItemStack greatarrowhead = ModItems.MATERIAL.getMaterial("arrowhead");
         ItemStack haft = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT);
 
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatbow"), new ItemStack(ModItems.greatbow), "si ", "s i", "s i", "si ", 'i', haft, 's', new ItemStack(BWMBlocks.ROPE));
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatbow"), new ItemStack(ModItems.GREATBOW), "si ", "s i", "s i", "si ", 'i', haft, 's', new ItemStack(BWMBlocks.ROPE));
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_head"), greatarrowhead, " n ", "nnn", "nnn", "n n", 'n', "nuggetSoulforgedSteel");
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_lightning"), new ItemStack(ModItems.greatarrowLightning), "nxn", "nxn", " i ", " f ", 'n', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH), 'x', greatarrowhead, 'i', haft, 'f', new ItemStack(Items.FEATHER));
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_destruction"), new ItemStack(ModItems.greatarrowDestruction), "n n", "nxn", " i ", " f ", 'n', "nuggetSoulforgedSteel", 'x', greatarrowhead, 'i', haft, 'f', new ItemStack(Items.FEATHER));
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_lightning"), new ItemStack(ModItems.GREATARROW_LIGHTNING), "nxn", "nxn", " i ", " f ", 'n', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH), 'x', greatarrowhead, 'i', haft, 'f', new ItemStack(Items.FEATHER));
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_destruction"), new ItemStack(ModItems.GREATARROW_DESTRUCTION), "n n", "nxn", " i ", " f ", 'n', "nuggetSoulforgedSteel", 'x', greatarrowhead, 'i', haft, 'f', new ItemStack(Items.FEATHER));
 
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_spade"),new ItemStack(ModItems.steelSpade),"x","x","i","i",'x',"ingotSoulforgedSteel",'i', haft);
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_matchpick"),new ItemStack(ModItems.steelMatchPick),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i', haft,'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_machete"),new ItemStack(ModItems.steelMachete),"   x","  x "," x  ","i   ",'x', "ingotSoulforgedSteel",'i', haft);
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_kukri"),new ItemStack(ModItems.steelKukri),"xx","x ","xx"," i",'x', "ingotSoulforgedSteel",'i', haft);
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_carpentersaw"),new ItemStack(ModItems.steelCarpenterSaw),"xxxi","x x ",'x', "ingotSoulforgedSteel",'i', haft);
-        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_masonpick"),new ItemStack(ModItems.steelMasonPick),"xxxx"," i  "," i  "," i  ",'x', "ingotSoulforgedSteel",'i', haft);
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_spade"),new ItemStack(ModItems.STEEL_SPADE),"x","x","i","i",'x',"ingotSoulforgedSteel",'i', haft);
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_matchpick"),new ItemStack(ModItems.STEEL_MATCHPICK),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i', haft,'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_machete"),new ItemStack(ModItems.STEEL_MACHETE),"   x","  x "," x  ","i   ",'x', "ingotSoulforgedSteel",'i', haft);
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_kukri"),new ItemStack(ModItems.STEEL_KUKRI),"xx","x ","xx"," i",'x', "ingotSoulforgedSteel",'i', haft);
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_carpentersaw"),new ItemStack(ModItems.STEEL_CARPENTER_SAW),"xxxi","x x ",'x', "ingotSoulforgedSteel",'i', haft);
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_masonpick"),new ItemStack(ModItems.STEEL_MASON_PICK),"xxxx"," i  "," i  "," i  ",'x', "ingotSoulforgedSteel",'i', haft);
 
         int axeAmt = HCTools.changeAxeRecipe ? 2 : 3;
         if(ModuleLoader.isFeatureEnabled(MetalReclaming.class) && MetalReclaming.reclaimCount > 0) {
@@ -276,46 +276,46 @@ public class InteractionBWA extends Interaction {
             ItemStack ingotSteel = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.INGOT_STEEL);
             ItemStack nuggetSteel = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NUGGET_STEEL);
 
-            addReclaimRecipe(new ItemStack(ModItems.ironSpade),ingotIron,nuggetIron,reclaimCount*2);
-            addReclaimRecipe(new ItemStack(ModItems.ironMatchPick),ingotIron,nuggetIron,reclaimCount*3);
-            addReclaimRecipe(new ItemStack(ModItems.ironMachete),ingotIron,nuggetIron,reclaimCount*4);
-            addReclaimRecipe(new ItemStack(ModItems.ironKukri),ingotIron,nuggetIron,reclaimCount*(axeAmt+2));
-            addReclaimRecipe(new ItemStack(ModItems.ironCarpenterSaw),ingotIron,nuggetIron,reclaimCount*(axeAmt+2));
-            addReclaimRecipe(new ItemStack(ModItems.ironMasonPick),ingotIron,nuggetIron,reclaimCount*4);
+            addReclaimRecipe(new ItemStack(ModItems.IRON_SPADE),ingotIron,nuggetIron,reclaimCount*2);
+            addReclaimRecipe(new ItemStack(ModItems.IRON_MATCHPICK),ingotIron,nuggetIron,reclaimCount*3);
+            addReclaimRecipe(new ItemStack(ModItems.IRON_MACHETE),ingotIron,nuggetIron,reclaimCount*4);
+            addReclaimRecipe(new ItemStack(ModItems.IRON_KUKRI),ingotIron,nuggetIron,reclaimCount*(axeAmt+2));
+            addReclaimRecipe(new ItemStack(ModItems.IRON_CARPENTER_SAW),ingotIron,nuggetIron,reclaimCount*(axeAmt+2));
+            addReclaimRecipe(new ItemStack(ModItems.IRON_MASON_PICK),ingotIron,nuggetIron,reclaimCount*4);
 
-            addReclaimRecipe(new ItemStack(ModItems.goldSpade),ingotGold,nuggetGold,reclaimCount*2);
-            addReclaimRecipe(new ItemStack(ModItems.goldMatchPick),ingotGold,nuggetGold,reclaimCount*3);
-            addReclaimRecipe(new ItemStack(ModItems.goldMachete),ingotGold,nuggetGold,reclaimCount*4);
-            addReclaimRecipe(new ItemStack(ModItems.goldKukri),ingotGold,nuggetGold,reclaimCount*(axeAmt+2));
-            addReclaimRecipe(new ItemStack(ModItems.goldCarpenterSaw),ingotGold,nuggetGold,reclaimCount*(axeAmt+2));
-            addReclaimRecipe(new ItemStack(ModItems.goldMasonPick),ingotGold,nuggetGold,reclaimCount*4);
+            addReclaimRecipe(new ItemStack(ModItems.GOLD_SPADE),ingotGold,nuggetGold,reclaimCount*2);
+            addReclaimRecipe(new ItemStack(ModItems.GOLD_MATCHPICK),ingotGold,nuggetGold,reclaimCount*3);
+            addReclaimRecipe(new ItemStack(ModItems.GOLD_MACHETE),ingotGold,nuggetGold,reclaimCount*4);
+            addReclaimRecipe(new ItemStack(ModItems.GOLD_KUKRI),ingotGold,nuggetGold,reclaimCount*(axeAmt+2));
+            addReclaimRecipe(new ItemStack(ModItems.GOLD_CARPENTER_SAW),ingotGold,nuggetGold,reclaimCount*(axeAmt+2));
+            addReclaimRecipe(new ItemStack(ModItems.GOLD_MASON_PICK),ingotGold,nuggetGold,reclaimCount*4);
 
-            addReclaimRecipe(new ItemStack(ModItems.steelSpade),ingotSteel,nuggetSteel,9*2);
-            addReclaimRecipe(new ItemStack(ModItems.steelMatchPick),ingotSteel,nuggetSteel,9*3);
-            addReclaimRecipe(new ItemStack(ModItems.steelMachete),ingotSteel,nuggetSteel,9*3);
-            addReclaimRecipe(new ItemStack(ModItems.steelKukri),ingotSteel,nuggetSteel,9*5);
-            addReclaimRecipe(new ItemStack(ModItems.steelCarpenterSaw),ingotSteel,nuggetSteel,9*5);
-            addReclaimRecipe(new ItemStack(ModItems.steelMasonPick),ingotSteel,nuggetSteel,9*4);
+            addReclaimRecipe(new ItemStack(ModItems.STEEL_SPADE),ingotSteel,nuggetSteel,9*2);
+            addReclaimRecipe(new ItemStack(ModItems.STEEL_MATCHPICK),ingotSteel,nuggetSteel,9*3);
+            addReclaimRecipe(new ItemStack(ModItems.STEEL_MACHETE),ingotSteel,nuggetSteel,9*3);
+            addReclaimRecipe(new ItemStack(ModItems.STEEL_KUKRI),ingotSteel,nuggetSteel,9*5);
+            addReclaimRecipe(new ItemStack(ModItems.STEEL_CARPENTER_SAW),ingotSteel,nuggetSteel,9*5);
+            addReclaimRecipe(new ItemStack(ModItems.STEEL_MASON_PICK),ingotSteel,nuggetSteel,9*4);
 
             if(ModuleLoader.isFeatureEnabled(HCDiamond.class))
             {
                 ItemStack ingotDiamond = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DIAMOND_INGOT);
                 ItemStack nuggetDiamond = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DIAMOND_NUGGET);
-                addReclaimRecipe(new ItemStack(ModItems.diamondSpade),ingotDiamond,nuggetDiamond,9*2);
-                addReclaimRecipe(new ItemStack(ModItems.diamondMatchPick),ingotDiamond,nuggetDiamond,9*3);
-                addReclaimRecipe(new ItemStack(ModItems.diamondMachete),ingotDiamond,nuggetDiamond,9*4);
-                addReclaimRecipe(new ItemStack(ModItems.diamondKukri),ingotDiamond,nuggetDiamond,9*(axeAmt+2));
-                addReclaimRecipe(new ItemStack(ModItems.diamondCarpenterSaw),ingotDiamond,nuggetDiamond,9*(axeAmt+2));
-                addReclaimRecipe(new ItemStack(ModItems.diamondMasonPick),ingotDiamond,nuggetDiamond,9*4);
+                addReclaimRecipe(new ItemStack(ModItems.DIAMOND_SPADE),ingotDiamond,nuggetDiamond,9*2);
+                addReclaimRecipe(new ItemStack(ModItems.DIAMOND_MATCHPICK),ingotDiamond,nuggetDiamond,9*3);
+                addReclaimRecipe(new ItemStack(ModItems.DIAMOND_MACHETE),ingotDiamond,nuggetDiamond,9*4);
+                addReclaimRecipe(new ItemStack(ModItems.DIAMOND_KUKRI),ingotDiamond,nuggetDiamond,9*(axeAmt+2));
+                addReclaimRecipe(new ItemStack(ModItems.DIAMOND_CARPENTER_SAW),ingotDiamond,nuggetDiamond,9*(axeAmt+2));
+                addReclaimRecipe(new ItemStack(ModItems.DIAMOND_MASON_PICK),ingotDiamond,nuggetDiamond,9*4);
             }
         }
 
-        BWRegistry.CAULDRON.addStokedRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.luretreeLog),new ItemStack(ModBlocks.luretreeFace)),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH,2)).setPriority(10);
+        BWRegistry.CAULDRON.addStokedRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.LURETREE_LOG),new ItemStack(ModBlocks.LURETREE_FACE)),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH,2)).setPriority(10);
 
-        TileEntityLureTree.addTreeFood(new ItemStack(ModItems.rottenFood),250);
+        TileEntityLureTree.addTreeFood(new ItemStack(ModItems.ROTTEN_FOOD),250);
         TileEntityLureTree.addTreeFood(new ItemStack(Items.ROTTEN_FLESH),250);
         TileEntityLureTree.addTreeFood(new ItemStack(Items.GLOWSTONE_DUST),500);
-        TileEntityLureTree.addTreeFood(ModItems.material.getMaterial("thornrose"),1000);
+        TileEntityLureTree.addTreeFood(ModItems.MATERIAL.getMaterial("thornrose"),1000);
         TileEntityLureTree.addTreeFood(new ItemStack(BWMItems.MYSTERY_MEAT),4000);
 
         //TODO: Make this more sensible holy shit
@@ -387,33 +387,33 @@ public class InteractionBWA extends Interaction {
         BlockWeight.addSpecialMeasuringBehavior(BWMBlocks.IRON_WALL, platformBehavior);
 
         //meme? idk
-        ModBlocks.redstoneEmitter.getBlockState().getValidStates().forEach(PulleyStructureManager::registerPulleyBlock);
+        ModBlocks.REDSTONE_EMITTER.getBlockState().getValidStates().forEach(PulleyStructureManager::registerPulleyBlock);
 
-        GameRegistry.addSmelting(Items.CARROT,new ItemStack(ModItems.bakedCarrot),0.35f);
-        GameRegistry.addSmelting(Items.BEETROOT,new ItemStack(ModItems.bakedBeetroot),0.35f);
-        GameRegistry.addSmelting(Blocks.BROWN_MUSHROOM,new ItemStack(ModItems.bakedMushroom),0.35f);
-        GameRegistry.addSmelting(Blocks.RED_MUSHROOM,new ItemStack(ModItems.bakedAmanita),0.35f);
+        GameRegistry.addSmelting(Items.CARROT,new ItemStack(ModItems.BAKED_CARROT),0.35f);
+        GameRegistry.addSmelting(Items.BEETROOT,new ItemStack(ModItems.BAKED_BEETROOT),0.35f);
+        GameRegistry.addSmelting(Blocks.BROWN_MUSHROOM,new ItemStack(ModItems.BAKED_MUSHROOM),0.35f);
+        GameRegistry.addSmelting(Blocks.RED_MUSHROOM,new ItemStack(ModItems.BAKED_AMANITA),0.35f);
 
         boolean hchunger = ModuleLoader.isFeatureEnabled(HCCooking.class);
 
-        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MELON),new ItemStack(ModItems.pieMelon,hchunger ? 1 : 2));
-        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MEAT),new ItemStack(ModItems.pieMeat,hchunger ? 1 : 2));
-        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MUSHROOM),new ItemStack(ModItems.pieMushroom,hchunger ? 1 : 2));
-        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.AMANITA),new ItemStack(ModItems.pieAmanita,hchunger ? 1 : 2));
+        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MELON),new ItemStack(ModItems.PIE_MELON,hchunger ? 1 : 2));
+        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MEAT),new ItemStack(ModItems.PIE_MEAT,hchunger ? 1 : 2));
+        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MUSHROOM),new ItemStack(ModItems.PIE_MUSHROOM,hchunger ? 1 : 2));
+        BWRegistry.KILN.addStokedRecipe(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.AMANITA),new ItemStack(ModItems.PIE_AMANITA,hchunger ? 1 : 2));
 
-        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MELON),new ItemStack(ModItems.pieMelon),0.35f);
-        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MEAT),new ItemStack(ModItems.pieMeat),0.35f);
-        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MUSHROOM),new ItemStack(ModItems.pieMushroom),0.35f);
-        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.AMANITA),new ItemStack(ModItems.pieAmanita),0.35f);
+        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MELON),new ItemStack(ModItems.PIE_MELON),0.35f);
+        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MEAT),new ItemStack(ModItems.PIE_MEAT),0.35f);
+        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.MUSHROOM),new ItemStack(ModItems.PIE_MUSHROOM),0.35f);
+        GameRegistry.addSmelting(BlockModUnbaked.getStack(BlockModUnbaked.EnumType.AMANITA),new ItemStack(ModItems.PIE_AMANITA),0.35f);
 
         if(STONEBRICKS_NEED_SMELTING) {
-            GameRegistry.addSmelting(Blocks.STONE, ModItems.material.getMaterial("stone_brick", 4), 0.1f);
+            GameRegistry.addSmelting(Blocks.STONE, ModItems.MATERIAL.getMaterial("stone_brick", 4), 0.1f);
         }
 
-        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(new ItemStack(ModItems.rottenFood)),new ItemStack(BWMItems.FERTILIZER));
+        BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(new ItemStack(ModItems.ROTTEN_FOOD)),new ItemStack(BWMItems.FERTILIZER));
 
-        BlockRopeSideways.addFastenableBlock(ModBlocks.scaffold);
-        BlockRopeSideways.addFastenableBlock(ModBlocks.ropePost);
+        BlockRopeSideways.addFastenableBlock(ModBlocks.SCAFFOLD);
+        BlockRopeSideways.addFastenableBlock(ModBlocks.ROPE_POST);
 
         BWRegistry.CAULDRON.addRecipe(new AdobeRecipe());
     }
@@ -527,7 +527,7 @@ public class InteractionBWA extends Interaction {
             else if(ItemUtil.matchesOreDict(stack,"foodMeat") || ItemUtil.matchesOreDict(stack,"listAllmeat") || ItemUtil.matchesOreDict(stack,"listAllmeatcooked"))
                 RotHandler.addRottingItem(stack,MEAT_ROT_TIME,"meat",new ItemStack(Items.ROTTEN_FLESH));
             else if(isFruit(stack))
-                RotHandler.addRottingItem(stack,FRUIT_ROT_TIME,"fruit",new ItemStack(ModItems.rottenFood));
+                RotHandler.addRottingItem(stack,FRUIT_ROT_TIME,"fruit",new ItemStack(ModItems.ROTTEN_FOOD));
             else
                 RotHandler.addRottingItem(stack,MISC_ROT_TIME);
         }
@@ -541,7 +541,7 @@ public class InteractionBWA extends Interaction {
         List<ItemStack> saltDusts = OreDictionary.getOres("foodSalt");
         if(saltDusts != null && saltDusts.size() > 0)
         {
-            ItemStack saltCluster = new ItemStack(ModItems.salts,1,0);
+            ItemStack saltCluster = new ItemStack(ModItems.SALTS,1,0);
             ItemStack saltDust = saltDusts.get(0).copy();
             saltDust.setCount(3);
             BWRegistry.MILLSTONE.addMillRecipe(Ingredient.fromStacks(saltCluster),saltDust);

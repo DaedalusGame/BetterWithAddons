@@ -293,15 +293,15 @@ public class BlockExtraGrass extends BlockGrass implements IColorable, IHasVaria
 
         if (target.getBlock() == Blocks.CLAY)
         {
-            return ModBlocks.grass.getDefaultState().withProperty(BlockExtraGrass.VARIANT, ExtraGrassType.CLAY);
+            return ModBlocks.GRASS.getDefaultState().withProperty(BlockExtraGrass.VARIANT, ExtraGrassType.CLAY);
         }
 
         if (target.getBlock() == Blocks.SAND)
         {
             if(target.getValue(BlockSand.VARIANT) == BlockSand.EnumType.SAND)
-                return ModBlocks.grass.getDefaultState().withProperty(BlockExtraGrass.VARIANT, ExtraGrassType.SAND);
+                return ModBlocks.GRASS.getDefaultState().withProperty(BlockExtraGrass.VARIANT, ExtraGrassType.SAND);
             if(target.getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND)
-                return ModBlocks.grass.getDefaultState().withProperty(BlockExtraGrass.VARIANT, ExtraGrassType.REDSAND);
+                return ModBlocks.GRASS.getDefaultState().withProperty(BlockExtraGrass.VARIANT, ExtraGrassType.REDSAND);
         }
 
         return null;

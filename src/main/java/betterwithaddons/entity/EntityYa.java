@@ -1,6 +1,5 @@
 package betterwithaddons.entity;
 
-import betterwithaddons.item.ItemGreatarrow;
 import betterwithaddons.item.ItemYa;
 import betterwithaddons.item.ModItems;
 import net.minecraft.dispenser.IPosition;
@@ -31,7 +30,7 @@ public class EntityYa extends EntityArrow {
     protected void entityInit()
     {
         super.entityInit();
-        this.dataManager.register(ARROW_TYPE, new ItemStack(ModItems.greatarrow));
+        this.dataManager.register(ARROW_TYPE, new ItemStack(ModItems.GREATARROW));
     }
 
     public void setArrowStack(ItemStack stack)
@@ -55,7 +54,7 @@ public class EntityYa extends EntityArrow {
 
     private ItemYa getArrowType() {
         ItemStack arrowstack = getArrowStack();
-        ItemYa arrowtype = ModItems.ya;
+        ItemYa arrowtype = ModItems.YA;
         if(!arrowstack.isEmpty() && arrowstack.getItem() instanceof ItemYa) //I don't trust people like you.
             arrowtype = (ItemYa) arrowstack.getItem();
         return arrowtype;

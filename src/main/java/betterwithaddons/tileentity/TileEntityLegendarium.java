@@ -42,7 +42,7 @@ public class TileEntityLegendarium extends TileEntityBase {
 
     public ItemStack insertItem(EntityPlayer player, ItemStack stack)
     {
-        if(stack.getItem() == ModItems.artifactFrame)
+        if(stack.getItem() == ModItems.ARTIFACT_FRAME)
         {
             if(cleanItemFrames() == 0) {
                 populateItemFrames();
@@ -74,7 +74,7 @@ public class TileEntityLegendarium extends TileEntityBase {
             return stack;
         }
 
-        ItemStack retain = queue.insertItem(0, ModItems.brokenArtifact.makeFrom(stack),false);
+        ItemStack retain = queue.insertItem(0, ModItems.BROKEN_ARTIFACT.makeFrom(stack),false);
         if(retain.isEmpty())
         {
             lastTurnIn = world.getTotalWorldTime();
@@ -155,7 +155,7 @@ public class TileEntityLegendarium extends TileEntityBase {
     {
         ItemStack displayStack = frame.getDisplayedItem();
 
-        return !displayStack.isEmpty() && displayStack.getItem() == ModItems.brokenArtifact;
+        return !displayStack.isEmpty() && displayStack.getItem() == ModItems.BROKEN_ARTIFACT;
     }
 
     private int cleanItemFrames()

@@ -79,7 +79,7 @@ public class AdobeRecipe extends CookingPotRecipe {
     @Nonnull
     @Override
     public ArrayList<ItemStack> getOutputs() {
-        ItemStack output = new ItemStack(ModBlocks.adobe, 1, 0);
+        ItemStack output = new ItemStack(ModBlocks.ADOBE, 1, 0);
 
         output.setTranslatableName("tooltip.adobe.crafting");
 

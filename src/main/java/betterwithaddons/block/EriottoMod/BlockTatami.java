@@ -1,6 +1,7 @@
 package betterwithaddons.block.EriottoMod;
 
 import betterwithaddons.block.BlockBase;
+import betterwithaddons.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -10,6 +11,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -22,16 +25,46 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-
 public class BlockTatami extends BlockBase {
     protected static final AxisAlignedBB MAT_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D);
     public static PropertyDirection FACING = PropertyDirection.create("facing");
 
-    public BlockTatami()
+    public BlockTatami(String name)
     {
-        super("tatami", Material.CARPET);
+        super(name, Material.CARPET);
         this.setSoundType(SoundType.CLOTH);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos1, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack heldItem = player.getHeldItem(hand);
+        EnumFacing block1facing = state.getValue(FACING);
+        BlockPos pos2 = pos1.offset(block1facing);
+        BlockPos pos1down = pos1.down();
+        BlockPos pos2down = pos2.down();
+
+        if(heldItem.getItem() instanceof ItemHoe && facing == EnumFacing.UP) {
+            IBlockState floor1 = world.getBlockState(pos1down);
+            IBlockState floor2 = world.getBlockState(pos2down);
+
+            if(floor1.getBlock() != ModBlocks.BAMBOO_SLATS)
+                return false;
+            if(block1facing != EnumFacing.UP && floor2.getBlock() == ModBlocks.BAMBOO_SLATS) {
+                world.setBlockState(pos1, Blocks.AIR.getDefaultState(), 2);
+                world.setBlockState(pos2, Blocks.AIR.getDefaultState(), 2);
+                world.setBlockState(pos1down, ModBlocks.TATAMI_RECESSED.getDefaultState().withProperty(BlockTatami.FACING, block1facing),2);
+                world.setBlockState(pos2down, ModBlocks.TATAMI_RECESSED.getDefaultState().withProperty(BlockTatami.FACING, block1facing.getOpposite()), 3);
+                world.markAndNotifyBlock(pos1down,world.getChunkFromBlockCoords(pos1down),floor1,world.getBlockState(pos1down),3);
+                return true;
+            }
+            else if(block1facing == EnumFacing.UP) {
+                world.setBlockState(pos1, Blocks.AIR.getDefaultState(), 2);
+                world.setBlockState(pos1down, ModBlocks.TATAMI_RECESSED.getDefaultState().withProperty(BlockTatami.FACING, block1facing),3);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -41,23 +74,9 @@ public class BlockTatami extends BlockBase {
     }
 
     @Override
-    @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-    {
-        return MAT_AABB;
-    }
-
-    @Override
     public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
         return true;
     }
-
-    /*@Override
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
-        return Blocks.LEAVES.getBlockLayer();
-    }*/
 
     @Override
     public boolean isOpaqueCube(IBlockState state)
@@ -86,7 +105,7 @@ public class BlockTatami extends BlockBase {
         EnumFacing block1facing = state.getValue(FACING);
         BlockPos block2pos = pos.offset(block1facing);
         Block block = world.getBlockState(block2pos).getBlock();
-        if(block == this || block1facing == EnumFacing.UP) {
+        if(block == this && block1facing != EnumFacing.UP) {
             world.setBlockToAir(block2pos);
             if(drop)
                 this.dropBlockAsItem(world, pos, state, 0);
@@ -96,7 +115,7 @@ public class BlockTatami extends BlockBase {
     public boolean canBlockStay(World worldIn, IBlockState state, BlockPos pos)
     {
         EnumFacing block1facing = state.getValue(FACING);
-        return worldIn.isSideSolid(pos.down(),EnumFacing.UP) && (block1facing == EnumFacing.UP || worldIn.isSideSolid(pos.offset(block1facing).down(),EnumFacing.UP));
+        return worldIn.getBlockState(pos.down()).getBlockFaceShape(worldIn,pos.down(),EnumFacing.UP) == BlockFaceShape.SOLID && (block1facing == EnumFacing.UP || worldIn.getBlockState(pos.offset(block1facing).down()).getBlockFaceShape(worldIn,pos.offset(block1facing).down(),EnumFacing.UP) == BlockFaceShape.SOLID);
     }
 
     @Override
@@ -108,20 +127,20 @@ public class BlockTatami extends BlockBase {
 
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float x, float y, float z, int meta, EntityLivingBase placer, EnumHand hand) {
-        x -= 0.5f;
+        /*x -= 0.5f;
         z -= 0.5f;
 
         boolean isEast = x > 0 && Math.abs(z) < Math.abs(x);
         boolean isWest = x < 0 && Math.abs(z) < Math.abs(x);
         boolean isSouth = z > 0 && Math.abs(x) < Math.abs(z);
-        boolean isNorth = z < 0 && Math.abs(x) < Math.abs(z);
+        boolean isNorth = z < 0 && Math.abs(x) < Math.abs(z);*/
 
-        EnumFacing block1facing = EnumFacing.UP;
+        EnumFacing block1facing = placer.getHorizontalFacing();
 
-        if(isEast) block1facing = EnumFacing.EAST;
+        /*if(isEast) block1facing = EnumFacing.EAST;
         if(isWest) block1facing = EnumFacing.WEST;
         if(isSouth) block1facing = EnumFacing.SOUTH;
-        if(isNorth) block1facing = EnumFacing.NORTH;
+        if(isNorth) block1facing = EnumFacing.NORTH;*/
         if(!canPlaceBlockAt(world,pos.offset(block1facing)))
         {
             block1facing = EnumFacing.UP;
@@ -149,7 +168,8 @@ public class BlockTatami extends BlockBase {
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return world.isAirBlock(pos) && world.isSideSolid(pos.down(),EnumFacing.UP);
+        IBlockState state = world.getBlockState(pos.down());
+        return world.isAirBlock(pos) && state.getBlockFaceShape(world,pos.down(),EnumFacing.UP) == BlockFaceShape.SOLID;
     }
 
     @Override

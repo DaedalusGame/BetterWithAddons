@@ -95,11 +95,11 @@ public class InteractionCondensedOutputs extends Interaction {
     @Override
     public void init() {
         if (!LOSE_BINDER) {
-            ModItems.materialBag.setContainer(bagStack);
-            ModItems.materialCrate.setContainer(crateStack);
-            ModItems.materialCongealed.setContainer(congealedStack);
-            ModItems.materialBolt.setContainer(boltStack);
-            ModItems.materialBundle.setContainer(bundleStack);
+            ModItems.MATERIAL_BAG.setContainer(bagStack);
+            ModItems.MATERIAL_CRATE.setContainer(crateStack);
+            ModItems.MATERIAL_CONGEALED.setContainer(congealedStack);
+            ModItems.MATERIAL_BOLT.setContainer(boltStack);
+            ModItems.MATERIAL_BUNDLE.setContainer(bundleStack);
         }
 
         BWRegistry.CAULDRON.addUnstokedRecipe(StackIngredient.fromOre(9,"dung"),new ItemStack(BWMBlocks.AESTHETIC, 1, BlockAesthetic.EnumType.DUNG.getMeta()));
@@ -120,7 +120,7 @@ public class InteractionCondensedOutputs extends Interaction {
         bagStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_CLOTH, 1);
         crateStack = new ItemStack(Blocks.PLANKS, 1);
         congealedStack = new ItemStack(Items.SLIME_BALL, 1);
-        boltStack = new ItemStack(ModBlocks.spindle, 1);
+        boltStack = new ItemStack(ModBlocks.SPINDLE, 1);
         bundleStack = betterwithmods.common.items.ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HEMP_FIBERS, 1);
 
         addBaggingRecipe(registry, "seed", new ItemStack(Items.WHEAT_SEEDS));
@@ -186,14 +186,14 @@ public class InteractionCondensedOutputs extends Interaction {
     }
 
     private void addBaggingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material) {
-        ItemStack output = ModItems.materialBag.getMaterial(id);
+        ItemStack output = ModItems.MATERIAL_BAG.getMaterial(id);
 
         addCondensingRecipe(registry, id, output, material, bagStack);
         addUncondensingRecipe(registry, id, output, material);
     }
 
     private void addCratingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material) {
-        ItemStack output = ModItems.materialCrate.getMaterial(id);
+        ItemStack output = ModItems.MATERIAL_CRATE.getMaterial(id);
 
         addCondensingRecipe(registry, id, output, material, crateStack);
         addUncondensingRecipe(registry, id, output, material);
@@ -204,7 +204,7 @@ public class InteractionCondensedOutputs extends Interaction {
     }
 
     private void addCongealingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material) {
-        ItemStack output = ModItems.materialCongealed.getMaterial(id);
+        ItemStack output = ModItems.MATERIAL_CONGEALED.getMaterial(id);
 
         addCondensingRecipe(registry, id, output, material, congealedStack);
         addUncondensingRecipe(registry, id, output, material);
@@ -221,7 +221,7 @@ public class InteractionCondensedOutputs extends Interaction {
     }
 
     private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material) {
-        ItemStack output = ModItems.materialBolt.getMaterial(id);
+        ItemStack output = ModItems.MATERIAL_BOLT.getMaterial(id);
 
         addCondensingRecipe(registry, id, output, material, boltStack);
         addUncondensingRecipe(registry, id, output, material);
@@ -234,7 +234,7 @@ public class InteractionCondensedOutputs extends Interaction {
     }
 
     private void addRollupRecipe(ForgeRegistry<IRecipe> registry, String id, String material, ItemStack materialStack) {
-        ItemStack output = ModItems.materialBolt.getMaterial(id);
+        ItemStack output = ModItems.MATERIAL_BOLT.getMaterial(id);
 
         addCondensingRecipe(registry, id, output, material, boltStack);
         addUncondensingRecipe(registry, id, output, materialStack);
@@ -245,7 +245,7 @@ public class InteractionCondensedOutputs extends Interaction {
     }
 
     private void addBundlingRecipe(ForgeRegistry<IRecipe> registry, String id, ItemStack material) {
-        ItemStack output = ModItems.materialBundle.getMaterial(id);
+        ItemStack output = ModItems.MATERIAL_BUNDLE.getMaterial(id);
 
         addCondensingRecipe(registry, id, output, material, bundleStack);
         addUncondensingRecipe(registry, id, output, material);

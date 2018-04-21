@@ -108,7 +108,7 @@ public class BetterWithAddons
 				continue;
 
 			if(mapping.key.getResourcePath().equals("pond_base"))
-				mapping.remap(ModBlocks.pondReplacement);
+				mapping.remap(ModBlocks.POND_REPLACEMENT);
 		}
 	}
 
@@ -121,9 +121,9 @@ public class BetterWithAddons
 				continue;
 
 			if(mapping.key.getResourcePath().equals("pond_base"))
-				mapping.remap(Item.getItemFromBlock(ModBlocks.pondReplacement));
+				mapping.remap(Item.getItemFromBlock(ModBlocks.POND_REPLACEMENT));
 			if(mapping.key.getResourcePath().equals("bowl"))
-				mapping.remap(ModItems.salts);
+				mapping.remap(ModItems.SALTS);
 		}
 	}
 

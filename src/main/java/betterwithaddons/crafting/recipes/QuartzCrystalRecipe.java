@@ -58,7 +58,7 @@ public class QuartzCrystalRecipe extends CookingPotRecipe {
 
             if(ItemUtil.matchesOreDict(stack,"pileSand"))
             {
-                boolean producesSouls = stack.getItem() == ModItems.soulSandPile;
+                boolean producesSouls = stack.getItem() == ModItems.SOUL_SAND_PILE;
                 NBTTagCompound compound = stack.getTagCompound();
                 if(compound != null && compound.hasKey("QuartzCrystal"))
                 {

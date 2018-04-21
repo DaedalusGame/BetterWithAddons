@@ -48,7 +48,7 @@ public class WheatHandler {
         {
             ItemStack stack = iterator.next();
             if(stack.getItem() == Items.WHEAT)
-                iterator.set(ModItems.materialWheat.getMaterial("hay",stack.getCount()));
+                iterator.set(ModItems.MATERIAL_WHEAT.getMaterial("hay",stack.getCount()));
             if(stack.getItem() == Items.WHEAT_SEEDS)
                 iterator.set(new ItemStack(Items.WHEAT,stack.getCount()));
         }
@@ -113,7 +113,7 @@ public class WheatHandler {
                         itemstacks_created.add(new ItemStack(Items.BREAD, bread_produced, 0));
                         itemstacks_created.add(new ItemStack(Items.WHEAT_SEEDS, seeds_produced, 0));
                         if(InteractionWheat.THRESH_WHEAT)
-                            itemstacks_created.add(ModItems.materialWheat.getMaterial("hay",wheat_consumed));
+                            itemstacks_created.add(ModItems.MATERIAL_WHEAT.getMaterial("hay",wheat_consumed));
                     }
 
                     if (itemstack.isEmpty())

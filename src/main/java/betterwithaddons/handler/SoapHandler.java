@@ -26,7 +26,7 @@ public class SoapHandler {
         IBlockState blockstate = world.getBlockState(pos);
         IBlockState bottomblock = world.getBlockState(pos.down());
         if (!world.isRemote && blockstate.getMaterial() == Material.WATER && bottomblock.equals(soapState)) {
-            world.setBlockState(pos.down(), ModBlocks.wetSoap.getDefaultState());
+            world.setBlockState(pos.down(), ModBlocks.WET_SOAP.getDefaultState());
         }
     }
 }

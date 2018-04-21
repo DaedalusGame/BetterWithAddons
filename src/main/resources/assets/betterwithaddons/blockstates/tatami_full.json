@@ -1,0 +1,35 @@
+{
+	"forge_marker": 1,
+  "defaults": {
+	"model": "betterwithaddons:carpet_full",
+	"transform": "forge:default-block",
+	"textures": {
+		"bottom": "betterwithaddons:blocks/sift",
+        "wool": "betterwithaddons:blocks/tatami_0"
+    }
+  },
+  "variants": {
+    "normal": [{}],
+	"inventory": [{}],
+	"facing": {
+		"down": {},
+		"up": {},
+		"north": { 
+			"textures": { "wool": "betterwithaddons:blocks/tatami_2" },
+			"y": 90
+		},
+		"south": { 
+			"textures": { "wool": "betterwithaddons:blocks/tatami_1" },
+			"y": 90
+		},
+		"east": { 
+			"textures": { "wool": "betterwithaddons:blocks/tatami_1" },
+			"y": 0
+		},
+		"west": { 
+			"textures": { "wool": "betterwithaddons:blocks/tatami_2" },
+			"y": 0
+		}
+	}
+  }
+}

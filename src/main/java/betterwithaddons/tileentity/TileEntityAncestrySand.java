@@ -91,7 +91,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
             if (te instanceof TileEntityFilteredHopper) {
                 TileEntityFilteredHopper tileHopper = (TileEntityFilteredHopper) te;
                 IItemHandler handler = tileHopper.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-                ItemStack stack = new ItemStack(ModItems.ancestryBottle);
+                ItemStack stack = new ItemStack(ModItems.ANCESTRY_BOTTLE);
                 ItemStack consumed = new ItemStack(Items.GLASS_BOTTLE);
                 if (tileHopper.getFilterStack().getItem() == Item.getItemFromBlock(Blocks.SOUL_SAND) && InvUtils.canInsert(handler, stack, 1) && InvUtils.getFirstOccupiedStackOfItem(handler, consumed) >= 0) {
                     InvUtils.consumeItemsInInventory(handler, consumed, 1, false);
@@ -187,7 +187,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
 
     @Override
     public Block getBlock() {
-        return ModBlocks.ancestrySand;
+        return ModBlocks.ANCESTRY_SAND;
     }
 
     @Override

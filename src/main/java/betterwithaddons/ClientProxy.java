@@ -27,7 +27,6 @@ import betterwithmods.manual.client.manual.provider.TextureImageProvider;
 import betterwithmods.manual.client.manual.segment.JEIRenderSegment;
 import betterwithmods.manual.client.manual.segment.JEISegment;
 import betterwithmods.manual.client.manual.segment.Segment;
-import betterwithmods.manual.client.manual.segment.SegmentRefiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
@@ -51,8 +50,6 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -85,19 +82,19 @@ public class ClientProxy implements IProxy
 
     @Override
     public void init() {
-        registerColorable(ModBlocks.ecksieSapling);
-        registerColorable(ModBlocks.grass);
-        registerColorable(ModBlocks.pcbwire);
-        registerColorable(ModItems.samuraiBoots);
-        registerColorable(ModItems.samuraiChestplate);
-        registerColorable(ModItems.samuraiLeggings);
-        registerColorable(ModItems.brokenArtifact);
-        registerColorable(ModBlocks.tea);
-        registerColorable(ModItems.teaLeaves);
-        registerColorable(ModItems.teaSoaked);
-        registerColorable(ModItems.teaWilted);
-        registerColorable(ModItems.teaPowder);
-        registerColorable(ModItems.teaCup);
+        registerColorable(ModBlocks.ECKSIE_SAPLING);
+        registerColorable(ModBlocks.GRASS);
+        registerColorable(ModBlocks.PCB_WIRE);
+        registerColorable(ModItems.SAMURAI_BOOTS);
+        registerColorable(ModItems.SAMURAI_CHESTPLATE);
+        registerColorable(ModItems.SAMURAI_LEGGINGS);
+        registerColorable(ModItems.BROKEN_ARTIFACT);
+        registerColorable(ModBlocks.TEA);
+        registerColorable(ModItems.TEA_LEAVES);
+        registerColorable(ModItems.TEA_SOAKED);
+        registerColorable(ModItems.TEA_WILTED);
+        registerColorable(ModItems.TEA_POWDER);
+        registerColorable(ModItems.TEA_CUP);
 
         MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
         //TODO definition provider
@@ -106,7 +103,7 @@ public class ClientProxy implements IProxy
         ManualAPI.addProvider("item", new ItemImageProvider());
         ManualAPI.addProvider("block", new BlockImageProvider());
         ManualAPI.addProvider("oredict", new OreDictImageProvider());
-        ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.chute)), "bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
+        ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.CHUTE)), "bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
         String imagePattern = "!\\[([^\\[]*)\\]\\(([^\\)]+)\\)";
         Document.SEGMENT_TYPES.removeIf(mapping -> mapping.pattern.pattern().equals(imagePattern));
         Document.SEGMENT_TYPES.add(1,new Document.PatternMapping(imagePattern, ClientProxy::JEIorVariableSegment));
@@ -171,8 +168,8 @@ public class ClientProxy implements IProxy
     {
         ItemModels.register();
 
-        ModelLoader.setCustomStateMapper(ModBlocks.thorns,new StateMap.Builder().ignore(BlockThorns.FACING).build());
-        ModelLoader.setCustomStateMapper(ModBlocks.ropeSideways, new StateMapperBase() {
+        ModelLoader.setCustomStateMapper(ModBlocks.THORNS,new StateMap.Builder().ignore(BlockThorns.FACING).build());
+        ModelLoader.setCustomStateMapper(ModBlocks.ROPE_SIDEWAYS, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
                 if(state.getValue(BlockRopeSideways.HAS_PLANKS))
@@ -184,7 +181,7 @@ public class ClientProxy implements IProxy
                 return new ModelResourceLocation(Block.REGISTRY.getNameForObject(state.getBlock()),this.getPropertyString(map));
             }
         });
-        ModelLoader.setCustomStateMapper(ModBlocks.ropePost, new StateMapperBase() {
+        ModelLoader.setCustomStateMapper(ModBlocks.ROPE_POST, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
                 if(state.getValue(BlockRopePost.HAS_POST))
@@ -197,7 +194,7 @@ public class ClientProxy implements IProxy
                 return new ModelResourceLocation(Block.REGISTRY.getNameForObject(state.getBlock()),this.getPropertyString(map));
             }
         });
-        ModelLoader.setCustomStateMapper(ModBlocks.aqueductWater, new StateMapperBase() {
+        ModelLoader.setCustomStateMapper(ModBlocks.AQUEDUCT_WATER, new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
                 return aqueductWaterLocation;
@@ -207,7 +204,7 @@ public class ClientProxy implements IProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityGreatarrow.class, RenderGreatarrow.GREATARROW_RENDER);
         RenderingRegistry.registerEntityRenderingHandler(EntityYa.class, RenderYa.YA_RENDER);
         RenderingRegistry.registerEntityRenderingHandler(EntitySpirit.class, manager -> new RenderSpirit(manager));
-        RenderingRegistry.registerEntityRenderingHandler(EntityAncestryBottle.class, manager -> new RenderSnowball<>(manager,ModItems.ancestryBottle,Minecraft.getMinecraft().getRenderItem()));
+        RenderingRegistry.registerEntityRenderingHandler(EntityAncestryBottle.class, manager -> new RenderSnowball<>(manager,ModItems.ANCESTRY_BOTTLE,Minecraft.getMinecraft().getRenderItem()));
         RenderingRegistry.registerEntityRenderingHandler(EntityArtifactFrame.class, RenderArtifactFrame.ARTIFACEFRAME_RENDER);
         RenderingRegistry.registerEntityRenderingHandler(EntityKarateZombie.class, RenderKarateZombie::new);
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAlchDragon.class, new RenderAlchDragon());

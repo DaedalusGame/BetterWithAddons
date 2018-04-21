@@ -14,7 +14,6 @@ import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.mechanical.BlockMechMachines;
 import betterwithmods.common.items.ItemMaterial;
-import betterwithmods.module.gameplay.CrucibleRecipes;
 import betterwithmods.module.gameplay.miniblocks.MiniBlocks;
 import betterwithmods.module.hardcore.world.HCBonemeal;
 import betterwithmods.module.tweaks.MineshaftGeneration;
@@ -119,29 +118,29 @@ public class InteractionBTWTweak extends Interaction {
 
         //Temp conversion recipe
         ResourceLocation resloc = new ResourceLocation(Reference.MOD_ID, "ink_and_quill_conversion");
-        registry.register(new ShapelessOreRecipe(resloc,new ItemStack(ModItems.inkAndQuill),new Object[]{ModItems.materialTweak.getMaterial("ink_and_quill")}).setRegistryName(resloc));
+        registry.register(new ShapelessOreRecipe(resloc,new ItemStack(ModItems.INK_AND_QUILL),new Object[]{ModItems.MATERIAL_TWEAK.getMaterial("ink_and_quill")}).setRegistryName(resloc));
     }
 
     @Override
     public void init() {
         if(ASH_FERTILIZER) {
             HCBonemeal.registerFertilzier(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
-            HCBonemeal.registerFertilzier(ModItems.materialTweak.getMaterial("ash"));
+            HCBonemeal.registerFertilzier(ModItems.MATERIAL_TWEAK.getMaterial("ash"));
         }
 
-        ModItems.materialTweak.setDisabled("ink_and_quill"); //Deprecated
+        ModItems.MATERIAL_TWEAK.setDisabled("ink_and_quill"); //Deprecated
 
         if(RUSTY_MINESHAFTS)
-            MineshaftGeneration.rail = piece -> ModBlocks.rustyRail.getDefaultState();
+            MineshaftGeneration.rail = piece -> ModBlocks.RUSTY_RAIL.getDefaultState();
         if(INFESTED_MINESHAFTS)
-            MineshaftGeneration.supports = piece -> ModBlocks.termiteLog.getDefaultState();
-        BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(ModBlocks.rustyRail,2),new ItemStack(Items.IRON_NUGGET));
-        BWRegistry.WOOD_SAW.addRecipe(new ItemStack(ModBlocks.termiteLog,1,OreDictionary.WILDCARD_VALUE), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST,2));
+            MineshaftGeneration.supports = piece -> ModBlocks.TERMITE_LOG.getDefaultState();
+        BWRegistry.CRUCIBLE.addStokedRecipe(new ItemStack(ModBlocks.RUSTY_RAIL,2),new ItemStack(Items.IRON_NUGGET));
+        BWRegistry.WOOD_SAW.addRecipe(new ItemStack(ModBlocks.TERMITE_LOG,1,OreDictionary.WILDCARD_VALUE), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SAWDUST,2));
 
         if(WOOL_RECYCLING && InteractionBWM.HARDCORE_SHEARING)
         {
             for (EnumDyeColor color: EnumDyeColor.values()) {
-                BWRegistry.CAULDRON.addStokedRecipe(new ItemStack(Blocks.WOOL,1,color.getMetadata()), new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()), ModItems.wool.getByColor(color,4)).setPriority(-1);
+                BWRegistry.CAULDRON.addStokedRecipe(new ItemStack(Blocks.WOOL,1,color.getMetadata()), new ItemStack(BWMBlocks.AESTHETIC,1,BlockAesthetic.EnumType.WICKER.getMeta()), ModItems.WOOL.getByColor(color,4)).setPriority(-1);
             }
         }
 
@@ -203,7 +202,7 @@ public class InteractionBTWTweak extends Interaction {
             for (ItemStack log : OreDictionary.getOres("logWood")) {
                 ItemStack result = FurnaceRecipes.instance().getSmeltingResult(log);
                 if(result.isEmpty())
-                    GameRegistry.addSmelting(log,ModItems.materialTweak.getMaterial("ash"),0.1f);
+                    GameRegistry.addSmelting(log,ModItems.MATERIAL_TWEAK.getMaterial("ash"),0.1f);
             }
         }
 

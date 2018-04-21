@@ -69,7 +69,7 @@ public class BlockWorldScaleOre extends BlockBase implements IHasVariants {
 
         if(isBroken(state))
         if(!isBlock(state))
-            drops.add(new ItemStack(ModItems.worldShard,rand.nextInt(2)+3));
+            drops.add(new ItemStack(ModItems.WORLD_SHARD,rand.nextInt(2)+3));
         else
             super.getDrops(drops, world, pos, state, fortune);
     }

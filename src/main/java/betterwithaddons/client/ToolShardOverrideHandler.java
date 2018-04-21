@@ -30,7 +30,7 @@ public class ToolShardOverrideHandler extends ItemOverrideList
     @Override
     public IBakedModel handleItemState(IBakedModel originalModel, ItemStack stack, World world, EntityLivingBase entity)
     {
-        ItemStack innerstack = ModItems.brokenArtifact.getInnerStack(stack);
+        ItemStack innerstack = ModItems.BROKEN_ARTIFACT.getInnerStack(stack);
 
         if (!stack.isEmpty() && !innerstack.isEmpty())
         {

@@ -25,8 +25,8 @@ public class RenderArtifactFrame extends RenderItemFrame {
     public static final IRenderFactory ARTIFACEFRAME_RENDER = renderManager1 -> new RenderArtifactFrame(renderManager1);
 
     private final Minecraft mc = Minecraft.getMinecraft();
-    private final ModelResourceLocation mapModel = new ModelResourceLocation(ModItems.artifactFrame.getRegistryName(), "map");
-    private final ModelResourceLocation itemFrameModel = new ModelResourceLocation(ModItems.artifactFrame.getRegistryName(), "normal");
+    private final ModelResourceLocation mapModel = new ModelResourceLocation(ModItems.ARTIFACT_FRAME.getRegistryName(), "map");
+    private final ModelResourceLocation itemFrameModel = new ModelResourceLocation(ModItems.ARTIFACT_FRAME.getRegistryName(), "normal");
     private final RenderItem itemRenderer;
 
     public RenderArtifactFrame(RenderManager renderManagerIn) {

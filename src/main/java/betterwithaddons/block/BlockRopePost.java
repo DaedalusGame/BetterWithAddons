@@ -192,7 +192,7 @@ public class BlockRopePost extends BlockFence {
     {
         IBlockState state1 = world.getBlockState(pos.offset(facing));
 
-        return (/*BlockRopeSideways.canFastenBlock(state1.getBlock()) ||*/ (state1.getBlock() == ModBlocks.ropeSideways && state1.getValue(BlockRopeSideways.SHAPE).has(facing.getAxis())));
+        return (/*BlockRopeSideways.canFastenBlock(state1.getBlock()) ||*/ (state1.getBlock() == ModBlocks.ROPE_SIDEWAYS && state1.getValue(BlockRopeSideways.SHAPE).has(facing.getAxis())));
     }
 
     @Override

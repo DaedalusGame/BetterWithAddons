@@ -164,7 +164,7 @@ public class InteractionBWR extends Interaction {
 
         OreDictionary.registerOre("pileSand",BWMItems.SAND_PILE);
         OreDictionary.registerOre("pileSand",BWMItems.RED_SAND_PILE);
-        OreDictionary.registerOre("pileSand",ModItems.soulSandPile);
+        OreDictionary.registerOre("pileSand",ModItems.SOUL_SAND_PILE);
 
         int axeAmt = HCTools.changeAxeRecipe ? 2 : 3;
 
@@ -214,12 +214,12 @@ public class InteractionBWR extends Interaction {
             addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_CHESTPLATE),8);
             addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_LEGGINGS),7);
             addDiamondRecovery(Ingredient.fromItem(Items.DIAMOND_BOOTS),4);
-            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondSpade),2);
-            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondMatchPick),3);
-            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondMachete),4);
-            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondKukri),axeAmt+2);
-            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondCarpenterSaw),axeAmt+2);
-            addDiamondRecovery(Ingredient.fromItem(ModItems.diamondMasonPick),4);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.DIAMOND_SPADE),2);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.DIAMOND_MATCHPICK),3);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.DIAMOND_MACHETE),4);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.DIAMOND_KUKRI),axeAmt+2);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.DIAMOND_CARPENTER_SAW),axeAmt+2);
+            addDiamondRecovery(Ingredient.fromItem(ModItems.DIAMOND_MASON_PICK),4);
         }
 
         if(LAPIS_FROM_WOOL)
@@ -242,12 +242,12 @@ public class InteractionBWR extends Interaction {
             addGoldGrinding(new ItemStack(Items.GOLDEN_CHESTPLATE),8);
             addGoldGrinding(new ItemStack(Items.GOLDEN_LEGGINGS),7);
             addGoldGrinding(new ItemStack(Items.GOLDEN_BOOTS),4);
-            addGoldGrinding(new ItemStack(ModItems.goldSpade),2);
-            addGoldGrinding(new ItemStack(ModItems.goldMatchPick),3);
-            addGoldGrinding(new ItemStack(ModItems.goldMachete),4);
-            addGoldGrinding(new ItemStack(ModItems.goldKukri),axeAmt+2);
-            addGoldGrinding(new ItemStack(ModItems.goldCarpenterSaw),axeAmt+2);
-            addGoldGrinding(new ItemStack(ModItems.goldMasonPick),4);
+            addGoldGrinding(new ItemStack(ModItems.GOLD_SPADE),2);
+            addGoldGrinding(new ItemStack(ModItems.GOLD_MATCHPICK),3);
+            addGoldGrinding(new ItemStack(ModItems.GOLD_MACHETE),4);
+            addGoldGrinding(new ItemStack(ModItems.GOLD_KUKRI),axeAmt+2);
+            addGoldGrinding(new ItemStack(ModItems.GOLD_CARPENTER_SAW),axeAmt+2);
+            addGoldGrinding(new ItemStack(ModItems.GOLD_MASON_PICK),4);
 
         }
 

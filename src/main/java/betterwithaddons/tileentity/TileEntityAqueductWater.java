@@ -27,7 +27,7 @@ public class TileEntityAqueductWater extends TileEntityBase {
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+        if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && InteractionBWA.AQUEDUCT_IS_TANK)
             return true;
 
         return super.hasCapability(capability, facing);
@@ -35,8 +35,8 @@ public class TileEntityAqueductWater extends TileEntityBase {
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-            return (T)new FluidBlockWrapper(ModBlocks.aqueductWater, world, pos);
+        if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && InteractionBWA.AQUEDUCT_IS_TANK)
+            return (T)new FluidBlockWrapper(ModBlocks.AQUEDUCT_WATER, world, pos);
 
         return super.getCapability(capability, facing);
     }
@@ -123,7 +123,7 @@ public class TileEntityAqueductWater extends TileEntityBase {
                 return getBlockDistanceFromSource(world,pumpInput,world.getBlockState(pumpInput),false);
             }
         }
-        else if(state.getBlock() == ModBlocks.aqueduct && !recursed)
+        else if(state.getBlock() == ModBlocks.AQUEDUCT && !recursed)
         {
             return getBlockDistanceFromSource(world,pos.up(),world.getBlockState(pos.up()),true);
         }

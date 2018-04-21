@@ -68,7 +68,7 @@ public class TataraRecipeCategory extends BlankRecipeCategory<SmeltingRecipeWrap
         guiItemStacks.init(2, false, 60, 18);
 
         guiItemStacks.set(0, recipeWrapper.getInputs());
-        guiItemStacks.set(1, ModItems.materialJapan.getMaterial("rice_ash"));
+        guiItemStacks.set(1, ModItems.MATERIAL_JAPAN.getMaterial("rice_ash"));
         guiItemStacks.set(2, recipeWrapper.getOutputs());
     }
 

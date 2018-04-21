@@ -77,7 +77,7 @@ public class ItemGreatbow extends ItemBow {
             if (itemstack != null || flag) {
                 float f;
                 if (itemstack == null) {
-                    itemstack = new ItemStack(ModItems.greatarrow);
+                    itemstack = new ItemStack(ModItems.GREATARROW);
                 }
                 if ((double)(f = ItemGreatbow.getArrowVelocity(i)) >= 0.1) {
                     boolean flag1;
@@ -85,7 +85,7 @@ public class ItemGreatbow extends ItemBow {
                     if (!worldIn.isRemote) {
                         int enchpower = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
                         int enchpunch = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-                        ItemGreatarrow itemarrow = (ItemGreatarrow)(itemstack.getItem() instanceof ItemGreatarrow ? itemstack.getItem() : ModItems.greatarrow);
+                        ItemGreatarrow itemarrow = (ItemGreatarrow)(itemstack.getItem() instanceof ItemGreatarrow ? itemstack.getItem() : ModItems.GREATARROW);
                         EntityGreatarrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
                         entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0f, f * 4.5f, 0.5f);
                         if (f == 1.0f) {

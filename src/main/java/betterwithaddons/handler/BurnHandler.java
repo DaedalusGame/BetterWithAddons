@@ -1,7 +1,6 @@
 package betterwithaddons.handler;
 
 import betterwithaddons.item.ModItems;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
@@ -9,7 +8,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -48,7 +46,7 @@ public class BurnHandler implements IWorldEventListener {
                     double xOffset = worldIn.rand.nextDouble() * 0.5 + 0.25D;
                     double yOffset = worldIn.rand.nextDouble() * 0.5 + 0.25D;
                     double zOffset = worldIn.rand.nextDouble() * 0.5 + 0.25D;
-                    EntityItem entityitem = new EntityItem(worldIn, pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset, ModItems.materialTweak.getMaterial("ash"));
+                    EntityItem entityitem = new EntityItem(worldIn, pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset, ModItems.MATERIAL_TWEAK.getMaterial("ash"));
                     entityitem.setDefaultPickupDelay();
                     entityitem.attackEntityFrom(DamageSource.IN_FIRE, -10000); //Make it immune to fire so it doesn't instantly burn
                     worldIn.spawnEntity(entityitem);

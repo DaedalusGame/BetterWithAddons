@@ -14,7 +14,7 @@ public class ToolShardRepairHandler {
 
         ItemStack shard = event.getLeft();
         ItemStack mat = event.getRight();
-        ItemStack artifact = ModItems.brokenArtifact.getInnerStack(shard);
+        ItemStack artifact = ModItems.BROKEN_ARTIFACT.getInnerStack(shard);
         if (!artifact.isEmpty() && mat.getItem() == artifact.getItem() && !mat.isItemDamaged()) {
             ItemStack innercopy = artifact.copy();
             innercopy.setItemDamage(0);
