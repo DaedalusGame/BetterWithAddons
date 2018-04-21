@@ -91,6 +91,11 @@ tile.crop_tea.name=茶种子
 tile.shoji.name=障子
 tile.fusuma.name=障子门
 tile.tatami.name=榻榻米垫
+tile.tatami_full.name=嵌入式榻榻米米垫
+tile.zen_sand.name=园艺沙
+tile.zen_redsand.name=园艺红沙
+tile.zen_soulsand.name=园艺灵魂沙
+tile.zen_ironsand.name=园艺铁砂
 
 tile.block_matcher.name=方块匹配器
 tile.legendarium.name=圣坛
@@ -298,7 +303,7 @@ item.wheatmat.hay.name=干草
 item.decomat.hemp_oil.name=大麻籽油
 item.decomat.wood_bleach.name=木材漂白剂
 item.decomat.wood_stain.name=木材着色剂
-item.decomat.glass_chunk.name=玻璃块
+item.decomat.glass_chunk.name=玻璃碎片
 
 item.salt.crystal.name=盐簇
 
@@ -437,6 +442,9 @@ death.attack.lightningArrow.item=%1$s在逃离%2$s的过程中被%3$s杀死
 info.rope.too_far=距离太远了。
 info.horse.will_wait=你的马会在此等候你。
 info.horse.your_horse_will_wait=%s会在此等候你。
+
+tooltip.zen_sand=通过用锄头右击对应方块而成。
+tooltip.tatami_full=将榻榻米垫放置在竹栏块上使用锄头右击即可嵌入。
 
 tooltip.adobe.crafting=混合物
 tooltip.adobe.description=需要在阳光下晾晒。
