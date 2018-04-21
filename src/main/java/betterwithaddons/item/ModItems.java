@@ -49,7 +49,7 @@ public class ModItems {
     }
 
     public static ItemArmor.ArmorMaterial samuraiArmorMaterial = EnumHelper.addArmorMaterial("SAMURAI", "samurai", 16,
-            new int[]{2, 6, 5, 2}, 18, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0);
+            new int[]{3, 6, 7, 3}, 18, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0f);
 
     @GameRegistry.ObjectHolder("betterwithaddons:greatbow")
     public static ItemGreatbow GREATBOW;
