@@ -129,15 +129,9 @@ public class InteractionBWR extends Interaction {
 
     @Override
     public void preInit() {
-        if(MELT_HELLFIRE)
-            PatientiaHandler.addCustomBlock(BWMBlocks.AESTHETIC);
-        if(CROSSBREED_PLANTS) {
-            PatientiaHandler.addCustomBlock(BWMBlocks.FERTILE_FARMLAND);
-            PatientiaHandler.addCustomBlock(BWMBlocks.PLANTER);
-            PatientiaHandler.addCustomBlock(Blocks.SOUL_SAND);
-            PatientiaHandler.addCustomBlock(Blocks.END_STONE);
+
+        if(CROSSBREED_PLANTS)
             MinecraftForge.EVENT_BUS.register(new PlantCrossbreedHandler());
-        }
         if(CROSSBREED_ANIMALS)
             MinecraftForge.EVENT_BUS.register(new AnimalCrossbreedHandler());
         if(REDSTONE_BOILING)
@@ -152,6 +146,14 @@ public class InteractionBWR extends Interaction {
 
     @Override
     void init() {
+        if(MELT_HELLFIRE)
+            PatientiaHandler.addCustomBlock(BWMBlocks.AESTHETIC);
+        if(CROSSBREED_PLANTS) {
+            PatientiaHandler.addCustomBlock(BWMBlocks.FERTILE_FARMLAND);
+            PatientiaHandler.addCustomBlock(BWMBlocks.PLANTER);
+            PatientiaHandler.addCustomBlock(Blocks.SOUL_SAND);
+            PatientiaHandler.addCustomBlock(Blocks.END_STONE);
+        }
         PlantCrossbreedHandler.initialize();
         AnimalCrossbreedHandler.initialize();
 

@@ -62,11 +62,6 @@ public class InteractionWheat extends Interaction {
 
     @Override
     public void preInit() {
-        if (TEXTURE_CHANGES) {
-            Items.WHEAT_SEEDS.setUnlocalizedName("seed_grain"); //Keep compatible with Botania's stupid way of checking for seeds >_>
-            ModItems.MATERIAL_BAG.subItemUnlocalizedNames[0] = "grain"; //Very ugly but y'know
-        }
-
         MinecraftForge.EVENT_BUS.register(WheatHandler.class);
 
         ConditionModule.MODULES.put("HayBales", () -> CHANGE_HAY_BALES);
@@ -97,6 +92,11 @@ public class InteractionWheat extends Interaction {
     @Override
     void init() {
         OreDictionary.registerOre("hay", ModItems.MATERIAL_WHEAT.getMaterial("hay"));
+
+        if (TEXTURE_CHANGES) {
+            Items.WHEAT_SEEDS.setUnlocalizedName("seed_grain"); //Keep compatible with Botania's stupid way of checking for seeds >_>
+            ModItems.MATERIAL_BAG.subItemUnlocalizedNames[0] = "grain"; //Very ugly but y'know
+        }
 
         if (DIG_UP_CROPS) {
             Blocks.POTATOES.setHardness(1.0f).setHarvestLevel("hoe", 0);

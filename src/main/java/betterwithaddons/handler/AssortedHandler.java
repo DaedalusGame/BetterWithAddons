@@ -94,7 +94,7 @@ public class AssortedHandler {
                 if(state.getValue(BlockSand.VARIANT) == BlockSand.EnumType.RED_SAND)
                     replaceSand = ModBlocks.ZEN_RED_SAND;
                 if(state.getValue(BlockSand.VARIANT) == BlockSand.EnumType.SAND)
-                    replaceSand = ModBlocks.ZEN_RED_SAND;
+                    replaceSand = ModBlocks.ZEN_SAND;
             }
             else if(state.getBlock() == Blocks.SOUL_SAND)
                 replaceSand = ModBlocks.ZEN_SOUL_SAND;
