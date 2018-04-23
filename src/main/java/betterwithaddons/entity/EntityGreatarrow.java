@@ -103,8 +103,8 @@ public class EntityGreatarrow extends EntityArrow {
 
                 if(!world.isRemote)
                 for(int i = 0; i < 2; i++) {
-                    BlockPos sideblock = blockpos.offset(EnumFacing.random(rand), 1);
-                    float sidehardness = world.getBlockState(sideblock).getBlock().getExplosionResistance(world,blockpos,this,null);
+                    BlockPos sideblock =  blockpos.offset(EnumFacing.random(rand), 1);
+                    float sidehardness = world.getBlockState(sideblock).getBlock().getExplosionResistance(world,sideblock,this,null);
                     if(breakBlockWithParticles(sideblock,blockBreakPower))
                     blockBreakPower -= sidehardness;
                 }
