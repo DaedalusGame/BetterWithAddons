@@ -43,7 +43,7 @@ public class HardcoreWoolHandler {
         BlockPos pos = player.getPosition();
         ItemStack tool = event.getItemStack();
 
-        if(!world.isRemote && target instanceof IShearable && isShears(tool))
+        if(!world.isRemote && !target.isDead && target instanceof IShearable && isShears(tool))
         {
             event.setCanceled(true);
             event.setCancellationResult(EnumActionResult.PASS);
