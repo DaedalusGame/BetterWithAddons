@@ -10,8 +10,7 @@
   "type": "forge:ore_shaped",
   "key": {
     "P": {
-      "item": "betterwithaddons:planks_sakura",
-	  "data": 0
+      "item": "#HE_SAKURA_MOULDING"
     },
 	"L": {
 	  "type": "forge:ore_dict",

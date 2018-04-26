@@ -38,8 +38,7 @@ public class BlockModSapling extends BlockBush implements IGrowable, IPlantable 
     {
         woodVariant = variant;
 
-        this.setHardness(0.6F);
-        this.setHarvestLevel("axe", 0);
+        this.setHardness(0.0F);
         this.setSoundType(SoundType.PLANT);
         this.setDefaultState(getDefaultState().withProperty(STAGE, Integer.valueOf(0)));
 

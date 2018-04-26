@@ -14,9 +14,11 @@ import betterwithmods.common.BWRegistry;
 import betterwithmods.common.blocks.BlockAesthetic;
 import betterwithmods.common.blocks.mechanical.BlockMechMachines;
 import betterwithmods.common.items.ItemMaterial;
+import betterwithmods.common.registry.block.recipe.BlockDropIngredient;
 import betterwithmods.module.gameplay.miniblocks.MiniBlocks;
 import betterwithmods.module.hardcore.world.HCBonemeal;
 import betterwithmods.module.tweaks.MineshaftGeneration;
+import betterwithmods.util.StackIngredient;
 import com.google.common.collect.Lists;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.material.Material;
@@ -50,6 +52,7 @@ public class InteractionBTWTweak extends Interaction {
     public static boolean REPLACE_WRITABLE_BOOK_RECIPE = true;
     public static boolean RUSTY_MINESHAFTS = true;
     public static boolean INFESTED_MINESHAFTS = true;
+    public static boolean BONEMEAL_TO_GLUE = false; //Disabled by default since it conflicts with Kibble
     public static int WRITING_TABLE_COST = 1;
     public static int EGG_INCUBATION_TIME = 5400;
 
@@ -71,6 +74,7 @@ public class InteractionBTWTweak extends Interaction {
         REPLACE_WRITABLE_BOOK_RECIPE = loadPropBool("ReplaceWritableBookRecipe","Changes writable books to require the Ink and Quill item.",REPLACE_WRITABLE_BOOK_RECIPE);
         RUSTY_MINESHAFTS = loadPropBool("RustedMineshafts","Rails in Mineshafts are rusted and melt down into much less iron.",RUSTY_MINESHAFTS);
         INFESTED_MINESHAFTS = loadPropBool("InfestedMineshafts","Logs in Mineshafts are infested by Termites and crumble into sawdust when harvested.",INFESTED_MINESHAFTS);
+        BONEMEAL_TO_GLUE = loadPropBool("BonemealToGlue","Bonemeal can be turned to glue in a stoked Crucible.",BONEMEAL_TO_GLUE);
         doesNotNeedRestart(() -> {
             WRITING_TABLE_COST = loadPropInt("WritingTableCost","How many levels it costs to rename an item or create a nametag.",WRITING_TABLE_COST);
             EGG_INCUBATION_TIME = loadPropInt("EggIncubationTime","How long it takes for an egg to hatch using incubation, in ticks.",EGG_INCUBATION_TIME);
@@ -144,22 +148,25 @@ public class InteractionBTWTweak extends Interaction {
             }
         }
 
-        if(SAW_RECYCLING)
-        {
+        if(BONEMEAL_TO_GLUE) {
+            BWRegistry.CAULDRON.addStokedRecipe(StackIngredient.fromStacks(new ItemStack(Items.DYE,64,EnumDyeColor.WHITE.getDyeDamage())),ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GLUE));
+        }
+
+        if(SAW_RECYCLING) {
             BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.BOOKSHELF), Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,4),new ItemStack(Items.BOOK,3)));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.CHEST),getSiding(BlockPlanks.EnumType.OAK,6));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.JUKEBOX),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,6),new ItemStack(Items.DIAMOND,1)));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.LADDER),new ItemStack(Items.STICK,2));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.NOTEBLOCK),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,6),new ItemStack(Items.REDSTONE,1)));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.TRAPDOOR),getSiding(BlockPlanks.EnumType.OAK,2));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.WOODEN_AXLE),Lists.newArrayList(getCorner(BlockPlanks.EnumType.OAK,2),new ItemStack(BWMBlocks.ROPE,1)));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.BELLOWS),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,2), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER_CUT,3)));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.WOODEN_GEARBOX),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH)));
-            BWRegistry.WOOD_SAW.addRecipe(BlockMechMachines.getStack(BlockMechMachines.EnumType.HOPPER),Lists.newArrayList(getMoulding(BlockPlanks.EnumType.OAK,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,1), new ItemStack(Blocks.WOODEN_PRESSURE_PLATE,1)));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.CHEST)),getSiding(BlockPlanks.EnumType.OAK,6));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.JUKEBOX)),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,6),new ItemStack(Items.DIAMOND,1)));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.LADDER)),new ItemStack(Items.STICK,2));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.NOTEBLOCK)),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,6),new ItemStack(Items.REDSTONE,1)));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.TRAPDOOR)),getSiding(BlockPlanks.EnumType.OAK,2));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(BWMBlocks.WOODEN_AXLE)),Lists.newArrayList(getCorner(BlockPlanks.EnumType.OAK,2),new ItemStack(BWMBlocks.ROPE,1)));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(BWMBlocks.BELLOWS)),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,2), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.TANNED_LEATHER_CUT,3)));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(BWMBlocks.WOODEN_GEARBOX)),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH)));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(BlockMechMachines.getStack(BlockMechMachines.EnumType.HOPPER)),Lists.newArrayList(getMoulding(BlockPlanks.EnumType.OAK,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR,1), new ItemStack(Blocks.WOODEN_PRESSURE_PLATE,1)));
             BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.PLATFORM),Lists.newArrayList(getMoulding(BlockPlanks.EnumType.OAK,3), new ItemStack(BWMBlocks.WICKER,2)));
             BWRegistry.WOOD_SAW.addRecipe(BlockMechMachines.getStack(BlockMechMachines.EnumType.PULLEY),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,3), new ItemStack(Items.IRON_INGOT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH)));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.SAW),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,1), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), new ItemStack(Items.IRON_INGOT, 2)));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(BWMBlocks.PUMP),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCREW), new ItemStack(BWMBlocks.GRATE, 1, BlockPlanks.EnumType.OAK.getMetadata())));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(BWMBlocks.SAW)),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,1), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.LEATHER_BELT), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.GEAR), new ItemStack(Items.IRON_INGOT, 2)));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(BWMBlocks.PUMP)),Lists.newArrayList(getSiding(BlockPlanks.EnumType.OAK,3), ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SCREW), new ItemStack(BWMBlocks.GRATE, 1, BlockPlanks.EnumType.OAK.getMetadata())));
 
             BlockPlanks.EnumType[] woodtypes = BlockPlanks.EnumType.values();
 
@@ -175,12 +182,12 @@ public class InteractionBTWTweak extends Interaction {
             BWRegistry.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.ACACIA_DOOR,Lists.newArrayList(getSiding(BlockPlanks.EnumType.ACACIA,4)),new ItemStack(Items.ACACIA_DOOR)));
             BWRegistry.WOOD_SAW.addRecipe(new DoorSawRecipe(Blocks.DARK_OAK_DOOR,Lists.newArrayList(getSiding(BlockPlanks.EnumType.DARK_OAK,4)),new ItemStack(Items.DARK_OAK_DOOR)));
 
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.OAK_FENCE_GATE),getMoulding(BlockPlanks.EnumType.OAK,3));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.BIRCH_FENCE_GATE),getMoulding(BlockPlanks.EnumType.BIRCH,3));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.SPRUCE_FENCE_GATE),getMoulding(BlockPlanks.EnumType.SPRUCE,3));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.JUNGLE_FENCE_GATE),getMoulding(BlockPlanks.EnumType.JUNGLE,3));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.ACACIA_FENCE_GATE),getMoulding(BlockPlanks.EnumType.ACACIA,3));
-            BWRegistry.WOOD_SAW.addRecipe(new ItemStack(Blocks.DARK_OAK_FENCE_GATE),getMoulding(BlockPlanks.EnumType.DARK_OAK,3));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.OAK_FENCE_GATE)),getMoulding(BlockPlanks.EnumType.OAK,3));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.BIRCH_FENCE_GATE)),getMoulding(BlockPlanks.EnumType.BIRCH,3));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.SPRUCE_FENCE_GATE)),getMoulding(BlockPlanks.EnumType.SPRUCE,3));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.JUNGLE_FENCE_GATE)),getMoulding(BlockPlanks.EnumType.JUNGLE,3));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.ACACIA_FENCE_GATE)),getMoulding(BlockPlanks.EnumType.ACACIA,3));
+            BWRegistry.WOOD_SAW.addRecipe(new BlockDropIngredient(new ItemStack(Blocks.DARK_OAK_FENCE_GATE)),getMoulding(BlockPlanks.EnumType.DARK_OAK,3));
         }
     }
 

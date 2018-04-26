@@ -17,9 +17,15 @@ import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWOreDictionary;
 import betterwithmods.common.BWRegistry;
 import betterwithmods.common.registry.Wood;
+import betterwithmods.module.gameplay.miniblocks.MiniBlockIngredient;
+import betterwithmods.module.gameplay.miniblocks.MiniBlocks;
+import betterwithmods.module.gameplay.miniblocks.MiniType;
+import betterwithmods.module.gameplay.miniblocks.blocks.BlockMini;
 import betterwithmods.module.hardcore.crafting.HCLumber;
 import betterwithmods.util.StackIngredient;
 import com.google.common.collect.Lists;
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Blocks;
@@ -30,6 +36,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.crafting.CompoundIngredient;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -37,6 +44,7 @@ import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -204,7 +212,8 @@ public class InteractionEriottoMod extends Interaction {
         //    MinecraftForge.addGrassSeed(new ItemStack(ModBlocks.rush), 2);
         //}
 
-        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.SAKURA_LOG),new ItemStack(ModBlocks.SAKURA_PLANKS),ModItems.MATERIAL_JAPAN.getMaterial("bark_sakura")));
+        ItemStack sakuraPlanks = new ItemStack(ModBlocks.SAKURA_PLANKS);
+        BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.SAKURA_LOG), sakuraPlanks,ModItems.MATERIAL_JAPAN.getMaterial("bark_sakura")));
         BWOreDictionary.woods.add(new Wood(new ItemStack(ModBlocks.MULBERRY_LOG),new ItemStack(ModBlocks.MULBERRY_PLANKS),ModItems.MATERIAL_JAPAN.getMaterial("bark_mulberry")){
             @Override
             public ItemStack getPlank(int count) {
@@ -228,10 +237,14 @@ public class InteractionEriottoMod extends Interaction {
         addArmorFinishRecipe("samurai_leggings",new ItemStack(ModItems.SAMURAI_LEGGINGS), ModItems.MATERIAL_JAPAN.getMaterial("legs_undecorated"), 7);
         addArmorFinishRecipe("samurai_boots",new ItemStack(ModItems.SAMURAI_BOOTS), ModItems.MATERIAL_JAPAN.getMaterial("boots_undecorated"), 4);
 
+        HashMap<Material, BlockMini> sidingMaterials = MiniBlocks.MINI_MATERIAL_BLOCKS.get(MiniType.SIDING);
+
+        ItemStack sakuraSiding = MiniBlocks.fromParent(sidingMaterials.get(Material.WOOD), ModBlocks.SAKURA_PLANKS.getDefaultState());
+        Ingredient sakuraPlankOrSiding = Ingredient.fromStacks(sakuraPlanks,sakuraSiding);
         CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"netted_screen"),new ItemStack(ModBlocks.NETTED_SCREEN), "bsb", "sss", "bsb", 's', "string", 'b', ModItems.MATERIAL_JAPAN.getMaterial("bamboo_slats")),2);
         CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"tatara"),new ItemStack(ModBlocks.TATARA), "idi", "g g", "ini", 'i', "ingotIron", 'g', "ingotGold", 'd', "gemDiamond", 'n', new ItemStack(Blocks.NETHERRACK)),4);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"soaking_unit"),new ItemStack(ModBlocks.CHERRY_BOX, 1, 0), "pxp", "x x", "pxp", 'p', new ItemStack(ModBlocks.SAKURA_PLANKS), 'x', new ItemStack(Blocks.IRON_BARS)),1);
-        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"drying_unit"),new ItemStack(ModBlocks.CHERRY_BOX, 1, 1), "pxp", "p p", "ppp", 'p', new ItemStack(ModBlocks.SAKURA_PLANKS), 'x', new ItemStack(Blocks.GLASS_PANE)),1);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"soaking_unit"),new ItemStack(ModBlocks.CHERRY_BOX, 1, 0), "pxp", "x x", "pxp", 'p', sakuraPlankOrSiding, 'x', new ItemStack(Blocks.IRON_BARS)),1);
+        CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"drying_unit"),new ItemStack(ModBlocks.CHERRY_BOX, 1, 1), "pxp", "p p", "ppp", 'p', sakuraPlankOrSiding, 'x', new ItemStack(Blocks.GLASS_PANE)),1);
         CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"nabe"),new ItemStack(ModBlocks.NABE, 1), "i i", "i i", "lhl", 'i', "ingotIron", 'l', "ingotTamahagane", 'h', "ingotHochoTetsu"),1);
 
         //Random seeds

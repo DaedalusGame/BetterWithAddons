@@ -9,8 +9,8 @@
     "name": "HE_PLANKS",
     "ingredient": [
       {
-        "type": "forge:ore_dict",
-        "ore": "plankWood"
+        "ore": "plankWood",
+        "type": "forge:ore_dict"
       },
       {
         "type": "betterwithmods:minitype",
@@ -19,6 +19,52 @@
           "type": "forge:ore_dict"
         },
         "minitype": "siding"
+      }
+    ]
+  },
+  {
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "betterwithmods"
+      }
+    ],
+    "name": "HE_SAKURA_SIDING",
+    "ingredient": [
+      {
+        "item": "betterwithaddons:planks_sakura",
+        "data": 0
+      },
+      {
+        "type": "betterwithmods:minitype",
+        "baseIngredient": {
+          "item": "betterwithaddons:planks_sakura",
+          "data": 0
+        },
+        "minitype": "siding"
+      }
+    ]
+  },
+  {
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "betterwithmods"
+      }
+    ],
+    "name": "HE_SAKURA_MOULDING",
+    "ingredient": [
+      {
+        "item": "betterwithaddons:planks_sakura",
+        "data": 0
+      },
+      {
+        "type": "betterwithmods:minitype",
+        "baseIngredient": {
+          "item": "betterwithaddons:planks_sakura",
+          "data": 0
+        },
+        "minitype": "moulding"
       }
     ]
   },

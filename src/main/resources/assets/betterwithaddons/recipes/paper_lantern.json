@@ -11,8 +11,7 @@
   "type": "forge:ore_shaped",
   "key": {
     "M": {
-      "type": "forge:ore_dict",
-	  "ore": "mouldingWood"
+      "item": "#MOULDING_WOOD"
     },
     "P": {
       "item": "minecraft:paper"

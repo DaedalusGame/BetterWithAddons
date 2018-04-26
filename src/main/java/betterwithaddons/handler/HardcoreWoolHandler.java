@@ -43,12 +43,12 @@ public class HardcoreWoolHandler {
         BlockPos pos = player.getPosition();
         ItemStack tool = event.getItemStack();
 
-        if(!world.isRemote && !target.isDead && target instanceof IShearable && isShears(tool))
+        if(!world.isRemote && target instanceof IShearable && isShears(tool))
         {
             event.setCanceled(true);
             event.setCancellationResult(EnumActionResult.PASS);
             IShearable sheep = (IShearable) target;
-            if(!sheep.isShearable(tool,world,pos))
+            if(target.isDead || !sheep.isShearable(tool,world,pos))
                 return;
             java.util.Random rand = new java.util.Random();
             for(ItemStack stack : InteractionBWM.convertShearedWool(sheep.onSheared(tool,world,pos, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE,tool))))
