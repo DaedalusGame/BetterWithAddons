@@ -92,7 +92,7 @@ public class RotHandler {
             if(returnKey == null)
                 returnKey = getLocalizationKey(baseName,rotPercentInt);
 
-            return returnKey;
+            return returnKey != null ? returnKey : (baseName + ".rot");
         }
 
         protected String getLocalizationKey(String baseName, int percent)
