@@ -30,6 +30,11 @@ public class BlockScaffold extends BlockBase {
     }
 
     @Override
+    public boolean isWood(IBlockAccess world, BlockPos pos) {
+        return true;
+    }
+
+    @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }

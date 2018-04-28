@@ -1,11 +1,16 @@
 package betterwithaddons.block;
 
+import betterwithaddons.world.WorldGenAlicioTree;
+import betterwithaddons.world.WorldGenBigTrees;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenTrees;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
@@ -16,18 +21,20 @@ public class BlockLureTreeSapling extends BlockModSapling {
 
     @Override
     public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        super.generateTree(worldIn, pos, state, rand);
+        if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
+        WorldGenerator worldgenerator = new WorldGenAlicioTree(true,log,leaves,this);
+        int i = 0;
+        int j = 0;
 
-        BlockPos checkpos = pos.up();
-        IBlockState checkstate = worldIn.getBlockState(checkpos);
+        worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
 
-        if(checkstate.getBlock() == ModBlocks.LURETREE_LOG)
-        {
-            worldIn.setBlockState(checkpos,ModBlocks.LURETREE_FACE.getDefaultState().withProperty(BlockLureTree.FACING, EnumFacing.getHorizontal(rand.nextInt(4))).withProperty(BlockLureTree.ACTIVE,true));
+        if (!worldgenerator.generate(worldIn, rand, pos.add(i, 0, j))) {
+            worldIn.setBlockState(pos, state, 4);
         }
-
-        worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
-                SoundEvents.ENTITY_WITHER_AMBIENT, SoundCategory.PLAYERS, 0.6F,
-                ((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.7F + 1.0F));
+        else {
+            worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
+                    SoundEvents.ENTITY_WITHER_AMBIENT, SoundCategory.PLAYERS, 0.6F,
+                    ((worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.7F + 1.0F));
+        }
     }
 }

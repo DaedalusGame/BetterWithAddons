@@ -64,6 +64,11 @@ public class BlockRopeSideways extends BlockContainerBase {
     }
 
     @Override
+    public boolean isWood(IBlockAccess world, BlockPos pos) {
+        return true;
+    }
+
+    @Override
     public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
         if(blockState.getValue(HAS_PLANKS))
             return 2.0F;
