@@ -251,9 +251,9 @@ public class InteractionBWM extends Interaction {
             OreIngredient dye = new OreIngredient("dye" + dyeOredictTags[color.ordinal()]);
             if (color != EnumDyeColor.WHITE) {
                 if (DYE_WOOL_IN_CAULDRON)
-                    BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(Ingredient.fromStacks(whiteWool), dye), new ItemStack(Blocks.WOOL, WOOL_BATCH, color.getMetadata()));
+                    BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(whiteWool), dye), new ItemStack(Blocks.WOOL, WOOL_BATCH, color.getMetadata()));
                 if (DYE_FLEECE_IN_CAULDRON)
-                    BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(Ingredient.fromStacks(whiteFleece), dye), new ItemStack(ModItems.WOOL, FLEECE_BATCH, color.getMetadata()));
+                    BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(whiteFleece), dye), new ItemStack(ModItems.WOOL, FLEECE_BATCH, color.getMetadata()));
             }
         }
 
