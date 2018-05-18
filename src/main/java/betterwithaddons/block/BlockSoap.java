@@ -13,7 +13,7 @@ public class BlockSoap extends BlockBase {
     public BlockSoap() {
         super("wet_soap", Material.GROUND);
         this.setSoundType(SoundType.SLIME);
-        this.slipperiness = 1.0F;
+        this.setDefaultSlipperiness(1.0F);
         this.setHardness(1.0F);
         this.setResistance(5.0F);
     }
