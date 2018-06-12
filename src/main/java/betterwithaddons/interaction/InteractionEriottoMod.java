@@ -253,7 +253,7 @@ public class InteractionEriottoMod extends Interaction {
 
             @Override
             public ItemStack getOutput(ItemStack input) {
-                int i = random.nextInt(2);
+                int i = random.nextInt(3);
                 switch(i)
                 {
                     case(0):return new ItemStack(ModBlocks.RICE);

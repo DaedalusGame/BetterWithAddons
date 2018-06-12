@@ -151,7 +151,7 @@ public class InteractionBWA extends Interaction {
 
             HORSES_IGNORE_GOLD = loadPropBool("HorsesIgnoreGold", "Horses can't be fed golden food. It gives them a tummy ache.", HORSES_IGNORE_GOLD);
             HORSES_SET_HOME = loadPropBool("HorsesSetHome", "Horses set their home location if they're in a safe spot when dismounting.", HORSES_SET_HOME);
-            HORSES_BREED_HAYBALE_PLACED = loadPropBool("HorsesBreedHaybales", "Horses can breed from eating haybales placed in world.", HORSES_BREED_HAYBALE_PLACED);
+            HORSES_BREED_HAYBALE_PLACED = loadPropBool("HorsesBreedHaybalesPlaced", "Horses can breed from eating haybales placed in world.", HORSES_BREED_HAYBALE_PLACED);
 
             AQUEDUCT_MAX_LENGTH = loadPropInt("MaxAqueductLength", "How long aqueducts can be.", AQUEDUCT_MAX_LENGTH);
             AQUEDUCT_IS_TANK = loadPropBool("AqueductIsTank", "Aqueduct water counts as a fluid tank for modded pipes. Happy birthday Vyraal1", AQUEDUCT_IS_TANK);
@@ -200,7 +200,7 @@ public class InteractionBWA extends Interaction {
 
             @Override
             public boolean eat(ItemStack item, EntityLivingBase eater) {
-                EntityHorse horse = (EntityHorse) eater;
+                AbstractHorse horse = (AbstractHorse) eater;
                 if(eater != null && HorseFoodHandler.canHorseBreed(horse)) {
                     horse.setEatingHaystack(true);
                     horse.setInLove(null);

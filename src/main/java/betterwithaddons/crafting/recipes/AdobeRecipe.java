@@ -2,8 +2,8 @@ package betterwithaddons.crafting.recipes;
 
 import betterwithaddons.block.AdobeType;
 import betterwithaddons.block.ModBlocks;
-import betterwithaddons.util.IngredientSpecial;
 import betterwithaddons.util.ItemUtil;
+import betterwithmods.common.registry.block.recipe.IngredientSpecial;
 import betterwithmods.common.registry.bulk.recipes.BulkCraftEvent;
 import betterwithmods.common.registry.bulk.recipes.CookingPotRecipe;
 import betterwithmods.common.registry.heat.BWMHeatRegistry;
@@ -30,7 +30,7 @@ public class AdobeRecipe extends CookingPotRecipe {
     Ingredient dung = new IngredientSpecial(stack -> getDung(stack) > 0);
 
     public AdobeRecipe() {
-        super(new ArrayList<>(),new ArrayList<>(), BWMHeatRegistry.UNSTOKED_HEAT);
+        super(new ArrayList<>(),Lists.newArrayList(new ItemStack(ModBlocks.ADOBE)), BWMHeatRegistry.UNSTOKED_HEAT);
         inputs.add(sand);
         inputs.add(clay);
     }
@@ -79,11 +79,15 @@ public class AdobeRecipe extends CookingPotRecipe {
     @Nonnull
     @Override
     public ArrayList<ItemStack> getOutputs() {
-        ItemStack output = new ItemStack(ModBlocks.ADOBE, 1, 0);
+        ArrayList<ItemStack> allOutputs = new ArrayList<>();
 
-        output.setTranslatableName("tooltip.adobe.crafting");
+        for(int i = 0; i < 8; i++) {
+            ItemStack output = new ItemStack(ModBlocks.ADOBE, 1, i);
+            output.setTranslatableName("tooltip.adobe.crafting");
+            allOutputs.add(output);
+        }
 
-        return Lists.newArrayList(output);
+        return Lists.newArrayList(allOutputs);
     }
 
     public boolean consumeIngredients(ItemStackHandler inv, NonNullList<ItemStack> containItems) {
@@ -100,6 +104,7 @@ public class AdobeRecipe extends CookingPotRecipe {
                 ItemStack container = stack.getItem().getContainerItem(stack);
                 container.setCount(stack.getCount());
                 containItems.add(container);
+                inv.extractItem(i,stack.getCount(),false);
             }
         }
 
@@ -157,10 +162,16 @@ public class AdobeRecipe extends CookingPotRecipe {
     }
 
     @Override
+    public boolean isInvalid() {
+        return false;
+    }
+
+    @Override
     public NonNullList<ItemStack> onCraft(World world, TileEntity tile, ItemStackHandler inv) {
         NonNullList<ItemStack> items = NonNullList.create();
+        ArrayList<ItemStack> mixedResult = getMixedResult(inv);
         if (consumeIngredients(inv, items)) {
-            items.addAll(getMixedResult(inv));
+            items.addAll(mixedResult);
             return BulkCraftEvent.fireOnCraft(tile, world, inv, this, items);
         }
         return NonNullList.create();

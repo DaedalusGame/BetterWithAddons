@@ -7,6 +7,7 @@ import betterwithaddons.tileentity.TileEntityAncestrySand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -29,6 +30,10 @@ public class ItemAncestryBottle extends Item {
             if(te instanceof TileEntityAncestrySand)
                 ((TileEntityAncestrySand) te).addSpirits(InteractionEriottoMod.BOTTLE_MAX_SPIRITS);
             stack.shrink(1);
+            if (stack.isEmpty())
+                player.setHeldItem(hand, new ItemStack(Items.GLASS_BOTTLE));
+            else if (!player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE)))
+                player.dropItem(new ItemStack(Items.GLASS_BOTTLE), false);
             return EnumActionResult.SUCCESS;
         }
         else if(state.getBlock() == ModBlocks.ANCESTRY_SAND)
@@ -37,6 +42,10 @@ public class ItemAncestryBottle extends Item {
             if(te instanceof TileEntityAncestrySand)
                 ((TileEntityAncestrySand) te).addSpirits(InteractionEriottoMod.BOTTLE_MAX_SPIRITS);
             stack.shrink(1);
+            if (stack.isEmpty())
+                player.setHeldItem(hand, new ItemStack(Items.GLASS_BOTTLE));
+            else if (!player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE)))
+                player.dropItem(new ItemStack(Items.GLASS_BOTTLE), false);
             return EnumActionResult.SUCCESS;
         }
 
@@ -53,7 +62,7 @@ public class ItemAncestryBottle extends Item {
             itemstack.shrink(1);
         }
 
-        worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_EXPERIENCE_BOTTLE_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+        worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_EXPERIENCE_BOTTLE_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
         if (!worldIn.isRemote)
         {

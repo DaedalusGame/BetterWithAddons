@@ -120,6 +120,11 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     }
 
     @Override
+    protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
+        //NOOP
+    }
+
+    @Override
     public void onDeath(DamageSource cause) {
         super.onDeath(cause);
 

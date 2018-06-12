@@ -1,5 +1,6 @@
 package betterwithaddons.block;
 
+import betterwithaddons.item.rbdtools.ItemMatchPick;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -62,7 +63,7 @@ public class BlockLantern extends BlockBase {
 
         ItemStack heldItem = playerIn.getHeldItem(hand);
 
-        if(!isLit && !heldItem.isEmpty() && heldItem.getItem() instanceof ItemFlintAndSteel)
+        if(!isLit && !heldItem.isEmpty() && (heldItem.getItem() instanceof ItemFlintAndSteel || heldItem.getItem() instanceof ItemMatchPick))
         {
             worldIn.setBlockState(pos,state.withProperty(LIT,true));
             heldItem.damageItem(1,playerIn);

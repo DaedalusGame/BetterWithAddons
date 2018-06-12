@@ -74,9 +74,11 @@ public class TileEntityInfuser extends TileEntityBase implements ITickable {
 
     @Override
     public void update() {
+        boolean valid = isValid();
+
         animLife++;
         activeGlowLast = activeGlow;
-        activeGlow = MathHelper.clamp(activeGlow + (isValid() ? 0.05f : -0.05f), 0, 1);
+        activeGlow = MathHelper.clamp(activeGlow + (valid ? 0.05f : -0.05f), 0, 1);
 
         if(world.isRemote)
             return;
@@ -87,7 +89,7 @@ public class TileEntityInfuser extends TileEntityBase implements ITickable {
 
         int spirits = getSpirits();
 
-        if(spirits > 0)
+        if(valid && spirits > 0)
         for (EntityItem item : items) {
             if(item.cannotPickup())
                 continue;
