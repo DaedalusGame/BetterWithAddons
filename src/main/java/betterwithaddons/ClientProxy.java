@@ -18,15 +18,10 @@ import betterwithaddons.util.VariableSegment;
 import betterwithmods.manual.api.ManualAPI;
 import betterwithmods.manual.api.manual.ImageRenderer;
 import betterwithmods.manual.api.prefab.manual.ItemStackTabIconRenderer;
-import betterwithmods.manual.api.prefab.manual.ResourceContentProvider;
-import betterwithmods.manual.client.manual.Document;
-import betterwithmods.manual.client.manual.provider.BlockImageProvider;
-import betterwithmods.manual.client.manual.provider.ItemImageProvider;
-import betterwithmods.manual.client.manual.provider.OreDictImageProvider;
-import betterwithmods.manual.client.manual.provider.TextureImageProvider;
-import betterwithmods.manual.client.manual.segment.JEIRenderSegment;
-import betterwithmods.manual.client.manual.segment.JEISegment;
 import betterwithmods.manual.client.manual.segment.Segment;
+import betterwithmods.manual.common.DirectoryDefaultProvider;
+import betterwithmods.manual.custom.JEIRenderSegment;
+import betterwithmods.manual.custom.JEISegment;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
@@ -62,7 +57,6 @@ public class ClientProxy implements IProxy
     public static ModelResourceLocation ropePostLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "rope_post_knot"), "normal");
 
     static ResourceProxy resourceProxy;
-    private static Pattern varPattern = Pattern.compile("var:([^\\)]+)");
 
     static {
         resourceProxy = new ResourceProxy();
@@ -97,35 +91,10 @@ public class ClientProxy implements IProxy
         registerColorable(ModItems.TEA_CUP);
 
         MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
-        //TODO definition provider
-        ManualAPI.addProvider(new ResourceContentProvider(Reference.MOD_ID, "docs/"));
-        ManualAPI.addProvider("", new TextureImageProvider());
-        ManualAPI.addProvider("item", new ItemImageProvider());
-        ManualAPI.addProvider("block", new BlockImageProvider());
-        ManualAPI.addProvider("oredict", new OreDictImageProvider());
-        ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.CHUTE)), "bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
-        String imagePattern = "!\\[([^\\[]*)\\]\\(([^\\)]+)\\)";
-        Document.SEGMENT_TYPES.removeIf(mapping -> mapping.pattern.pattern().equals(imagePattern));
-        Document.SEGMENT_TYPES.add(1,new Document.PatternMapping(imagePattern, ClientProxy::JEIorVariableSegment));
+        ManualAPI.addProvider(new DirectoryDefaultProvider(new ResourceLocation(Reference.MOD_ID, "docs/")));
+        ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.CHUTE)),"bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
     }
 
-    private static Segment JEIorVariableSegment(final Segment s, final Matcher m) {
-        Matcher varMatch = varPattern.matcher(m.group(2));
-        if(varMatch.matches()) {
-            return new VariableSegment(s,varMatch.group(1));
-        }
-
-        try {
-            final ImageRenderer renderer = ManualAPI.imageFor(m.group(2));
-            if (renderer != null) {
-                return new JEIRenderSegment(s, m.group(1), m.group(2), renderer);
-            } else {
-                return new JEISegment(s, "No renderer found for: " + m.group(2));
-            }
-        } catch (final Throwable t) {
-            return new JEISegment(s, Strings.isNullOrEmpty(t.toString()) ? "Unknown error." : t.toString(), m.group(2));
-        }
-    }
 
     @Override
     public void postInit() {

@@ -234,7 +234,7 @@ public class InteractionBWM extends Interaction {
         String[] dyeOredictTags = new String[]{"White", "Orange", "Magenta", "LightBlue", "Yellow", "Lime", "Pink", "Gray", "LightGray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"};
 
         if (HARDCORE_SHEARING) {
-            BlockBDispenser.ENTITY_COLLECT_REGISTRY.putObject(EntitySheep.class, (world, pos, entity, itemStack) -> {
+            BlockBDispenser.ENTITY_COLLECT_REGISTRY.putObject(new ResourceLocation("sheep"), (world, pos, entity, itemStack) -> {
                 EntitySheep sheep = (EntitySheep) entity;
                 if (sheep.isShearable(new ItemStack(Items.SHEARS), world, pos)) {
                     return convertShearedWool(sheep.onSheared(new ItemStack(Items.SHEARS), world, pos, 0));
