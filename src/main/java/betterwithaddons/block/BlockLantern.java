@@ -66,6 +66,7 @@ public class BlockLantern extends BlockBase {
 
         if(!isLit && !heldItem.isEmpty() && (heldItem.getItem() instanceof ItemFlintAndSteel || heldItem.getItem() instanceof ItemMatchPick)) {
             worldIn.setBlockState(pos,state.withProperty(LIT,true));
+            worldIn.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0f, 1.5f);
             worldIn.playSound(null, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0f, 0.2f);
             heldItem.damageItem(1,playerIn);
             return true;
@@ -73,7 +74,7 @@ public class BlockLantern extends BlockBase {
         else if(isLit && heldItem.isEmpty())
         {
             worldIn.setBlockState(pos,state.withProperty(LIT,false));
-            worldIn.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.5f);
+            worldIn.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 3f);
             return true;
         }
 
