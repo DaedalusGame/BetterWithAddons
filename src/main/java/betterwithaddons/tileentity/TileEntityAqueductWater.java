@@ -4,6 +4,8 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.interaction.InteractionBWA;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.util.DirUtils;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,6 +20,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class TileEntityAqueductWater extends TileEntityBase {
@@ -108,9 +111,9 @@ public class TileEntityAqueductWater extends TileEntityBase {
         if(!BIOMES.isEmpty())
             isValidBiome = BIOMES.contains(world.getBiome(pos)) == InteractionBWA.AQUEDUCT_BIOMES_IS_WHITELIST;
 
-        if(isValidBiome && ((state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0) || WATER_SOURCES.contains(state.getBlock().getRegistryName())))
+        if(isValidBiome && isRealWaterSource(state))
         {
-            return 0;
+            return (InteractionBWA.AQUEDUCT_SOURCES_MINIMUM <= 0 || isEnoughWater(world, pos)) ? 0 : -1;
         }
         else if(state.getBlock() == BWMBlocks.TEMP_LIQUID_SOURCE && !recursed)
         {
@@ -137,6 +140,30 @@ public class TileEntityAqueductWater extends TileEntityBase {
         }
 
         return -1;
+    }
+
+    public static boolean isRealWaterSource(IBlockState state) {
+        return (state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0) || WATER_SOURCES.contains(state.getBlock().getRegistryName());
+    }
+
+    public static boolean isEnoughWater(World world, BlockPos pos) {
+        HashSet<BlockPos> visited = Sets.newHashSet();
+        ArrayList<BlockPos> toVisit = Lists.newArrayList(pos);
+        int foundWater = 0;
+        for(int i = 0; i < InteractionBWA.AQUEDUCT_SOURCES_SEARCH; i++) {
+            BlockPos visit = toVisit.remove(0);
+            if(visited.contains(visit))
+                continue;
+            visited.add(visit);
+            if(!isRealWaterSource(world.getBlockState(visit)))
+                continue;
+            foundWater++;
+            if(foundWater >= InteractionBWA.AQUEDUCT_SOURCES_MINIMUM)
+                return true;
+            for (EnumFacing facing : EnumFacing.VALUES)
+                toVisit.add(visit.offset(facing));
+        }
+        return false;
     }
 
     public static void reloadBiomeList()

@@ -68,6 +68,8 @@ public class InteractionBWA extends Interaction {
             "streams:river"
     };
     public static boolean AQUEDUCT_IS_TANK = false;
+    public static int AQUEDUCT_SOURCES_MINIMUM = 0;
+    public static int AQUEDUCT_SOURCES_SEARCH = 0;
 
     public static boolean GRASS_TO_CLAY = false;
     public static boolean GRASS_TO_SAND = false;
@@ -154,6 +156,8 @@ public class InteractionBWA extends Interaction {
             HORSES_BREED_HAYBALE_PLACED = loadPropBool("HorsesBreedHaybalesPlaced", "Horses can breed from eating haybales placed in world.", HORSES_BREED_HAYBALE_PLACED);
 
             AQUEDUCT_MAX_LENGTH = loadPropInt("MaxAqueductLength", "How long aqueducts can be.", AQUEDUCT_MAX_LENGTH);
+            AQUEDUCT_SOURCES_MINIMUM = loadPropInt("AqueductSourcesRequired", "How many connected water sources are required for an aqueduct to take from it.", AQUEDUCT_SOURCES_MINIMUM);
+            AQUEDUCT_SOURCES_SEARCH = loadPropInt("AqueductSourcesSearch", "How many blocks will be checked for water sources. This should be a bit larger than the minimum amount of sources.", AQUEDUCT_SOURCES_SEARCH);
             AQUEDUCT_IS_TANK = loadPropBool("AqueductIsTank", "Aqueduct water counts as a fluid tank for modded pipes. Happy birthday Vyraal1", AQUEDUCT_IS_TANK);
 
             LEGENDARIUM_MIN_DAMAGE = loadPropDouble("LegendariumDamageMin", "How much durability the artifact you're turning in can have at max. (As a factor of max durability; 0.1 means 1/10 of max durability)", LEGENDARIUM_MIN_DAMAGE);
