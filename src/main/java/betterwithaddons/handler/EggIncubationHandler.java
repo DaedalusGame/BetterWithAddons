@@ -78,7 +78,7 @@ public class EggIncubationHandler {
             ItemStack stack = entity.getItem();
             BlockPos pos = entity.getPosition();
             boolean remove = false;
-            if(entity.isDead || stack.isEmpty() || stack.getItem() != Items.EGG || stack.getCount() > 1)
+            if(!world.isBlockLoaded(pos) || entity.isDead || stack.isEmpty() || stack.getItem() != Items.EGG || stack.getCount() > 1)
                 remove = true;
             else {
                 if((int) ReflectionHelper.getPrivateValue(EntityItem.class, entity, "d", "field_70292_b", "age") > InteractionBTWTweak.EGG_INCUBATION_TIME && hasPadding(world,pos.down()) && hasLitLight(world,pos.up()))
