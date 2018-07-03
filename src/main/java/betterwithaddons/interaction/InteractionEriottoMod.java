@@ -9,10 +9,7 @@ import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.entity.EntityKarateZombie;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
-import betterwithaddons.util.IngredientSized;
-import betterwithaddons.util.NabeResultPoison;
-import betterwithaddons.util.TeaType;
-import betterwithaddons.util.VariableSegment;
+import betterwithaddons.util.*;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWOreDictionary;
 import betterwithmods.common.BWRegistry;
@@ -196,9 +193,9 @@ public class InteractionEriottoMod extends Interaction {
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{new ItemStack(ModItems.FUGU_SAC, 1), new ItemStack(ModItems.PREPARED_PUFFER, 3)}, Ingredient.fromStacks(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata())), 0);
         CraftingManagerFireNet.getInstance().addRecipe(new ItemStack[]{ModItems.MATERIAL_JAPAN.getMaterial("iron_scales", IRON_PER_IRONSAND * 3)}, Ingredient.fromStacks(new ItemStack(ModBlocks.IRON_SAND, 1)));
         CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.MATERIAL_JAPAN.getMaterial("washi", 9)}, Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("mulberry_sheet")), 0);
-        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(tea)}, Ingredient.fromStacks(ModItems.TEA_WILTED.getStack(tea)), 0));
-        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(tea)}, Ingredient.fromStacks(ModItems.TEA_SOAKED.getStack(tea)), 0));
-        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(TeaType.MATCHA)}, Ingredient.fromStacks(ModItems.TEA_POWDER.getStack(TeaType.TENCHA)),0);
+        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(tea)}, new IngredientTea(tea, TeaType.ItemType.Wilted), 0));
+        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().forEach(tea -> CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(tea)}, new IngredientTea(tea, TeaType.ItemType.Soaked), 0));
+        CraftingManagerWaterNet.getInstance().addRecipe(new ItemStack[]{ItemStack.EMPTY, ModItems.TEA_POWDER.getStack(TeaType.MATCHA)}, new IngredientTea(TeaType.TENCHA, TeaType.ItemType.Powder),0);
 
         BWRegistry.CAULDRON.addUnstokedRecipe(ModItems.MATERIAL_JAPAN.getMaterial("soaked_rice"),new ItemStack(ModItems.RICE));
         BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(ModItems.MULBERRY,3)),Ingredient.fromItem(Items.SUGAR),new OreIngredient("foodFlour")),new ItemStack(ModItems.LAXATIVE,2));
@@ -344,13 +341,13 @@ public class InteractionEriottoMod extends Interaction {
             CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("bark_mulberry")), ModItems.MATERIAL_JAPAN.getMaterial("soaked_mulberry"));
         CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.MULBERRY_LOG)), ModItems.MATERIAL_JAPAN.getMaterial("soaked_mulberry"));
         CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(Blocks.SPONGE, 1, 0)), new ItemStack(Blocks.SPONGE, 1, 1));
-        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.TEA_LEAVES.getStack(tea)), ModItems.TEA_SOAKED.getStack(tea)));
+        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerSoakingBox.instance().addRecipe(new IngredientTea(tea, TeaType.ItemType.Leaves), ModItems.TEA_SOAKED.getStack(tea)));
 
         CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("rice_stalk")), ModItems.MATERIAL_JAPAN.getMaterial("rice_hay"));
         CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("soaked_mulberry")), ModItems.MATERIAL_JAPAN.getMaterial("mulberry_paste"));
         CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("soaked_bamboo")), ModItems.MATERIAL_JAPAN.getMaterial("bamboo_slats"));
         CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(Blocks.SPONGE, 1, 1)), new ItemStack(Blocks.SPONGE, 1, 0));
-        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.TEA_LEAVES.getStack(tea)), ModItems.TEA_WILTED.getStack(tea)));
+        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerDryingBox.instance().addRecipe(new IngredientTea(tea, TeaType.ItemType.Leaves), ModItems.TEA_WILTED.getStack(tea)));
 
         CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.IRON_SAND)), new ItemStack(ModBlocks.KERA));
         CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("tamahagane")), ModItems.MATERIAL_JAPAN.getMaterial("tamahagane_heated"));
