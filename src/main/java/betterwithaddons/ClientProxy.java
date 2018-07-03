@@ -18,7 +18,9 @@ import betterwithaddons.util.VariableSegment;
 import betterwithmods.manual.api.ManualAPI;
 import betterwithmods.manual.api.manual.ImageRenderer;
 import betterwithmods.manual.api.prefab.manual.ItemStackTabIconRenderer;
+import betterwithmods.manual.client.manual.Document;
 import betterwithmods.manual.client.manual.segment.Segment;
+import betterwithmods.manual.client.manual.segment.SegmentRefiner;
 import betterwithmods.manual.common.DirectoryDefaultProvider;
 import betterwithmods.manual.custom.JEIRenderSegment;
 import betterwithmods.manual.custom.JEISegment;
@@ -45,6 +47,8 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -57,6 +61,8 @@ public class ClientProxy implements IProxy
     public static ModelResourceLocation ropePostLocation = new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "rope_post_knot"), "normal");
 
     static ResourceProxy resourceProxy;
+
+    private static Pattern varPattern = Pattern.compile("var:([^\\)]+)");
 
     static {
         resourceProxy = new ResourceProxy();
@@ -93,8 +99,38 @@ public class ClientProxy implements IProxy
         MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
         ManualAPI.addProvider(new DirectoryDefaultProvider(new ResourceLocation(Reference.MOD_ID, "docs/")));
         ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.CHUTE)),"bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
+
+        String imagePattern = "!\\[([^\\[]*)\\]\\(([^\\)]+)\\)";
+        Document.PatternMapping oldMapping = Document.SEGMENT_TYPES.stream().filter(mapping -> mapping.pattern.pattern().equals(imagePattern)).findFirst().orElse(null);
+        Document.PatternMapping newMapping = null;
+        if(oldMapping != null)
+        try {
+            Constructor<Document.PatternMapping> constructor = ReflectionHelper.findConstructor(Document.PatternMapping.class, String.class, SegmentRefiner.class);
+            newMapping = constructor.newInstance(imagePattern, new ImageSegmentRefiner(oldMapping.refiner));
+            Document.SEGMENT_TYPES.add(newMapping);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | ReflectionHelper.UnknownConstructorException e) {
+            e.printStackTrace();
+        }
+        Document.SEGMENT_TYPES.remove(oldMapping);
+        Document.SEGMENT_TYPES.add(newMapping);
     }
 
+    public static class ImageSegmentRefiner implements SegmentRefiner {
+        SegmentRefiner imageRefiner;
+
+        public ImageSegmentRefiner(SegmentRefiner imageRefiner) {
+            this.imageRefiner = imageRefiner;
+        }
+
+        @Override
+        public Segment refine(Segment segment, Matcher matcher) {
+            Matcher varMatch = varPattern.matcher(matcher.group(2));
+            if(varMatch.matches()) {
+                return new VariableSegment(segment,varMatch.group(1));
+            }
+            return imageRefiner.refine(segment,matcher);
+        }
+    }
 
     @Override
     public void postInit() {
