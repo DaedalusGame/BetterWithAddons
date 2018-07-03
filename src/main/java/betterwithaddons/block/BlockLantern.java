@@ -10,6 +10,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -63,15 +64,16 @@ public class BlockLantern extends BlockBase {
 
         ItemStack heldItem = playerIn.getHeldItem(hand);
 
-        if(!isLit && !heldItem.isEmpty() && (heldItem.getItem() instanceof ItemFlintAndSteel || heldItem.getItem() instanceof ItemMatchPick))
-        {
+        if(!isLit && !heldItem.isEmpty() && (heldItem.getItem() instanceof ItemFlintAndSteel || heldItem.getItem() instanceof ItemMatchPick)) {
             worldIn.setBlockState(pos,state.withProperty(LIT,true));
+            worldIn.playSound(null, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0f, 0.2f);
             heldItem.damageItem(1,playerIn);
             return true;
         }
         else if(isLit && heldItem.isEmpty())
         {
             worldIn.setBlockState(pos,state.withProperty(LIT,false));
+            worldIn.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.5f);
             return true;
         }
 
