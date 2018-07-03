@@ -9,8 +9,10 @@ import betterwithaddons.handler.FallingPlatformHandler;
 import betterwithaddons.handler.HardcorePackingHandler;
 import betterwithaddons.handler.HardcoreWoolHandler;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.lib.Reference;
 import betterwithaddons.util.IngredientSized;
 import betterwithaddons.util.ItemUtil;
+import betterwithmods.BWMod;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWRegistry;
@@ -20,6 +22,7 @@ import betterwithmods.common.blocks.BlockBUD;
 import betterwithmods.common.blocks.BlockUrn;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.block.recipe.IngredientSpecial;
+import betterwithmods.common.registry.crafting.RecipeShapedColor;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.HCCooking;
@@ -34,14 +37,17 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -68,6 +74,7 @@ public class InteractionBWM extends Interaction {
     public static boolean DYE_TERRACOTTA_IN_CAULDRON = true;
     public static boolean REMOVE_REGULAR_DYE_RECIPES = true;
     public static boolean HIDDEN_ENCHANTS = false;
+    public static boolean CHEAP_WOOL_ARMOR = true;
 
     public static String[] SHEARS_WHITELIST = new String[]{
             "tconstruct:kama",
@@ -153,6 +160,7 @@ public class InteractionBWM extends Interaction {
         TERRACOTTA_BATCH = loadPropInt("DyeTerracottaBatchSize", "How much terracotta can be dyed at once in a stoked cauldron.", TERRACOTTA_BATCH);
         REMOVE_REGULAR_DYE_RECIPES = loadPropBool("RemoveDyeRecipes", "Removes dye recipes from the crafting table if the relevant cauldron dying recipes exist.", REMOVE_REGULAR_DYE_RECIPES);
         SHEARS_WHITELIST = loadPropStringList("ShearWhitelist", "Extra items that are functionally shears but don't extend ItemShears.", SHEARS_WHITELIST);
+        CHEAP_WOOL_ARMOR = loadPropBool("CheapWoolArmor", "Wool Armor is made from Fleece.", CHEAP_WOOL_ARMOR);
     }
 
     @Override
@@ -196,12 +204,27 @@ public class InteractionBWM extends Interaction {
             if (DYE_TERRACOTTA_IN_CAULDRON)
                 Arrays.stream(TERRACOTTA_DYING_RECIPES).forEach(resloc -> BetterWithAddons.removeCraftingRecipe(new ResourceLocation(resloc)));
         }
+        if(CHEAP_WOOL_ARMOR) {
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"wool_boots"));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"wool_chest"));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"wool_helmet"));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"wool_pants"));
+        }
 
         ConditionModule.MODULES.put("HardcoreDiamond", () -> ModuleLoader.isFeatureEnabled(HCDiamond.class));
         ConditionModule.MODULES.put("HardcoreShearing", () -> HARDCORE_SHEARING);
         ConditionModule.MODULES.put("HardcoreHunger", () -> ModuleLoader.isFeatureEnabled(HCCooking.class));
 
         HardcoreWoolHandler.EXTRA_SHEARS = new HashSet<>(Arrays.asList(SHEARS_WHITELIST)); //Populate the set of extra shears.
+    }
+
+    @Override
+    void modifyRecipes(RegistryEvent.Register<IRecipe> event) {
+        IForgeRegistry<IRecipe> registry = event.getRegistry();
+        registry.register(new RecipeShapedColor(new ResourceLocation(Reference.MOD_ID,"wool_boots"),BWMItems.WOOL_BOOTS,"C C","C C",'C',new ItemStack(ModItems.WOOL,1,OreDictionary.WILDCARD_VALUE)).setRegistryName(new ResourceLocation(Reference.MOD_ID,"wool_boots")));
+        registry.register(new RecipeShapedColor(new ResourceLocation(Reference.MOD_ID,"wool_pants"),BWMItems.WOOL_PANTS,"CCC","C C","C C",'C',new ItemStack(ModItems.WOOL,1,OreDictionary.WILDCARD_VALUE)).setRegistryName(new ResourceLocation(Reference.MOD_ID,"wool_pants")));
+        registry.register(new RecipeShapedColor(new ResourceLocation(Reference.MOD_ID,"wool_chest"),BWMItems.WOOL_CHEST,"C C","CCC","CCC",'C',new ItemStack(ModItems.WOOL,1,OreDictionary.WILDCARD_VALUE)).setRegistryName(new ResourceLocation(Reference.MOD_ID,"wool_chest")));
+        registry.register(new RecipeShapedColor(new ResourceLocation(Reference.MOD_ID,"wool_helmet"),BWMItems.WOOL_HELMET,"CCC","C C",'C',new ItemStack(ModItems.WOOL,1,OreDictionary.WILDCARD_VALUE)).setRegistryName(new ResourceLocation(Reference.MOD_ID,"wool_helmet")));
     }
 
     public static NonNullList<ItemStack> convertShearedWool(List<ItemStack> sheared) {

@@ -1,6 +1,7 @@
 package betterwithaddons.item;
 
 import betterwithaddons.util.IHasVariants;
+import betterwithmods.api.util.IColorProvider;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumDyeColor;
@@ -11,7 +12,7 @@ import net.minecraft.util.NonNullList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemColored extends Item implements IHasVariants
+public class ItemColored extends Item implements IHasVariants, IColorProvider
 {
     public ItemColored() {
         this.setHasSubtypes(true);
@@ -56,5 +57,10 @@ public class ItemColored extends Item implements IHasVariants
     @Override
     public String getVariantName(int meta) {
         return null;
+    }
+
+    @Override
+    public int getColor(ItemStack stack) {
+        return EnumDyeColor.byMetadata(stack.getMetadata()).getColorValue();
     }
 }
