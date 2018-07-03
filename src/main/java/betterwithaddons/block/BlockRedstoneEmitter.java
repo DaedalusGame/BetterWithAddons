@@ -1,5 +1,9 @@
 package betterwithaddons.block;
 
+import betterwithaddons.BetterWithAddons;
+import betterwithaddons.lib.Reference;
+import betterwithmods.common.blocks.BlockRotate;
+import betterwithmods.util.DirUtils;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -14,16 +18,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockRedstoneEmitter extends BlockBase {
+public class BlockRedstoneEmitter extends BlockRotate {
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
     public static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     public BlockRedstoneEmitter() {
-        super("redstone_emitter", Material.WOOD);
+        super(Material.WOOD);
+
         this.setHardness(2.0F).setResistance(1.0F);
         this.setSoundType(SoundType.WOOD);
         this.setHarvestLevel("axe", 0);
         this.setDefaultState(getDefaultState().withProperty(ACTIVE,false));
+
+        this.setUnlocalizedName("redstone_emitter");
+        this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "redstone_emitter"));
+        this.setCreativeTab(BetterWithAddons.instance.creativeTab);
     }
 
     @Override
@@ -47,8 +56,15 @@ public class BlockRedstoneEmitter extends BlockBase {
     }
 
     @Override
+    public void nextState(World world, BlockPos pos, IBlockState state) {
+        world.setBlockState(pos, state.cycleProperty(DirUtils.FACING));
+    }
+
+    @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(!worldIn.isRemote)
+        boolean done = super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+
+        if(!worldIn.isRemote && !done)
         {
             state = state.cycleProperty(ACTIVE);
             worldIn.setBlockState(pos, state, 3);
