@@ -20,6 +20,7 @@ import betterwithaddons.util.PulleyUtil;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWRegistry;
+import betterwithmods.common.entity.EntityIngredientRelation;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.PulleyStructureManager;
 import betterwithmods.module.ModuleLoader;
@@ -57,6 +58,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.sql.Ref;
 import java.util.HashSet;
 import java.util.List;
 
@@ -115,7 +117,7 @@ public class InteractionBWA extends Interaction {
     public static boolean HORSES_IGNORE_GOLD = true;
     public static boolean HORSES_SET_HOME = true;
     public static boolean HORSES_BREED_HAYBALE_PLACED = true;
-    //public static boolean HORSES_BREED_HAYBALES = false;
+    public static boolean HORSES_BREED_HAYBALES = false;
     public static int ROPE_LIMIT = 30;
 
 
@@ -142,7 +144,7 @@ public class InteractionBWA extends Interaction {
         FRUIT_ROT_TIME = loadPropInt("RottenFruitTime", "How long fruit takes to rot. (In ticks)", (int) FRUIT_ROT_TIME);
         MISC_ROT_TIME = loadPropInt("RottenMiscTime", "How long misc food takes to rot. (In ticks)", (int) MISC_ROT_TIME);
 
-        //HORSES_BREED_HAYBALES = loadPropBool("HorsesBreedHaybales", "Horeses can breed from eating dropped haybales.", HORSES_BREED_HAYBALES);
+        HORSES_BREED_HAYBALES = loadPropBool("HorsesBreedHaybales", "Horeses can breed from eating dropped haybales.", HORSES_BREED_HAYBALES);
 
         ARMOR_SHARD_RENDER = loadPropBool("ArmorShardRender", "Enables or disables the custom armor shard renderer, for when it causes crashes.", ARMOR_SHARD_RENDER);
 
@@ -196,25 +198,8 @@ public class InteractionBWA extends Interaction {
         ConditionModule.MODULES.put("StoneBricksNeedSmelting", () -> STONEBRICKS_NEED_SMELTING);
         ConditionModule.MODULES.put("GatedAqueducts", () -> GATED_AQUEDUCTS);
 
-        /*if(HORSES_BREED_HAYBALES)
-        EasyBreeding.EXTRA_FOOD_ITEMS.put(Item.getItemFromBlock(Blocks.HAY_BLOCK), new EasyBreeding.IExtraFoodItem() {
-            @Override
-            public boolean canEat(ItemStack item, EntityLivingBase eater) {
-                return eater instanceof AbstractHorse && HorseFoodHandler.canHorseBreed((EntityHorse) eater);
-            }
-
-            @Override
-            public boolean eat(ItemStack item, EntityLivingBase eater) {
-                AbstractHorse horse = (AbstractHorse) eater;
-                if(eater != null && HorseFoodHandler.canHorseBreed(horse)) {
-                    horse.setEatingHaystack(true);
-                    horse.setInLove(null);
-                    return true;
-                }
-                return false;
-            }
-        });*/
-
+        if(HORSES_BREED_HAYBALES)
+            EasyBreeding.REGISTRY.addPredicateEntry(new ResourceLocation(Reference.MOD_ID,"horse"),e -> e instanceof AbstractHorse && HorseFoodHandler.canHorseBreed((AbstractHorse) e)).addIngredient(Ingredient.fromStacks(new ItemStack(Blocks.HAY_BLOCK)));
         MinecraftForge.EVENT_BUS.register(new AssortedHandler());
         MinecraftForge.EVENT_BUS.register(new ToolShardRepairHandler());
         MinecraftForge.EVENT_BUS.register(new HorseFoodHandler());
