@@ -359,6 +359,7 @@ public class InteractionBWM extends Interaction {
             CraftingManagerPacking.getInstance().addRecipe(Blocks.NETHER_WART_BLOCK.getDefaultState(), new ItemStack(Blocks.NETHER_WART_BLOCK), IngredientSized.fromItem(Items.NETHER_WART, 9));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.SLIME_BLOCK.getDefaultState(), new ItemStack(Blocks.SLIME_BLOCK), IngredientSized.fromItem(Items.SLIME_BALL, 9));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.MAGMA.getDefaultState(), new ItemStack(Blocks.MAGMA), IngredientSized.fromItem(Items.MAGMA_CREAM, 4));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.PACKED_ICE.getDefaultState(), new ItemStack(Blocks.PACKED_ICE), IngredientSized.fromStacks(new ItemStack(Blocks.ICE, 4)));
         }
         //BlockBUD.addBlacklistBlock(ModBlocks.PCB_WIRE);
 
