@@ -31,42 +31,42 @@ public class Infuser {
     public static final String clazz = "mods.betterwithaddons.Infuser";
 
     @ZenMethod
-    public void addShaped(IItemStack output, IIngredient[][] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {
+    public static void addShaped(IItemStack output, IIngredient[][] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {
         CraftTweaker.LATE_ACTIONS.add(new AddShaped(output, ingredients, spirits, function, action, false, false));
     }
 
     @ZenMethod
-    public void addShapedMirrored(IItemStack output, IIngredient[][] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {
+    public static void addShapedMirrored(IItemStack output, IIngredient[][] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {
         CraftTweaker.LATE_ACTIONS.add(new AddShaped(output, ingredients, spirits, function, action, true, false));
     }
 
     @ZenMethod
-    public void addShapeless(IItemStack output, IIngredient[] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {
+    public static void addShapeless(IItemStack output, IIngredient[] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {
         CraftTweaker.LATE_ACTIONS.add(new AddShapeless(output, ingredients, spirits, function, action, false));
     }
 
     @ZenMethod
-    public void addTransmutation(IItemStack output, IIngredient input, int spirits) {
+    public static void addTransmutation(IItemStack output, IIngredient input, int spirits) {
         CraftTweaker.LATE_ACTIONS.add(new AddTransmutation(CraftTweakerMC.getItemStack(output), new IngredientCraftTweaker(input), spirits));
     }
 
     @ZenMethod
-    public void removeAll() {
+    public static void removeAll() {
         CraftTweaker.LATE_ACTIONS.add(new RemoveAll());
     }
 
     @ZenMethod
-    public void remove(IItemStack output) {
+    public static void remove(IItemStack output) {
         CraftTweaker.LATE_ACTIONS.add(new Remove(CraftTweakerMC.getItemStack(output)));
     }
 
     @ZenMethod
-    public void removeTransmutation(IItemStack output) {
+    public static void removeTransmutation(IItemStack output) {
         CraftTweaker.LATE_ACTIONS.add(new RemoveTransmutation(CraftTweakerMC.getItemStack(output)));
     }
 
     @ZenMethod
-    public void removeAllTransmutation() {
+    public static void removeAllTransmutation() {
         CraftTweaker.LATE_ACTIONS.add(new RemoveAllTransmutations());
     }
 

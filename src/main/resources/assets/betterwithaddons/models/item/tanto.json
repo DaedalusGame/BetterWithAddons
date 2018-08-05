@@ -2,5 +2,19 @@
     "parent": "item/handheld",
     "textures": {
         "layer0": "betterwithaddons:items/tanto"
-    }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "minecraft:lefthanded": 0
+            },
+            "model": "betterwithaddons:item/tanto_right"
+        },
+        {
+            "predicate": {
+                "minecraft:lefthanded": 1
+            },
+            "model": "betterwithaddons:item/tanto_left"
+        }
+    ]
 }

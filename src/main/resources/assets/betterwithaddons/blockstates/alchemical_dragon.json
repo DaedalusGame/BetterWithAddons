@@ -6,7 +6,6 @@
 	},
 	"variants": {
 		"normal": [{}],
-		"inventory": [{}],
 		"facing": {
 			"up":{},
 			"down":{},

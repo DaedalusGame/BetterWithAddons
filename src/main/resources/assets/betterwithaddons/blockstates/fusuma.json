@@ -12,7 +12,6 @@
   },
   "variants": {
     "normal": [{}],
-	"inventory": [{}],
 	"paint":{
 		"0":{ "textures": { "pane": "betterwithaddons:blocks/fusuma" } },
 		"1":{ "textures": { "pane": "betterwithaddons:blocks/fusuma_painted_1" } },

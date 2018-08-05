@@ -1,6 +1,7 @@
 package betterwithaddons.item.rbdtools;
 
 import betterwithaddons.util.ItemUtil;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
@@ -12,10 +13,19 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Set;
+
 public class ItemKukri extends ItemAxeConvenient {
     public ItemKukri(ToolMaterial material, float damage, float speed) {
         super(material, damage, speed);
     }
+
+    @Override
+    public Set<String> getToolClasses(ItemStack stack) {
+        return ImmutableSet.of("axe","shear"); //This sucks
+    }
+
+
 
     @Override
     public boolean canCollect(ItemStack stack, IBlockState state) {

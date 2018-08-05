@@ -15,6 +15,7 @@ public class BlockRustyRail extends BlockRail {
         super();
         setRegistryName(new ResourceLocation(Reference.MOD_ID,"rail_rusted"));
         setHardness(0.7F);
+        setHarvestLevel("pickaxe",0);
         setSoundType(SoundType.METAL);
         setUnlocalizedName("rail_rusted");
         setCreativeTab(BetterWithAddons.instance.creativeTab);

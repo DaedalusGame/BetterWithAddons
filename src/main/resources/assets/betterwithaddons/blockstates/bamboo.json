@@ -7,7 +7,6 @@
   },
   "variants": {
     "normal": [{}],
-	"inventory": [{}],
 	"age": {
 		"0": {},
 		"1": {},

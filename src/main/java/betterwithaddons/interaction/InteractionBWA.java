@@ -28,6 +28,7 @@ import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.HCCooking;
 import betterwithmods.module.hardcore.needs.HCTools;
+import betterwithmods.module.tweaks.CheaperAxes;
 import betterwithmods.module.tweaks.EasyBreeding;
 import betterwithmods.util.DirUtils;
 import com.google.common.collect.Lists;
@@ -114,7 +115,7 @@ public class InteractionBWA extends Interaction {
     public static boolean HORSES_IGNORE_GOLD = true;
     public static boolean HORSES_SET_HOME = true;
     public static boolean HORSES_BREED_HAYBALE_PLACED = true;
-    public static boolean HORSES_BREED_HAYBALES = false;
+    //public static boolean HORSES_BREED_HAYBALES = false;
     public static int ROPE_LIMIT = 30;
 
 
@@ -141,7 +142,7 @@ public class InteractionBWA extends Interaction {
         FRUIT_ROT_TIME = loadPropInt("RottenFruitTime", "How long fruit takes to rot. (In ticks)", (int) FRUIT_ROT_TIME);
         MISC_ROT_TIME = loadPropInt("RottenMiscTime", "How long misc food takes to rot. (In ticks)", (int) MISC_ROT_TIME);
 
-        HORSES_BREED_HAYBALES = loadPropBool("HorsesBreedHaybales", "Horeses can breed from eating dropped haybales.", HORSES_BREED_HAYBALES);
+        //HORSES_BREED_HAYBALES = loadPropBool("HorsesBreedHaybales", "Horeses can breed from eating dropped haybales.", HORSES_BREED_HAYBALES);
 
         ARMOR_SHARD_RENDER = loadPropBool("ArmorShardRender", "Enables or disables the custom armor shard renderer, for when it causes crashes.", ARMOR_SHARD_RENDER);
 
@@ -195,7 +196,7 @@ public class InteractionBWA extends Interaction {
         ConditionModule.MODULES.put("StoneBricksNeedSmelting", () -> STONEBRICKS_NEED_SMELTING);
         ConditionModule.MODULES.put("GatedAqueducts", () -> GATED_AQUEDUCTS);
 
-        if(HORSES_BREED_HAYBALES)
+        /*if(HORSES_BREED_HAYBALES)
         EasyBreeding.EXTRA_FOOD_ITEMS.put(Item.getItemFromBlock(Blocks.HAY_BLOCK), new EasyBreeding.IExtraFoodItem() {
             @Override
             public boolean canEat(ItemStack item, EntityLivingBase eater) {
@@ -212,7 +213,7 @@ public class InteractionBWA extends Interaction {
                 }
                 return false;
             }
-        });
+        });*/
 
         MinecraftForge.EVENT_BUS.register(new AssortedHandler());
         MinecraftForge.EVENT_BUS.register(new ToolShardRepairHandler());
@@ -269,7 +270,7 @@ public class InteractionBWA extends Interaction {
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_carpentersaw"),new ItemStack(ModItems.STEEL_CARPENTER_SAW),"xxxi","x x ",'x', "ingotSoulforgedSteel",'i', haft);
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_masonpick"),new ItemStack(ModItems.STEEL_MASON_PICK),"xxxx"," i  "," i  "," i  ",'x', "ingotSoulforgedSteel",'i', haft);
 
-        int axeAmt = HCTools.changeAxeRecipe ? 2 : 3;
+        int axeAmt = ModuleLoader.isFeatureEnabled(CheaperAxes.class) ? 2 : 3;
         if(ModuleLoader.isFeatureEnabled(MetalReclaming.class) && MetalReclaming.reclaimCount > 0) {
             int reclaimCount = MetalReclaming.reclaimCount;
 

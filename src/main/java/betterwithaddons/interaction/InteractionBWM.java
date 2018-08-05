@@ -359,7 +359,7 @@ public class InteractionBWM extends Interaction {
             CraftingManagerPacking.getInstance().addRecipe(Blocks.SLIME_BLOCK.getDefaultState(), new ItemStack(Blocks.SLIME_BLOCK), IngredientSized.fromItem(Items.SLIME_BALL, 9));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.MAGMA.getDefaultState(), new ItemStack(Blocks.MAGMA), IngredientSized.fromItem(Items.MAGMA_CREAM, 4));
         }
-        BlockBUD.addBlacklistBlock(ModBlocks.PCB_WIRE);
+        //BlockBUD.addBlacklistBlock(ModBlocks.PCB_WIRE);
 
         ItemStack arrowhead = ModItems.MATERIAL.getMaterial("arrowhead");
         ItemStack haft = ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.HAFT);

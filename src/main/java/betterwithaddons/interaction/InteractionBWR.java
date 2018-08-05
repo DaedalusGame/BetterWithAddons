@@ -13,6 +13,7 @@ import betterwithmods.common.registry.heat.BWMHeatRegistry;
 import betterwithmods.module.ModuleLoader;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.HCTools;
+import betterwithmods.module.tweaks.CheaperAxes;
 import betterwithmods.util.StackIngredient;
 import com.google.common.collect.Lists;
 import net.minecraft.init.Blocks;
@@ -140,12 +141,6 @@ public class InteractionBWR extends Interaction {
             MinecraftForge.EVENT_BUS.register(new SoulSandHandler());
         if(EMERALD_PORTAL)
             MinecraftForge.EVENT_BUS.register(new PortalHandler());
-        MinecraftForge.EVENT_BUS.register(new RenewablesHandler());
-        RenewablesHandler.registerCapability();
-    }
-
-    @Override
-    void init() {
         if(MELT_HELLFIRE)
             PatientiaHandler.addCustomBlock(BWMBlocks.AESTHETIC);
         if(CROSSBREED_PLANTS) {
@@ -154,6 +149,12 @@ public class InteractionBWR extends Interaction {
             PatientiaHandler.addCustomBlock(Blocks.SOUL_SAND);
             PatientiaHandler.addCustomBlock(Blocks.END_STONE);
         }
+        MinecraftForge.EVENT_BUS.register(new RenewablesHandler());
+        RenewablesHandler.registerCapability();
+    }
+
+    @Override
+    void init() {
         PlantCrossbreedHandler.initialize();
         AnimalCrossbreedHandler.initialize();
 
@@ -168,7 +169,7 @@ public class InteractionBWR extends Interaction {
         OreDictionary.registerOre("pileSand",BWMItems.RED_SAND_PILE);
         OreDictionary.registerOre("pileSand",ModItems.SOUL_SAND_PILE);
 
-        int axeAmt = HCTools.changeAxeRecipe ? 2 : 3;
+        int axeAmt = ModuleLoader.isFeatureEnabled(CheaperAxes.class) ? 2 : 3;
 
         //Tanning Leather with dung blocks
         //TODO: This is hacky.
