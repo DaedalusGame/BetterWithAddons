@@ -71,7 +71,7 @@ public class BlockLantern extends BlockBase {
             heldItem.damageItem(1,playerIn);
             return true;
         }
-        else if(isLit && heldItem.isEmpty())
+        else if(isLit && heldItem.isEmpty() && playerIn.isSneaking())
         {
             worldIn.setBlockState(pos,state.withProperty(LIT,false));
             worldIn.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 3f);
