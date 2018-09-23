@@ -140,7 +140,7 @@ public class BlockCropRush extends BlockCrops implements IPlantable, IHasVariant
 
         if (isMaxAge(state))
         {
-            for (int i = 0; i < 1 + fortune; ++i)
+            for (int i = 0; i < 3 + fortune; ++i)
             {
                 if (rand.nextInt(2 * getMaxAge()) <= age)
                 {
