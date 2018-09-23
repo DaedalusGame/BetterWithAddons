@@ -26,7 +26,7 @@ public class BannerUtil {
 
     public static boolean isSameBanner(ItemStack bannerA, ItemStack bannerB)
     {
-        if(bannerA.getItem() instanceof ItemBanner && bannerB.getItem() instanceof ItemBanner) {
+        if(isAnyBanner(bannerA) && isAnyBanner(bannerB)) {
             boolean baseequal = ItemBanner.getBaseColor(bannerA) == ItemBanner.getBaseColor(bannerB);
             NBTTagList patternsA = null;
             NBTTagList patternsB = null;
