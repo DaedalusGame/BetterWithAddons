@@ -349,7 +349,7 @@ public class ModItems {
         registerItem("food_sashimi", new ItemFood(2, 0.1F, false));
         registerItem("food_mulberry", new ItemFood(1, 0.2F, false));
         registerItem("food_cooked_rice", new ItemFood(2, 0.3F, false));
-        registerItem("food_bowl_rice", new ItemFood(9, 0.6F, false).setMaxStackSize(1));
+        registerItem("food_bowl_rice", new ItemFoodBowl(9, 0.6F, false).setMaxStackSize(1));
         registerItem("laxative", new ItemLaxative(0, 0, false));
         registerItem("tea_leaves", new ItemTea(TeaType.ItemType.Leaves));
         registerItem("tea_soaked", new ItemTea(TeaType.ItemType.Soaked));
