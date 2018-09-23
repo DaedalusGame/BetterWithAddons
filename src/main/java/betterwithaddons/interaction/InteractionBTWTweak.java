@@ -128,8 +128,7 @@ public class InteractionBTWTweak extends Interaction {
     @Override
     public void init() {
         if(ASH_FERTILIZER) {
-            HCBonemeal.registerFertilzier(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.POTASH));
-            HCBonemeal.registerFertilzier(ModItems.MATERIAL_TWEAK.getMaterial("ash"));
+            StackIngredient.mergeStacked(Lists.newArrayList(HCBonemeal.FERTILIZERS, StackIngredient.fromOre("dustPotash"), StackIngredient.fromOre("dustAsh")));
         }
 
         ModItems.MATERIAL_TWEAK.setDisabled("ink_and_quill"); //Deprecated

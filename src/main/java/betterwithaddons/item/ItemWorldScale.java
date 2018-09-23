@@ -20,7 +20,7 @@ public class ItemWorldScale extends Item {
     private boolean disabled;
 
     public ItemWorldScale() {
-        this.addPropertyOverride(new ResourceLocation("shine"), new IItemPropertyGetter() {
+        /*this.addPropertyOverride(new ResourceLocation("shine"), new IItemPropertyGetter() {
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
                 if (entityIn == null && !stack.isOnItemFrame()) {
                     return 0.0F;
@@ -76,7 +76,7 @@ public class ItemWorldScale extends Item {
             long sqrDistance(long x, long y, long z) {
                 return x * x + y * y + z * z;
             }
-        });
+        });*/
     }
 
     @Override

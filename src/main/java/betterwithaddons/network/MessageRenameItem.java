@@ -38,7 +38,7 @@ public class MessageRenameItem implements IMessage {
             if(player.openContainer instanceof ContainerRename)
             {
                 ContainerRename writingTable = (ContainerRename) player.openContainer;
-                Minecraft.getMinecraft().addScheduledTask(() -> writingTable.updateItemName(ChatAllowedCharacters.filterAllowedCharacters(message.name)));
+                player.getServerWorld().addScheduledTask(() -> writingTable.updateItemName(ChatAllowedCharacters.filterAllowedCharacters(message.name)));
             }
 
             return null;

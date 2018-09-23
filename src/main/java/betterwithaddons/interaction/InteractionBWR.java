@@ -1,7 +1,33 @@
 package betterwithaddons.interaction;
 
+// Original Copyright Notice provided as required by the License.
+// ==========================================================================
+// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+// OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+// ---------------------------------------------------------------------------
+
+import betterwithaddons.block.BlockBetterLilyPad;
+import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.recipes.QuartzCrystalRecipe;
 import betterwithaddons.handler.*;
+import betterwithaddons.item.ItemBlockLilypad;
 import betterwithaddons.item.ModItems;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
@@ -44,6 +70,7 @@ public class InteractionBWR extends Interaction {
     public static boolean NETHERRACK_SYNTHESIS = true;
     public static boolean QUARTZ_GROWING = true;
     public static boolean EMERALD_PORTAL = true;
+    public static boolean LILYPADS_SPREAD = true;
 
     public static boolean MELT_HELLFIRE = true;
     public static boolean DUNG_TO_DIRT = true;
@@ -97,6 +124,7 @@ public class InteractionBWR extends Interaction {
         MELT_HELLFIRE = loadPropBool("MeltHellfire","Allows Blocks of Hellfire to be melted into lava by proximity to it.", MELT_HELLFIRE);
         REDSTONE_BOILING = loadPropBool("BoilRedstone","Allows redstone to be 'boiled' into glowstone by exposure to focused sunlight.", REDSTONE_BOILING);
         EMERALD_PORTAL = loadPropBool("EmeraldPortal","Allows portals to be made from emerald blocks and sacrifice.", EMERALD_PORTAL);
+        LILYPADS_SPREAD = loadPropBool("LilyPadsSpread","Allows lilypads to spread.", LILYPADS_SPREAD);
         doesNotNeedRestart(() -> {
             DUNG_TO_DIRT_THRESHOLD = loadPropInt("DungToDirtThreshold","The chance for a block of dung to turn into dirt from rinsing. The chance is rand(n) < heat", DUNG_TO_DIRT_THRESHOLD);
             DUNG_TO_DIRT_AMBIENT_TEMP = loadPropInt("DungToDirtAmbientTemp","Amount of ambient temperature is added to the heat value.", DUNG_TO_DIRT_AMBIENT_TEMP);
@@ -149,8 +177,14 @@ public class InteractionBWR extends Interaction {
             PatientiaHandler.addCustomBlock(Blocks.SOUL_SAND);
             PatientiaHandler.addCustomBlock(Blocks.END_STONE);
         }
+        if(LILYPADS_SPREAD) {
+            BlockBetterLilyPad lilyPad = new BlockBetterLilyPad();
+            ModBlocks.registerBlock(lilyPad,null,false);
+            ModItems.registerItem(new ItemBlockLilypad(lilyPad));
+        }
         MinecraftForge.EVENT_BUS.register(new RenewablesHandler());
         RenewablesHandler.registerCapability();
+
     }
 
     @Override
@@ -292,13 +326,14 @@ public class InteractionBWR extends Interaction {
 
     private void addLapisRinsing(EnumDyeColor inputColor, int quantity, EnumDyeColor... outputColors)
     {
+        Ingredient soap = StackIngredient.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOAP,2*quantity));
         Ingredient inputWool = StackIngredient.fromStacks(new ItemStack(Blocks.WOOL,quantity * 8,inputColor.getMetadata()));
         ArrayList<ItemStack> outputStacks = new ArrayList<>();
         for (EnumDyeColor color : outputColors)
             outputStacks.add(new ItemStack(Blocks.WOOL,(quantity * 8) / outputColors.length,color.getMetadata()));
 
-        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(inputWool), new ArrayList<>(outputStacks)).setPriority(10);
+        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(inputWool,soap), new ArrayList<>(outputStacks)).setPriority(10);
         outputStacks.add(new ItemStack(Items.DYE,1,EnumDyeColor.BLUE.getDyeDamage()));
-        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(inputWool,Ingredient.fromItem(Items.CLAY_BALL)),outputStacks).setPriority(11);
+        BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(inputWool,soap,Ingredient.fromItem(Items.CLAY_BALL)),outputStacks).setPriority(11);
     }
 }

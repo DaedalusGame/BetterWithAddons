@@ -56,7 +56,7 @@ public class PatientiaHandler {
                 int k = chunk.z * 16;
 
                 for (ExtendedBlockStorage extendedblockstorage : chunk.getBlockStorageArray()) {
-                    if (extendedblockstorage != Chunk.NULL_BLOCK_STORAGE && extendedblockstorage.needsRandomTick()) {
+                    if (extendedblockstorage != Chunk.NULL_BLOCK_STORAGE) {
                         for (int i1 = 0; i1 < i; ++i1) {
                             this.updateLCG = this.updateLCG * 3 + 1013904223;
                             int j1 = this.updateLCG >> 2;

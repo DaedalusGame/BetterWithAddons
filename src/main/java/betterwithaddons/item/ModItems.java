@@ -446,13 +446,17 @@ public class ModItems {
         ModInteractions.oreDictRegistration();
     }
 
+    public static Item registerItem(Item item) {
+        LIST.add(item);
+
+        return item;
+    }
+
     public static Item registerItem(String name, Item item) {
         if (item.getRegistryName() == null)
             item.setRegistryName(Reference.MOD_ID, name);
         item.setUnlocalizedName(name);
         item.setCreativeTab(BetterWithAddons.instance.creativeTab);
-        LIST.add(item);
-
-        return item;
+        return registerItem(item);
     }
 }

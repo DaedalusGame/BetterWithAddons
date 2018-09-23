@@ -22,7 +22,7 @@ public class WorldScaleData extends WorldSavedData
     public WorldScaleData(String name)
     {
         super(name);
-        WorldScales = new HashMap<ChunkPos, BlockPos>();
+        WorldScales = new HashMap<>();
     }
 
     public WorldScaleData()

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class BWANetworkHandler {
     public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID);
 
-    static
+    public static void registerMessages()
     {
         INSTANCE.registerMessage(MessageRenameItem.HandlerRenameItem.class, MessageRenameItem.class, 0, Side.SERVER);
     }

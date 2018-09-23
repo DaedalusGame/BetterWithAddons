@@ -356,9 +356,13 @@ public class InteractionBWM extends Interaction {
             CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.DUNG), BlockAesthetic.getStack(BlockAesthetic.EnumType.DUNG), IngredientSized.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.DUNG, 9)));
             CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.SOAP), BlockAesthetic.getStack(BlockAesthetic.EnumType.SOAP), IngredientSized.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.SOAP, 9)));
             CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.HELLFIRE), BlockAesthetic.getStack(BlockAesthetic.EnumType.HELLFIRE), IngredientSized.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.CONCENTRATED_HELLFIRE, 9)));
+            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.ENDERBLOCK), BlockAesthetic.getStack(BlockAesthetic.EnumType.ENDERBLOCK), IngredientSized.fromItem(Items.ENDER_PEARL, 9));
+            CraftingManagerPacking.getInstance().addRecipe(BlockAesthetic.getVariant(BlockAesthetic.EnumType.NETHERCOAL), BlockAesthetic.getStack(BlockAesthetic.EnumType.NETHERCOAL), IngredientSized.fromStacks(ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL, 9)));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.NETHER_WART_BLOCK.getDefaultState(), new ItemStack(Blocks.NETHER_WART_BLOCK), IngredientSized.fromItem(Items.NETHER_WART, 9));
+            CraftingManagerPacking.getInstance().addRecipe(Blocks.BONE_BLOCK.getDefaultState(), new ItemStack(Blocks.BONE_BLOCK), IngredientSized.fromStacks(new ItemStack(Items.DYE, 9, EnumDyeColor.WHITE.getDyeDamage())));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.SLIME_BLOCK.getDefaultState(), new ItemStack(Blocks.SLIME_BLOCK), IngredientSized.fromItem(Items.SLIME_BALL, 9));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.MAGMA.getDefaultState(), new ItemStack(Blocks.MAGMA), IngredientSized.fromItem(Items.MAGMA_CREAM, 4));
+            CraftingManagerPacking.getInstance().addRecipe(ModBlocks.ELYTRA_MAGMA.getDefaultState(), new ItemStack(ModBlocks.ELYTRA_MAGMA), IngredientSized.fromStacks(ModItems.MATERIAL.getMaterial("ender_cream",4)));
             CraftingManagerPacking.getInstance().addRecipe(Blocks.PACKED_ICE.getDefaultState(), new ItemStack(Blocks.PACKED_ICE), IngredientSized.fromStacks(new ItemStack(Blocks.ICE, 4)));
         }
         //BlockBUD.addBlacklistBlock(ModBlocks.PCB_WIRE);
@@ -379,7 +383,7 @@ public class InteractionBWM extends Interaction {
         BWRegistry.CAULDRON.addUnstokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(Items.BONE, 2)), getIngredient(new ItemStack(Items.DYE, 8, 15))), ModItems.MATERIAL.getMaterial("bone_ingot"));
         BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromStacks(ModItems.MATERIAL.getMaterial("midori")), ModItems.MATERIAL.getMaterial("midori_popped"));
         BWRegistry.CAULDRON.addUnstokedRecipe(Ingredient.fromItem(ModItems.GROUND_MEAT), new ItemStack(ModItems.MEATBALLS, 1));
-        BWRegistry.MILLSTONE.addMillRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.WORLD_SCALE_ORE, 1, 1)), new ItemStack(ModBlocks.WORLD_SCALE, 1));
+        //BWRegistry.MILLSTONE.addMillRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.WORLD_SCALE_ORE, 1, 1)), new ItemStack(ModBlocks.WORLD_SCALE, 1));
 
         //Bark
         ModBlocks.MULBERRY_LOG.barkStack = ModItems.MATERIAL_JAPAN.getMaterial("bark_mulberry");

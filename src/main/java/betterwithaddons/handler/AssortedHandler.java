@@ -60,22 +60,22 @@ import java.util.Random;
 import java.util.UUID;
 
 public class AssortedHandler {
-    public static final int ScaleQuarryAmt = 5;
+    /*public static final int ScaleQuarryAmt = 5;
     public static final int ScaleQuarryMinDist = 200;
     public static final int ScaleQuarryMaxDist = 3000;
     public static final int ScaleQuarryFuzzyness = 500;
     public static final int ScaleQuarrySize = 16;
     public static final int ScaleQuarryMinDepth = 0;
     public static final int ScaleQuarryMaxDepth = 32;
-    public static BlockPos[] ScaleQuarries = new BlockPos[ScaleQuarryAmt];
+    public static BlockPos[] ScaleQuarries = new BlockPos[ScaleQuarryAmt];*/
     static Random rng = new Random();
     private final int BossCleanupThreshold = 10;
     private final float HardnessThreshold = 5.0f;
     private HashMap<UUID, BossInfoServer> BossList = new HashMap<>();
 
-    public static boolean doScaleQuarriesExist() {
+    /*public static boolean doScaleQuarriesExist() {
         return ScaleQuarryAmt > 0 && ScaleQuarries[0] != null;
-    }
+    }*/
 
     @SubscribeEvent
     public void tillZenGardenEvent(PlayerInteractEvent.RightClickBlock event) {
@@ -320,7 +320,7 @@ public class AssortedHandler {
         }
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void worldTick(TickEvent.WorldTickEvent tickEvent) {
         World world = tickEvent.world;
         WorldScaleData.getInstance(world).cleanup();
@@ -373,7 +373,7 @@ public class AssortedHandler {
                 }
             }
         }
-    }
+    }*/
 
     @SubscribeEvent
     public void breakBlock(PlayerEvent.BreakSpeed breakEvent) {

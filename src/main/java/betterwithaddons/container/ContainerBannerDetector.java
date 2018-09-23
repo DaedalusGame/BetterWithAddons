@@ -8,6 +8,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemBanner;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -24,8 +25,7 @@ public class ContainerBannerDetector extends Container
         this.pos = new BlockPos(x, y, z);
         this.entityBannerDetector = (TileEntityBannerDetector) world.getTileEntity(pos);
 
-        this.addSlotToContainer(new SlotFiltered(entityBannerDetector.getInventory(), 0, 80, 18, (Predicate<ItemStack>) input -> input.getItem() == Items.BANNER)
-        {
+        this.addSlotToContainer(new SlotFiltered(entityBannerDetector.getInventory(), 0, 80, 18, input -> input.getItem() instanceof ItemBanner) {
             @Override
             public int getSlotStackLimit() {
                 return 1;
@@ -98,108 +98,5 @@ public class ContainerBannerDetector extends Container
         }
 
         return itemstack;
-    }
-
-    @Override
-    public boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4)
-    {
-        boolean flag1 = false;
-        int k = par2;
-
-        if (par4)
-        {
-            k = par3 - 1;
-        }
-
-        Slot slot;
-        ItemStack itemstack1;
-
-        if (par1ItemStack.isStackable())
-        {
-            while (par1ItemStack.getCount() > 0 && (!par4 && k < par3 || par4 && k >= par2))
-            {
-                slot = this.inventorySlots.get(k);
-                itemstack1 = slot.getStack();
-
-                if (!itemstack1.isEmpty() && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1) && slot.isItemValid(par1ItemStack))
-                {
-                    int l = itemstack1.getCount() + par1ItemStack.getCount();
-
-                    if (l <= par1ItemStack.getMaxStackSize())
-                    {
-                        par1ItemStack.setCount(0);
-                        itemstack1.setCount(1);
-                        slot.onSlotChanged();
-                        flag1 = true;
-                    }
-                    else if (itemstack1.getCount() < par1ItemStack.getMaxStackSize())
-                    {
-                        par1ItemStack.shrink(par1ItemStack.getMaxStackSize() - itemstack1.getCount());
-                        itemstack1.setCount(par1ItemStack.getMaxStackSize());
-                        slot.onSlotChanged();
-                        flag1 = true;
-                    }
-                }
-
-                if (par4)
-                {
-                    --k;
-                }
-                else
-                {
-                    ++k;
-                }
-            }
-        }
-
-        if (par1ItemStack.getCount() > 0)
-        {
-            if (par4)
-            {
-                k = par3 - 1;
-            }
-            else
-            {
-                k = par2;
-            }
-
-            while (!par4 && k < par3 || par4 && k >= par2)
-            {
-                slot = this.inventorySlots.get(k);
-                itemstack1 = slot.getStack();
-
-                if (itemstack1.isEmpty() && slot.isItemValid(par1ItemStack))
-                {
-                    if (1 < par1ItemStack.getCount())
-                    {
-                        ItemStack copy = par1ItemStack.copy();
-                        copy.setCount(1);
-                        slot.putStack(copy);
-
-                        par1ItemStack.shrink(1);
-                        flag1 = true;
-                        break;
-                    }
-                    else
-                    {
-                        slot.putStack(par1ItemStack.copy());
-                        slot.onSlotChanged();
-                        par1ItemStack.setCount(0);
-                        flag1 = true;
-                        break;
-                    }
-                }
-
-                if (par4)
-                {
-                    --k;
-                }
-                else
-                {
-                    ++k;
-                }
-            }
-        }
-        return flag1;
     }
 }

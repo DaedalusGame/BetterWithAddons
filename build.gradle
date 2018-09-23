@@ -15,7 +15,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "0.43"
+version = "0.45"
 group= "betterwithaddons" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Better With Addons"
 
@@ -38,7 +38,7 @@ repositories {
 }
 
 dependencies {
-	deobfCompile "betterwithmods:BetterWithMods:1.12-2.3.5-892"
+	deobfCompile "betterwithmods:BetterWithMods:1.12-2.3.6-919"
 	deobfCompile "mezz.jei:jei_1.12.2:4.8.3.128"
     //deobfCompile "com.blamejared:MTLib:3.+"
 	compile files('libs/')

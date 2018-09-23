@@ -362,14 +362,14 @@ public class ModBlocks {
         pane2.addCompatiblePane(pane1);
     }
 
-    private static Block registerBlock(Block block) {
+    public static Block registerBlock(Block block) {
         LIST.add(block);
         ModItems.registerItem(block.getRegistryName().toString(), new ItemBlockMeta(block).setRegistryName(block.getRegistryName()));
 
         return block;
     }
 
-    private static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, boolean hasSubtypes) {
+    public static Block registerBlock(Block block, Class<? extends ItemBlock> itemBlock, boolean hasSubtypes) {
         LIST.add(block);
         if (itemBlock != null)
             try {

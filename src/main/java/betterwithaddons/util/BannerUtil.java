@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemBanner;
+import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -54,14 +55,25 @@ public class BannerUtil {
 
     public static boolean isSameBanner(ItemStack banner, Entity bannerHolder)
     {
+        boolean match = false;
+
         if(bannerHolder instanceof EntityLivingBase) {
             ItemStack helmet = ((EntityLivingBase) bannerHolder).getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-            if(!helmet.isEmpty() && helmet.getItem() instanceof ItemBanner)
-            {
-                return isSameBanner(banner,helmet);
-            }
+            ItemStack mainhand = ((EntityLivingBase) bannerHolder).getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+            ItemStack offhand = ((EntityLivingBase) bannerHolder).getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
+            if(isAnyBanner(helmet))
+                match |= isSameBanner(banner,helmet);
+            if(isAnyBanner(mainhand))
+                match |= isSameBanner(banner,mainhand);
+            if(isAnyBanner(offhand))
+                match |= isSameBanner(banner,offhand);
         }
 
-        return false;
+        return match;
+    }
+
+    public static boolean isAnyBanner(ItemStack stack)
+    {
+        return stack.getItem() instanceof ItemBanner || stack.getItem() instanceof ItemShield;
     }
 }

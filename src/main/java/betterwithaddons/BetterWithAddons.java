@@ -7,6 +7,7 @@ import betterwithaddons.entity.ModEntities;
 import betterwithaddons.interaction.ModInteractions;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
+import betterwithaddons.network.BWANetworkHandler;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.tileentity.ModTileEntities;
 import betterwithmods.common.BWMRecipes;
@@ -67,6 +68,7 @@ public class BetterWithAddons
 		ModInteractions.preInit(event);
 		proxy.preInit();
 		ModInteractions.preInitEnd(event);
+		BWANetworkHandler.registerMessages();
 
 		MinecraftForge.EVENT_BUS.register(this);
 
