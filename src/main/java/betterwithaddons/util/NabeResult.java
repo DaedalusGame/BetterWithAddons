@@ -1,6 +1,5 @@
 package betterwithaddons.util;
 
-import com.google.common.collect.HashBiMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -62,17 +61,22 @@ public class NabeResult {
         return fluid != null && fluid.amount >= MAX_FLUID_FILL;
     }
 
-    public ItemStack take(ItemStack container) {
-        if(fluid != null)
-        {
+    public StackResult take(ItemStack container) {
+        if(fluid != null) {
             IFluidHandlerItem handler = FluidUtil.getFluidHandler(container);
             if(handler != null) {
-                int amount = handler.fill(fluid, true);
-                fluid.amount -= amount;
-                return handler.getContainer();
+                ItemStack bucket = container.splitStack(1);
+                handler = FluidUtil.getFluidHandler(bucket);
+                if(handler != null) {
+                    int amount = handler.fill(fluid, true);
+                    if(amount > 0) {
+                        fluid.amount -= amount;
+                        return new StackResult(true,container,handler.getContainer());
+                    }
+                }
             }
         }
-        return ItemStack.EMPTY;
+        return new StackResult(false,container);
     }
 
     public final NBTTagCompound serializeNBT() {

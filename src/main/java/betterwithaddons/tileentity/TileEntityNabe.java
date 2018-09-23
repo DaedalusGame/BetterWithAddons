@@ -5,6 +5,7 @@ import betterwithaddons.crafting.manager.CraftingManagerNabe;
 import betterwithaddons.crafting.recipes.INabeRecipe;
 import betterwithaddons.util.InventoryUtil;
 import betterwithaddons.util.NabeResult;
+import betterwithaddons.util.StackResult;
 import betterwithmods.common.registry.heat.BWMHeatRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,8 +19,11 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -163,18 +167,24 @@ public class TileEntityNabe extends TileEntityBase implements ITickable {
 
     public void onBlockActivated(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack originalItem = playerIn.getHeldItem(hand);
-        ItemStack heldItem = originalItem.copy();
-        ItemStack retrieved = result.take(heldItem);
-        if(retrieved != ItemStack.EMPTY) {
-            InventoryUtil.addItemToPlayer(playerIn, retrieved);
+        StackResult retrieved = result.take(originalItem.copy());
+
+        if (!retrieved.isSuccess()) {
+            if (!result.isFull()) { //Try to reset water if not full
+                retrieved = putWater(originalItem);
+            } else if (hasWater() && CraftingManagerNabe.getInstance().isValidItem(originalItem)) { //Otherwise try to insert it
+                retrieved = putItem(originalItem);
+            }
         }
-        EntityEquipmentSlot slot = hand == EnumHand.MAIN_HAND ? EntityEquipmentSlot.MAINHAND : EntityEquipmentSlot.OFFHAND;
-        if(originalItem.isItemEqual(heldItem) || originalItem.getCount() != heldItem.getCount())
-            playerIn.setItemStackToSlot(slot, heldItem);
-        else if(hasWater() && CraftingManagerNabe.getInstance().isValidItem(heldItem)) { //Otherwise try to insert it
-            ItemStack leftover = attemptToInsert(inventory, heldItem);
-            playerIn.setItemStackToSlot(slot, leftover);
+
+        if (retrieved.isSuccess()) {
+            if (!retrieved.getReturnStack().isEmpty()) {
+                InventoryUtil.addItemToPlayer(playerIn, retrieved.getReturnStack());
+            }
+            EntityEquipmentSlot slot = hand == EnumHand.MAIN_HAND ? EntityEquipmentSlot.MAINHAND : EntityEquipmentSlot.OFFHAND;
+            playerIn.setItemStackToSlot(slot, retrieved.getOriginalStack());
         }
+
         markDirty();
         syncTE();
     }
@@ -210,18 +220,56 @@ public class TileEntityNabe extends TileEntityBase implements ITickable {
 
     private boolean captureDroppedItems() {
         List<EntityItem> items = this.getCaptureItems(getWorld(), getPos());
+        SoundEvent sound = null;
         if (items.size() > 0) {
-            boolean flag = false;
             for (EntityItem item : items) {
-                if(CraftingManagerNabe.getInstance().isValidItem(item.getItem()))
-                flag = putDropInInventoryAllSlots(inventory, item) || flag;
+                if(CraftingManagerNabe.getInstance().isValidItem(item.getItem()) && putDropInInventoryAllSlots(inventory, item))
+                    sound = SoundEvents.ENTITY_ITEM_PICKUP;
+                if(!result.isFull() && putDropWaterFill(item))
+                    sound = SoundEvents.ITEM_BUCKET_FILL;
             }
-            if (flag) {
-                this.getWorld().playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((getWorld().rand.nextFloat() - getWorld().rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+            if (sound != null) {
+                this.getWorld().playSound(null, pos.getX(), pos.getY(), pos.getZ(), sound, SoundCategory.PLAYERS, 0.2F, ((getWorld().rand.nextFloat() - getWorld().rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean putDropWaterFill(EntityItem item) {
+        ItemStack stack = item.getItem();
+        StackResult result = putWater(stack.copy());
+        item.setItem(result.getOriginalStack());
+        ejectStack(result.getReturnStack());
+        return result.isSuccess();
+    }
+
+    public StackResult putItem(ItemStack stack) {
+        ItemStack originalItem = stack.copy();
+        ItemStack oneItem = originalItem.splitStack(1);
+        ItemStack returnStack = attemptToInsert(inventory, oneItem);
+        if(returnStack.isEmpty()) {
+            return new StackResult(true, originalItem, returnStack);
+        }
+        return new StackResult(false,stack);
+    }
+
+    private StackResult putWater(ItemStack stack) {
+        ItemStack original = stack.copy();
+        ItemStack container = original.splitStack(1);
+        IFluidHandlerItem handler = FluidUtil.getFluidHandler(container);
+
+        if(handler != null) {
+            FluidStack drainResource = new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME);
+            FluidStack fluid = handler.drain(drainResource,false);
+            if(fluid != null && fluid.getFluid() == FluidRegistry.WATER && fluid.amount >= Fluid.BUCKET_VOLUME) {
+                handler.drain(drainResource,true);
+                resetWater();
+                return new StackResult(true,original,handler.getContainer());
+            }
+        }
+
+        return new StackResult(false,stack);
     }
 
     private void entityCollision() {
@@ -262,9 +310,9 @@ public class TileEntityNabe extends TileEntityBase implements ITickable {
     }
 
     public static ItemStack attemptToInsert(IItemHandler inv, ItemStack stack) {
-        ItemStack leftover = ItemStack.EMPTY;
+        ItemStack leftover = stack;
         for (int slot = 0; slot < inv.getSlots(); slot++) {
-            leftover = inv.insertItem(slot, stack, false);
+            leftover = inv.insertItem(slot, leftover, false);
             if (leftover.isEmpty())
                 break;
         }

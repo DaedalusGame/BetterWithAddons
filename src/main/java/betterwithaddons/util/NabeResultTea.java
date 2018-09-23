@@ -42,15 +42,15 @@ public class NabeResultTea extends NabeResult {
     }
 
     @Override
-    public ItemStack take(ItemStack container) {
+    public StackResult take(ItemStack container) {
         if(doses <= 0)
-            return ItemStack.EMPTY;
+            return new StackResult(false,container);
         if(container.getItem() == ModItems.TEA_CUP && !ItemTeaCup.isFilled(container)) {
             container.shrink(1);
             doses--;
-            return ModItems.TEA_CUP.getFilled(this);
+            return new StackResult(true,container,ModItems.TEA_CUP.getFilled(this));
         }
-        return ItemStack.EMPTY;
+        return new StackResult(false,container);
     }
 
     @Override
