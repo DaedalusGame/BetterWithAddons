@@ -4,6 +4,7 @@ import betterwithaddons.interaction.ModInteractions;
 import betterwithaddons.lib.Reference;
 import betterwithmods.BWMod;
 import betterwithmods.module.ModuleLoader;
+import com.google.common.collect.Sets;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -12,6 +13,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.HashSet;
 
 public class ModConfiguration {
     public static Configuration configuration;
@@ -62,6 +65,13 @@ public class ModConfiguration {
         prop.setComment(desc);
         setNeedsRestart(prop);
         return prop.getStringList();
+    }
+
+    public static HashSet<String> loadPropStringSet(String propName, String category, String desc, String[] default_) {
+        Property prop = configuration.get(category, propName, default_);
+        prop.setComment(desc);
+        setNeedsRestart(prop);
+        return Sets.newHashSet(prop.getStringList());
     }
 
     public static void doesNotNeedRestart(Runnable op)

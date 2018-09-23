@@ -6,6 +6,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.ForgeRegistry;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -66,6 +67,10 @@ public abstract class Interaction {
 
     protected final String[] loadPropStringList(String propName, String desc, String[] default_) {
         return ModConfiguration.loadPropStringList(propName, getName(), desc, default_);
+    }
+
+    protected final HashSet<String> loadPropStringSet(String propName, String desc, String[] default_) {
+        return ModConfiguration.loadPropStringSet(propName, getName(), desc, default_);
     }
 
     protected final void doesNotNeedRestart(Runnable op)

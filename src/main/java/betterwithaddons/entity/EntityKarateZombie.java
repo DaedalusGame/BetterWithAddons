@@ -36,9 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
-    private int nextCheck = 0;
-    private List<EntitySpirit> attractedSpirits = new ArrayList<>();
-
     private static final String TAG_SPIRITS = "spirits";
     private static final String TAG_MOVE = "karate_move";
     private static final String TAG_MOVETIMEOUT = "karate_move_timeout";
@@ -140,8 +137,21 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     }
 
     @Override
+    protected boolean canFitPassenger(Entity passenger) {
+        return getPassengers().size() < 2;
+    }
+
+    @Override
     protected boolean canBeRidden(Entity entityIn) {
         return true;
+    }
+
+    public Entity getCarriedPassenger() {
+        for (Entity entity : getPassengers()) {
+            if(entity != getControllingPassenger())
+                return entity;
+        }
+        return null;
     }
 
     @Override
@@ -153,7 +163,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
         boolean success = super.attackEntityAsMob(entityIn);
 
-        if ((currentMove == MartialArts.Suplex || currentMove == MartialArts.Throw) && success && entityIn instanceof EntityLivingBase) {
+        if ((currentMove == MartialArts.Suplex || currentMove == MartialArts.Throw) && success && entityIn instanceof EntityLivingBase && getCarriedPassenger() == null) {
             if (moveTime <= 0)
             {
                 pickup(entityIn);
@@ -243,6 +253,8 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     public boolean attackEntityFrom(DamageSource source, float amount) {
         EntityLivingBase entity = this.getAttackTarget();
         boolean success = super.attackEntityFrom(source, amount);
+        if(getControllingPassenger() != null && source.getImmediateSource() instanceof EntityLivingBase)
+            entity = (EntityLivingBase) source.getImmediateSource();
 
         if(success && getCurrentMove() == MartialArts.Disarm && !this.isDead)
         {
@@ -276,10 +288,10 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
     @Override
     public void fall(float distance, float damageMultiplier) {
         float mult = damageMultiplier;
-        List<Entity> passengers = getPassengers();
-        if(getCurrentMove() == MartialArts.Suplex)
+        Entity carriedPassenger = getCarriedPassenger();
+        if(carriedPassenger != null && getCurrentMove() == MartialArts.Suplex)
         {
-            passengers.forEach(this::forceDismount);
+            forceDismount(carriedPassenger);
             float[] ret = net.minecraftforge.common.ForgeHooks.onLivingFall(this, distance, damageMultiplier);
             if (ret == null) return;
             distance = ret[0]; damageMultiplier = ret[1];
@@ -289,9 +301,7 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
             if (i > 0)
             {
                 this.playSound(this.getFallSound(i), 1.0F, 1.0F);
-                for (Entity passenger:passengers) {
-                    passenger.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
-                }
+                carriedPassenger.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
             }
             mult = 0;
             randomizeMove();
@@ -319,26 +329,23 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
             moveTime--;
             moveTimeout--;
 
-            List<Entity> passengers = getPassengers();
-
             float rad = 0.017453292F;
+            Entity carried = getCarriedPassenger();
             switch(getCurrentMove())
             {
                 case Suplex:
-                    if (moveTime == 0 && passengers.size() > 0)
+                    if (moveTime == 0 && carried != null)
                     {
                         double jumppower = MathHelper.clampedLerp(1.5,2.0,power);
                         addVelocity(MathHelper.sin(this.rotationYaw * rad) * 0.1,jumppower,-MathHelper.cos(this.rotationYaw * rad) * 0.1);
                     }
                     break;
                 case Throw:
-                    if (moveTime == 0) {
+                    if (moveTime == 0 && carried != null) {
                         double throwpower = MathHelper.clampedLerp(1.0,2.0,power);
-                        passengers.stream().filter(passenger -> passenger instanceof EntityLivingBase).forEach(passenger -> {
-                            forceDismount(passenger);
-                            passenger.attackEntityFrom(DamageSource.causeMobDamage(this), (float) 2);
-                            passenger.addVelocity(throwpower * -MathHelper.sin(this.rotationYaw * rad), 0, throwpower * MathHelper.cos(this.rotationYaw * rad));
-                        });
+                        forceDismount(carried);
+                        carried.attackEntityFrom(DamageSource.causeMobDamage(this), (float) 2);
+                        carried.addVelocity(throwpower * -MathHelper.sin(this.rotationYaw * rad), 0, throwpower * MathHelper.cos(this.rotationYaw * rad));
                         randomizeMove();
                     }
                     break;
@@ -347,52 +354,21 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
             if (moveTimeout <= 0 && !performingMove) {
                 randomizeMove();
             }
-
-            Vec3d pos = getPositionVector();
-            float maxdist = 8.0f;
-            AxisAlignedBB aabb = new AxisAlignedBB(pos.x,pos.y,pos.z, pos.x,pos.y,pos.z);
-
-            if (nextCheck-- < 0) {
-                attractedSpirits = world.getEntitiesWithinAABB(EntitySpirit.class, aabb.grow(maxdist - 0.5));
-                nextCheck = 50;
-            }
-
-            int spirits = getSpirits();
-
-            if (spirits < InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS)
-                for (EntitySpirit spirit : attractedSpirits) {
-                    double spiritdist = spirit.getDistanceSq(pos.x, pos.y, pos.z);
-
-                    if (spiritdist < 1.2f) {
-                        if (spirits < InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS) {
-                            int cachedSpirits = spirit.getSpiritValue();
-                            int consume = Math.min(InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS - spirits, cachedSpirits);
-                            addSpirits(consume);
-                            cachedSpirits -= consume;
-                            if (cachedSpirits <= 0)
-                                spirit.setDead();
-                            spirit.setSpiritValue(cachedSpirits);
-                        }
-                        continue;
-                    }
-
-                    if (spiritdist > maxdist * maxdist)
-                        continue;
-
-                    double dx = (pos.x - spirit.posX) / 8.0D;
-                    double dy = (pos.y - spirit.posY) / 8.0D;
-                    double dz = (pos.z - spirit.posZ) / 8.0D;
-                    double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-                    double d5 = 1.0D - dist;
-
-                    if (d5 > 0.0D) {
-                        d5 = d5 * d5;
-                        spirit.motionX += dx / dist * d5 * 0.1D;
-                        spirit.motionY += dy / dist * d5 * 0.1D;
-                        spirit.motionZ += dz / dist * d5 * 0.1D;
-                    }
-                }
         }
+    }
+
+    @Override
+    public boolean canAbsorbSpirits() {
+        if(getControllingPassenger() != null && getHealth() < getMaxHealth())
+            return true;
+        return getSpirits() < InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS;
+    }
+
+    @Override
+    public int absorbSpirits(int n) {
+        int consume = Math.min(InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS - getSpirits(), n);
+        addSpirits(consume);
+        return n - consume;
     }
 
     private void updateStats(double power) {

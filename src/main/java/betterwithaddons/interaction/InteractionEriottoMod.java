@@ -40,10 +40,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class InteractionEriottoMod extends Interaction {
     public static boolean ENABLED = true;
@@ -66,6 +63,7 @@ public class InteractionEriottoMod extends Interaction {
     public static double KERA_HOCHOTETSU_CHANCE = 0.20;
     public static double KERA_IRON_CHANCE = 0.20;
     public static int KARATE_ZOMBIE_MAX_SPIRITS = 128;
+    public static HashSet<String> TRANSFORM_ZOMBIES = new HashSet<>();
     public ArrayList<Item> REPAIRABLE_TOOLS = new ArrayList<>();
 
     @Override
@@ -95,6 +93,7 @@ public class InteractionEriottoMod extends Interaction {
             KERA_TAMAHAGANE_CHANCE = loadPropDouble("KeraTamahaganeChance","Chance to obtain Tamahagane from breaking Kera.",KERA_TAMAHAGANE_CHANCE);
             KERA_HOCHOTETSU_CHANCE = loadPropDouble("KeraHochoTetsuChance","Chance to obtain Hocho-Tetsu from breaking Kera.",KERA_HOCHOTETSU_CHANCE);
             KERA_IRON_CHANCE = loadPropDouble("KeraIronChance","Chance to obtain Iron from breaking Kera.",KERA_IRON_CHANCE);
+            TRANSFORM_ZOMBIES = loadPropStringSet("TransformZombies","A list of entity ids that can become Karate Zombies on contact with spirits.",new String[]{"minecraft:zombie"});
         });
     }
 
