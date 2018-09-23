@@ -359,6 +359,8 @@ public class EntityKarateZombie extends EntityZombie implements IHasSpirits {
 
     @Override
     public boolean canAbsorbSpirits() {
+        if(isARealAmerican())
+            return false;
         if(getControllingPassenger() != null && getHealth() < getMaxHealth())
             return true;
         return getSpirits() < InteractionEriottoMod.KARATE_ZOMBIE_MAX_SPIRITS;
