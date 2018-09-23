@@ -71,7 +71,7 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
                     return false;
                 if((z != x || x != 0) && !isBedding(world.getBlockState(pos.add(x,-1,z))))
                     return false;
-                if(x == z && x != 0 && !isStoneBrick(world.getBlockState(pos.add(x,0,z))))
+                if(Math.abs(x) == Math.abs(z) && x != 0 && !isStoneBrick(world.getBlockState(pos.add(x,0,z))))
                     return false;
             }
 
