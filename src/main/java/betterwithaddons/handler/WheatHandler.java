@@ -116,19 +116,16 @@ public class WheatHandler {
                             itemstacks_created.add(ModItems.MATERIAL_WHEAT.getMaterial("hay",wheat_consumed));
                     }
 
-                    if (itemstack.isEmpty())
-                    {
-                        inventory.setInventorySlotContents(i, ItemStack.EMPTY);
-                    }
+                    inventory.setInventorySlotContents(i, itemstack);
                 }
+            }
 
-                for(ItemStack stack : itemstacks_created)
-                {
-                    double y = villager.posY - 0.3 + (double)villager.getEyeHeight();
-                    EntityItem entityitem = new EntityItem(villager.world, villager.posX, y, villager.posZ, stack);
-                    entityitem.setDefaultPickupDelay();
-                    villager.world.spawnEntity(entityitem);
-                }
+            for(ItemStack stack : itemstacks_created)
+            {
+                double y = villager.posY - 0.3 + (double)villager.getEyeHeight();
+                EntityItem entityitem = new EntityItem(villager.world, villager.posX, y, villager.posZ, stack);
+                entityitem.setDefaultPickupDelay();
+                villager.world.spawnEntity(entityitem);
             }
         }
     }
