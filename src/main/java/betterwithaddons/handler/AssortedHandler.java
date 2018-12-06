@@ -378,10 +378,10 @@ public class AssortedHandler {
     @SubscribeEvent
     public void breakBlock(PlayerEvent.BreakSpeed breakEvent) {
         World world = breakEvent.getEntity().getEntityWorld();
-        Entity entity = breakEvent.getEntity();
-        WorldScaleData scaledata = WorldScaleData.getInstance(world);
-        BlockPos worldscale = scaledata.getNearbyScale(breakEvent.getPos());
-        ItemStack banner;
+        //Entity entity = breakEvent.getEntity();
+        //WorldScaleData scaledata = WorldScaleData.getInstance(world);
+        //BlockPos worldscale = scaledata.getNearbyScale(breakEvent.getPos());
+        //ItemStack banner;
         BlockPos breakpos = breakEvent.getPos();
         IBlockState blockstate = world.getBlockState(breakpos);
         /*if(entity instanceof EntityPlayer) {
@@ -397,14 +397,14 @@ public class AssortedHandler {
             hardnessmod = 2.0f;
         }
 
-        float hardness = blockstate.getBlockHardness(world, breakEvent.getPos()) * hardnessmod;
+        //float hardness = blockstate.getBlockHardness(world, breakEvent.getPos()) * hardnessmod;
         float newspeed = breakEvent.getNewSpeed() * (1.0f / hardnessmod);
 
-        if (worldscale != null && !(banner = BannerUtil.getBannerItemFromBlock(world, worldscale.up())).isEmpty()) {
+        /*if (worldscale != null && !(banner = BannerUtil.getBannerItemFromBlock(world, worldscale.up())).isEmpty()) {
             if (!BannerUtil.isSameBanner(banner, entity)) {
                 newspeed = breakEvent.getOriginalSpeed() * (Math.max(0f, HardnessThreshold - hardness) / HardnessThreshold) * 0.3333f * (1.0f / hardnessmod);
             }
-        }
+        }*/
 
         breakEvent.setNewSpeed(newspeed);
     }

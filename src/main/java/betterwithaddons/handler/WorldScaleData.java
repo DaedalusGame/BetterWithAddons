@@ -112,7 +112,7 @@ public class WorldScaleData extends WorldSavedData
 
     public static WorldScaleData getInstance(World world)
     {
-        if (world != null)
+        /*if (world != null)
         {
             WorldSavedData handler = world.getPerWorldStorage().getOrLoadData(WorldScaleData.class, ID);
             if (handler == null)
@@ -123,7 +123,7 @@ public class WorldScaleData extends WorldSavedData
             ((WorldScaleData)handler).worldObj = world;
 
             return (WorldScaleData) handler;
-        }
+        }*/
         return null;
     }
 }

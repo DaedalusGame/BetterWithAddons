@@ -82,10 +82,9 @@ public class TileEntityWorldScaleActive extends TileEntityBase implements ITicka
             return true;
 
         WorldScaleData scaledata = WorldScaleData.getInstance(world);
-        if(!scaledata.isClaimed(chunkpos))
-        {
+        if (scaledata != null && !scaledata.isClaimed(chunkpos)) {
             claimedChunks.add(chunkpos);
-            scaledata.claimChunk(chunkpos,this.getPos());
+            scaledata.claimChunk(chunkpos, this.getPos());
             return true;
         }
         return false;
@@ -97,22 +96,28 @@ public class TileEntityWorldScaleActive extends TileEntityBase implements ITicka
         if(claimedChunks.contains(chunkpos))
         {
             claimedChunks.remove(chunkpos);
-            scaledata.unclaimChunk(chunkpos);
+            if (scaledata != null) {
+                scaledata.unclaimChunk(chunkpos);
+            }
         }
     }
 
     public void claimAllChunks()
     {
         BlockPos pos = this.getPos();
+        WorldScaleData scaledata = WorldScaleData.getInstance(world);
+        if (scaledata != null)
         for (ChunkPos chunk: claimedChunks) {
-            WorldScaleData.getInstance(world).claimChunk(chunk,pos);
+            scaledata.claimChunk(chunk,pos);
         }
     }
 
     public void unclaimAllChunks()
     {
+        WorldScaleData scaledata = WorldScaleData.getInstance(world);
+        if (scaledata != null)
         for (ChunkPos chunk: claimedChunks) {
-            WorldScaleData.getInstance(world).unclaimChunk(chunk);
+            scaledata.unclaimChunk(chunk);
         }
     }
 
