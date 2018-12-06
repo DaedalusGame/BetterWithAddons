@@ -30,7 +30,6 @@
 ## Construction
  * [Hall of Legends](legendarium.md)
  * [Aqueducts](aqueduct.md)
- * [The Worldscale](worldscale.md)
  * [Lattice](lattice.md)
  * [Scaffold](scaffold.md)
  * [Rope Bridges](bridges.md)

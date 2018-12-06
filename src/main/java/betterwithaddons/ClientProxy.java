@@ -49,7 +49,9 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,11 +99,25 @@ public class ClientProxy implements IProxy
         registerColorable(ModItems.TEA_CUP);
 
         MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
-        ManualAPI.addProvider(new DirectoryDefaultProvider(new ResourceLocation(Reference.MOD_ID, "docs/")));
+        ManualAPI.addProvider(new DirectoryDefaultProvider(new ResourceLocation(Reference.MOD_ID, "documentation/docs/")));
         ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.CHUTE)),"bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
 
+        ListIterator<Document.PatternMapping> iterator = Document.SEGMENT_TYPES.listIterator();
         String imagePattern = "!\\[([^\\[]*)\\]\\(([^\\)]+)\\)";
-        Document.PatternMapping oldMapping = Document.SEGMENT_TYPES.stream().filter(mapping -> mapping.pattern.pattern().equals(imagePattern)).findFirst().orElse(null);
+        while(iterator.hasNext())
+        {
+            Document.PatternMapping oldMapping = iterator.next();
+            if(oldMapping.pattern.pattern().equals(imagePattern))
+            try {
+                Constructor<Document.PatternMapping> constructor = ReflectionHelper.findConstructor(Document.PatternMapping.class, String.class, SegmentRefiner.class);
+                Document.PatternMapping newMapping = constructor.newInstance(imagePattern, new ImageSegmentRefiner(oldMapping.refiner));
+                iterator.set(newMapping);
+                break;
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | ReflectionHelper.UnknownConstructorException e) {
+                e.printStackTrace();
+            }
+        }
+        /*Document.PatternMapping oldMapping = Document.SEGMENT_TYPES.stream().filter(mapping -> mapping.pattern.pattern().equals(imagePattern)).findFirst().orElse(null);
         Document.PatternMapping newMapping = null;
         if(oldMapping != null)
         try {
@@ -112,7 +128,7 @@ public class ClientProxy implements IProxy
             e.printStackTrace();
         }
         Document.SEGMENT_TYPES.remove(oldMapping);
-        Document.SEGMENT_TYPES.add(newMapping);
+        Document.SEGMENT_TYPES.add(newMapping);*/
     }
 
     public static class ImageSegmentRefiner implements SegmentRefiner {
@@ -124,7 +140,8 @@ public class ClientProxy implements IProxy
 
         @Override
         public Segment refine(Segment segment, Matcher matcher) {
-            Matcher varMatch = varPattern.matcher(matcher.group(2));
+            String group2 = matcher.group(2);
+            Matcher varMatch = varPattern.matcher(group2);
             if(varMatch.matches()) {
                 return new VariableSegment(segment,varMatch.group(1));
             }

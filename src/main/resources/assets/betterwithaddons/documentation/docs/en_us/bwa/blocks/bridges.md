@@ -1,6 +1,6 @@
 # Rope Bridges
 
-![Rope Bridges](betterwithaddons:docs/imgs/ropebridge.png)
+![Rope Bridges](betterwithaddons:ropebridge.png)
 
 Rope Bridges are mostly decorative, but can also serve as horizontal scaffolding or simple bridges to cross ravines and gaps.
 To create a rope bridge, rope can be attached to fenceposts. When two posts are lined up and right-clicked with rope, they will automatically be connected, consuming rope proportional to the distance between them.

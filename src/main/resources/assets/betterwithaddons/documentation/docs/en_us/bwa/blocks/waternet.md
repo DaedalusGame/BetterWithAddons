@@ -1,6 +1,6 @@
 # Netted Screen (Filter)
 
-![Schematic](betterwithaddons:docs/imgs/waternet.png)
+![Schematic](betterwithaddons:waternet.png)
 
 This design filters a material through a sharp mesh of fabric. The now filtered (or sliced) materials will end up in the water underneath the screen. Some hard components of the filtered material may not be able to pass the filter and instead remain on top of the filter.
 Note that due to the inability to move water sources, it may be impossible to construct this structure unless one would construct it in a river or lake.

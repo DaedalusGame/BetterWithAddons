@@ -1,6 +1,6 @@
 # Netted Screen (Sand Funnel)
 
-![Schematic](betterwithaddons:docs/imgs/sandnet.png)
+![Schematic](betterwithaddons:sandnet.png)
 
 This design combines a material with wet sand. First, sand must be inserted into this screen, where it will be deposited in the bamboo funnel underneath. Then, the material to mix with the sand should be passed through the screen. The result will pop back out and remain on the screen.
 

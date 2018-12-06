@@ -7,6 +7,8 @@ import betterwithaddons.tileentity.TileEntityAqueductWater;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -16,6 +18,7 @@ import net.minecraft.util.math.BlockPos.PooledMutableBlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fluids.BlockFluidClassic;
@@ -27,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Random;
 
-public class BlockAqueductWater extends BlockFluidClassic {
+public class BlockAqueductWater extends BlockFluidClassic implements IColorable {
     protected BlockAqueductWater() {
         super(FluidRegistry.WATER,Material.WATER);
 
@@ -325,5 +328,21 @@ public class BlockAqueductWater extends BlockFluidClassic {
     @Override
     public boolean canDrain(World world, BlockPos pos) {
         return true;
+    }
+
+    @Override
+    public IBlockColor getBlockColor() {
+        return new IBlockColor()
+        {
+            public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex)
+            {
+                return worldIn != null && pos != null ? BiomeColorHelper.getWaterColorAtPos(worldIn, pos) : -1;
+            }
+        };
+    }
+
+    @Override
+    public IItemColor getItemColor() {
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 # Netted Screen (Melter)
 
-![Schematic](betterwithaddons:docs/imgs/firenet.png)
+![Schematic](betterwithaddons:firenet.png)
 
 (The block underneath the net can contain either fire or lava)
 

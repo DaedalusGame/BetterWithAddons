@@ -13,10 +13,7 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityAqueductWater;
 import betterwithaddons.tileentity.TileEntityLureTree;
-import betterwithaddons.util.EntityUtil;
-import betterwithaddons.util.ISpecialMeasuringBehavior;
-import betterwithaddons.util.ItemUtil;
-import betterwithaddons.util.PulleyUtil;
+import betterwithaddons.util.*;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWRegistry;
@@ -215,6 +212,8 @@ public class InteractionBWA extends Interaction {
 
         for(String s : AQUEDUCT_SOURCE_WHITELIST)
             TileEntityAqueductWater.addWaterSource(new ResourceLocation(s));
+
+        VariableSegment.addVariableSupplier(new ResourceLocation(Reference.MOD_ID, "aqueduct_length"), () -> Integer.toString(AQUEDUCT_MAX_LENGTH));
     }
 
     @Override
