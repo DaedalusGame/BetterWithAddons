@@ -94,6 +94,13 @@ public class ItemTeaCup extends Item implements IColorable {
         }
     }
 
+    private void affectEntity(EntityLivingBase entity, PotionEffect effect) {
+        if(effect.getPotion().isInstant())
+            effect.getPotion().affectEntity(null,null,entity,effect.getAmplifier(),1.0f);
+        else
+            entity.addPotionEffect(effect);
+    }
+
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving)
     {
@@ -102,7 +109,7 @@ public class ItemTeaCup extends Item implements IColorable {
         if (!worldIn.isRemote)
         {
             List<PotionEffect> effects = getEffects(stack);
-            effects.forEach(entityLiving::addPotionEffect);
+            effects.forEach(effect -> affectEntity(entityLiving,effect));
         }
 
         if (entityplayer instanceof EntityPlayerMP)
