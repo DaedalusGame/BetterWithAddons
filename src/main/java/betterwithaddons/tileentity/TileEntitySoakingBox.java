@@ -33,6 +33,6 @@ public class TileEntitySoakingBox extends TileEntityCherryBox {
 
     public boolean isIce(IBlockState state)
     {
-        return state.getBlock() == Blocks.ICE;
+        return state.getMaterial() == Material.ICE;
     }
 }
