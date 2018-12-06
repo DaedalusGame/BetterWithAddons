@@ -205,10 +205,10 @@ public class InteractionBWM extends Interaction {
                 Arrays.stream(TERRACOTTA_DYING_RECIPES).forEach(resloc -> BetterWithAddons.removeCraftingRecipe(new ResourceLocation(resloc)));
         }
         if(CHEAP_WOOL_ARMOR) {
-            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"wool_boots"));
-            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"wool_chest"));
-            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"wool_helmet"));
-            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"wool_pants"));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"items/wool_boots"));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"items/wool_chest"));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"items/wool_helmet"));
+            BetterWithAddons.removeCraftingRecipe(new ResourceLocation(BWMod.MODID,"items/wool_pants"));
         }
 
         ConditionModule.MODULES.put("HardcoreDiamond", () -> ModuleLoader.isFeatureEnabled(HCDiamond.class));
@@ -304,11 +304,6 @@ public class InteractionBWM extends Interaction {
                 OreIngredient dye = new OreIngredient("dye" + dyeOredictTags[color.ordinal()]);
                 BWRegistry.CAULDRON.addStokedRecipe(Lists.newArrayList(StackIngredient.fromStacks(new ItemStack(Blocks.HARDENED_CLAY, TERRACOTTA_BATCH)), dye), Lists.newArrayList(new ItemStack(Blocks.STAINED_HARDENED_CLAY, TERRACOTTA_BATCH, color.getMetadata())));
             }
-
-        ModBlocks.ZEN_SAND.setBaseState(Blocks.SAND.getDefaultState());
-        ModBlocks.ZEN_RED_SAND.setBaseState(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND));
-        ModBlocks.ZEN_SOUL_SAND.setBaseState(Blocks.SOUL_SAND.getDefaultState());
-        ModBlocks.ZEN_IRON_SAND.setBaseState(ModBlocks.IRON_SAND.getDefaultState());
 
         HCPiles.registerPile(ModBlocks.ZEN_SAND, new ItemStack(BWMItems.SAND_PILE, 3));
         HCPiles.registerPile(ModBlocks.ZEN_RED_SAND, new ItemStack(BWMItems.RED_SAND_PILE, 3));

@@ -26,15 +26,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class BlockZenSand extends BlockFalling {
     protected static final AxisAlignedBB SOUL_SAND_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
     public static final PropertyEnum<SandDirection> SHAPE = PropertyEnum.create("shape", SandDirection.class);
     boolean shouldFall;
     boolean shouldSlow;
-    IBlockState baseState;
+    Supplier<IBlockState> baseStateDelegate;
 
-    public BlockZenSand(String name)
+    public BlockZenSand(String name, Supplier<IBlockState> baseStateDelegate)
     {
         super();
         this.setUnlocalizedName(name);
@@ -42,6 +43,7 @@ public class BlockZenSand extends BlockFalling {
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
         this.setSoundType(SoundType.SAND);
         this.setHarvestLevel("shovel", 0);
+        this.baseStateDelegate = baseStateDelegate;
     }
 
     public BlockZenSand setShouldFall() {
@@ -54,18 +56,19 @@ public class BlockZenSand extends BlockFalling {
         return this;
     }
 
-    public void setBaseState(IBlockState baseState) {
-        this.baseState = baseState;
+    public IBlockState getBaseState()
+    {
+        return baseStateDelegate.get();
     }
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return baseState.getBlock().getItemDropped(baseState,rand,fortune);
+        return getBaseState().getBlock().getItemDropped(getBaseState(),rand,fortune);
     }
 
     @Override
     public int damageDropped(IBlockState state) {
-        return baseState.getBlock().damageDropped(baseState);
+        return getBaseState().getBlock().damageDropped(getBaseState());
     }
 
     @Nullable
@@ -152,7 +155,7 @@ public class BlockZenSand extends BlockFalling {
     {
         if (!worldIn.isRemote && entityIn.canTrample(worldIn, this, pos, fallDistance)) // Forge: Move logic to Entity#canTrample
         {
-            worldIn.setBlockState(pos,baseState);
+            worldIn.setBlockState(pos,getBaseState());
         }
 
         super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
@@ -165,7 +168,7 @@ public class BlockZenSand extends BlockFalling {
 
         if (worldIn.getBlockState(pos.up()).getMaterial().isSolid())
         {
-            worldIn.setBlockState(pos,baseState);
+            worldIn.setBlockState(pos,getBaseState());
         }
     }
 
@@ -182,15 +185,15 @@ public class BlockZenSand extends BlockFalling {
     {
         if ((worldIn.isAirBlock(pos.down()) || canFallThrough(worldIn.getBlockState(pos.down()))) && pos.getY() >= 0)
         {
-            worldIn.setBlockState(pos,baseState,2);
-            worldIn.immediateBlockTick(pos,baseState,worldIn.rand);
+            worldIn.setBlockState(pos,getBaseState(),2);
+            worldIn.immediateBlockTick(pos,getBaseState(),worldIn.rand);
         }
     }
 
     @Override
     public int getDustColor(IBlockState state) {
-        Block block = baseState.getBlock();
-        return block instanceof BlockFalling ? ((BlockFalling) block).getDustColor(baseState) : super.getDustColor(state);
+        Block block = getBaseState().getBlock();
+        return block instanceof BlockFalling ? ((BlockFalling) block).getDustColor(getBaseState()) : super.getDustColor(state);
     }
 
     @Override

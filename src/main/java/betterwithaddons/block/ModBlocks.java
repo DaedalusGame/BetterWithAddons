@@ -15,7 +15,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.event.RegistryEvent;
@@ -270,18 +272,34 @@ public class ModBlocks {
         registerBlock(new BlockTatami("tatami").setHardness(1.0f));
         registerBlock(new BlockTatamiRecessed("tatami_full").setHardness(1.0f));
 
-        registerBlock(new BlockZenSand("zen_sand").setShouldFall().setHardness(0.5F));
-        registerBlock(new BlockZenSand("zen_redsand").setShouldFall().setHardness(0.5F));
-        registerBlock(new BlockZenSand("zen_soulsand").setShouldSlow().setHardness(0.5F));
-        registerBlock(new BlockZenSand("zen_ironsand").setHardness(0.7F).setResistance(5.0F));
+        //I swear to god if this closures wrongly i'm suing
+        registerBlock(new BlockZenSand("zen_sand", () -> Blocks.SAND.getDefaultState()).setShouldFall().setHardness(0.5F));
+        registerBlock(new BlockZenSand("zen_redsand", () -> Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND)).setShouldFall().setHardness(0.5F));
+        registerBlock(new BlockZenSand("zen_soulsand", () -> Blocks.SOUL_SAND.getDefaultState()).setShouldSlow().setHardness(0.5F));
+        registerBlock(new BlockZenSand("zen_ironsand", () -> ModBlocks.IRON_SAND.getDefaultState()).setHardness(0.7F).setResistance(5.0F));
 
         registerBlock(new BlockSoap());
 
         registerBlock(new BlockChandelier().setLightLevel(0.9375F));
         registerBlock(new BlockModPane("paper_wall", Material.WOOD).setHardness(1.0f));
         registerBlock(new BlockModPane("wrought_bars", Material.IRON).setHardness(5.0f));
-        registerBlock(new BlockLantern("wood_lamp", Material.WOOD).setHardness(1.0f));
-        registerBlock(new BlockLantern("wrought_lamp", Material.IRON).setHardness(5.0f));
+        registerBlock(new BlockLantern("wood_lamp", Material.WOOD) {
+            @Override
+            public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+                double offset = 0;
+                if(state.getValue(BlockLantern.FACING) == EnumFacing.UP)
+                    offset = 4/16.0;
+                else if(state.getValue(BlockLantern.FACING) != EnumFacing.DOWN)
+                    offset = 2/16.0;
+                return new AxisAlignedBB(0.25, offset, 0.25, 0.75, 0.75+offset, 0.75);
+            }
+        }.setHardness(1.0f));
+        registerBlock(new BlockLantern("wrought_lamp", Material.IRON) {
+            @Override
+            public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+                return new AxisAlignedBB(0.1875, 0, 0.1875, 0.8125, 0.75, 0.8125);
+            }
+        }.setHardness(5.0f));
         registerBlock(new BlockPavement());
         registerBlock(new BlockWhiteBrick());
 
@@ -301,14 +319,13 @@ public class ModBlocks {
         registerBlock(new BlockReplacement("pond_replacement") {
             @Override
             public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-                switch(state.getValue(BlockReplacement.META))
-                {
-                    case(0):
-                    case(1):
-                        drops.add(new ItemStack(ADOBE, 1,1));
+                switch (state.getValue(BlockReplacement.META)) {
+                    case (0):
+                    case (1):
+                        drops.add(new ItemStack(ADOBE, 1, 1));
                         break;
-                    case(2):
-                        drops.add(new ItemStack(ADOBE, 1,9));
+                    case (2):
+                        drops.add(new ItemStack(ADOBE, 1, 9));
                         break;
                 }
             }
