@@ -17,7 +17,6 @@ import betterwithaddons.util.*;
 import betterwithmods.common.BWMBlocks;
 import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWRegistry;
-import betterwithmods.common.entity.EntityIngredientRelation;
 import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.PulleyStructureManager;
 import betterwithmods.module.ModuleLoader;
@@ -25,7 +24,6 @@ import betterwithmods.module.gameplay.AnvilRecipes;
 import betterwithmods.module.gameplay.MetalReclaming;
 import betterwithmods.module.hardcore.crafting.HCDiamond;
 import betterwithmods.module.hardcore.needs.HCCooking;
-import betterwithmods.module.hardcore.needs.HCTools;
 import betterwithmods.module.tweaks.CheaperAxes;
 import betterwithmods.module.tweaks.EasyBreeding;
 import betterwithmods.util.DirUtils;
@@ -36,7 +34,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -52,10 +49,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.sql.Ref;
 import java.util.HashSet;
 import java.util.List;
 
@@ -68,6 +65,7 @@ public class InteractionBWA extends Interaction {
             "streams:river"
     };
     public static boolean AQUEDUCT_IS_TANK = false;
+    public static int AQUEDUCT_WATER_AMOUNT = Fluid.BUCKET_VOLUME;
     public static int AQUEDUCT_SOURCES_MINIMUM = 0;
     public static int AQUEDUCT_SOURCES_SEARCH = 0;
 
@@ -159,6 +157,7 @@ public class InteractionBWA extends Interaction {
             AQUEDUCT_SOURCES_MINIMUM = loadPropInt("AqueductSourcesRequired", "How many connected water sources are required for an aqueduct to take from it.", AQUEDUCT_SOURCES_MINIMUM);
             AQUEDUCT_SOURCES_SEARCH = loadPropInt("AqueductSourcesSearch", "How many blocks will be checked for water sources. This should be a bit larger than the minimum amount of sources.", AQUEDUCT_SOURCES_SEARCH);
             AQUEDUCT_IS_TANK = loadPropBool("AqueductIsTank", "Aqueduct water counts as a fluid tank for modded pipes. Happy birthday Vyraal1", AQUEDUCT_IS_TANK);
+            AQUEDUCT_WATER_AMOUNT = loadPropInt("AqueductWaterAmount", "How much water is contained in each block, set to less than 1000 to disallow picking up buckets.", AQUEDUCT_WATER_AMOUNT, 0, Integer.MAX_VALUE);
 
             LEGENDARIUM_MIN_DAMAGE = loadPropDouble("LegendariumDamageMin", "How much durability the artifact you're turning in can have at max. (As a factor of max durability; 0.1 means 1/10 of max durability)", LEGENDARIUM_MIN_DAMAGE);
             LEGENDARIUM_DAMAGE_PAD = loadPropInt("LegendariumDamagePad", "How much durability more than the minimum the artifact can have to still be considered broken. (As a static value)", LEGENDARIUM_DAMAGE_PAD);

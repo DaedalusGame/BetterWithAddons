@@ -43,6 +43,8 @@ public class BlockAqueductWater extends BlockFluidClassic implements IColorable 
         this.setCreativeTab(BetterWithAddons.instance.creativeTab);
         this.setTickRandomly(true);
         this.setDefaultState(getDefaultState().withProperty(LEVEL, 0));
+
+        stack.amount = InteractionBWA.AQUEDUCT_WATER_AMOUNT;
     }
 
     @Override
