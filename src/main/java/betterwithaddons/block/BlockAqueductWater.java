@@ -24,6 +24,8 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -330,17 +332,13 @@ public class BlockAqueductWater extends BlockFluidClassic implements IColorable 
         return true;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public IBlockColor getBlockColor() {
-        return new IBlockColor()
-        {
-            public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex)
-            {
-                return worldIn != null && pos != null ? BiomeColorHelper.getWaterColorAtPos(worldIn, pos) : -1;
-            }
-        };
+        return (state, worldIn, pos, tintIndex) -> worldIn != null && pos != null ? BiomeColorHelper.getWaterColorAtPos(worldIn, pos) : -1;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public IItemColor getItemColor() {
         return null;

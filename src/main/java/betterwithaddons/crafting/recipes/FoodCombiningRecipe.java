@@ -39,7 +39,7 @@ public class FoodCombiningRecipe extends ShapelessOreRecipe {
                     prevMatch = stack.copy();
                 else
                 {
-                    RotHandler.setCreationDate(prevMatch,RotHandler.getCreationDate(stack));
+                    RotHandler.setCreationDate(prevMatch,Math.min(RotHandler.getCreationDate(prevMatch),RotHandler.getCreationDate(stack)));
                     if (stack.getItem() != prevMatch.getItem() || stack.getMetadata() != prevMatch.getMetadata() || !ItemStack.areItemStackTagsEqual(prevMatch, stack)) {
                         return false;
                     }
