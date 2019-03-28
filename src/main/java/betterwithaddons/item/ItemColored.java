@@ -2,6 +2,7 @@ package betterwithaddons.item;
 
 import betterwithaddons.util.IHasVariants;
 import betterwithmods.api.util.IColorProvider;
+import betterwithmods.util.ColorUtils;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumDyeColor;
@@ -61,6 +62,6 @@ public class ItemColored extends Item implements IHasVariants, IColorProvider
 
     @Override
     public int getColor(ItemStack stack) {
-        return EnumDyeColor.byMetadata(stack.getMetadata()).getColorValue();
+        return ColorUtils.getDyeColor(EnumDyeColor.byMetadata(stack.getMetadata()));
     }
 }
