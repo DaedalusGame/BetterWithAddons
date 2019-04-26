@@ -93,7 +93,7 @@ public class TileEntityAncestrySand extends TileEntityBase implements ITickable,
                 IItemHandler handler = tileHopper.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
                 ItemStack stack = new ItemStack(ModItems.ANCESTRY_BOTTLE);
                 ItemStack consumed = new ItemStack(Items.GLASS_BOTTLE);
-                if (tileHopper.getFilterStack().getItem() == Item.getItemFromBlock(Blocks.SOUL_SAND) && InvUtils.canInsert(handler, stack, 1) && InvUtils.getFirstOccupiedStackOfItem(handler, consumed) >= 0) {
+                if (tileHopper.getFilterStack().isEmpty() && InvUtils.canInsert(handler, stack, 1) && InvUtils.getFirstOccupiedStackOfItem(handler, consumed) >= 0) {
                     InvUtils.consumeItemsInInventory(handler, consumed, 1, false);
                     InvUtils.insert(handler, stack, false);
                     consumeSpirits(InteractionEriottoMod.BOTTLE_MAX_SPIRITS);
