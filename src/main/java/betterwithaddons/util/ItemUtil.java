@@ -1,6 +1,7 @@
 package betterwithaddons.util;
 
 import com.google.common.collect.Lists;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.item.EntityItem;
@@ -12,7 +13,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -23,6 +23,38 @@ import java.util.Map;
 
 public class ItemUtil
 {
+	public static ItemArmor.ArmorMaterial getArmorMaterial(Item item) {
+		try {
+			if (item instanceof ItemArmor) {
+				return  ((ItemArmor) item).getArmorMaterial();
+			}
+		}
+		catch(Exception e) //Gotta catch em all
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static ItemArmor.ToolMaterial getToolMaterial(Item item) {
+		try {
+			if (item instanceof ItemTool) {
+				return ((ItemTool) item).toolMaterial;
+			}
+			if (item instanceof ItemSword) {
+				return ((ItemSword) item).material;
+			}
+			if (item instanceof ItemHoe) {
+				return ((ItemHoe) item).toolMaterial;
+			}
+		}
+		catch(Exception e) //Gotta catch em all
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static boolean matchesOreDict(ItemStack stack, String oreDictName)
 	{
 		if(stack.isEmpty()) return false;
@@ -127,14 +159,14 @@ public class ItemUtil
 
 		if (list.isEmpty())
 		{
-			String s = I18n.translateToLocal("effect.none").trim();
+			String s = I18n.format("effect.none").trim();
 			lores.add(TextFormatting.GRAY + s);
 		}
 		else
 		{
 			for (PotionEffect potioneffect : list)
 			{
-				String s1 = I18n.translateToLocal(potioneffect.getEffectName()).trim();
+				String s1 = I18n.format(potioneffect.getEffectName()).trim();
 				Potion potion = potioneffect.getPotion();
 				Map<IAttribute, AttributeModifier> map = potion.getAttributeModifierMap();
 
@@ -150,7 +182,7 @@ public class ItemUtil
 
 				if (potioneffect.getAmplifier() > 0)
 				{
-					s1 = s1 + " " + I18n.translateToLocal("potion.potency." + potioneffect.getAmplifier()).trim();
+					s1 = s1 + " " + I18n.format("potion.potency." + potioneffect.getAmplifier()).trim();
 				}
 
 				if (potioneffect.getDuration() > 20)
@@ -172,7 +204,7 @@ public class ItemUtil
 		if (!attributeModifiers.isEmpty())
 		{
 			lores.add("");
-			lores.add(TextFormatting.DARK_PURPLE + I18n.translateToLocal("potion.whenDrank"));
+			lores.add(TextFormatting.DARK_PURPLE + I18n.format("potion.whenDrank"));
 
 			for (Tuple<String, AttributeModifier> tuple : attributeModifiers)
 			{
@@ -191,12 +223,12 @@ public class ItemUtil
 
 				if (d0 > 0.0D)
 				{
-					lores.add(TextFormatting.BLUE + I18n.translateToLocalFormatted("attribute.modifier.plus." + attributemodifier2.getOperation(), ItemStack.DECIMALFORMAT.format(d1), I18n.translateToLocal("attribute.name." + (String)tuple.getFirst())));
+					lores.add(TextFormatting.BLUE + I18n.format("attribute.modifier.plus." + attributemodifier2.getOperation(), ItemStack.DECIMALFORMAT.format(d1), I18n.format("attribute.name." + (String)tuple.getFirst())));
 				}
 				else if (d0 < 0.0D)
 				{
 					d1 = d1 * -1.0D;
-					lores.add(TextFormatting.RED + I18n.translateToLocalFormatted("attribute.modifier.take." + attributemodifier2.getOperation(), ItemStack.DECIMALFORMAT.format(d1), I18n.translateToLocal("attribute.name." + (String)tuple.getFirst())));
+					lores.add(TextFormatting.RED + I18n.format("attribute.modifier.take." + attributemodifier2.getOperation(), ItemStack.DECIMALFORMAT.format(d1), I18n.format("attribute.name." + (String)tuple.getFirst())));
 				}
 			}
 		}

@@ -8,6 +8,9 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.recipes.AdobeRecipe;
 import betterwithaddons.crafting.recipes.FoodCombiningRecipe;
+import betterwithaddons.enchantment.EnchantmentMendingGoldOnly;
+import betterwithaddons.enchantment.EnchantmentProtectionOther;
+import betterwithaddons.enchantment.EnchantmentSharpnessOther;
 import betterwithaddons.handler.*;
 import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
@@ -30,26 +33,39 @@ import betterwithmods.util.DirUtils;
 import com.google.common.collect.Lists;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.*;
+import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.AbstractHorse;
+import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -115,6 +131,14 @@ public class InteractionBWA extends Interaction {
     public static boolean HORSES_BREED_HAYBALES = false;
     public static int ROPE_LIMIT = 30;
 
+    public static boolean REPLACE_PROTECTION = true;
+    public static String[] RESISTANCE_TYPES = new String[] {};
+    public static boolean REPLACE_SHARPNESS = true;
+    public static String[] SHARPNESS_ENTITIES = new String[] {};
+    public static boolean REPLACE_MENDING = true;
+    public static String[] GOLD_ITEMS = new String[] {};
+
+    private boolean isLoaded;
 
     @Override
     protected String getName() {
@@ -143,6 +167,10 @@ public class InteractionBWA extends Interaction {
 
         ARMOR_SHARD_RENDER = loadPropBool("ArmorShardRender", "Enables or disables the custom armor shard renderer, for when it causes crashes.", ARMOR_SHARD_RENDER);
 
+        REPLACE_SHARPNESS = loadPropBool("SharpnessReplacer", "Whether the Sharpness enchantment should be replaced with a weaker version that only works on things not affected by other damage enchantments.", REPLACE_SHARPNESS);
+        REPLACE_PROTECTION = loadPropBool("ProtectionReplacer", "Whether the Protection enchantment should be replaced with a weaker version that only works on things not affected by other protective enchantments.", REPLACE_PROTECTION);
+        REPLACE_MENDING = loadPropBool("MendingReplacer", "Whether the Mending enchantment should be replaced with a weaker version that only works on golden items.", REPLACE_MENDING);
+
         doesNotNeedRestart(() -> {
             RADIUS = loadPropInt("LureTreeRadius", "Radius in which the tree can spawn mobs.", RADIUS);
             MAXCHARGE = loadPropInt("LureTreeTime", "Time it takes for the tree to do one spawning cycle.", MAXCHARGE);
@@ -166,7 +194,78 @@ public class InteractionBWA extends Interaction {
             LEGENDARIUM_TURN_IN_DELAY = loadPropInt("LegendariumTurnInDelay", "How long until the next artifact can be turned in. (in ticks; 1000 ticks is one Minecraft hour)", LEGENDARIUM_TURN_IN_DELAY);
             LEGENDARIUM_REPAIR_COST_MULTIPLIER = loadPropDouble("LegendariumRepairCostMultiplier", "When repairing a shard on an anvil, the repair cost is modified by this multiplier.", LEGENDARIUM_REPAIR_COST_MULTIPLIER);
             LEGENDARIUM_SHARD_COST = loadPropInt("LegendariumRepairCost", "How many levels it costs to repair a shard on an anvil.", LEGENDARIUM_SHARD_COST);
+
+            RESISTANCE_TYPES = loadPropStringList("ProtectionResistanceTypes","Damage types already covered by other protective enchantments.", RESISTANCE_TYPES);
+            SHARPNESS_ENTITIES = loadPropStringList("SharpnessEntities","Resource names of entities already affected by other damage enchantments.", SHARPNESS_ENTITIES);
+            GOLD_ITEMS = loadPropStringList("MendingGoldItems","Resource names of items that should be allowed to have Mending on them.", GOLD_ITEMS);
+
+            if(isLoaded) {
+                writeEnchantmentConfigs();
+            }
         });
+    }
+
+    @SubscribeEvent
+    public void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
+        if(REPLACE_SHARPNESS)
+            event.getRegistry().register(new EnchantmentSharpnessOther(Enchantment.Rarity.COMMON, EntityEquipmentSlot.MAINHAND).setRegistryName(new ResourceLocation("sharpness")));
+        if(REPLACE_PROTECTION)
+            event.getRegistry().register(new EnchantmentProtectionOther(Enchantment.Rarity.COMMON, EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET).setRegistryName(new ResourceLocation("protection")));
+        if(REPLACE_MENDING)
+            event.getRegistry().register(new EnchantmentMendingGoldOnly(Enchantment.Rarity.RARE, EntityEquipmentSlot.values()).setRegistryName(new ResourceLocation("mending")));
+    }
+
+    private void writeEnchantmentConfigs() {
+        EnchantmentProtectionOther.reset();
+        EnchantmentSharpnessOther.reset();
+        EnchantmentMendingGoldOnly.reset();
+
+        EnchantmentProtectionOther.register(DamageSource::isFireDamage);
+        EnchantmentProtectionOther.register(DamageSource::isProjectile);
+        EnchantmentProtectionOther.register(DamageSource::isExplosion);
+        EnchantmentProtectionOther.register("fall");
+        if(Loader.isModLoaded("apotheosis"))
+            EnchantmentProtectionOther.register(DamageSource::isMagicDamage);
+
+        EnchantmentSharpnessOther.registerType(EnumCreatureAttribute.ARTHROPOD);
+        EnchantmentSharpnessOther.registerType(EnumCreatureAttribute.UNDEAD);
+        if(Loader.isModLoaded("abyssalcraft"))
+            EnchantmentSharpnessOther.registerType("SHADOW");
+
+        if(Loader.isModLoaded("selim_enchants")) {
+            //Uncivilized
+            EnchantmentSharpnessOther.register(EntityVillager.class);
+            EnchantmentSharpnessOther.register(EntityIronGolem.class);
+            EnchantmentSharpnessOther.register(EntitySnowman.class);
+            EnchantmentSharpnessOther.register(EntityWitch.class);
+            EnchantmentSharpnessOther.register(EntityZombieVillager.class);
+            EnchantmentSharpnessOther.register(EntityZombie.class);
+            EnchantmentSharpnessOther.register(EntityPlayer.class);
+            EnchantmentSharpnessOther.register(EntityEvoker.class);
+            EnchantmentSharpnessOther.register(EntityVindicator.class);
+            EnchantmentSharpnessOther.register(EntityVex.class);
+            EnchantmentSharpnessOther.register(EntityIllusionIllager.class);
+            //Banishing
+            EnchantmentSharpnessOther.register(EntityWither.class);
+            for (EnumCreatureType type : EnumCreatureType.values())
+                for (Biome.SpawnListEntry e : Biomes.HELL.getSpawnableList(type))
+                    EnchantmentSharpnessOther.register(EntityList.getKey(e.entityClass).toString());
+            //Warping
+            EnchantmentSharpnessOther.register(EntityEnderman.class);
+            EnchantmentSharpnessOther.register(EntityEndermite.class);
+            EnchantmentSharpnessOther.register(EntityShulker.class);
+            EnchantmentSharpnessOther.register(EntityDragon.class);
+            for (EnumCreatureType type : EnumCreatureType.values())
+                for (Biome.SpawnListEntry e : Biomes.SKY.getSpawnableList(type))
+                    EnchantmentSharpnessOther.register(EntityList.getKey(e.entityClass).toString());
+        }
+
+        for (String damageType : RESISTANCE_TYPES)
+            EnchantmentProtectionOther.register(damageType);
+        for (String entity : SHARPNESS_ENTITIES)
+            EnchantmentSharpnessOther.register(entity);
+        for (String item : GOLD_ITEMS)
+            EnchantmentMendingGoldOnly.register(item);
     }
 
     @Override
@@ -213,6 +312,8 @@ public class InteractionBWA extends Interaction {
             TileEntityAqueductWater.addWaterSource(new ResourceLocation(s));
 
         VariableSegment.addVariableSupplier(new ResourceLocation(Reference.MOD_ID, "aqueduct_length"), () -> Integer.toString(AQUEDUCT_MAX_LENGTH));
+
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
@@ -534,6 +635,9 @@ public class InteractionBWA extends Interaction {
             saltDust.setCount(3);
             BWRegistry.MILLSTONE.addMillRecipe(Ingredient.fromStacks(saltCluster),saltDust);
         }
+
+        writeEnchantmentConfigs();
+        isLoaded = true;
     }
 
     private boolean isFruit(ItemStack stack) {
