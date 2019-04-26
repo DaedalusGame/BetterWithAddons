@@ -35,7 +35,7 @@ public class PatientiaHandler {
     public void worldTick(TickEvent.WorldTickEvent tickEvent)
     {
         World world = tickEvent.world;
-        if(!world.isRemote && world instanceof WorldServer) {
+        if(!world.isRemote && tickEvent.phase == TickEvent.Phase.START && world instanceof WorldServer) {
             customRandomTick((WorldServer)world);
         }
     }
