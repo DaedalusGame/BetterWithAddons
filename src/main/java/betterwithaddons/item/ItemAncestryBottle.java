@@ -4,7 +4,12 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.entity.EntityAncestryBottle;
 import betterwithaddons.interaction.InteractionEriottoMod;
 import betterwithaddons.tileentity.TileEntityAncestrySand;
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.dispenser.BehaviorProjectileDispense;
+import net.minecraft.dispenser.IPosition;
+import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -18,6 +23,27 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemAncestryBottle extends Item {
+    public ItemAncestryBottle() {
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, new BehaviorProjectileDispense() {
+            @Override
+            protected IProjectile getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
+                return new EntityAncestryBottle(worldIn, position.getX(), position.getY(), position.getZ());
+            }
+
+            @Override
+            protected float getProjectileInaccuracy()
+            {
+                return super.getProjectileInaccuracy() * 0.5F;
+            }
+
+            @Override
+            protected float getProjectileVelocity()
+            {
+                return super.getProjectileVelocity() * 1.25F;
+            }
+        });
+    }
+
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         IBlockState state = worldIn.getBlockState(pos);

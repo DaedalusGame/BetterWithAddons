@@ -14,6 +14,11 @@ public class EntityAncestryBottle extends EntityExpBottle {
         super(worldIn);
     }
 
+    public EntityAncestryBottle(World worldIn, double x, double y, double z) {
+        super(worldIn);
+        setPosition(x,y,z);
+    }
+
     public EntityAncestryBottle(World world, EntityLivingBase thrower) {
         super(world,thrower);
     }
