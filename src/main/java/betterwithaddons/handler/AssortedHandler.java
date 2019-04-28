@@ -25,9 +25,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
@@ -279,9 +277,9 @@ public class AssortedHandler {
             ItemStack stack = player.getHeldItemMainhand();
             Item item = stack.getItem();
 
-            if (!stack.isEmpty() && (item instanceof ItemTool || item instanceof ItemSword || item instanceof ItemArmor || item instanceof ItemBow)) {
+            if (!stack.isEmpty() && (!item.getToolClasses(stack).isEmpty() || item instanceof  ItemHoe || item instanceof ItemSword || item instanceof ItemArmor || item instanceof ItemBow)) {
                 player.swingArm(EnumHand.MAIN_HAND);
-                player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ModItems.brokenArtifact.makeFrom(stack));
+                player.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ModItems.BROKEN_ARTIFACT.makeFrom(stack));
 
                 if (!event.getWorld().isRemote) {
                     event.setCanceled(true);

@@ -79,6 +79,7 @@ public class ClientProxy implements IProxy
     @Override
     public void preInit() {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
         ModInteractions.preInitClient();
     }
 
@@ -98,7 +99,6 @@ public class ClientProxy implements IProxy
         registerColorable(ModItems.TEA_POWDER);
         registerColorable(ModItems.TEA_CUP);
 
-        MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
         ManualAPI.addProvider(new DirectoryDefaultProvider(new ResourceLocation(Reference.MOD_ID, "documentation/docs/")));
         ManualAPI.addTab(new ItemStackTabIconRenderer(new ItemStack(ModBlocks.CHUTE)),"bwm.manual.bwa", "%LANGUAGE%/bwa/index.md");
 
