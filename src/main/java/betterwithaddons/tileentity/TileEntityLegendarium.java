@@ -93,12 +93,12 @@ public class TileEntityLegendarium extends TileEntityBase {
     {
         if(stack.isEmpty()) return "not_item";
         if(!ItemUtil.isTool(stack.getItem())) return "not_tool";
-        if(!stack.hasDisplayName()) return "not_artifact";
-        if(!stack.isItemEnchanted()) return "not_artifact";
+        if(!stack.hasDisplayName() && InteractionBWA.LEGENDARIUM_MUST_BE_NAMED) return "not_artifact";
+        if(!stack.isItemEnchanted() && InteractionBWA.LEGENDARIUM_MUST_BE_ENCHANTED) return "not_artifact";
         int actualDamage = (stack.getMaxDamage() - stack.getItemDamage());
         double maxDamage = stack.getMaxDamage() * InteractionBWA.LEGENDARIUM_MIN_DAMAGE + InteractionBWA.LEGENDARIUM_DAMAGE_PAD;
         if(actualDamage > maxDamage) return "not_broken";
-        if(stack.getRepairCost() <= 30) return "not_at_limit";
+        if(stack.getRepairCost() <= 30 && InteractionBWA.LEGENDARIUM_MUST_BE_LIMIT) return "not_at_limit";
         return null;
     }
 

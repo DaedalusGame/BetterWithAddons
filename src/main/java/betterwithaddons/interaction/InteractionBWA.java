@@ -92,6 +92,9 @@ public class InteractionBWA extends Interaction {
 
     public static boolean ARMOR_SHARD_RENDER = true;
     public static double LEGENDARIUM_MIN_DAMAGE = 0.1f;
+    public static boolean LEGENDARIUM_MUST_BE_NAMED = true;
+    public static boolean LEGENDARIUM_MUST_BE_ENCHANTED = true;
+    public static boolean LEGENDARIUM_MUST_BE_LIMIT = true;
     public static int LEGENDARIUM_DAMAGE_PAD = 24;
     public static int LEGENDARIUM_POSTER_RANGE = 16;
     public static int LEGENDARIUM_MIN_QUEUE_SIZE = 7;
@@ -194,6 +197,9 @@ public class InteractionBWA extends Interaction {
             LEGENDARIUM_TURN_IN_DELAY = loadPropInt("LegendariumTurnInDelay", "How long until the next artifact can be turned in. (in ticks; 1000 ticks is one Minecraft hour)", LEGENDARIUM_TURN_IN_DELAY);
             LEGENDARIUM_REPAIR_COST_MULTIPLIER = loadPropDouble("LegendariumRepairCostMultiplier", "When repairing a shard on an anvil, the repair cost is modified by this multiplier.", LEGENDARIUM_REPAIR_COST_MULTIPLIER);
             LEGENDARIUM_SHARD_COST = loadPropInt("LegendariumRepairCost", "How many levels it costs to repair a shard on an anvil.", LEGENDARIUM_SHARD_COST);
+            LEGENDARIUM_MUST_BE_NAMED = loadPropBool("LegendariumMustBeNamed", "Whether items must be named to be considered artifacts.", LEGENDARIUM_MUST_BE_NAMED);
+            LEGENDARIUM_MUST_BE_ENCHANTED = loadPropBool("LegendariumMustBeEnchanted", "Whether items must be enchanted to be considered artifacts.", LEGENDARIUM_MUST_BE_ENCHANTED);
+            LEGENDARIUM_MUST_BE_LIMIT = loadPropBool("LegendariumMustBeLimit", "Whether items must be over the repair limit to be considered artifacts.", LEGENDARIUM_MUST_BE_LIMIT);
 
             RESISTANCE_TYPES = loadPropStringList("ProtectionResistanceTypes","Damage types already covered by other protective enchantments.", RESISTANCE_TYPES);
             SHARPNESS_ENTITIES = loadPropStringList("SharpnessEntities","Resource names of entities already affected by other damage enchantments.", SHARPNESS_ENTITIES);
