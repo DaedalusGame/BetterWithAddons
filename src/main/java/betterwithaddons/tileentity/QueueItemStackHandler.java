@@ -1,5 +1,6 @@
 package betterwithaddons.tileentity;
 
+import betterwithaddons.util.IDirtyHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
@@ -9,11 +10,11 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 
 public class QueueItemStackHandler extends ItemStackHandler {
-    private final TileEntity tile;
+    private IDirtyHandler handler;
 
-    public QueueItemStackHandler(TileEntity inv) {
+    public QueueItemStackHandler(IDirtyHandler handler) {
         super(NonNullList.create());
-        this.tile = inv;
+        this.handler = handler;
     }
 
     @Override
@@ -81,6 +82,7 @@ public class QueueItemStackHandler extends ItemStackHandler {
 
     @Override
     protected void onContentsChanged(int slot) {
-        tile.markDirty();
+        if(handler != null)
+            handler.markDirty();
     }
 }

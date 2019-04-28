@@ -3,52 +3,129 @@ package betterwithaddons.tileentity;
 import betterwithaddons.entity.EntityArtifactFrame;
 import betterwithaddons.interaction.InteractionBWA;
 import betterwithaddons.item.ModItems;
+import betterwithaddons.util.IDirtyHandler;
 import betterwithaddons.util.ItemUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCarpet;
+import net.minecraft.block.BlockPane;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
+import java.util.Comparator;
 import java.util.List;
 
-public class TileEntityLegendarium extends TileEntityBase {
-
+public class TileEntityLegendarium extends TileEntityBase implements ITickable {
+    public enum CanvasType {
+        Normal,
+        Flat,
+        Invisible,
+    }
 
     private long lastClick = 0;
     private long lastTurnIn = 0;
-    QueueItemStackHandler queue;
 
-    public TileEntityLegendarium()
-    {
+    private CanvasType canvasType = CanvasType.Normal;
+
+    QueueItemStackHandler migrationQueue;
+    IItemHandler readonlyHandler = new IItemHandler() {
+        @Override
+        public int getSlots() {
+            IItemHandler queue = getInventory();
+            return queue.getSlots();
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            IItemHandler queue = getInventory();
+            return queue.getStackInSlot(slot);
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            return stack;
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            IItemHandler queue = getInventory();
+            return queue.getSlotLimit(slot);
+        }
+    };
+
+    public TileEntityLegendarium() {
         super();
-        queue = new QueueItemStackHandler(this);
+    }
+
+    public CanvasType getCanvasType() {
+        return canvasType;
     }
 
     @Override
     public void writeDataToNBT(NBTTagCompound compound) {
-        compound.setTag("Queue", queue.serializeNBT());
+        if(migrationQueue != null)
+            compound.setTag("Queue", migrationQueue.serializeNBT());
         compound.setLong("LastTurnIn",lastTurnIn);
+        compound.setInteger("CanvasType",canvasType.ordinal());
     }
 
     @Override
     public void readDataFromNBT(NBTTagCompound compound) {
-        queue.deserializeNBT(compound.getCompoundTag("Queue"));
+        if(compound.hasKey("Queue")) {
+            migrationQueue = new QueueItemStackHandler(null);
+            migrationQueue.deserializeNBT(compound.getCompoundTag("Queue"));
+        }
         lastTurnIn = compound.getLong("LastTurnIn");
+        canvasType = CanvasType.values()[compound.getInteger("CanvasType")];
+    }
+
+    private void migrate() {
+        LegendariumData data = LegendariumData.getInstance(world);
+        while(migrationQueue.getSlots() > 0) {
+            ItemStack stack = migrationQueue.extractItem(0,1,false);
+            data.queue.insertItem(0,stack,false);
+        }
+        migrationQueue = null;
     }
 
     public ItemStack insertItem(EntityPlayer player, ItemStack stack)
     {
-        if(stack.getItem() == ModItems.ARTIFACT_FRAME)
-        {
+        if(stack.getItem() instanceof ItemBlock) {
+            ItemBlock itemBlock = (ItemBlock) stack.getItem();
+            Block block = itemBlock.getBlock();
+            IBlockState state = block.getDefaultState();
+            if(block instanceof BlockPane && state.getMaterial() == Material.GLASS) {
+                canvasType = canvasType != CanvasType.Invisible ? CanvasType.Invisible : CanvasType.Normal;
+            } else if(block instanceof BlockCarpet && state.getMaterial() == Material.CLOTH) {
+                canvasType = canvasType != CanvasType.Flat ? CanvasType.Flat : CanvasType.Normal;
+            }
+            player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.canvas_changed."+canvasType.name().toLowerCase()),true);
+        } else if(stack.getItem() == ModItems.ARTIFACT_FRAME) {
             if(cleanItemFrames() == 0) {
                 populateItemFrames();
                 player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.frames_populated"),true);
-            }
-            else
+            } else
                 player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.frames_cleared"),true);
 
             return stack;
@@ -56,8 +133,7 @@ public class TileEntityLegendarium extends TileEntityBase {
 
         String analysis = analyzeItem(stack);
 
-        if(analysis != null)
-        {
+        if(analysis != null) {
             player.sendStatusMessage(new TextComponentTranslation("tile.legendarium."+analysis),true);
 
             return stack;
@@ -65,8 +141,7 @@ public class TileEntityLegendarium extends TileEntityBase {
 
         long timeUntilNextTurnIn = lastTurnIn + InteractionBWA.LEGENDARIUM_TURN_IN_DELAY - world.getTotalWorldTime();
 
-        if(timeUntilNextTurnIn > 0)
-        {
+        if(timeUntilNextTurnIn > 0) {
             long days = timeUntilNextTurnIn / 24000;
             long hours = (timeUntilNextTurnIn % 24000) / 1000;
             player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.not_now",days,hours),true);
@@ -74,16 +149,14 @@ public class TileEntityLegendarium extends TileEntityBase {
             return stack;
         }
 
+        IItemHandler queue = getInventory();
         ItemStack retain = queue.insertItem(0, ModItems.BROKEN_ARTIFACT.makeFrom(stack),false);
-        if(retain.isEmpty())
-        {
+        if(retain.isEmpty()) {
             lastTurnIn = world.getTotalWorldTime();
             populateItemFrames();
         }
 
-
-        if(queue.getSlots() >= InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE)
-        {
+        if(queue.getSlots() >= InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE) {
             player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.ready"),true);
         }
         return retain;
@@ -105,15 +178,14 @@ public class TileEntityLegendarium extends TileEntityBase {
     public ItemStack retrieveItem(EntityPlayer player)
     {
         long time = world.getTotalWorldTime();
+        IItemHandler queue = getInventory();
 
-        if(queue.getSlots() < InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE)
-        {
+        if(queue.getSlots() < InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE) {
             player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.not_enough_artifacts"),true);
             return ItemStack.EMPTY;
         }
 
-        if(time - lastClick > 3 && queue.getSlots() >= InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE)
-        {
+        if(time - lastClick > 3 && queue.getSlots() >= InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE) {
             lastClick = time;
             ItemStack retrieved = queue.extractItem(0,1,false);
             populateItemFrames();
@@ -123,18 +195,44 @@ public class TileEntityLegendarium extends TileEntityBase {
         return ItemStack.EMPTY;
     }
 
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return true;
+        return super.hasCapability(capability, facing);
+    }
+
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(readonlyHandler);
+        return super.getCapability(capability, facing);
+    }
+
+    public IItemHandler getInventory() {
+        LegendariumData data = LegendariumData.getInstance(world);
+        return data.queue;
+    }
+
     private void populateItemFrames()
     {
         int posterRange = InteractionBWA.LEGENDARIUM_POSTER_RANGE;
         AxisAlignedBB posterArea = new AxisAlignedBB(pos.add(-posterRange,-posterRange,-posterRange),pos.add(posterRange,posterRange,posterRange));
-        List<EntityArtifactFrame> frames = world.getEntitiesWithinAABB(EntityArtifactFrame.class,posterArea);
+        List<EntityArtifactFrame> frames = world.getEntitiesWithinAABB(EntityArtifactFrame.class,posterArea,frame -> !frame.isLinked());
         cleanItemFrames();
 
+        frames.sort(Comparator.comparingDouble(o -> o.getDistanceSq(getPos())));
+        int i = 0;
+        for (EntityArtifactFrame frame : frames) {
+            frame.link(this,i);
+            i++;
+        }
+
+        /*IItemHandler queue = getInventory();
         int e = 0;
         for (int i = 0; i < queue.getSlots(); i++) {
             ItemStack artifact = queue.getStackInSlot(i);
-            while(e < frames.size())
-            {
+            while(e < frames.size()) {
                 EntityArtifactFrame frame = frames.get(e);
                 e++;
                 if(!isFrameClean(frame)) continue;
@@ -143,67 +241,51 @@ public class TileEntityLegendarium extends TileEntityBase {
                 frame.setEntityInvulnerable(true);
                 break;
             }
-        }
-    }
-
-    private boolean isFrameClean(EntityArtifactFrame frame)
-    {
-        return frame.getDisplayedItem().isEmpty();
-    }
-
-    private boolean isFrameArtifact(EntityArtifactFrame frame)
-    {
-        ItemStack displayStack = frame.getDisplayedItem();
-
-        return !displayStack.isEmpty() && displayStack.getItem() == ModItems.BROKEN_ARTIFACT;
+        }*/
     }
 
     private int cleanItemFrames()
     {
         int posterRange = InteractionBWA.LEGENDARIUM_POSTER_RANGE;
         AxisAlignedBB posterArea = new AxisAlignedBB(pos.add(-posterRange,-posterRange,-posterRange),pos.add(posterRange,posterRange,posterRange));
-        List<EntityArtifactFrame> frames = world.getEntitiesWithinAABB(EntityArtifactFrame.class,posterArea);
+        List<EntityArtifactFrame> frames = world.getEntitiesWithinAABB(EntityArtifactFrame.class,posterArea,frame -> frame.isLinked());
 
         int ret = 0;
-
         for (EntityArtifactFrame frame : frames) {
-            if(!isFrameArtifact(frame)) continue;
-            frame.setEntityInvulnerable(false);
-            frame.setDisplayedItem(ItemStack.EMPTY);
-            frame.setCustomNameTag("");
+            frame.unlink();
             ret++;
         }
 
         return ret;
     }
 
-    public static class LegendariumData extends WorldSavedData
+    @Override
+    public void update() {
+        if(migrationQueue != null) {
+            migrate();
+        }
+    }
+
+    public static class LegendariumData extends WorldSavedData implements IDirtyHandler
     {
         public static final String ID = "LegendariumInfo";
-        private World worldObj;
 
-        NBTTagCompound data = new NBTTagCompound();
+        QueueItemStackHandler queue;
 
         public LegendariumData() {
             super(ID);
+            queue = new QueueItemStackHandler(this);
         }
 
         @Override
         public void readFromNBT(NBTTagCompound compound) {
-            data = compound;
+            queue.deserializeNBT(compound.getCompoundTag("Queue"));
         }
 
         @Override
         public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-            for (String key : data.getKeySet()) {
-                compound.setInteger(key, data.getInteger(key));
-            }
+            compound.setTag("Queue",queue.serializeNBT());
             return compound;
-        }
-
-        private static String getName(World world) {
-            final IChunkGenerator chunkGenerator = world.provider.createChunkGenerator();
-            return chunkGenerator.getClass().getName();
         }
 
         public static LegendariumData getInstance(World world)
@@ -211,12 +293,10 @@ public class TileEntityLegendarium extends TileEntityBase {
             if (world != null)
             {
                 WorldSavedData handler = world.getPerWorldStorage().getOrLoadData(LegendariumData.class, ID);
-                if (handler == null)
-                {
+                if (handler == null) {
                     handler = new LegendariumData();
                     world.getPerWorldStorage().setData(ID, handler);
                 }
-                ((LegendariumData)handler).worldObj = world;
 
                 return (LegendariumData) handler;
             }
