@@ -59,7 +59,10 @@ public class EnchantmentSharpnessOther extends EnchantmentDamage {
     }
 
     private boolean appliesToEntity(Entity entity) {
-        if(creatureByResourceName.contains(EntityList.getKey(entity).toString()))
+        if(entity == null)
+            return true;
+        ResourceLocation name = EntityList.getKey(entity);
+        if(name == null || creatureByResourceName.contains(name.toString()))
             return false;
         if(get(entity.getClass()))
             return false;
