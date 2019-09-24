@@ -87,8 +87,15 @@ public class RenderArtifactFrame extends RenderItemFrame {
             net.minecraftforge.client.event.RenderItemInFrameEvent event = new net.minecraftforge.client.event.RenderItemInFrameEvent(itemFrame, this);
             if (!net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event))
             {
-                //TODO:Render bigger if some flag is set
-                GlStateManager.scale(0.5F, 0.5F, 0.5F);
+                switch(itemFrame.getCanvasType()) {
+                    case Normal:
+                        GlStateManager.scale(0.5F, 0.5F, 0.5F);
+                        break;
+                    case Flat:
+                    case Invisible:
+                        GlStateManager.scale(0.75F, 0.75F, 0.75F);
+                        break;
+                }
                 GlStateManager.pushAttrib();
                 RenderHelper.enableStandardItemLighting();
                 this.itemRenderer.renderItem(entityitem.getItem(), ItemCameraTransforms.TransformType.FIXED);
@@ -105,17 +112,18 @@ public class RenderArtifactFrame extends RenderItemFrame {
     {
         BlockRendererDispatcher blockrendererdispatcher = this.mc.getBlockRendererDispatcher();
         ModelManager modelmanager = blockrendererdispatcher.getBlockModelShapes().getModelManager();
-        IBakedModel ibakedmodel;
+        IBakedModel ibakedmodel = null;
 
-        if (!entity.getDisplayedItem().isEmpty() && entity.getDisplayedItem().getItem() == Items.FILLED_MAP)
+        switch(entity.getCanvasType())
         {
-            //ModelResourceLocation mapModel = new ModelResourceLocation(new ResourceLocation("betterwithaddons",this.mapModel.getResourcePath()),this.mapModel.getVariant());
-            ibakedmodel = modelmanager.getModel(mapModel);
-        }
-        else
-        {
-            //ModelResourceLocation itemFrameModel = new ModelResourceLocation(new ResourceLocation("betterwithaddons",this.itemFrameModel.getResourcePath()),this.itemFrameModel.getVariant());
-            ibakedmodel = modelmanager.getModel(itemFrameModel);
+            case Normal:
+                ibakedmodel = modelmanager.getModel(itemFrameModel);
+                break;
+            case Flat:
+                ibakedmodel = modelmanager.getModel(mapModel);
+                break;
+            case Invisible:
+                return;
         }
 
         //GlStateManager.pushMatrix();

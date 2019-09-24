@@ -10,19 +10,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.model.IModelState;
 
 import java.util.HashMap;
 
 public class ToolShardOverrideHandler extends ItemOverrideList
 {
-    public static final ToolShardOverrideHandler INSTANCE = new ToolShardOverrideHandler();
-    private HashMap<Item,IBakedModel> brokenModels = new HashMap<>();
+    private static HashMap<Item,IBakedModel> brokenModels = new HashMap<>();
 
     public ToolShardOverrideHandler() {
-        super(ImmutableList.<ItemOverride>of());
+        super(ImmutableList.of());
     }
 
-    public void addModel(Item item, IBakedModel model)
+    public static void addModel(Item item, IBakedModel model)
     {
         brokenModels.put(item,model);
     }

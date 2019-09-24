@@ -1,0 +1,9 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "inventory": {
+      "model": "betterwithaddons:tool_shard_custom",
+      "transform": "forge:default-item"
+    }
+  }
+}

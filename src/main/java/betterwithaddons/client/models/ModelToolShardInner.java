@@ -3,6 +3,7 @@ package betterwithaddons.client.models;
 import betterwithaddons.lib.Reference;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -14,7 +15,9 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.BakedItemModel;
 import net.minecraftforge.client.model.IModel;
+import net.minecraftforge.client.model.ModelDynBucket;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 import net.minecraftforge.common.model.IModelState;
@@ -24,10 +27,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector4f;
-import java.util.BitSet;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ModelToolShardInner implements IModel {
     private final ImmutableList<ResourceLocation> textures;
@@ -102,12 +102,7 @@ public class ModelToolShardInner implements IModel {
         }
         TextureAtlasSprite particle = bakedTextureGetter.apply(textures.isEmpty() ? new ResourceLocation("missingno") : textures.get(0));
         ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> map = PerspectiveMapWrapper.getTransforms(state);
-        return new BakedItemModel(builder.build(), particle, map, null);
-    }
-
-    public IModelState getDefaultState()
-    {
-        return TRSRTransformation.identity();
+        return new BakedItemModel(builder.build(), particle, Maps.immutableEnumMap(map), ItemOverrideList.NONE);
     }
 
     public static ImmutableList<BakedQuad> getQuadsForSprite(int tint, TextureAtlasSprite template, TextureAtlasSprite sprite, VertexFormat format, Optional<TRSRTransformation> transform)
@@ -224,6 +219,32 @@ public class ModelToolShardInner implements IModel {
                                 x2, y1, 8.5f / 16f, u2, v2,
                                 x2, y2, 8.5f / 16f, u2, v1,
                                 x1, y2, 8.5f / 16f, u1, v1
+                        ));
+                        // north
+                        builder.add(buildQuad(format, transform, EnumFacing.NORTH, sprite, tint, color,
+                                x2, y1, 7.5f / 16f, u2, v2,
+                                x2, y1, 8.5f / 16f, u2, v1,
+                                x1, y1, 8.5f / 16f, u1, v1,
+                                x1, y1, 7.5f / 16f, u1, v2
+                        ));
+                        // south
+                        builder.add(buildQuad(format, transform, EnumFacing.SOUTH, sprite, tint, color,
+                                x1, y2, 7.5f / 16f, u1, v2,
+                                x1, y2, 8.5f / 16f, u1, v1,
+                                x2, y2, 8.5f / 16f, u2, v1,
+                                x2, y2, 7.5f / 16f, u2, v2
+                        ));
+                        builder.add(buildQuad(format, transform, EnumFacing.EAST, sprite, tint, color,
+                                x2, y1, 7.5f / 16f, u1, v2,
+                                x2, y2, 7.5f / 16f, u1, v1,
+                                x2, y2, 8.5f / 16f, u2, v1,
+                                x2, y1, 8.5f / 16f, u2, v2
+                        ));
+                        builder.add(buildQuad(format, transform, EnumFacing.WEST, sprite, tint, color,
+                                x1, y1, 8.5f / 16f, u2, v2,
+                                x1, y2, 8.5f / 16f, u2, v1,
+                                x1, y2, 7.5f / 16f, u1, v1,
+                                x1, y1, 7.5f / 16f, u1, v2
                         ));
                     }
                 }
@@ -419,7 +440,7 @@ public class ModelToolShardInner implements IModel {
         }
     }
 
-    private static final class BakedItemModel implements IBakedModel {
+    /*private static final class BakedItemModel implements IBakedModel {
         private final ImmutableList<BakedQuad> quads;
         private final TextureAtlasSprite particle;
         private final ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transforms;
@@ -499,5 +520,5 @@ public class ModelToolShardInner implements IModel {
         public ItemOverrideList getOverrides() {
             return ItemOverrideList.NONE;
         }
-    }
+    }*/
 }

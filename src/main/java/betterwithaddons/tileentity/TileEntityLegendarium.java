@@ -115,12 +115,22 @@ public class TileEntityLegendarium extends TileEntityBase implements ITickable {
             ItemBlock itemBlock = (ItemBlock) stack.getItem();
             Block block = itemBlock.getBlock();
             IBlockState state = block.getDefaultState();
-            if(block instanceof BlockPane && state.getMaterial() == Material.GLASS) {
+            boolean changed = false;
+            Material material = state.getMaterial();
+            if(block instanceof BlockPane && material == Material.GLASS) {
                 canvasType = canvasType != CanvasType.Invisible ? CanvasType.Invisible : CanvasType.Normal;
-            } else if(block instanceof BlockCarpet && state.getMaterial() == Material.CLOTH) {
+                changed = true;
+            } else if(block instanceof BlockCarpet && (material == Material.CARPET || material == Material.CLOTH)) {
                 canvasType = canvasType != CanvasType.Flat ? CanvasType.Flat : CanvasType.Normal;
+                changed = true;
             }
-            player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.canvas_changed."+canvasType.name().toLowerCase()),true);
+            if(changed) {
+                markDirty();
+                syncTE();
+                player.sendStatusMessage(new TextComponentTranslation("tile.legendarium.canvas_changed." + canvasType.name().toLowerCase()), true);
+            }
+
+            return stack;
         } else if(stack.getItem() == ModItems.ARTIFACT_FRAME) {
             if(cleanItemFrames() == 0) {
                 populateItemFrames();
@@ -153,7 +163,6 @@ public class TileEntityLegendarium extends TileEntityBase implements ITickable {
         ItemStack retain = queue.insertItem(0, ModItems.BROKEN_ARTIFACT.makeFrom(stack),false);
         if(retain.isEmpty()) {
             lastTurnIn = world.getTotalWorldTime();
-            populateItemFrames();
         }
 
         if(queue.getSlots() >= InteractionBWA.LEGENDARIUM_MIN_QUEUE_SIZE) {
@@ -219,7 +228,7 @@ public class TileEntityLegendarium extends TileEntityBase implements ITickable {
         int posterRange = InteractionBWA.LEGENDARIUM_POSTER_RANGE;
         AxisAlignedBB posterArea = new AxisAlignedBB(pos.add(-posterRange,-posterRange,-posterRange),pos.add(posterRange,posterRange,posterRange));
         List<EntityArtifactFrame> frames = world.getEntitiesWithinAABB(EntityArtifactFrame.class,posterArea,frame -> !frame.isLinked());
-        cleanItemFrames();
+        //cleanItemFrames();
 
         frames.sort(Comparator.comparingDouble(o -> o.getDistanceSq(getPos())));
         int i = 0;
@@ -272,8 +281,8 @@ public class TileEntityLegendarium extends TileEntityBase implements ITickable {
 
         QueueItemStackHandler queue;
 
-        public LegendariumData() {
-            super(ID);
+        public LegendariumData(String id) {
+            super(id);
             queue = new QueueItemStackHandler(this);
         }
 
@@ -294,7 +303,7 @@ public class TileEntityLegendarium extends TileEntityBase implements ITickable {
             {
                 WorldSavedData handler = world.getPerWorldStorage().getOrLoadData(LegendariumData.class, ID);
                 if (handler == null) {
-                    handler = new LegendariumData();
+                    handler = new LegendariumData(ID);
                     world.getPerWorldStorage().setData(ID, handler);
                 }
 

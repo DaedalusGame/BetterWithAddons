@@ -47,7 +47,7 @@ public class EntityArtifactFrame extends EntityItemFrame implements IEntityAddit
     }
 
     public BlockPos getLinkPos() {
-        return this.getDataManager().get(LINKPOS).or((BlockPos) null);
+        return this.getDataManager().get(LINKPOS).orNull();
     }
 
     public int getSlot() {
@@ -77,7 +77,7 @@ public class EntityArtifactFrame extends EntityItemFrame implements IEntityAddit
     }
 
     public void setLinkPos(BlockPos pos) {
-        this.getDataManager().set(LINKPOS, Optional.of(pos));
+        this.getDataManager().set(LINKPOS, Optional.fromNullable(pos));
     }
 
     @Override
@@ -92,17 +92,29 @@ public class EntityArtifactFrame extends EntityItemFrame implements IEntityAddit
         this.getDataManager().register(SLOT, 0);
     }
 
-    @Override
-    public ItemStack getDisplayedItem() {
+    public ItemStack getArtifact() {
         TileEntityLegendarium legendarium = getLegendarium();
         if(legendarium != null) {
             IItemHandler inventory = legendarium.getInventory();
-            if(inventory.getSlots() > getSlot())
-                return inventory.getStackInSlot(getSlot());
-            else
+            if(inventory.getSlots() > getSlot()) {
+                ItemStack stack = inventory.getStackInSlot(getSlot()).copy();
+                //stack.setItemFrame(this);
+                return stack;
+            } else
                 return ItemStack.EMPTY;
         } else
             return ItemStack.EMPTY;
+    }
+
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        if(!world.isRemote) {
+            ItemStack stack = getArtifact();
+            ItemStack displayStack = getDisplayedItem();
+            if (!ItemStack.areItemStacksEqual(stack, displayStack))
+                setDisplayedItem(stack);
+        }
     }
 
     @Override

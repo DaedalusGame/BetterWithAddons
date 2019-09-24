@@ -30,6 +30,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
@@ -40,6 +42,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.model.ModelDynBucket;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -78,8 +81,8 @@ public class ClientProxy implements IProxy
 
     @Override
     public void preInit() {
-        MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ToolShardModelHandler());
+        MinecraftForge.EVENT_BUS.register(this);
         ModInteractions.preInitClient();
     }
 
@@ -189,6 +192,10 @@ public class ClientProxy implements IProxy
     public void registerModels(ModelRegistryEvent event)
     {
         ItemModels.register();
+
+        ModelResourceLocation toolShardLocation = new ModelResourceLocation(ModItems.BROKEN_ARTIFACT.getRegistryName(), "inventory");
+        ModelLoader.setCustomMeshDefinition(ModItems.BROKEN_ARTIFACT, stack -> toolShardLocation);
+        ModelBakery.registerItemVariants(ModItems.BROKEN_ARTIFACT, toolShardLocation);
 
         ModelLoader.setCustomStateMapper(ModBlocks.THORNS,new StateMap.Builder().ignore(BlockThorns.FACING).build());
         ModelLoader.setCustomStateMapper(ModBlocks.ROPE_SIDEWAYS, new StateMapperBase() {

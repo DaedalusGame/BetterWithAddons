@@ -11,6 +11,7 @@
     "uvlock": false
   },
   "variants": {
+    "inventory": [{}],
     "type": {
       "raw_melon_pie": {
         "textures": {

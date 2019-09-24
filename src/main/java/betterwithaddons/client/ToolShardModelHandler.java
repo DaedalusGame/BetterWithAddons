@@ -15,6 +15,8 @@ import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -26,6 +28,7 @@ import java.util.List;
 
 public class ToolShardModelHandler {
     Method getVariantNames;
+    public static IModelState STATE;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onModelBake(ModelBakeEvent event)
@@ -50,8 +53,8 @@ public class ToolShardModelHandler {
                 }
                 if(model == null) continue;
                 IModel brokenmodel = new ModelToolShardInner(ImmutableList.copyOf(model.getTextures()));
-                IBakedModel bakedbrokenmodel = brokenmodel.bake(brokenmodel.getDefaultState(), DefaultVertexFormats.ITEM, location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString()));
-                ToolShardOverrideHandler.INSTANCE.addModel(item,bakedbrokenmodel);
+                IBakedModel bakedbrokenmodel = brokenmodel.bake(STATE, DefaultVertexFormats.ITEM, location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString()));
+                ToolShardOverrideHandler.addModel(item,bakedbrokenmodel);
             }
         }
     }

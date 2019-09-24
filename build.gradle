@@ -15,12 +15,18 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "0.48"
+version = "0.50-hotfix"
 group= "betterwithaddons" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Better With Addons"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
+
+jar {
+    manifest {
+        attributes 'FMLAT': 'bwa_at.cfg'
+    }
+}
 
 minecraft {
     version = "1.12.2-14.23.4.2705"
