@@ -12,6 +12,10 @@ import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.interaction.jei.category.*;
 import betterwithaddons.interaction.jei.wrapper.*;
 import betterwithaddons.item.ModItems;
+import crafttweaker.mc1120.recipes.MCRecipeShaped;
+import crafttweaker.mc1120.recipes.MCRecipeShapeless;
+import crafttweaker.mods.jei.recipeWrappers.CraftingRecipeWrapperShaped;
+import crafttweaker.mods.jei.recipeWrappers.CraftingRecipeWrapperShapeless;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IRecipeWrapper;
@@ -106,6 +110,10 @@ public class BWAJEIPlugin implements IModPlugin {
             return new ShapedRecipesWrapper(helper, (ShapedRecipes) recipe);
         if(recipe instanceof ShapelessOreRecipe || recipe instanceof ShapelessRecipes)
             return new ShapelessRecipeWrapper<>(helper, recipe);
+        if(recipe instanceof MCRecipeShaped)
+            return new CraftingRecipeWrapperShaped((MCRecipeShaped) recipe);
+        if(recipe instanceof MCRecipeShapeless)
+            return new CraftingRecipeWrapperShapeless((MCRecipeShapeless) recipe);
         return null;
     }
 }

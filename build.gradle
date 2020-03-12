@@ -15,7 +15,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "0.50-hotfix"
+version = "0.51"
 group= "betterwithaddons" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Better With Addons"
 
@@ -29,7 +29,7 @@ jar {
 }
 
 minecraft {
-    version = "1.12.2-14.23.4.2705"
+    version = "1.12.2-14.23.5.2820"
     runDir = "run"
     mappings = "snapshot_20171125"
     replace "%VERSION%": "${project.version}"

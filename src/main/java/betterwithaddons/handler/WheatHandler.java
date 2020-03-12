@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -61,7 +62,7 @@ public class WheatHandler {
             return;
 
         if(toolMaterialField == null)
-            toolMaterialField = ReflectionHelper.findField(ItemHoe.class,"field_77843_a","toolMaterial");
+            toolMaterialField = ObfuscationReflectionHelper.findField(ItemHoe.class,"field_77843_a");
 
         EntityPlayer player = event.getEntityPlayer();
 

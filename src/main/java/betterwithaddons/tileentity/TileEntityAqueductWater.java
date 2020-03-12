@@ -17,13 +17,94 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class TileEntityAqueductWater extends TileEntityBase {
+    public class AqueductWrapper implements IFluidHandler, IFluidTankProperties {
+        @Override
+        public IFluidTankProperties[] getTankProperties() {
+            return new IFluidTankProperties[] {this};
+        }
+
+        @Override
+        public int fill(FluidStack resource, boolean doFill) {
+            return resource.amount;
+        }
+
+        @Nullable
+        @Override
+        public FluidStack drain(FluidStack resource, boolean doDrain) {
+            if(resource == null)
+                return null;
+
+            if(resource.getFluid() == FluidRegistry.WATER)
+            {
+                FluidStack drained = ModBlocks.AQUEDUCT_WATER.drain(getWorld(),getPos(),doDrain);
+                if(drained != null) {
+                    drained.amount = Math.min(drained.amount, resource.amount);
+                    return drained;
+                }
+            }
+
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public FluidStack drain(int maxDrain, boolean doDrain) {
+            if(maxDrain <= 0)
+                return null;
+
+            FluidStack drained = ModBlocks.AQUEDUCT_WATER.drain(getWorld(), getPos(), doDrain);
+            if (drained != null) {
+                drained.amount = Math.min(drained.amount, maxDrain);
+                return drained;
+            }
+
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public FluidStack getContents() {
+            return new FluidStack(FluidRegistry.WATER,InteractionBWA.AQUEDUCT_WATER_AMOUNT);
+        }
+
+        @Override
+        public int getCapacity() {
+            return InteractionBWA.AQUEDUCT_WATER_AMOUNT;
+        }
+
+        @Override
+        public boolean canFill() {
+            return true;
+        }
+
+        @Override
+        public boolean canDrain() {
+            return true;
+        }
+
+        @Override
+        public boolean canFillFluidType(FluidStack fluidStack) {
+            return true;
+        }
+
+        @Override
+        public boolean canDrainFluidType(FluidStack fluidStack) {
+            return fluidStack.getFluid() == FluidRegistry.WATER;
+        }
+    }
+
     private int distanceFromSource;
     private static final HashSet<ResourceLocation> WATER_SOURCES = new HashSet<>();
     private static final HashSet<Biome> BIOMES = new HashSet<>();
@@ -39,7 +120,7 @@ public class TileEntityAqueductWater extends TileEntityBase {
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && InteractionBWA.AQUEDUCT_IS_TANK)
-            return (T)new FluidBlockWrapper(ModBlocks.AQUEDUCT_WATER, world, pos);
+            return (T)new AqueductWrapper();
 
         return super.getCapability(capability, facing);
     }

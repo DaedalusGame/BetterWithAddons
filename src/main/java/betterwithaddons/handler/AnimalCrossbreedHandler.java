@@ -42,6 +42,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -93,7 +94,8 @@ public class AnimalCrossbreedHandler {
 
     public static void initialize()
     {
-        inLove = ReflectionHelper.findField(EntityAnimal.class, "field_70881_d", "inLove");
+
+        inLove = ObfuscationReflectionHelper.findField(EntityAnimal.class,"field_70881_d");
 
         //Standard
         mutationSet.add(new AnimalMutation((world, pos, mother, father) -> spawnBabyAt(world,pos,new EntityCow(world)),100));

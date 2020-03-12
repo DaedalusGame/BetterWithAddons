@@ -16,6 +16,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -81,7 +82,7 @@ public class EggIncubationHandler {
             if(!world.isBlockLoaded(pos) || entity.isDead || stack.isEmpty() || stack.getItem() != Items.EGG || stack.getCount() > 1)
                 remove = true;
             else {
-                if((int) ReflectionHelper.getPrivateValue(EntityItem.class, entity, "d", "field_70292_b", "age") > InteractionBTWTweak.EGG_INCUBATION_TIME && hasPadding(world,pos.down()) && hasLitLight(world,pos.up()))
+                if((int) ObfuscationReflectionHelper.getPrivateValue(EntityItem.class, entity, "d", "field_70292_b", "age") > InteractionBTWTweak.EGG_INCUBATION_TIME && hasPadding(world,pos.down()) && hasLitLight(world,pos.up()))
                 {
                     world.playSound(null,entity.posX,entity.posY,entity.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.NEUTRAL,  0.25F, world.rand.nextFloat() * 1.5F + 1.0F);
                     EntityChicken chick = new EntityChicken(world);
