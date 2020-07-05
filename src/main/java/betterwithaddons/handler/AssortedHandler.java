@@ -40,6 +40,7 @@ import net.minecraft.world.BossInfo.Overlay;
 import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -441,6 +442,30 @@ public class AssortedHandler {
                 }
 
             } else if (world.getMinecraftServer().getTickCounter() % BossCleanupThreshold == 0 && BossList.containsKey(uuid)) {
+                BossInfoServer bossInfo = BossList.get(uuid);
+                for (EntityPlayerMP ply : bossInfo.getPlayers()) {
+                    bossInfo.removePlayer(ply);
+                }
+                BossList.remove(uuid);
+            }
+        }
+    }
+	
+    @SubscribeEvent
+    public void livingDeath(LivingDeathEvent event) {
+        final EntityLivingBase entity = updateEvent.getEntityLiving();
+        
+        if (entity == null)
+            return;
+        
+        World world = entity.getEntityWorld();
+        UUID uuid = entity.getUniqueID();
+        
+        if (world == null || uuid == null)
+            return;
+        
+        if (!world.isRemote) {
+            if (world.getMinecraftServer().getTickCounter() % BossCleanupThreshold == 0 && BossList.containsKey(uuid)) {
                 BossInfoServer bossInfo = BossList.get(uuid);
                 for (EntityPlayerMP ply : bossInfo.getPlayers()) {
                     bossInfo.removePlayer(ply);
