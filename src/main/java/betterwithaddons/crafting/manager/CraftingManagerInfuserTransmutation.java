@@ -6,6 +6,7 @@ import net.minecraft.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +31,10 @@ public class CraftingManagerInfuserTransmutation {
     public void addRecipe(Ingredient input, int spirits, ItemStack output) {
         this.recipes.add(createRecipe(input, spirits, output));
     }
+    
+    public void addRecipe(Ingredient input, int spirits, ItemStack[] outputs) {
+        this.recipes.add(createRecipe(input, spirits, outputs));
+    }
 
     public void removeRecipe(TransmutationRecipe recipe) {
         this.recipes.remove(recipe);
@@ -41,11 +46,16 @@ public class CraftingManagerInfuserTransmutation {
 
     protected TransmutationRecipe createRecipe(Ingredient input, int spirits, ItemStack output)
     {
-        return new TransmutationRecipe(input, spirits, output);
+        return createRecipe(input, spirits, new ItemStack[]{output});
+    }
+    
+    protected TransmutationRecipe createRecipe(Ingredient input, int spirits, ItemStack[] outputs)
+    {
+        return new TransmutationRecipe(input, spirits, outputs);
     }
 
     public List<TransmutationRecipe> findRecipeForRemoval(@Nonnull ItemStack output) {
-        return recipes.stream().filter(recipe -> recipe.output.isItemEqual(output)).collect(Collectors.toList());
+        return recipes.stream().filter(recipe -> recipe.getRecipeOutputs().contains(output)).collect(Collectors.toList());
     }
 
     public TransmutationRecipe getSmeltingRecipe(ItemStack input, int spirits) {
