@@ -43,7 +43,7 @@ public class TransmutationRecipe extends SmeltingRecipe {
         if(spirits < requiredSpirit)
             return false;
         
-        if (Arrays.asList(possibleOutputs).stream().map(ItemStack::getItem).anyMatch((itemStack) -> itemStack == item))
+        if (Arrays.asList(possibleOutputs).stream().map(ItemStack::getItem).anyMatch((itemStack) -> itemStack == item.getItem()))
             return false;
 
         return matchesInput(item);
