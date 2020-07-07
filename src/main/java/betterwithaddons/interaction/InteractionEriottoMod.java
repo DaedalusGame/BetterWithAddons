@@ -244,59 +244,9 @@ public class InteractionEriottoMod extends Interaction {
         CraftingManagerInfuser.getInstance().addRecipe(new ShapedOreRecipe(new ResourceLocation(Reference.MOD_ID,"nabe"),new ItemStack(ModBlocks.NABE, 1), "i i", "i i", "lhl", 'i', "ingotIron", 'l', "ingotTamahagane", 'h', "ingotHochoTetsu"),1);
 
         //Random seeds
-        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreIngredient("seed"), 1, ItemStack.EMPTY) {
-            Random random = new Random();
-
-            @Override
-            public ItemStack getOutput(ItemStack input) {
-                int i = random.nextInt(3);
-                switch(i)
-                {
-                    case(0):return new ItemStack(ModBlocks.RICE);
-                    case(1):return new ItemStack(ModBlocks.RUSH);
-                    case(2):return new ItemStack(ModBlocks.TEA);
-                    default:return ItemStack.EMPTY;
-                }
-            }
-
-            @Override
-            public boolean matchesInput(ItemStack item) {
-                if (item.getItem() == Item.getItemFromBlock(ModBlocks.RICE) || item.getItem() == Item.getItemFromBlock(ModBlocks.RUSH) || item.getItem() == Item.getItemFromBlock(ModBlocks.TEA))
-                    return false;
-
-                return super.matchesInput(item);
-            }
-
-            @Override
-            public List<ItemStack> getRecipeOutputs() {
-                return Lists.newArrayList(new ItemStack(ModBlocks.RICE), new ItemStack(ModBlocks.RUSH), new ItemStack(ModBlocks.TEA));
-            }
-        });
+        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreIngredient("seed"), 1, new ItemStack[]{new ItemStack(ModBlocks.RICE), new ItemStack(ModBlocks.RUSH), new ItemStack(ModBlocks.TEA)}));
         //Random saplings
-        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreIngredient("treeSapling"), 1, ItemStack.EMPTY) {
-            Random random = new Random();
-
-            @Override
-            public ItemStack getOutput(ItemStack input) {
-                if (random.nextInt(2) == 0)
-                    return new ItemStack(ModBlocks.SAKURA_SAPLING);
-                else
-                    return new ItemStack(ModBlocks.MULBERRY_SAPLING);
-            }
-
-            @Override
-            public boolean matchesInput(ItemStack item) {
-                if (item.getItem() == Item.getItemFromBlock(ModBlocks.SAKURA_SAPLING) || item.getItem() == Item.getItemFromBlock(ModBlocks.MULBERRY_SAPLING))
-                    return false;
-
-                return super.matchesInput(item);
-            }
-
-            @Override
-            public List<ItemStack> getRecipeOutputs() {
-                return Lists.newArrayList(new ItemStack(ModBlocks.SAKURA_SAPLING), new ItemStack(ModBlocks.MULBERRY_SAPLING));
-            }
-        });
+        CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(new OreIngredient("treeSapling"), 1, new ItemStack[]{new ItemStack(ModBlocks.SAKURA_SAPLING), new ItemStack(ModBlocks.MULBERRY_SAPLING)}));
         //Bamboo
         CraftingManagerInfuserTransmutation.getInstance().addRecipe(new OreIngredient("sugarcane"), 1, new ItemStack(ModBlocks.BAMBOO));
         //Repair tools and armor
