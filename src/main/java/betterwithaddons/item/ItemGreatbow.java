@@ -80,8 +80,7 @@ public class ItemGreatbow extends ItemBow {
                     itemstack = new ItemStack(ModItems.GREATARROW);
                 }
                 if ((double)(f = ItemGreatbow.getArrowVelocity(i)) >= 0.1) {
-                    boolean flag1;
-                    boolean bl = flag1 = entityplayer.capabilities.isCreativeMode || itemstack.getItem() instanceof ItemGreatarrow && ((ItemGreatarrow)itemstack.getItem()).isInfinite(itemstack, stack, entityplayer);
+                    boolean flag1 = entityplayer.capabilities.isCreativeMode || itemstack.getItem() instanceof ItemGreatarrow && ((ItemGreatarrow)itemstack.getItem()).isInfinite(itemstack, stack, entityplayer);
                     if (!worldIn.isRemote) {
                         int enchpower = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
                         int enchpunch = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
@@ -106,7 +105,7 @@ public class ItemGreatbow extends ItemBow {
                         worldIn.spawnEntity(entityarrow);
                     }
                     worldIn.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_SKELETON_DEATH, SoundCategory.NEUTRAL, 1.0f, 1.0f / (itemRand.nextFloat() * 0.4f + 2.2f) - f * 0.2f);
-                    if (!flag1) {
+                    if (!flag1 && !flag) {
                         itemstack.shrink(1);
                         if (itemstack.getCount() == 0) {
                             entityplayer.inventory.deleteStack(itemstack);
