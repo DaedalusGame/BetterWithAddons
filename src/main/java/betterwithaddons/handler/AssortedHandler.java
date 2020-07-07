@@ -430,12 +430,12 @@ public class AssortedHandler {
             if (entity.isPotionActive(ModPotions.boss)) {
                 if (!BossList.containsKey(uuid)) {
                     BossInfoServer displayData = (BossInfoServer) new BossInfoServer(entity.getDisplayName(), Color.PURPLE, Overlay.PROGRESS).setDarkenSky(false);
-                    BossList.put(uuid, displayData);
                     List<EntityPlayerMP> entities = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expand(24, 24, 24));
                     if (entities != null)
                         for (EntityPlayerMP ply : entities) {
                             displayData.addPlayer(ply);
                         }
+                    BossList.put(uuid, displayData);
                 } else {
                     BossInfoServer bossInfo = BossList.get(uuid);
                     bossInfo.setPercent(entity.getHealth() / entity.getMaxHealth());
@@ -453,7 +453,7 @@ public class AssortedHandler {
 	
     @SubscribeEvent
     public void livingDeath(LivingDeathEvent event) {
-        final EntityLivingBase entity = updateEvent.getEntityLiving();
+        final EntityLivingBase entity = event.getEntityLiving();
         
         if (entity == null)
             return;
@@ -465,7 +465,7 @@ public class AssortedHandler {
             return;
         
         if (!world.isRemote) {
-            if (world.getMinecraftServer().getTickCounter() % BossCleanupThreshold == 0 && BossList.containsKey(uuid)) {
+            if (BossList.containsKey(uuid)) {
                 BossInfoServer bossInfo = BossList.get(uuid);
                 for (EntityPlayerMP ply : bossInfo.getPlayers()) {
                     bossInfo.removePlayer(ply);
