@@ -41,6 +41,7 @@ import net.minecraft.world.BossInfo.Overlay;
 import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
@@ -432,18 +433,42 @@ public class AssortedHandler {
             if (entity.isPotionActive(ModPotions.boss)) {
                 if (!BossList.containsKey(uuid)) {
                     BossInfoServer displayData = (BossInfoServer) new BossInfoServer(entity.getDisplayName(), Color.PURPLE, Overlay.PROGRESS).setDarkenSky(false);
-                    BossList.put(uuid, displayData);
                     List<EntityPlayerMP> entities = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expand(24, 24, 24));
                     if (entities != null)
                         for (EntityPlayerMP ply : entities) {
                             displayData.addPlayer(ply);
                         }
+                    BossList.put(uuid, displayData);
                 } else {
                     BossInfoServer bossInfo = BossList.get(uuid);
                     bossInfo.setPercent(entity.getHealth() / entity.getMaxHealth());
                 }
 
             } else if (world.getMinecraftServer().getTickCounter() % BossCleanupThreshold == 0 && BossList.containsKey(uuid)) {
+                BossInfoServer bossInfo = BossList.get(uuid);
+                for (EntityPlayerMP ply : bossInfo.getPlayers()) {
+                    bossInfo.removePlayer(ply);
+                }
+                BossList.remove(uuid);
+            }
+        }
+    }
+	
+    @SubscribeEvent
+    public void livingDeath(LivingDeathEvent event) {
+        final EntityLivingBase entity = event.getEntityLiving();
+        
+        if (entity == null)
+            return;
+        
+        World world = entity.getEntityWorld();
+        UUID uuid = entity.getUniqueID();
+        
+        if (world == null || uuid == null)
+            return;
+        
+        if (!world.isRemote) {
+            if (BossList.containsKey(uuid)) {
                 BossInfoServer bossInfo = BossList.get(uuid);
                 for (EntityPlayerMP ply : bossInfo.getPlayers()) {
                     bossInfo.removePlayer(ply);
