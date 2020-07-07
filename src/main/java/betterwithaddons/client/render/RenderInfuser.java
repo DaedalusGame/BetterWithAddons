@@ -15,6 +15,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.awt.*;
+
 @SideOnly(Side.CLIENT)
 public class RenderInfuser extends TileEntitySpecialRenderer<TileEntityInfuser>
 {
@@ -67,9 +69,12 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileEntityInfuser>
         GlStateManager.shadeModel(7425);
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
 
-        int r = (int)MathHelper.clampedLerp(100,255,activeVal);
-        int g = (int)MathHelper.clampedLerp(100,0,activeVal);
-        int b = (int)MathHelper.clampedLerp(100,0,activeVal);
+        Color colorLow = InteractionEriottoMod.INFUSER_COLOR_LOW;
+        Color colorHigh = InteractionEriottoMod.INFUSER_COLOR_HIGH;
+        int r = (int)MathHelper.clampedLerp(colorLow.getRed(),colorHigh.getRed(),activeVal);
+        int g = (int)MathHelper.clampedLerp(colorLow.getGreen(),colorHigh.getGreen(),activeVal);
+        int b = (int)MathHelper.clampedLerp(colorLow.getBlue(),colorHigh.getBlue(),activeVal);
+        int a = (int)MathHelper.clampedLerp(colorLow.getAlpha(),colorHigh.getAlpha(),activeVal);
 
         int lightmapfull = 0x00F000F0;
 
@@ -94,10 +99,10 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileEntityInfuser>
             double unorm2 = (u+1) / (double)detail_hor;
             double vnorm2 = (v+1) / (double)detail_ver;
 
-            bufferbuilder.pos(Math.sin(twopi * unorm1) * Math.sin(pi * vnorm1) * size, Math.cos(pi * vnorm1) * size, Math.cos(twopi * unorm1) * Math.sin(pi * vnorm1) * size).tex(unorm1, vnorm1).lightmap(lightmapu,lightmapv).color(r, b, g, 255).endVertex();
-            bufferbuilder.pos(Math.sin(twopi * unorm2) * Math.sin(pi * vnorm1) * size, Math.cos(pi * vnorm1) * size, Math.cos(twopi * unorm2) * Math.sin(pi * vnorm1) * size).tex(unorm2, vnorm1).lightmap(lightmapu,lightmapv).color(r, b, g, 255).endVertex();
-            bufferbuilder.pos(Math.sin(twopi * unorm2) * Math.sin(pi * vnorm2) * size, Math.cos(pi * vnorm2) * size,  Math.cos(twopi * unorm2) * Math.sin(pi * vnorm2) * size).tex(unorm2, vnorm2).lightmap(lightmapu,lightmapv).color(r, b, g, 255).endVertex();
-            bufferbuilder.pos(Math.sin(twopi * unorm1) * Math.sin(pi * vnorm2) * size, Math.cos(pi * vnorm2) * size, Math.cos(twopi * unorm1) * Math.sin(pi * vnorm2) * size).tex(unorm1, vnorm2).lightmap(lightmapu,lightmapv).color(r, b, g, 255).endVertex();
+            bufferbuilder.pos(Math.sin(twopi * unorm1) * Math.sin(pi * vnorm1) * size, Math.cos(pi * vnorm1) * size, Math.cos(twopi * unorm1) * Math.sin(pi * vnorm1) * size).tex(unorm1, vnorm1).lightmap(lightmapu,lightmapv).color(r, g, b, 255).endVertex();
+            bufferbuilder.pos(Math.sin(twopi * unorm2) * Math.sin(pi * vnorm1) * size, Math.cos(pi * vnorm1) * size, Math.cos(twopi * unorm2) * Math.sin(pi * vnorm1) * size).tex(unorm2, vnorm1).lightmap(lightmapu,lightmapv).color(r, g, b, 255).endVertex();
+            bufferbuilder.pos(Math.sin(twopi * unorm2) * Math.sin(pi * vnorm2) * size, Math.cos(pi * vnorm2) * size,  Math.cos(twopi * unorm2) * Math.sin(pi * vnorm2) * size).tex(unorm2, vnorm2).lightmap(lightmapu,lightmapv).color(r, g, b, 255).endVertex();
+            bufferbuilder.pos(Math.sin(twopi * unorm1) * Math.sin(pi * vnorm2) * size, Math.cos(pi * vnorm2) * size, Math.cos(twopi * unorm1) * Math.sin(pi * vnorm2) * size).tex(unorm1, vnorm2).lightmap(lightmapu,lightmapv).color(r, g, b, 255).endVertex();
         }
 
         tessellator.draw();
@@ -112,10 +117,10 @@ public class RenderInfuser extends TileEntitySpecialRenderer<TileEntityInfuser>
         GlStateManager.disableCull();
         GlStateManager.shadeModel(7425);
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
-        bufferbuilder.pos(0, 12 / 16.0 - 0.01, 0).tex(0.0, 0.0).lightmap(lightmapu,lightmapv).color(r, b, g, 255).endVertex();
-        bufferbuilder.pos(0, 12 / 16.0 - 0.01, 1).tex(1.0, 0.0).lightmap(lightmapu,lightmapv).color(r, b, g, 255).endVertex();
-        bufferbuilder.pos(1, 12 / 16.0 - 0.01, 1).tex(1.0, 1.0).lightmap(lightmapu,lightmapv).color(r, b, g, 255).endVertex();
-        bufferbuilder.pos(1, 12 / 16.0 - 0.01, 0).tex(0.0, 1.0).lightmap(lightmapu,lightmapv).color(r, b, g, 255).endVertex();
+        bufferbuilder.pos(0, 12 / 16.0 - 0.01, 0).tex(0.0, 0.0).lightmap(lightmapu,lightmapv).color(r, g, b, a).endVertex();
+        bufferbuilder.pos(0, 12 / 16.0 - 0.01, 1).tex(1.0, 0.0).lightmap(lightmapu,lightmapv).color(r, g, b, a).endVertex();
+        bufferbuilder.pos(1, 12 / 16.0 - 0.01, 1).tex(1.0, 1.0).lightmap(lightmapu,lightmapv).color(r, g, b, a).endVertex();
+        bufferbuilder.pos(1, 12 / 16.0 - 0.01, 0).tex(0.0, 1.0).lightmap(lightmapu,lightmapv).color(r, g, b, a).endVertex();
         tessellator.draw();
         GlStateManager.popMatrix();
     }

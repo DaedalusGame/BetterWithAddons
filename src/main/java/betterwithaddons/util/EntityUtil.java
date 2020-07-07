@@ -1,8 +1,10 @@
 package betterwithaddons.util;
 
+import betterwithaddons.interaction.InteractionBWA;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -33,8 +35,13 @@ public class EntityUtil {
         return pos;
     }
 
-    public static DamageSource causeLightningArrowDamage(Entity shooter)
+    public static DamageSource causeLightningArrowDamage(Entity shooter, Entity arrow)
     {
-        return (new EntityDamageSource("lightningArrow",shooter)).setProjectile().setDamageBypassesArmor();
+        return (new EntityDamageSourceIndirect(InteractionBWA.GREATARROW_LIGHTNING_DAMAGE_TYPE,arrow,shooter)).setProjectile().setDamageBypassesArmor();
+    }
+
+    public static DamageSource causeFireArrowDamage(Entity shooter, Entity arrow)
+    {
+        return (new EntityDamageSourceIndirect(InteractionBWA.GREATARROW_FIRE_DAMAGE_TYPE,arrow,shooter)).setProjectile().setFireDamage();
     }
 }

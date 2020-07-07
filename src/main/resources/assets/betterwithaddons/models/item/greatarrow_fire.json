@@ -1,0 +1,28 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "betterwithaddons:items/greatarrow_fire"
+    },
+	"display": {
+		"ground": {
+			"scale": [ 1.0, 1.0, 1.0 ],
+			"translation": [ 0, 2.5, 0 ]
+		},
+        "thirdperson_righthand": {
+			"rotation": [ -80, 260, -40 ],
+            "scale": [ 1.10, 1.10, 1.10 ]
+        },
+		"thirdperson_lefthand": {
+			"rotation": [ -80, -280, 40 ],
+            "scale": [ 1.10, 1.10, 1.10 ]
+        },
+        "firstperson_righthand": {
+			"rotation": [ 0, -90, 25 ],
+            "scale": [ 1.36, 1.36, 1.36 ]
+        },
+		"firstperson_lefthand": {
+			"rotation": [ 0, 90, -25 ],
+            "scale": [ 1.36, 1.36, 1.36 ]
+        }
+    }
+}

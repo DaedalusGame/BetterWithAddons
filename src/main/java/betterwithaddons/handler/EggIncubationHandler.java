@@ -1,11 +1,7 @@
 package betterwithaddons.handler;
 
 import betterwithaddons.interaction.InteractionBTWTweak;
-import betterwithaddons.interaction.InteractionBWR;
-import betterwithmods.common.BWMBlocks;
-import betterwithmods.common.blocks.BlockAesthetic;
-import betterwithmods.common.blocks.BlockLight;
-import net.minecraft.block.state.IBlockState;
+import betterwithaddons.util.MiscUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityChicken;
@@ -19,7 +15,6 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -53,17 +48,6 @@ public class EggIncubationHandler {
         }
     }
 
-    private boolean hasLitLight(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        return state.getBlock() instanceof BlockLight && state.getValue(BlockLight.ACTIVE);
-    }
-
-    private boolean hasPadding(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        return state.getBlock() == BWMBlocks.AESTHETIC && state.getValue(BlockAesthetic.TYPE).equals(BlockAesthetic.EnumType.PADDING);
-    }
-
-
     private void handleEggs()
     {
         if(TrackedItemsIterator == null || !TrackedItemsIterator.hasNext())
@@ -82,7 +66,7 @@ public class EggIncubationHandler {
             if(!world.isBlockLoaded(pos) || entity.isDead || stack.isEmpty() || stack.getItem() != Items.EGG || stack.getCount() > 1)
                 remove = true;
             else {
-                if((int) ObfuscationReflectionHelper.getPrivateValue(EntityItem.class, entity, "d", "field_70292_b", "age") > InteractionBTWTweak.EGG_INCUBATION_TIME && hasPadding(world,pos.down()) && hasLitLight(world,pos.up()))
+                if((int) ObfuscationReflectionHelper.getPrivateValue(EntityItem.class, entity, "d", "field_70292_b", "age") > InteractionBTWTweak.EGG_INCUBATION_TIME && MiscUtil.hasPadding(world,pos.down()) && MiscUtil.hasLitLight(world,pos.up()))
                 {
                     world.playSound(null,entity.posX,entity.posY,entity.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.NEUTRAL,  0.25F, world.rand.nextFloat() * 1.5F + 1.0F);
                     EntityChicken chick = new EntityChicken(world);

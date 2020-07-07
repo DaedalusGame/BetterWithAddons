@@ -4,6 +4,7 @@ import betterwithaddons.block.ModBlocks;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.manager.*;
 import betterwithaddons.crafting.recipes.ArmorDecorateRecipe;
+import betterwithaddons.crafting.recipes.NabeRecipeVisual;
 import betterwithaddons.crafting.recipes.TeaNabeRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.entity.EntityKarateZombie;
@@ -11,17 +12,17 @@ import betterwithaddons.item.ModItems;
 import betterwithaddons.lib.Reference;
 import betterwithaddons.util.*;
 import betterwithmods.common.BWMBlocks;
+import betterwithmods.common.BWMItems;
 import betterwithmods.common.BWOreDictionary;
 import betterwithmods.common.BWRegistry;
+import betterwithmods.common.items.ItemMaterial;
 import betterwithmods.common.registry.Wood;
-import betterwithmods.module.gameplay.miniblocks.MiniBlockIngredient;
 import betterwithmods.module.gameplay.miniblocks.MiniBlocks;
 import betterwithmods.module.gameplay.miniblocks.MiniType;
 import betterwithmods.module.gameplay.miniblocks.blocks.BlockMini;
 import betterwithmods.module.hardcore.crafting.HCLumber;
 import betterwithmods.util.StackIngredient;
 import com.google.common.collect.Lists;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityZombie;
@@ -31,16 +32,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.crafting.CompoundIngredient;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InteractionEriottoMod extends Interaction {
     public static boolean ENABLED = true;
@@ -63,6 +67,14 @@ public class InteractionEriottoMod extends Interaction {
     public static double KERA_HOCHOTETSU_CHANCE = 0.20;
     public static double KERA_IRON_CHANCE = 0.20;
     public static int KARATE_ZOMBIE_MAX_SPIRITS = 128;
+    public static Color SPIRIT_COLOR_LOW = new Color(127, 0, 0, 128);
+    public static Color SPIRIT_COLOR_HIGH = new Color(255, 0, 0, 128);
+    public static Color SPIRIT_GUI_COLOR_LOW = new Color(127, 0, 0, 255);
+    public static Color SPIRIT_GUI_COLOR_HIGH = new Color(255, 0, 0, 255);
+    public static Color INFUSER_COLOR_LOW = new Color(100,100,100);
+    public static Color INFUSER_COLOR_HIGH = new Color(255,0,0);
+    public static boolean HARDCORE_BREWING = true;
+
     public static HashSet<String> TRANSFORM_ZOMBIES = new HashSet<>();
     public ArrayList<Item> REPAIRABLE_TOOLS = new ArrayList<>();
 
@@ -80,6 +92,7 @@ public class InteractionEriottoMod extends Interaction {
         KARATE_ZOMBIE_SPAWN_WEIGHT = loadPropInt("RandomJapaneseMobsWeight","Weight for a karate zombie to spawn.", KARATE_ZOMBIE_SPAWN_WEIGHT);
         IRON_PER_IRONSAND = loadPropInt("IronPerIronSand","How much iron should be required per block of iron sand", IRON_PER_IRONSAND);
         SAND_PER_IRONSAND = loadPropInt("SandPerIronSand","How much sand should be required per block of iron sand", SAND_PER_IRONSAND);
+        HARDCORE_BREWING = loadPropBool("HardcoreBrewing", "Replaces certain Nabe brewing ingredients with their equivalent HC brewing equivalents.", HARDCORE_BREWING);
         doesNotNeedRestart(() -> {
             SOULSAND_MAX_SPIRITS = loadPropInt("MaxSpirits","Maximum amount of spirit to be stored in Infused Soul Sand.", SOULSAND_MAX_SPIRITS);
             BOTTLE_MAX_SPIRITS = loadPropInt("SpiritsPerBottle","How much spirit is contained in one bottle.", BOTTLE_MAX_SPIRITS);
@@ -94,6 +107,12 @@ public class InteractionEriottoMod extends Interaction {
             KERA_HOCHOTETSU_CHANCE = loadPropDouble("KeraHochoTetsuChance","Chance to obtain Hocho-Tetsu from breaking Kera.",KERA_HOCHOTETSU_CHANCE);
             KERA_IRON_CHANCE = loadPropDouble("KeraIronChance","Chance to obtain Iron from breaking Kera.",KERA_IRON_CHANCE);
             TRANSFORM_ZOMBIES = loadPropStringSet("TransformZombies","A list of entity ids that can become Karate Zombies on contact with spirits.",new String[]{"minecraft:zombie"});
+            SPIRIT_COLOR_LOW = loadPropColor("SpiritColorLow", "The low color that spirit entities have.", SPIRIT_COLOR_LOW);
+            SPIRIT_COLOR_HIGH = loadPropColor("SpiritColorHigh", "The high color that spirit entities have.", SPIRIT_COLOR_HIGH);
+            SPIRIT_GUI_COLOR_LOW = loadPropColor("SpiritGuiColorLow", "The background color that spirit values have in a gui.", SPIRIT_GUI_COLOR_LOW);
+            SPIRIT_GUI_COLOR_HIGH = loadPropColor("SpiritGuiColorHigh", "The foreground color that spirit values have in a gui.", SPIRIT_GUI_COLOR_HIGH);
+            INFUSER_COLOR_LOW = loadPropColor("InfuserColorLow", "The color that an empty Infuser has.", INFUSER_COLOR_LOW);
+            INFUSER_COLOR_HIGH = loadPropColor("InfuserColorHigh", "The color that a filled Infuser has.", INFUSER_COLOR_HIGH);
         });
     }
 
@@ -248,7 +267,11 @@ public class InteractionEriottoMod extends Interaction {
             Random random = new Random();
 
             @Override
-            public ItemStack getOutput(ItemStack input) {
+            public List<ItemStack> getOutput(List<ItemStack> inputs, TileEntity tile) {
+                return Lists.newArrayList(getRandomSeed());
+            }
+
+            public ItemStack getRandomSeed() {
                 int i = random.nextInt(3);
                 switch(i)
                 {
@@ -277,7 +300,11 @@ public class InteractionEriottoMod extends Interaction {
             Random random = new Random();
 
             @Override
-            public ItemStack getOutput(ItemStack input) {
+            public List<ItemStack> getOutput(List<ItemStack> inputs, TileEntity tile) {
+                return Lists.newArrayList(getRandomSapling());
+            }
+
+            public ItemStack getRandomSapling() {
                 if (random.nextInt(2) == 0)
                     return new ItemStack(ModBlocks.SAKURA_SAPLING);
                 else
@@ -327,10 +354,14 @@ public class InteractionEriottoMod extends Interaction {
                 }
 
                 @Override
-                public ItemStack getOutput(ItemStack input) {
-                    if (input.isItemStackDamageable())
-                        input.setItemDamage(Math.max(0, input.getItemDamage() - input.getMaxDamage() / 20));
-                    return input;
+                public List<ItemStack> getOutput(List<ItemStack> inputs, TileEntity tile) {
+                    return inputs.stream().map(ItemStack::copy).map(this::repair).collect(Collectors.toList());
+                }
+
+                private ItemStack repair(ItemStack stack) {
+                    if (stack.isItemStackDamageable())
+                        stack.setItemDamage(Math.max(0, stack.getItemDamage() - stack.getMaxDamage() / 20));
+                    return stack;
                 }
             });
 
@@ -340,13 +371,13 @@ public class InteractionEriottoMod extends Interaction {
             CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("bark_mulberry")), ModItems.MATERIAL_JAPAN.getMaterial("soaked_mulberry"));
         CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.MULBERRY_LOG)), ModItems.MATERIAL_JAPAN.getMaterial("soaked_mulberry"));
         CraftingManagerSoakingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(Blocks.SPONGE, 1, 0)), new ItemStack(Blocks.SPONGE, 1, 1));
-        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerSoakingBox.instance().addRecipe(new IngredientTea(tea, TeaType.ItemType.Leaves), ModItems.TEA_SOAKED.getStack(tea)));
+        TeaType.getTypesByItem(TeaType.ItemType.Soaked).stream().filter(this::hasLeaf).forEach(tea -> CraftingManagerSoakingBox.instance().addRecipe(new IngredientTea(tea, TeaType.ItemType.Leaves), ModItems.TEA_SOAKED.getStack(tea)));
 
         CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("rice_stalk")), ModItems.MATERIAL_JAPAN.getMaterial("rice_hay"));
         CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("soaked_mulberry")), ModItems.MATERIAL_JAPAN.getMaterial("mulberry_paste"));
         CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("soaked_bamboo")), ModItems.MATERIAL_JAPAN.getMaterial("bamboo_slats"));
         CraftingManagerDryingBox.instance().addRecipe(Ingredient.fromStacks(new ItemStack(Blocks.SPONGE, 1, 1)), new ItemStack(Blocks.SPONGE, 1, 0));
-        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().filter(TeaType::hasLeaf).forEach(tea -> CraftingManagerDryingBox.instance().addRecipe(new IngredientTea(tea, TeaType.ItemType.Leaves), ModItems.TEA_WILTED.getStack(tea)));
+        TeaType.getTypesByItem(TeaType.ItemType.Wilted).stream().filter(this::hasLeaf).forEach(tea -> CraftingManagerDryingBox.instance().addRecipe(new IngredientTea(tea, TeaType.ItemType.Leaves), ModItems.TEA_WILTED.getStack(tea)));
 
         CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(new ItemStack(ModBlocks.IRON_SAND)), new ItemStack(ModBlocks.KERA));
         CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("tamahagane")), ModItems.MATERIAL_JAPAN.getMaterial("tamahagane_heated"));
@@ -354,8 +385,55 @@ public class InteractionEriottoMod extends Interaction {
         CraftingManagerTatara.instance().addRecipe(Ingredient.fromStacks(ModItems.MATERIAL_JAPAN.getMaterial("hocho_tetsu")), ModItems.MATERIAL_JAPAN.getMaterial("hocho_tetsu_heated"));
         CraftingManagerTatara.instance().addRecipe(Ingredient.fromItem(Items.CLAY_BALL), ModItems.TEA_CUP.getEmpty());
 
-        CraftingManagerNabe.getInstance().addRecipe("poison",new NabeResultPoison(12,12),Lists.newArrayList(new OreIngredient("cropNetherWart"),new OreIngredient("gunpowder"),new OreIngredient("dustRedstone"),new OreIngredient("dustGlowstone"),Ingredient.fromItem(Items.SPIDER_EYE),new OreIngredient("cropRush")),1000);
+        Ingredient extender = new OreIngredient("dustRedstone");
+        Ingredient amplifier = new OreIngredient("dustGlowstone");
+        Ingredient projectile = new OreIngredient("gunpowder");
+        Ingredient poison = Ingredient.fromItem(Items.SPIDER_EYE);
+        if(HARDCORE_BREWING) {
+            extender = ItemMaterial.getIngredient(ItemMaterial.EnumMaterial.WITCH_WART);
+            amplifier = ItemMaterial.getIngredient(ItemMaterial.EnumMaterial.BRIMSTONE);
+            projectile = Ingredient.fromItem(BWMItems.CREEPER_OYSTER);
+            poison = Ingredient.fromStacks(new ItemStack(Blocks.RED_MUSHROOM));
+        }
+
+        ArrayList<Ingredient> poisonIngredients = Lists.newArrayList(new OreIngredient("cropNetherWart"), projectile, extender, amplifier, poison, new OreIngredient("cropRush"));
+        CraftingManagerNabe.getInstance().addRecipe(new ResourceLocation(Reference.MOD_ID,"poison"),new NabeResultPoison(12,12), poisonIngredients,1000);
         CraftingManagerNabe.getInstance().addRecipe(new TeaNabeRecipe());
+
+        Ingredient teaA = Ingredient.fromStacks(ModItems.TEA_POWDER.getStack(TeaType.BANCHA));
+        Ingredient teaB = Ingredient.fromStacks(ModItems.TEA_LEAVES.getStack(TeaType.WHITE));
+        Ingredient teaGreen = Ingredient.fromStacks(ModItems.TEA_POWDER.getStack(TeaType.MATCHA));
+        ArrayList<Ingredient> teaIngredients = Lists.newArrayList(teaA, teaA, teaB, TeaNabeRecipe.SUGAR, TeaNabeRecipe.MILK);
+        ArrayList<Ingredient> ceremonialTeaIngredients = Lists.newArrayList(teaGreen, teaGreen, teaGreen, teaGreen, teaGreen, teaGreen);
+        CraftingManagerNabe.getInstance().addVisualRecipe(new NabeRecipeVisual(teaIngredients) {
+            @Override
+            public String getInfo() {
+                return "Mix different ingredients to make tea.";
+            }
+        });
+        CraftingManagerNabe.getInstance().addVisualRecipe(new NabeRecipeVisual(ceremonialTeaIngredients) {
+            @Override
+            public String getInfo() {
+                return "Ceremonial tea:\n3 random positive effects\n1 random negative effect.";
+            }
+        });
+        CraftingManagerNabe.getInstance().addVisualRecipe(new NabeRecipeVisual(Lists.newArrayList(TeaNabeRecipe.MILK)) {
+            @Override
+            public String getInfo() {
+                return "Tea additive:\n-1 negative effect";
+            }
+        });
+        CraftingManagerNabe.getInstance().addVisualRecipe(new NabeRecipeVisual(Lists.newArrayList(TeaNabeRecipe.SUGAR)) {
+            @Override
+            public String getInfo() {
+                return "Tea additive:\nimprove positive effect";
+            }
+        });
+        CraftingManagerNabe.getInstance().addVisualRecipe(new NabeRecipeVisual(poisonIngredients,new IngredientSized(Ingredient.fromStacks(new ItemStack(ModItems.YA)),12),new ItemStack(ModItems.YA_POISONED,12)));
+    }
+
+    private boolean hasLeaf(TeaType type) {
+        return type.hasType(TeaType.ItemType.Leaves);
     }
 
     private boolean isRepairableTool(ItemStack stack) {

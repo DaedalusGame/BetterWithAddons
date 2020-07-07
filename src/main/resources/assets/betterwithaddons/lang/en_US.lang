@@ -163,6 +163,7 @@ item.greatbow.name=Greatbow
 item.greatarrow.name=Greatarrow
 item.greatarrow_lightning.name=Lightning Greatarrow
 item.greatarrow_destruction.name=Destructive Greatarrow
+item.greatarrow_fire.name=Napalm Greatarrow
 item.monument.name=Monument
 item.warwall.name=Warwall
 
@@ -436,6 +437,8 @@ entity.karate_zombie.name=Karate Zombie
 
 death.attack.lightningArrow=%1$s was shot by %2$s
 death.attack.lightningArrow.item=%1$s was shot by %2$s using %3$s
+death.attack.fireArrow=%1$s was burnt to death by %2$s
+death.attack.fireArrow.item=%1$s was burnt to death by %2$s using %3$s
 
 bwm.manual.bwa=Better With Addons
 

@@ -59,6 +59,8 @@ public class ModItems {
     public static ItemGreatarrow GREATARROW_LIGHTNING;
     @GameRegistry.ObjectHolder("betterwithaddons:greatarrow_destruction")
     public static ItemGreatarrow GREATARROW_DESTRUCTION;
+    @GameRegistry.ObjectHolder("betterwithaddons:greatarrow_fire")
+    public static ItemGreatarrow GREATARROW_FIRE;
     @GameRegistry.ObjectHolder("betterwithaddons:monument")
     public static ItemMonument MONUMENT;
     @GameRegistry.ObjectHolder("betterwithaddons:artifact_frame")
@@ -321,6 +323,7 @@ public class ModItems {
         registerItem("greatarrow", new ItemGreatarrow());
         registerItem("greatarrow_lightning", new ItemGreatarrowLightning());
         registerItem("greatarrow_destruction", new ItemGreatarrowDestruction());
+        registerItem("greatarrow_fire", new ItemGreatarrowFire());
         registerItem("monument", new ItemMonument());
         //Food
         registerItem("food_mushroom_baked", new ItemFood(3, 0.2F, false));

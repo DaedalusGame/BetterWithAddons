@@ -24,6 +24,7 @@ public class EntityGreatarrow extends EntityArrow {
 
     private static final DataParameter<ItemStack> ARROW_TYPE = EntityDataManager.createKey(EntityGreatarrow.class, DataSerializers.ITEM_STACK);
     private static final DataParameter<Float> BLOCK_BREAK_POWER = EntityDataManager.createKey(EntityGreatarrow.class, DataSerializers.FLOAT);
+    private static final DataParameter<Boolean> CHARGED = EntityDataManager.createKey(EntityGreatarrow.class, DataSerializers.BOOLEAN);
 
     public EntityGreatarrow(World worldIn) {
         super(worldIn);
@@ -43,6 +44,7 @@ public class EntityGreatarrow extends EntityArrow {
         super.entityInit();
         this.dataManager.register(ARROW_TYPE, new ItemStack(ModItems.GREATARROW));
         this.dataManager.register(BLOCK_BREAK_POWER, 3.0f);
+        this.dataManager.register(CHARGED, false);
     }
 
     public void setBlockBreakPower(float amt)
@@ -55,6 +57,16 @@ public class EntityGreatarrow extends EntityArrow {
         return dataManager.get(BLOCK_BREAK_POWER);
     }
 
+    public void setCharged(boolean amt)
+    {
+        dataManager.set(CHARGED, amt);
+    }
+
+    public boolean isCharged()
+    {
+        return dataManager.get(CHARGED);
+    }
+
     public void setArrowStack(ItemStack stack)
     {
         stack = stack.copy();
@@ -63,7 +75,7 @@ public class EntityGreatarrow extends EntityArrow {
     }
 
     @Override
-    protected ItemStack getArrowStack() {
+    public ItemStack getArrowStack() {
         return dataManager.get(ARROW_TYPE);
     }
 
@@ -76,7 +88,7 @@ public class EntityGreatarrow extends EntityArrow {
     }
 
     public void spawnPotionParticles(int particleCount) {
-        if(particleCount > 0)
+        if(particleCount > 0 && !inGround)
             for(int i = 0; i < particleCount; i++)
                 world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, posX + (rand.nextDouble() - 0.5D) * width, posY + rand.nextDouble() * height, posZ + (rand.nextDouble() - 0.5D) * width, 0.0D, 0.0D, 0.0D, new int[0]);
     }
@@ -120,7 +132,7 @@ public class EntityGreatarrow extends EntityArrow {
                 impactSoundPlayed = true;
             }
 
-            arrowtype.hitBlock(this,blockpos,blockstate,!isnormalhit);
+            arrowtype.hitBlock(this,raytraceResultIn,!isnormalhit);
         }
 
         if(isnormalhit)
@@ -128,8 +140,11 @@ public class EntityGreatarrow extends EntityArrow {
             super.onHit(raytraceResultIn);
         }
 
-        if(inGround)
-            arrowtype.hitBlockFinal(this);
+        if(inGround) {
+            BlockPos pos = new BlockPos(xTile,yTile,zTile);
+            IBlockState state = world.getBlockState(pos);
+            arrowtype.hitBlockFinal(this, raytraceResultIn);
+        }
 
         //if(!worldObj.isRemote)
         //    worldObj.createExplosion(this, posX, posY, posZ, 2F, true);
@@ -143,7 +158,7 @@ public class EntityGreatarrow extends EntityArrow {
         arrowtype.hitEntity(this,living);
     }
 
-    private ItemGreatarrow getArrowType() {
+    public ItemGreatarrow getArrowType() {
         ItemStack arrowstack = getArrowStack();
         ItemGreatarrow arrowtype = ModItems.GREATARROW;
         if(!arrowstack.isEmpty() && arrowstack.getItem() instanceof ItemGreatarrow) //I don't trust people like you.

@@ -10,5 +10,5 @@ import stanhebben.zenscript.annotations.ZenClass;
 @ZenClass("mods.betterwithaddons.IBeaconInteractFunction")
 @ZenRegister
 public interface IBeaconInteractFunction {
-    boolean interact(IWorld world, IBlockPos pos, int beaconlevel, IPlayer player, IItemStack stack);
+    boolean interact(IBeaconInfo beaconInfo, IPlayer player, IItemStack stack);
 }

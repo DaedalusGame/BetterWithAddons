@@ -5,6 +5,8 @@ import betterwithaddons.crafting.manager.CraftingManagerInfuserTransmutation;
 import betterwithaddons.crafting.recipes.infuser.InfuserRecipe;
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.util.IngredientCraftTweaker;
+import betterwithaddons.util.ItemUtil;
+import com.google.common.collect.Lists;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
@@ -19,16 +21,36 @@ import crafttweaker.mc1120.recipes.MCRecipeShaped;
 import crafttweaker.mc1120.recipes.MCRecipeShapeless;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tileentity.TileEntity;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @ZenRegister
 @ZenClass(Infuser.clazz)
 public class Infuser {
     public static final String clazz = "mods.betterwithaddons.Infuser";
+
+    public static class TransmutationFunction extends TransmutationRecipe {
+        IModRecipeFunction function;
+
+        public TransmutationFunction(IIngredient input, int requiredSpirit, IModRecipeFunction function) {
+            super(new IngredientCraftTweaker(input), requiredSpirit, ItemStack.EMPTY);
+        }
+
+        @Override
+        public List<ItemStack> getOutput(List<ItemStack> inputs, TileEntity tile) {
+            IItemStack[] outputs = function.process(ItemUtil.getMarkedInputs(inputs, Lists.newArrayList(this.input)),getMachineInfo(tile));
+            return Arrays.stream(outputs).map(CraftTweakerMC::getItemStack).collect(Collectors.toList());
+        }
+
+        private IMachineInfo getMachineInfo(TileEntity tile) {
+            return IMachineInfo.create(tile);
+        }
+    }
 
     @ZenMethod
     public static void addShaped(IItemStack output, IIngredient[][] ingredients, int spirits, @Optional IRecipeFunction function, @Optional IRecipeAction action) {

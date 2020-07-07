@@ -42,8 +42,8 @@ public class GuiInfuser extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int p_drawGuiContainerForegroundLayer_1_, int p_drawGuiContainerForegroundLayer_2_) {
-        int foregroundcolor = new Color(255,0,0).getRGB();
-        int backgroundcolor = new Color(128,0,0).getRGB();
+        int foregroundcolor = InteractionEriottoMod.SPIRIT_GUI_COLOR_HIGH.getRGB();
+        int backgroundcolor = InteractionEriottoMod.SPIRIT_GUI_COLOR_LOW.getRGB();
 
         String costString = I18n.format("inv.infuser.cost.name",container.requiredSpirit);
 

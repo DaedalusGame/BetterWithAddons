@@ -1,6 +1,7 @@
 package betterwithaddons.util;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Sets;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.WeightedRandom;
@@ -141,25 +142,19 @@ public class TeaType {
     }
 
     String name;
-    boolean hasLeaf;
-    int leafColor;
-    boolean hasSoaked;
-    int soakedColor;
-    boolean hasWilted;
-    int wiltedColor;
-    int powderColor;
+    Set<ItemType> itemTypes = Sets.newHashSet(ItemType.Powder);
+    Map<ItemType, Color> itemColors = new HashMap<>();
 
     //HashMap<ItemType,Integer> Strengths = new HashMap<>();
-    HashMultimap<ItemType,PotionEffect> PositiveEffects = HashMultimap.create();
-    HashMultimap<ItemType,PotionEffect> NegativeEffects = HashMultimap.create();
+    HashMultimap<ItemType,PotionEffect> positiveEffects = HashMultimap.create();
+    HashMultimap<ItemType,PotionEffect> negativeEffects = HashMultimap.create();
 
     public TeaType(String name, Color color)
     {
         this.name = name;
-        powderColor = color.getRGB();
-        leafColor = color.getRGB();
-        soakedColor = color.getRGB();
-        wiltedColor = color.getRGB();
+        for (ItemType type : ItemType.values()) {
+            itemColors.put(type, color);
+        }
         /*Strengths.put(ItemType.Leaves,0);
         Strengths.put(ItemType.Soaked,1);
         Strengths.put(ItemType.Wilted,2);
@@ -174,7 +169,7 @@ public class TeaType {
 
     public static List<TeaType> getTypesByItem(ItemType type)
     {
-        return TYPES.values().stream().filter(tea -> tea.isItemType(type)).collect(Collectors.toCollection(ArrayList::new));
+        return TYPES.values().stream().filter(tea -> tea.hasType(type)).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static TeaType getByLocation(World world, BlockPos pos, Random rand)
@@ -183,52 +178,56 @@ public class TeaType {
         return weightedTeas.size() > 0 ? WeightedRandom.getRandomItem(rand,weightedTeas).getType() : null;
     }
 
-    public boolean isItemType(ItemType type)
-    {
-        switch(type)
-        {
-            case Leaves: return hasLeaf();
-            case Soaked: return hasSoaked();
-            case Wilted: return hasWilted();
-            case Powder: return true;
-            default: return false;
-        }
-    }
-
     public TeaType setHasLeaf()
     {
-        hasLeaf = true;
+        itemTypes.add(ItemType.Leaves);
         return this;
     }
 
     public TeaType setHasLeaf(Color color)
     {
-        leafColor = color.getRGB();
+        itemColors.put(ItemType.Leaves, color);
         return setHasLeaf();
     }
 
     public TeaType setHasSoaked()
     {
-        hasSoaked = true;
+        itemTypes.add(ItemType.Soaked);
         return this;
     }
 
     public TeaType setHasSoaked(Color color)
     {
-        soakedColor = color.getRGB();
+        itemColors.put(ItemType.Soaked, color);
         return setHasLeaf();
     }
 
     public TeaType setHasWilted()
     {
-        hasWilted = true;
+        itemTypes.add(ItemType.Wilted);
         return this;
     }
 
     public TeaType setHasWilted(Color color)
     {
-        wiltedColor = color.getRGB();
+        itemColors.put(ItemType.Wilted, color);
         return setHasLeaf();
+    }
+
+    public TeaType setHasType(ItemType shape) {
+        itemTypes.add(shape);
+        return this;
+    }
+
+    public TeaType setHasType(ItemType shape, Color color) {
+        itemColors.put(shape,color);
+        return setHasType(shape);
+    }
+
+    public TeaType removeType(ItemType shape) {
+        itemTypes.remove(shape);
+        clearEffects(shape);
+        return this;
     }
 
     /*public TeaType setStrength(ItemType type,int strength)
@@ -239,13 +238,13 @@ public class TeaType {
 
     public TeaType addPositive(ItemType type,PotionEffect effect)
     {
-        PositiveEffects.put(type,effect);
+        positiveEffects.put(type,effect);
         return this;
     }
 
     public TeaType addNegative(ItemType type,PotionEffect effect)
     {
-        NegativeEffects.put(type,effect);
+        negativeEffects.put(type,effect);
         return this;
     }
 
@@ -253,32 +252,13 @@ public class TeaType {
         return name;
     }
 
-    public boolean hasLeaf() {
-        return hasLeaf;
+    public boolean hasType(ItemType type) {
+        return itemTypes.contains(type);
     }
 
-    public boolean hasSoaked() {
-        return hasSoaked;
-    }
-
-    public boolean hasWilted() {
-        return hasWilted;
-    }
-
-    public int getLeafColor() {
-        return leafColor;
-    }
-
-    public int getSoakedColor() {
-        return soakedColor;
-    }
-
-    public int getWiltedColor() {
-        return wiltedColor;
-    }
-
-    public int getPowderColor() {
-        return powderColor;
+    public int getTypeColor(ItemType type) {
+        Color color = itemColors.getOrDefault(type,Color.BLACK);
+        return color.getRGB();
     }
 
     /*public int getStrength(ItemType type) {
@@ -286,19 +266,24 @@ public class TeaType {
     }*/
 
     public Collection<PotionEffect> getPositiveEffects() {
-        return PositiveEffects.values();
+        return positiveEffects.values();
     }
 
     public Collection<PotionEffect> getPositiveEffects(ItemType type) {
-        return PositiveEffects.get(type);
+        return positiveEffects.get(type);
     }
 
     public Collection<PotionEffect> getNegativeEffects() {
-        return NegativeEffects.values();
+        return negativeEffects.values();
     }
 
     public Collection<PotionEffect> getNegativeEffects(ItemType type) {
-        return NegativeEffects.get(type);
+        return negativeEffects.get(type);
+    }
+
+    public void clearEffects(ItemType shape) {
+        positiveEffects.get(shape).clear();
+        negativeEffects.get(shape).clear();
     }
 
     public int getWeight(World world, BlockPos pos)

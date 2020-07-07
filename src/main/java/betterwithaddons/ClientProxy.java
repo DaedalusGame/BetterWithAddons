@@ -2,6 +2,8 @@ package betterwithaddons;
 
 import betterwithaddons.block.*;
 import betterwithaddons.client.ToolShardModelHandler;
+import betterwithaddons.client.fx.FXFireBlast;
+import betterwithaddons.client.fx.FXFireExplosion;
 import betterwithaddons.client.fx.FXLeafParticle;
 import betterwithaddons.client.fx.FXLightning;
 import betterwithaddons.client.models.ItemModels;
@@ -16,21 +18,16 @@ import betterwithaddons.tileentity.TileEntityNabe;
 import betterwithaddons.util.ResourceProxy;
 import betterwithaddons.util.VariableSegment;
 import betterwithmods.manual.api.ManualAPI;
-import betterwithmods.manual.api.manual.ImageRenderer;
 import betterwithmods.manual.api.prefab.manual.ItemStackTabIconRenderer;
 import betterwithmods.manual.client.manual.Document;
 import betterwithmods.manual.client.manual.segment.Segment;
 import betterwithmods.manual.client.manual.segment.SegmentRefiner;
 import betterwithmods.manual.common.DirectoryDefaultProvider;
-import betterwithmods.manual.custom.JEIRenderSegment;
-import betterwithmods.manual.custom.JEISegment;
-import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
@@ -40,9 +37,9 @@ import net.minecraft.client.resources.IResourcePack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.model.ModelDynBucket;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -52,7 +49,6 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -168,6 +164,18 @@ public class ClientProxy implements IProxy
     public void makeLightningFX(double x, double y, double z, float r, float g, float b, float size, float maxAgeMul) {
         FXLightning spark = new FXLightning(Minecraft.getMinecraft().world, x, y, z, size, r, g, b, true, maxAgeMul);
         Minecraft.getMinecraft().effectRenderer.addEffect(spark);
+    }
+
+    @Override
+    public void makeFireBlastFX(World world, double x, double y, double z, float size, int time) {
+        FXFireBlast blast = new FXFireBlast(world, x, y, z, size, time);
+        Minecraft.getMinecraft().effectRenderer.addEffect(blast);
+    }
+
+    @Override
+    public void makeFireExplosionFX(World world, double x, double y, double z, float size, float radius, int time, int count) {
+        FXFireExplosion explosion = new FXFireExplosion(world,x,y,z,size,radius,time,count);
+        Minecraft.getMinecraft().effectRenderer.addEffect(explosion);
     }
 
     @Override

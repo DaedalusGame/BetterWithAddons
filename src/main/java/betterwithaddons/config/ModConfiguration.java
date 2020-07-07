@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.awt.*;
 import java.util.HashSet;
 
 public class ModConfiguration {
@@ -60,6 +61,13 @@ public class ModConfiguration {
         return prop.getBoolean(default_);
     }
 
+    public static String loadPropString(String propName, String category, String desc, String default_) {
+        Property prop = configuration.get(category, propName, default_);
+        prop.setComment(desc);
+        setNeedsRestart(prop);
+        return prop.getString();
+    }
+
     public static String[] loadPropStringList(String propName, String category, String desc, String[] default_) {
         Property prop = configuration.get(category, propName, default_);
         prop.setComment(desc);
@@ -72,6 +80,37 @@ public class ModConfiguration {
         prop.setComment(desc);
         setNeedsRestart(prop);
         return Sets.newHashSet(prop.getStringList());
+    }
+
+    public static Color loadPropColor(String propName, String category, String desc, Color default_) {
+        Property prop = configuration.get(category, propName, colorToString(default_));
+        prop.setComment(desc);
+        setNeedsRestart(prop);
+        return stringToColor(prop.getString());
+    }
+
+    public static GreyList<String> loadGreyList(String propName, String category, String desc, GreyList<String> default_){
+        boolean isWhiteList = loadPropBool(propName+"IsWhitelist", category,"Whether "+propName+" should be a whitelist or a blacklist", default_.isWhiteList);
+        String[] values = loadPropStringList(propName, category, desc, default_.defaults);
+
+        default_.setWhiteList(isWhiteList);
+        default_.setup(values);
+
+        return default_;
+    }
+
+    private static String colorToString(Color color) {
+        return String.format("%s,%s,%s,%s", color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+    }
+
+    private static Color stringToColor(String string) {
+        String[] values = string.split(",");
+        return new Color(
+                Integer.parseInt(values[0]),
+                Integer.parseInt(values[1]),
+                Integer.parseInt(values[2]),
+                Integer.parseInt(values[3])
+        );
     }
 
     public static void doesNotNeedRestart(Runnable op)

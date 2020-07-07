@@ -1,8 +1,10 @@
 package betterwithaddons.interaction.minetweaker;
 
+import betterwithaddons.crafting.ResultBlock;
 import betterwithaddons.crafting.manager.CraftingManagerPacking;
 import betterwithaddons.crafting.recipes.PackingRecipe;
 import betterwithaddons.util.IngredientCraftTweaker;
+import com.google.common.collect.Lists;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
@@ -27,8 +29,7 @@ public class Packing {
         ItemStack stack = CraftTweakerMC.getItemStack(output);
         if(stack.getItem() instanceof ItemBlock) {
             Block block = ((ItemBlock) stack.getItem()).getBlock();
-            PackingRecipe r = new PackingRecipe(new IngredientCraftTweaker(input), block.getStateFromMeta(stack.getMetadata()));
-            r.setJeiOutput(stack);
+            PackingRecipe r = new PackingRecipe(Lists.newArrayList(new IngredientCraftTweaker(input)), new ResultBlock(block.getStateFromMeta(stack.getMetadata()),stack));
             CraftTweaker.LATE_ACTIONS.add(new Add(r));
         }
     }
@@ -69,8 +70,8 @@ public class Packing {
 
         @Override
         public void apply() {
-            List<PackingRecipe> recipes = CraftingManagerPacking.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
-            CraftingManagerPacking.getInstance().getRecipes().removeAll(recipes);
+            //List<PackingRecipe> recipes = CraftingManagerPacking.getInstance().findRecipeForRemoval(CraftTweakerMC.getItemStack(input));
+            //CraftingManagerPacking.getInstance().getRecipes().removeAll(recipes);
         }
 
         @Override

@@ -1,6 +1,8 @@
 package betterwithaddons.crafting.manager;
 
+import betterwithaddons.crafting.ResultBlock;
 import betterwithaddons.crafting.recipes.PackingRecipe;
+import com.google.common.collect.Lists;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -30,40 +32,8 @@ public class CraftingManagerPacking
         recipes.add(recipe);
     }
 
-    public void addRecipe(IBlockState output, ItemStack jeiOutput, Ingredient input)
-    {
-        PackingRecipe recipe = createRecipe(output, input);
-        recipe.setJeiOutput(jeiOutput);
-        recipes.add(recipe);
-    }
-
-    public void addRecipe(IBlockState output, Ingredient input)
-    {
-        recipes.add(createRecipe(output, input));
-    }
-
-    public List<PackingRecipe> findRecipeForRemoval(@Nonnull ItemStack input) {
-        return recipes.stream().filter(recipe -> recipe.matchesInput(input)).collect(Collectors.toList());
-    }
-
-    public PackingRecipe getMostValidRecipe(IBlockState compressState, List<EntityItem> inv)
-    {
-        List<PackingRecipe> recipes = getValidCraftingRecipes(compressState,inv);
-
-        if(recipes == null || recipes.size() == 0)
-            return null;
-
-        return recipes.get(0);
-    }
-
-    public List<PackingRecipe> getValidCraftingRecipes(IBlockState compressState, List<EntityItem> inv)
-    {
-        return recipes.stream().filter(recipe -> recipe.matches(compressState,inv)).collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    private PackingRecipe createRecipe(IBlockState output, Ingredient input)
-    {
-        return new PackingRecipe(input, output);
+    public void addRecipe(IBlockState output, ItemStack jeiOutput, Ingredient input) {
+        recipes.add(new PackingRecipe(Lists.newArrayList(input), new ResultBlock(output,jeiOutput)));
     }
 
     public List<PackingRecipe> getRecipes()

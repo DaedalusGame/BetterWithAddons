@@ -13,5 +13,5 @@ import java.util.List;
 @ZenClass("mods.betterwithaddons.IBeaconEffectFunction")
 @ZenRegister
 public interface IBeaconEffectFunction {
-    boolean apply(IWorld world, IBlockPos pos, int beaconlevel, List<IEntityLivingBase> entities);
+    boolean apply(IBeaconInfo beaconInfo, List<IEntityLivingBase> entities);
 }

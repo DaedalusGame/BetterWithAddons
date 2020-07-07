@@ -9,7 +9,7 @@ import net.minecraft.item.crafting.Ingredient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IngredientCraftTweaker extends Ingredient implements IHasSize {
+public class IngredientCraftTweaker extends Ingredient implements IHasSize, IHasMark {
     IIngredient predicate;
 
     public IngredientCraftTweaker(IIngredient ingredient)
@@ -33,5 +33,10 @@ public class IngredientCraftTweaker extends Ingredient implements IHasSize {
     @Override
     public int getSize() {
         return predicate.getAmount();
+    }
+
+    @Override
+    public String getMark() {
+        return predicate.getMark();
     }
 }

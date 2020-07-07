@@ -69,6 +69,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 
@@ -141,6 +142,20 @@ public class InteractionBWA extends Interaction {
     public static boolean REPLACE_MENDING = true;
     public static String[] GOLD_ITEMS = new String[] {};
 
+    public static double GREATARROW_DAMAGE = 4.0;
+    public static double GREATARROW_DESTRUCTION_DAMAGE = 4.0;
+    public static int GREATARROW_DESTRUCTION_DAMAGE_VS_ARMOR = 50;
+    public static double GREATARROW_DESTRUCTION_DAMAGE_VS_ARMOR_PERCENT = 0.2;
+    public static double GREATARROW_LIGHTNING_DAMAGE = 4.0;
+    public static double GREATARROW_LIGHTNING_DAMAGE_VS_DRAGON = 20.0;
+    public static String GREATARROW_LIGHTNING_DAMAGE_TYPE = "lightningArrow";
+    public static Color GREATARROW_LIGHTNING_COLOR = new Color(16383998);
+    public static Color GREATARROW_LIGHTNING_FADE = new Color(16701501);
+    public static double GREATARROW_FIRE_DAMAGE = 4.0;
+    public static double GREATARROW_FIRE_EXTRA_DAMAGE = 5.0;
+    public static int GREATARROW_FIRE_BURN = 30;
+    public static String GREATARROW_FIRE_DAMAGE_TYPE = "fireArrow";
+
     private boolean isLoaded;
 
     @Override
@@ -204,6 +219,21 @@ public class InteractionBWA extends Interaction {
             RESISTANCE_TYPES = loadPropStringList("ProtectionResistanceTypes","Damage types already covered by other protective enchantments.", RESISTANCE_TYPES);
             SHARPNESS_ENTITIES = loadPropStringList("SharpnessEntities","Resource names of entities already affected by other damage enchantments.", SHARPNESS_ENTITIES);
             GOLD_ITEMS = loadPropStringList("MendingGoldItems","Resource names of items that should be allowed to have Mending on them.", GOLD_ITEMS);
+
+            GREATARROW_DAMAGE = loadPropDouble("GreatArrowDamage", "How much damage Great Arrows should deal.", GREATARROW_DAMAGE);
+            GREATARROW_DESTRUCTION_DAMAGE = loadPropDouble("GreatArrowDestructionDamage", "How much damage Destructive Great Arrows should deal.", GREATARROW_DESTRUCTION_DAMAGE);
+            GREATARROW_DESTRUCTION_DAMAGE_VS_ARMOR = loadPropInt("GreatArrowDestructionDamageVsArmor", "How much durability damage Destructive Great Arrows should deal.", GREATARROW_DESTRUCTION_DAMAGE_VS_ARMOR);
+            GREATARROW_DESTRUCTION_DAMAGE_VS_ARMOR_PERCENT = loadPropDouble("GreatArrowDestructionDamageVsArmorPercent", "How much percentual durability damage Destructive Great Arrows should deal.", GREATARROW_DESTRUCTION_DAMAGE_VS_ARMOR_PERCENT);
+            GREATARROW_LIGHTNING_DAMAGE = loadPropDouble("GreatArrowLightningDamage", "How much damage Lightning Great Arrows should deal.", GREATARROW_LIGHTNING_DAMAGE);
+            GREATARROW_LIGHTNING_DAMAGE_VS_DRAGON = loadPropDouble("GreatArrowLightningDamageVsDragon", "How much extra damage Lightning Great Arrows should deal to dragon type entities.", GREATARROW_LIGHTNING_DAMAGE_VS_DRAGON);
+            GREATARROW_LIGHTNING_DAMAGE_TYPE = loadPropString("GreatArrowLightningDamageType", "What damage type Lightning Great Arrows use when dealing bonus damage.", GREATARROW_LIGHTNING_DAMAGE_TYPE);
+            GREATARROW_LIGHTNING_COLOR = loadPropColor("GreatArrowLightningColor", "The color that Lightning Great Arrows use for their particles.", GREATARROW_LIGHTNING_COLOR);
+            GREATARROW_LIGHTNING_FADE = loadPropColor("GreatArrowLightningFade", "The fade color that Lightning Great Arrows use for their particles.", GREATARROW_LIGHTNING_FADE);
+            GREATARROW_FIRE_DAMAGE = loadPropDouble("GreatArrowFireDamage", "How much damage Napalm Great Arrows should deal.", GREATARROW_FIRE_DAMAGE);
+            GREATARROW_FIRE_BURN = loadPropInt("GreatArrowFireBurn", "How many seconds Napalm Great Arrows should set entities on fire for.", GREATARROW_FIRE_BURN);
+            GREATARROW_FIRE_DAMAGE_TYPE = loadPropString("GreatArrowFireDamageType", "What damage type Napalm Great Arrows use when dealing bonus damage.", GREATARROW_FIRE_DAMAGE_TYPE);
+            GREATARROW_FIRE_EXTRA_DAMAGE = loadPropDouble("GreatArrowFireDamageExtra", "How much extra damage Napalm Great Arrows should deal to nearby entities.", GREATARROW_FIRE_EXTRA_DAMAGE);
+
 
             if(isLoaded) {
                 writeEnchantmentConfigs();
@@ -352,6 +382,7 @@ public class InteractionBWA extends Interaction {
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_head"), greatarrowhead, " n ", "nnn", "nnn", "n n", 'n', "nuggetSoulforgedSteel");
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_lightning"), new ItemStack(ModItems.GREATARROW_LIGHTNING), "nxn", "nxn", " i ", " f ", 'n', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.REDSTONE_LATCH), 'x', greatarrowhead, 'i', haft, 'f', new ItemStack(Items.FEATHER));
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_destruction"), new ItemStack(ModItems.GREATARROW_DESTRUCTION), "n n", "nxn", " i ", " f ", 'n', "nuggetSoulforgedSteel", 'x', greatarrowhead, 'i', haft, 'f', new ItemStack(Items.FEATHER));
+        AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"greatarrow_fire"), new ItemStack(ModItems.GREATARROW_FIRE), "nnn", "txt", " i ", " f ", 'n', ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.BLASTING_OIL), 't', "materialNetherSludge", 'x', greatarrowhead, 'i', haft, 'f', new ItemStack(Items.FEATHER));
 
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_spade"),new ItemStack(ModItems.STEEL_SPADE),"x","x","i","i",'x',"ingotSoulforgedSteel",'i', haft);
         AnvilRecipes.addSteelShapedRecipe(new ResourceLocation(Reference.MOD_ID,"steel_matchpick"),new ItemStack(ModItems.STEEL_MATCHPICK),"xxx","nic"," i "," i ",'x', "ingotSoulforgedSteel",'i', haft,'n',ItemMaterial.getMaterial(ItemMaterial.EnumMaterial.NETHERCOAL),'c',"ingotConcentratedHellfire");

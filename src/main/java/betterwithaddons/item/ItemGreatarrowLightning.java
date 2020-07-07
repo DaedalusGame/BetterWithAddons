@@ -1,6 +1,9 @@
 package betterwithaddons.item;
 
 import betterwithaddons.entity.EntityGreatarrow;
+import betterwithaddons.entity.EntityLightningArc;
+import betterwithaddons.interaction.InteractionBWA;
+import betterwithaddons.lib.Reference;
 import betterwithaddons.potion.ModPotions;
 import betterwithaddons.util.EntityUtil;
 import net.minecraft.entity.Entity;
@@ -15,13 +18,17 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 public class ItemGreatarrowLightning extends ItemGreatarrow {
-    static final float EXTRA_LIGHTNING_DAMAGE = 20f;
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/entity/greatarrow_lightning.png");
+    public static final ResourceLocation TEXTURE_CHARGED = new ResourceLocation(Reference.MOD_ID, "textures/entity/greatarrow_lightning_aspect.png");
+
     NBTTagCompound fireworksEntity;
     NBTTagCompound fireworksGround;
 
@@ -32,8 +39,8 @@ public class ItemGreatarrowLightning extends ItemGreatarrow {
         NBTTagCompound explosionEntity = new NBTTagCompound();
         explosionEntity.setBoolean("Flicker", true);
         explosionEntity.setByte("Type", (byte) 0);
-        explosionEntity.setIntArray("Colors", new int[]{16383998});
-        explosionEntity.setIntArray("FadeColors", new int[]{16701501}); //THESE HAVE TO BE MAGIC NUMBERS BECAUSE THE METHOD FOR GETTING COLOR VALUE FROM DYE IS CLIENTSIDE
+        explosionEntity.setIntArray("Colors", new int[]{InteractionBWA.GREATARROW_LIGHTNING_COLOR.getRGB()});
+        explosionEntity.setIntArray("FadeColors", new int[]{InteractionBWA.GREATARROW_LIGHTNING_FADE.getRGB()}); //THESE HAVE TO BE MAGIC NUMBERS BECAUSE THE METHOD FOR GETTING COLOR VALUE FROM DYE IS CLIENTSIDE
         NBTTagList explosionsEntityList = new NBTTagList();
         explosionsEntityList.appendTag(explosionEntity);
         fireworksTagEntity.setTag("Explosions", explosionsEntityList);
@@ -51,6 +58,18 @@ public class ItemGreatarrowLightning extends ItemGreatarrow {
         fireworksGround.setTag("Fireworks", fireworksTagGround);
     }
 
+    @Override
+    public boolean canChargeFire() {
+        return true;
+    }
+
+    @Override
+    public ResourceLocation getEntityTexture(EntityGreatarrow arrow) {
+        if(arrow.isCharged())
+            return TEXTURE_CHARGED;
+        return TEXTURE;
+    }
+
     private void makeFireworks(World world, Vec3d pos, NBTTagCompound parameters)
     {
         if(!world.isRemote)
@@ -64,11 +83,23 @@ public class ItemGreatarrowLightning extends ItemGreatarrow {
     }
 
     @Override
-    public void hitBlockFinal(EntityGreatarrow arrow) {
-        super.hitBlockFinal(arrow);
+    public float getBlockBreakPowerBase() {
+        return 0.0f;
+    }
+
+    @Override
+    public double getDamageBase() {
+        return InteractionBWA.GREATARROW_LIGHTNING_DAMAGE;
+    }
+
+    @Override
+    public void hitBlockFinal(EntityGreatarrow arrow, RayTraceResult rayTraceResult) {
+        super.hitBlockFinal(arrow, rayTraceResult);
         if (!arrow.isDead && !arrow.world.isRemote) {
-            makeLightningField(arrow.world,arrow.getPositionVector(),4.0f);
-            makeFireworks(arrow.world,arrow.getPositionVector(),fireworksGround);
+            makeLightningField(arrow.world, rayTraceResult.hitVec,4.0f);
+            if(arrow.isCharged())
+                makeLightningArc(arrow.world, rayTraceResult.hitVec, new Vec3d(arrow.motionX, arrow.motionY, arrow.motionZ));
+            makeFireworks(arrow.world, rayTraceResult.hitVec, fireworksGround);
             arrow.setDead();
         }
     }
@@ -82,17 +113,19 @@ public class ItemGreatarrowLightning extends ItemGreatarrow {
             EntityLivingBase living = (EntityLivingBase) entity;
 
             if (isDragon(living)) {
-                DamageSource damagesource = EntityUtil.causeLightningArrowDamage(arrow.shootingEntity);
+                DamageSource damagesource = EntityUtil.causeLightningArrowDamage(arrow.shootingEntity,arrow);
 
                 int hurtSave = entity.hurtResistantTime;
                 entity.hurtResistantTime = 0;
-                if (!entity.attackEntityFrom(damagesource, EXTRA_LIGHTNING_DAMAGE)) {
+                if (!entity.attackEntityFrom(damagesource, (float) InteractionBWA.GREATARROW_LIGHTNING_DAMAGE_VS_DRAGON)) {
                     entity.hurtResistantTime = hurtSave;
                 }
             }
 
             living.addPotionEffect(new PotionEffect(ModPotions.electrified, 20 * 5, 2, false, false)); //electrify for a bit
             makeLightningField(arrow.world,arrow.getPositionVector(),1.0f);
+            if(arrow.isCharged())
+                makeLightningArc(arrow.world, new Vec3d(entity.posX,entity.posY + entity.height/2,entity.posZ), new Vec3d(arrow.motionX, arrow.motionY, arrow.motionZ));
             makeFireworks(arrow.world,arrow.getPositionVector(),fireworksEntity);
             arrow.setDead();
         }
@@ -108,6 +141,16 @@ public class ItemGreatarrowLightning extends ItemGreatarrow {
             if (distSq < range * range) {
                 living.addPotionEffect(new PotionEffect(ModPotions.electrified, 20 * 7, 2, false, false));
             }
+        }
+    }
+
+    private static void makeLightningArc(World world, Vec3d pos, Vec3d velocity) {
+        if(world.canSeeSky(new BlockPos(pos).up())) {
+            double angle = Math.atan2(velocity.x, velocity.z);
+            double width = Math.PI * 0.2;
+            EntityLightningArc arc = new EntityLightningArc(world, pos.x, pos.y, pos.z);
+            arc.setup(angle - width, angle + width, 40, 30);
+            world.spawnEntity(arc);
         }
     }
 

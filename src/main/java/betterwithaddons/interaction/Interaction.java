@@ -1,11 +1,13 @@
 package betterwithaddons.interaction;
 
+import betterwithaddons.config.GreyList;
 import betterwithaddons.config.ModConfiguration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.ForgeRegistry;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -65,12 +67,24 @@ public abstract class Interaction {
         return ModConfiguration.loadPropBool(propName, getName(), desc, default_);
     }
 
+    protected final String loadPropString(String propName, String desc, String default_) {
+        return ModConfiguration.loadPropString(propName, getName(), desc, default_);
+    }
+
     protected final String[] loadPropStringList(String propName, String desc, String[] default_) {
         return ModConfiguration.loadPropStringList(propName, getName(), desc, default_);
     }
 
     protected final HashSet<String> loadPropStringSet(String propName, String desc, String[] default_) {
         return ModConfiguration.loadPropStringSet(propName, getName(), desc, default_);
+    }
+
+    protected final Color loadPropColor(String propName, String desc, Color default_) {
+        return ModConfiguration.loadPropColor(propName, getName(), desc, default_);
+    }
+
+    protected final GreyList<String> loadGreyList(String propName, String desc, GreyList<String> default_) {
+        return ModConfiguration.loadGreyList(propName, getName(), desc, default_);
     }
 
     protected final void doesNotNeedRestart(Runnable op)

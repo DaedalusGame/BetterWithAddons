@@ -1,15 +1,19 @@
 package betterwithaddons.handler;
 
+import betterwithaddons.crafting.ICraftingResult;
 import betterwithaddons.crafting.manager.CraftingManagerPacking;
 import betterwithaddons.crafting.recipes.PackingRecipe;
+import betterwithaddons.util.ItemUtil;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityPiston;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,6 +23,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class HardcorePackingHandler {
     Set<TileEntityPiston> activePistons =  Collections.synchronizedSet(new HashSet<>());
@@ -52,10 +58,16 @@ public class HardcorePackingHandler {
                 IBlockState compressState = world.getBlockState(compressPos);
                 if(isEmpty(world, compressPos, compressState) && isSurrounded(world,compressPos,facing.getOpposite())) {
                     AxisAlignedBB blockMask = new AxisAlignedBB(shovePos).union(new AxisAlignedBB(compressPos));
-                    List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, blockMask);
-                    PackingRecipe recipe = CraftingManagerPacking.getInstance().getMostValidRecipe(compressState, items);
-                    if (recipe != null && recipe.consumeIngredients(items)) {
-                        world.setBlockState(compressPos, recipe.getOutput(compressState, items));
+                    List<EntityItem> entities = world.getEntitiesWithinAABB(EntityItem.class, blockMask);
+                    List<ItemStack> stacks = entities.stream().map(EntityItem::getItem).collect(Collectors.toList());
+                    for (PackingRecipe recipe : CraftingManagerPacking.getInstance().getRecipes()) {
+                        if (recipe.consume(stacks,compressState,true)) {
+                            ICraftingResult result = recipe.getOutput(stacks, compressState);
+                            result.apply(world,compressPos);
+                            result.spawnItems(world, new Vec3d(compressPos).addVector(0.5,0.5,0.5));
+                            recipe.consume(stacks,compressState,false);
+                            ItemUtil.consumeItems(entities);
+                        }
                     }
                 }
         }

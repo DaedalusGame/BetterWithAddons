@@ -8,5 +8,5 @@ import stanhebben.zenscript.annotations.ZenClass;
 @ZenClass("mods.betterwithaddons.IBeaconRemoveFunction")
 @ZenRegister
 public interface IBeaconRemoveFunction {
-    void remove(IWorld world, IBlockPos pos, int beaconlevel);
+    void remove(IBeaconInfo beaconInfo);
 }

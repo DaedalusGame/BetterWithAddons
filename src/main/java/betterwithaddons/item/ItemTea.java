@@ -52,14 +52,7 @@ public class ItemTea extends Item implements IColorable {
     public int getColor(ItemStack stack)
     {
         TeaType type = getType(stack);
-        switch (itemType)
-        {
-            case Leaves: return type.getLeafColor();
-            case Soaked: return type.getSoakedColor();
-            case Wilted: return type.getWiltedColor();
-            case Powder: return type.getPowderColor();
-            default: return 0xFFFFFF;
-        }
+        return type.getTypeColor(itemType);
     }
 
     @Override

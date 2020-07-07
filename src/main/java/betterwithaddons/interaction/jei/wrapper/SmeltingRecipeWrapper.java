@@ -20,6 +20,10 @@ public class SmeltingRecipeWrapper extends BlankRecipeWrapper {
         ingredients.setOutputs(ItemStack.class,getOutputs());
     }
 
+    public SmeltingRecipe getRecipe() {
+        return recipe;
+    }
+
     public List<ItemStack> getInputs() {
         return recipe.getRecipeInputs();
     }

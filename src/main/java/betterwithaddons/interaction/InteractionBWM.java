@@ -2,6 +2,7 @@ package betterwithaddons.interaction;
 
 import betterwithaddons.BetterWithAddons;
 import betterwithaddons.block.ModBlocks;
+import betterwithaddons.config.GreyList;
 import betterwithaddons.crafting.conditions.ConditionModule;
 import betterwithaddons.crafting.manager.CraftingManagerPacking;
 import betterwithaddons.handler.ButcherHandler;

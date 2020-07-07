@@ -2,6 +2,7 @@ package betterwithaddons.crafting.manager;
 
 import betterwithaddons.block.EriottoMod.BlockCherryBox.CherryBoxType;
 import betterwithaddons.crafting.recipes.CherryBoxRecipe;
+import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
@@ -53,7 +54,7 @@ public abstract class CraftingManagerCherryBox {
             entry = var2.next();
         } while(!entry.matchesInput(input));
 
-        return entry.getOutput(input);
+        return entry.getOutput(Lists.newArrayList(input), null).get(0);
     }
 
     public List<CherryBoxRecipe> getRecipes() {

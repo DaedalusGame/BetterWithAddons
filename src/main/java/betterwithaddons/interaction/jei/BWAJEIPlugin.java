@@ -12,6 +12,7 @@ import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
 import betterwithaddons.interaction.jei.category.*;
 import betterwithaddons.interaction.jei.wrapper.*;
 import betterwithaddons.item.ModItems;
+import com.google.common.collect.Lists;
 import crafttweaker.mc1120.recipes.MCRecipeShaped;
 import crafttweaker.mc1120.recipes.MCRecipeShapeless;
 import crafttweaker.mods.jei.recipeWrappers.CraftingRecipeWrapperShaped;
@@ -19,21 +20,28 @@ import crafttweaker.mods.jei.recipeWrappers.CraftingRecipeWrapperShapeless;
 import mezz.jei.api.*;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.plugins.vanilla.crafting.ShapedOreRecipeWrapper;
 import mezz.jei.plugins.vanilla.crafting.ShapedRecipesWrapper;
 import mezz.jei.plugins.vanilla.crafting.ShapelessRecipeWrapper;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @mezz.jei.api.JEIPlugin
 public class BWAJEIPlugin implements IModPlugin {
+    public static IJeiHelpers HELPER;
+
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
         subtypeRegistry.useNbtForSubtypes(ModItems.TEA_LEAVES);
@@ -44,6 +52,8 @@ public class BWAJEIPlugin implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
+        HELPER = registry.getJeiHelpers();
+
         IJeiHelpers helper = registry.getJeiHelpers();
         IGuiHelper guiHelper = helper.getGuiHelper();
 
@@ -56,7 +66,8 @@ public class BWAJEIPlugin implements IModPlugin {
                 new SpindleRecipeCategory(guiHelper),
                 new PackingRecipeCategory(guiHelper),
                 new InfuserRecipeCategory(guiHelper),
-                new TransmutationRecipeCategory(guiHelper));
+                new TransmutationRecipeCategory(guiHelper),
+                new NabeCategory(guiHelper));
     }
 
     @Override
@@ -73,6 +84,7 @@ public class BWAJEIPlugin implements IModPlugin {
         registry.handleRecipes(SmeltingRecipe.class, SmeltingRecipeWrapper::new, TataraRecipeCategory.UID);
         registry.handleRecipes(TransmutationRecipe.class, TransmutationRecipeWrapper::new, TransmutationRecipeCategory.UID);
         registry.handleRecipes(PackingRecipe.class, PackingRecipeWrapper::new, PackingRecipeCategory.UID);
+        registry.handleRecipes(NabeRecipeVisual.class, NabeWrapper::new, NabeCategory.UID);
 
         registry.handleRecipes(InfuserRecipe.class, recipe -> new InfuserRecipeWrapper(getCraftingRecipeWrapper(helper, recipe.internal),recipe.getRecipeRequiredSpirit()), InfuserRecipeCategory.UID);
 
@@ -86,6 +98,7 @@ public class BWAJEIPlugin implements IModPlugin {
         registry.addRecipes(CraftingManagerInfuser.getInstance().getRecipeList(),InfuserRecipeCategory.UID);
         registry.addRecipes(CraftingManagerInfuserTransmutation.getInstance().getRecipes(),TransmutationRecipeCategory.UID);
         registry.addRecipes(CraftingManagerPacking.getInstance().getRecipes(),PackingRecipeCategory.UID);
+        registry.addRecipes(CraftingManagerNabe.getInstance().getVisualRecipes(),NabeCategory.UID);
 
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.TATARA), TataraRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.CHERRY_BOX, 1, 0), SoakingBoxRecipeCategory.UID);
@@ -95,6 +108,7 @@ public class BWAJEIPlugin implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(Blocks.PISTON), PackingRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSER), InfuserRecipeCategory.UID);
         registry.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSER), TransmutationRecipeCategory.UID);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.NABE), NabeCategory.UID);
 
         registry.addRecipeClickArea(GuiTatara.class, 78, 32, 28, 23, TataraRecipeCategory.UID);
         registry.addRecipeClickArea(GuiSoakingBox.class, 78, 32, 28, 23, SoakingBoxRecipeCategory.UID);
@@ -115,5 +129,22 @@ public class BWAJEIPlugin implements IModPlugin {
         if(recipe instanceof MCRecipeShapeless)
             return new CraftingRecipeWrapperShapeless((MCRecipeShapeless) recipe);
         return null;
+    }
+
+    public static List<ItemStack> flatExpand(Ingredient ingredient) {
+        return expand(ingredient).stream().flatMap(Collection::stream).collect(Collectors.toList());
+    }
+
+    public static List<ItemStack> flatExpand(List<Ingredient> ingredients) {
+        return expand(ingredients).stream().flatMap(Collection::stream).collect(Collectors.toList());
+    }
+
+    public static List<List<ItemStack>> expand(Ingredient ingredient) {
+        return expand(Lists.newArrayList(ingredient));
+    }
+
+    public static List<List<ItemStack>> expand(List<Ingredient> ingredients) {
+        IStackHelper stackHelper = HELPER.getStackHelper();
+        return stackHelper.expandRecipeItemStackInputs(ingredients);
     }
 }

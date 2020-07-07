@@ -1,6 +1,7 @@
 package betterwithaddons.client.render;
 
 import betterwithaddons.entity.EntitySpirit;
+import betterwithaddons.interaction.InteractionEriottoMod;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -9,6 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.awt.*;
 
 @SideOnly(Side.CLIENT)
 public class RenderSpirit extends Render<EntitySpirit>
@@ -48,7 +51,14 @@ public class RenderSpirit extends Render<EntitySpirit>
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             float f8 = 255.0F;
             float f9 = ((float)entity.xpColor + partialTicks) / 2.0F;
-            l = (int)((MathHelper.sin(f9 + 0.0F) * 0.25F + 0.75F) * 255.0F);
+            float glow = MathHelper.sin(f9 + 0.0F);
+            l = (int)((glow * 0.25F + 0.75F) * 255.0F);
+            Color colorLow = InteractionEriottoMod.SPIRIT_COLOR_LOW;
+            Color colorHigh = InteractionEriottoMod.SPIRIT_COLOR_HIGH;
+            int r = (int)MathHelper.clampedLerp(colorLow.getRed(),colorHigh.getRed(), glow * 0.5F + 0.5F);
+            int g = (int)MathHelper.clampedLerp(colorLow.getGreen(),colorHigh.getGreen(), glow * 0.5F + 0.5F);
+            int b = (int)MathHelper.clampedLerp(colorLow.getBlue(),colorHigh.getBlue(), glow * 0.5F + 0.5F);
+            int a = (int)MathHelper.clampedLerp(colorLow.getAlpha(),colorHigh.getAlpha(), glow * 0.5F + 0.5F);
             int i1 = 255;
             int j1 = (int)(((MathHelper.sin(f9 + 4.1887903F) + 1.0F) * 0.5F + 0.5F) * 255.0F);
             GlStateManager.translate(0.0F, 0.1F, 0.0F);
@@ -59,10 +69,10 @@ public class RenderSpirit extends Render<EntitySpirit>
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder vertexbuffer = tessellator.getBuffer();
             vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
-            vertexbuffer.pos(-0.5D, -0.25D, 0.0D).tex((double)f, (double)f3).color(l, 0, 0, 128).normal(0.0F, 1.0F, 0.0F).endVertex();
-            vertexbuffer.pos(0.5D, -0.25D, 0.0D).tex((double)f1, (double)f3).color(l, 0, 0, 128).normal(0.0F, 1.0F, 0.0F).endVertex();
-            vertexbuffer.pos(0.5D, 0.75D, 0.0D).tex((double)f1, (double)f2).color(l, 0, 0, 128).normal(0.0F, 1.0F, 0.0F).endVertex();
-            vertexbuffer.pos(-0.5D, 0.75D, 0.0D).tex((double)f, (double)f2).color(l, 0, 0, 128).normal(0.0F, 1.0F, 0.0F).endVertex();
+            vertexbuffer.pos(-0.5D, -0.25D, 0.0D).tex((double)f, (double)f3).color(r, g, b, a).normal(0.0F, 1.0F, 0.0F).endVertex();
+            vertexbuffer.pos(0.5D, -0.25D, 0.0D).tex((double)f1, (double)f3).color(r, g, b, a).normal(0.0F, 1.0F, 0.0F).endVertex();
+            vertexbuffer.pos(0.5D, 0.75D, 0.0D).tex((double)f1, (double)f2).color(r, g, b, a).normal(0.0F, 1.0F, 0.0F).endVertex();
+            vertexbuffer.pos(-0.5D, 0.75D, 0.0D).tex((double)f, (double)f2).color(r, g, b, a).normal(0.0F, 1.0F, 0.0F).endVertex();
             tessellator.draw();
             GlStateManager.disableBlend();
             GlStateManager.disableRescaleNormal();

@@ -1,6 +1,7 @@
 package betterwithaddons.client.render;
 
-import betterwithaddons.lib.Reference;
+import betterwithaddons.entity.EntityGreatarrow;
+import betterwithaddons.item.ItemGreatarrow;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -21,16 +22,19 @@ public class RenderGreatarrow extends RenderArrow {
             return new RenderGreatarrow(renderManager);
         }
     };
-    ResourceLocation res;
 
     public RenderGreatarrow(RenderManager renderManagerIn) {
         super(renderManagerIn);
-        this.res = new ResourceLocation(Reference.MOD_ID,"textures/entity/greatarrow.png");
     }
 
     @Override
     protected ResourceLocation getEntityTexture(Entity entity) {
-        return res;
+        EntityGreatarrow arrow = (EntityGreatarrow) entity;
+        ItemGreatarrow arrowType = arrow.getArrowType();
+        if(arrowType != null)
+            return arrowType.getEntityTexture(arrow);
+        else
+            return ItemGreatarrow.TEXTURE;
     }
 
     @Override

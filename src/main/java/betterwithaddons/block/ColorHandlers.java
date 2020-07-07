@@ -86,16 +86,16 @@ public class ColorHandlers {
         if(worldIn != null && pos != null) {
             TileEntity tile = worldIn.getTileEntity(pos);
             if (tile instanceof TileEntityTea)
-                return ((TileEntityTea) tile).getType().getLeafColor();
+                return ((TileEntityTea) tile).getType().getTypeColor(TeaType.ItemType.Leaves);
         }
-        return TeaType.WHITE.getLeafColor();
+        return TeaType.WHITE.getTypeColor(TeaType.ItemType.Leaves);
     };
 
     public static final IItemColor TEA_ITEM_COLORING = (stack, tintIndex) -> {
         Item item = stack.getItem();
         if(item instanceof ItemTea)
             return ((ItemTea) item).getColor(stack);
-        return TeaType.WHITE.getLeafColor();
+        return TeaType.WHITE.getTypeColor(TeaType.ItemType.Leaves);
     };
 
     public static final IItemColor TEACUP_COLORING = (stack, tintIndex) -> {

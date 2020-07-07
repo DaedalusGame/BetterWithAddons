@@ -1,6 +1,7 @@
 package betterwithaddons.interaction.jei.wrapper;
 
 import betterwithaddons.crafting.recipes.infuser.TransmutationRecipe;
+import betterwithaddons.interaction.InteractionEriottoMod;
 import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -28,8 +29,8 @@ public class TransmutationRecipeWrapper extends SmeltingRecipeWrapper {
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        int foregroundcolor = new Color(255,0,0).getRGB();
-        int backgroundcolor = new Color(128,0,0).getRGB();
+        int foregroundcolor = InteractionEriottoMod.SPIRIT_GUI_COLOR_HIGH.getRGB();
+        int backgroundcolor = InteractionEriottoMod.SPIRIT_GUI_COLOR_LOW.getRGB();
 
         int requiredSpirit = recipe.getRecipeRequiredSpirit();
         String costString = I18n.format("inv.infuser.cost.name",requiredSpirit);

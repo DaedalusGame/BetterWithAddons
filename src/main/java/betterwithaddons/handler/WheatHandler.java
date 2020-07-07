@@ -4,6 +4,7 @@ import betterwithaddons.interaction.InteractionWheat;
 import betterwithaddons.item.ModItems;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityVillager;
@@ -38,6 +39,9 @@ public class WheatHandler {
 
         IBlockState state = event.getState();
         if(state.getBlock() != Blocks.WHEAT)
+            return;
+        BlockCrops cropBlock = (BlockCrops) state.getBlock();
+        if(!cropBlock.isMaxAge(state)) //NO FREE WHEATSIES
             return;
 
         List<ItemStack> drops = event.getDrops();

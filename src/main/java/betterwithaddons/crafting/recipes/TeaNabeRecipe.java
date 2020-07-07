@@ -1,6 +1,7 @@
 package betterwithaddons.crafting.recipes;
 
 import betterwithaddons.item.ItemTea;
+import betterwithaddons.lib.Reference;
 import betterwithaddons.tileentity.TileEntityNabe;
 import betterwithaddons.util.ItemUtil;
 import betterwithaddons.util.NabeResult;
@@ -10,8 +11,10 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -21,7 +24,12 @@ import java.util.List;
 import java.util.function.Function;
 
 public class TeaNabeRecipe implements INabeRecipe {
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(Reference.MOD_ID, "tea");
+    public static boolean ENABLE_CEREMONIAL_RECIPE = true;
+
     public static final HashMap<Potion,Potion> OPPOSITES = new HashMap<>();
+    public static Ingredient SUGAR = Ingredient.fromItems(Items.SUGAR);
+    public static Ingredient MILK = Ingredient.fromItems(Items.MILK_BUCKET);
 
     static {
         addOpposite(MobEffects.INSTANT_HEALTH,MobEffects.INSTANT_DAMAGE);
@@ -51,12 +59,12 @@ public class TeaNabeRecipe implements INabeRecipe {
     }
 
     private boolean isSugar(ItemStack stack) {
-        return stack.getItem() == Items.SUGAR;
+        return SUGAR.apply(stack);
     }
 
     private boolean isMilk(ItemStack stack)
     {
-        return stack.getItem() == Items.MILK_BUCKET;
+        return MILK.apply(stack);
     }
 
     @Override
@@ -94,7 +102,7 @@ public class TeaNabeRecipe implements INabeRecipe {
         TeaType secondaryType = secondaryTea.isEmpty() ? null : ItemTea.getType(secondaryTea);
         boolean isCeremonial = mainTea.getCount() == 6 && mainType == TeaType.MATCHA; //Matcha is special and gives random effects but only positive
         int strength = Math.max(getStrength(mainTea),getStrength(secondaryTea));
-        Color color = new Color(mainType.getPowderColor());
+        Color color = new Color(mainType.getTypeColor(TeaType.ItemType.Powder));
         if (milk > 1)
             color.brighter();
         if (sugar > 1)
@@ -205,8 +213,8 @@ public class TeaNabeRecipe implements INabeRecipe {
     }
 
     @Override
-    public String getName() {
-        return "tea";
+    public ResourceLocation getName() {
+        return RESOURCE_LOCATION;
     }
 
     @Override

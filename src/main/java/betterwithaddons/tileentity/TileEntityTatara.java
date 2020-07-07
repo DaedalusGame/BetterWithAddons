@@ -3,6 +3,7 @@ package betterwithaddons.tileentity;
 import betterwithaddons.crafting.manager.CraftingManagerTatara;
 import betterwithaddons.crafting.recipes.SmeltingRecipe;
 import betterwithaddons.item.ModItems;
+import com.google.common.collect.Lists;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -140,7 +141,7 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
         if(inputstack.isEmpty() || recipe == null) {
             return false;
         } else {
-                ItemStack itemstack = recipe.getOutput(inputstack);
+                ItemStack itemstack = recipe.getOutput(Lists.newArrayList(inputstack), this).get(0);
                 if (itemstack.isEmpty()) {
                     return false;
                 } else if (outputstack.isEmpty()) {
@@ -161,7 +162,7 @@ public class TileEntityTatara extends TileEntityBase implements ITickable {
         if(this.canSmelt()) {
             SmeltingRecipe recipe = CraftingManagerTatara.instance().getSmeltingRecipe(inputstack);
             if(recipe != null) {
-                ItemStack itemstack = recipe.getOutput(inputstack);
+                ItemStack itemstack = recipe.getOutput(Lists.newArrayList(inputstack), this).get(0);
                 if (outputstack.isEmpty()) {
                     inventory.setStackInSlot(2, itemstack.copy());
                 } else if (outputstack.getItem() == itemstack.getItem()) {

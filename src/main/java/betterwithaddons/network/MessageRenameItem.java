@@ -30,7 +30,7 @@ public class MessageRenameItem implements IMessage {
         name = ByteBufUtils.readUTF8String(buf);
     }
 
-    public static class HandlerRenameItem implements IMessageHandler<MessageRenameItem,IMessage>
+    public static class Handler implements IMessageHandler<MessageRenameItem,IMessage>
     {
         @Override
         public IMessage onMessage(MessageRenameItem message, MessageContext ctx) {

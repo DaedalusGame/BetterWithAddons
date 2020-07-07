@@ -1,86 +1,47 @@
 package betterwithaddons.crafting.recipes;
 
-import betterwithaddons.util.IHasSize;
-import com.google.common.collect.Lists;
+import betterwithaddons.crafting.ICraftingResult;
+import betterwithaddons.util.ItemUtil;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PackingRecipe
 {
-    public IBlockState output;
-    public ItemStack jeiOutput = ItemStack.EMPTY;
-    public Ingredient input = Ingredient.EMPTY;
+    public ICraftingResult output;
+    public List<Ingredient> inputs;
 
-    public PackingRecipe(Ingredient input, IBlockState output)
-    {
+    public PackingRecipe(List<Ingredient> inputs, ICraftingResult output) {
         this.output = output;
-        this.input = input;
+        this.inputs = inputs;
     }
 
-    public void setJeiOutput(ItemStack output)
+    public ICraftingResult getOutput(List<ItemStack> inputs, IBlockState compressState) {
+        return this.output.copy();
+    }
+
+    public boolean consume(List<ItemStack> inputs, IBlockState compressState, boolean simulate)
     {
-        this.jeiOutput = output;
-    }
-
-    public IBlockState getOutput(IBlockState compressState, List<EntityItem> inv)
-    {
-        return this.output;
-    }
-
-    public ItemStack getJeiOutput()
-    {
-        return jeiOutput;
-    }
-
-    public List<ItemStack> getRecipeInputs() {
-        return Lists.newArrayList(input.getMatchingStacks());
-    }
-
-    public List<ItemStack> getRecipeOutputs() {
-        return Lists.newArrayList(getJeiOutput());
-    }
-
-    public boolean matchesInput(EntityItem ent)
-    {
-        return matchesInput(ent.getItem());
-    }
-
-    public boolean matchesInput(ItemStack item) {
-        return input.apply(item);
-    }
-
-    public boolean matches(IBlockState compressState, List<EntityItem> inv)
-    {
-        for (EntityItem ent: inv) {
-            if(matchesInput(ent))
-                return true;
-        }
-        return false;
-    }
-
-    public boolean consumeIngredients(List<EntityItem> inv)
-    {
-        for (EntityItem ent: inv) {
-            if(matchesInput(ent))
-            {
-                ItemStack stack = ent.getItem();
-                int count = getInputCount();
-                stack.shrink(count);
-                if(stack.isEmpty())
-                    ent.setDead();
-                else
-                    ent.setItem(stack);
-                return true;
+        inputs = new ArrayList<>(inputs);
+        for (Ingredient ingredient : this.inputs) {
+            boolean matches = false;
+            Iterator<ItemStack> iterator = inputs.iterator();
+            while(iterator.hasNext()) {
+                ItemStack checkStack = iterator.next();
+                if(ingredient.apply(checkStack)) {
+                    if(!simulate)
+                        checkStack.shrink(ItemUtil.getSize(ingredient));
+                    iterator.remove();
+                    matches = true;
+                }
             }
+            if(!matches)
+                return false;
         }
-        return false;
-    }
-
-    public int getInputCount() {
-        return input instanceof IHasSize ? ((IHasSize) input).getSize() : 1;
+        return true;
     }
 }

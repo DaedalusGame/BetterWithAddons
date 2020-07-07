@@ -4,6 +4,7 @@ import betterwithaddons.tileentity.TileEntityNabe;
 import betterwithaddons.util.NabeResult;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.HashSet;
@@ -14,9 +15,9 @@ public class ShapelessNabeRecipe implements INabeRecipe {
     public int time;
     List<Ingredient> ingredients;
     NabeResult result;
-    String name;
+    ResourceLocation name;
 
-    public ShapelessNabeRecipe(String name, NabeResult result, List<Ingredient> ingredients, int time) {
+    public ShapelessNabeRecipe(ResourceLocation name, NabeResult result, List<Ingredient> ingredients, int time) {
         this.name = name;
         this.ingredients = ingredients;
         this.result = result;
@@ -66,7 +67,7 @@ public class ShapelessNabeRecipe implements INabeRecipe {
     }
 
     @Override
-    public String getName() {
+    public ResourceLocation getName() {
         return name;
     }
 

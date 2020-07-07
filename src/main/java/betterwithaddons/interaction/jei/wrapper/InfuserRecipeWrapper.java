@@ -1,5 +1,6 @@
 package betterwithaddons.interaction.jei.wrapper;
 
+import betterwithaddons.interaction.InteractionEriottoMod;
 import com.google.common.collect.Lists;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
@@ -35,8 +36,8 @@ public class InfuserRecipeWrapper extends BlankRecipeWrapper {
 
     @Override
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-        int foregroundcolor = new Color(255,0,0).getRGB();
-        int backgroundcolor = new Color(128,0,0).getRGB();
+        int foregroundcolor = InteractionEriottoMod.SPIRIT_GUI_COLOR_HIGH.getRGB();
+        int backgroundcolor = InteractionEriottoMod.SPIRIT_GUI_COLOR_LOW.getRGB();
 
         String costString = I18n.format("inv.infuser.cost.name",requiredSpirits);
 

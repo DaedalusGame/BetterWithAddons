@@ -10,6 +10,8 @@ public class BWANetworkHandler {
 
     public static void registerMessages()
     {
-        INSTANCE.registerMessage(MessageRenameItem.HandlerRenameItem.class, MessageRenameItem.class, 0, Side.SERVER);
+        int id = 0;
+        INSTANCE.registerMessage(MessageRenameItem.Handler.class, MessageRenameItem.class, id++, Side.SERVER);
+        INSTANCE.registerMessage(MessageFireBlastFX.Handler.class, MessageFireBlastFX.class, id++, Side.CLIENT);
     }
 }

@@ -1,6 +1,8 @@
 package betterwithaddons.util;
 
 import com.google.common.collect.Lists;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -17,9 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ItemUtil
 {
@@ -115,13 +115,43 @@ public class ItemUtil
 
 	public static boolean consumeItem(List<EntityItem> inv, Ingredient ingredient)
 	{
-		int amount = ingredient instanceof IHasSize ? ((IHasSize) ingredient).getSize() : 1;
+		int amount = getSize(ingredient);
 		for (EntityItem ent : inv) {
 			ItemStack item = ent.getItem();
 			if(ingredient.apply(item))
 				amount -= consumeItem(ent,amount);
 		}
 		return amount <= 0;
+	}
+
+	public static int getSize(Ingredient ingredient) {
+		return ingredient instanceof IHasSize ? ((IHasSize) ingredient).getSize() : 1;
+	}
+
+	private static String getMark(Ingredient ingredient) {
+		if(ingredient instanceof IHasMark)
+			return ((IHasMark) ingredient).getMark();
+		return null;
+	}
+
+	public static Map<String, IItemStack> getMarkedInputs(List<ItemStack> inputs, List<Ingredient> ingredients) {
+		Map<String,IItemStack> markedInputs = new HashMap<>();
+		inputs = new ArrayList<>(inputs); //Copy the list
+		for (Ingredient ingredient : ingredients) {
+			String mark = getMark(ingredient);
+			if(mark == null)
+				continue;
+			Iterator<ItemStack> iterator = inputs.iterator();
+			while(!iterator.hasNext()) {
+				ItemStack stack = iterator.next();
+				if(ingredient.apply(stack)) {
+					markedInputs.put(mark, CraftTweakerMC.getIItemStack(stack));
+					iterator.remove();
+					break;
+				}
+			}
+		}
+		return markedInputs;
 	}
 
 	public static int consumeItem(EntityItem item, int n)
@@ -136,6 +166,15 @@ public class ItemUtil
 			item.setItem(entstack);
 
 		return removed;
+	}
+
+	public static void consumeItems(List<EntityItem> entities) {
+		for (EntityItem entity : entities) {
+			if(entity.getItem().isEmpty())
+				entity.setDead();
+			else
+				entity.setItem(entity.getItem());
+		}
 	}
 
 	public static NBTTagList serializePotionEffects(List<PotionEffect> effects) {

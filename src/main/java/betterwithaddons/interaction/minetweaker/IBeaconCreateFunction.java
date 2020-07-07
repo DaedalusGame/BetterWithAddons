@@ -8,5 +8,5 @@ import stanhebben.zenscript.annotations.ZenClass;
 @ZenClass("mods.betterwithaddons.IBeaconCreateFunction")
 @ZenRegister
 public interface IBeaconCreateFunction {
-    void create(IWorld world, IBlockPos pos, int beaconlevel);
+    void create(IBeaconInfo beaconInfo);
 }
