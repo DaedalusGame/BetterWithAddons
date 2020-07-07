@@ -17,6 +17,7 @@ import crafttweaker.mc1120.recipes.MCRecipeBase;
 import crafttweaker.mc1120.recipes.MCRecipeManager;
 import crafttweaker.mc1120.recipes.MCRecipeShaped;
 import crafttweaker.mc1120.recipes.MCRecipeShapeless;
+import java.util.Arrays;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import stanhebben.zenscript.annotations.Optional;
@@ -48,6 +49,11 @@ public class Infuser {
     @ZenMethod
     public static void addTransmutation(IItemStack output, IIngredient input, int spirits) {
         CraftTweaker.LATE_ACTIONS.add(new AddTransmutation(CraftTweakerMC.getItemStack(output), new IngredientCraftTweaker(input), spirits));
+    }
+    
+    @ZenMethod
+    public static void addTransmutation(IItemStack[] outputs, IIngredient input, int spirits) {
+        CraftTweaker.LATE_ACTIONS.add(new AddTransmutation(Arrays.asList(outputs).stream().map(CraftTweakerMC::getItemStack).toArray(ItemStack[]::new), new IngredientCraftTweaker(input), spirits));
     }
 
     @ZenMethod
@@ -122,25 +128,34 @@ public class Infuser {
     }
 
     private static class AddTransmutation implements IAction {
-        protected ItemStack output;
+        protected ItemStack[] possibleOutputs;
         protected Ingredient input;
         protected int requiredSpirits;
 
         public AddTransmutation(ItemStack output, Ingredient input, int spirits)
         {
-            this.output = output;
+            this(new ItemStack[]{output}, input, spirits);
+        }
+        
+        public AddTransmutation(ItemStack[] outputs, Ingredient input, int spirits)
+        {
+            this.possibleOutputs = outputs;
             this.input = input;
             this.requiredSpirits = spirits;
         }
 
         @Override
         public void apply() {
-            CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(input,requiredSpirits,output));
+            CraftingManagerInfuserTransmutation.getInstance().addRecipe(new TransmutationRecipe(input, requiredSpirits, possibleOutputs));
         }
 
         @Override
         public String describe() {
-            return "Adding ancestral infuser transmutation for "+output.getDisplayName();
+            StringBuilder sb = new StringBuilder("Adding ancestral infuser transmutation for");
+            for (ItemStack i : possibleOutputs) {
+                sb.append(" " + i.getDisplayName());
+            }
+            return sb.toString();
         }
     }
 
