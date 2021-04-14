@@ -60,12 +60,12 @@ public class LureTree {
 
         @Override
         public void apply() {
-            TileEntityLureTree.getTreeFoods().remove(recipe);
+            if (recipe != null) TileEntityLureTree.getTreeFoods().remove(recipe);
         }
 
         @Override
         public String describe() {
-            return "Removing Lure Tree food:"+recipe.stack.toString();
+            return (recipe != null) ? "Removing Lure Tree food:"+recipe.stack.toString() : "";
         }
     }
 }
