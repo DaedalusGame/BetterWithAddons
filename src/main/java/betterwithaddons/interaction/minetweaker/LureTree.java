@@ -18,54 +18,61 @@ public class LureTree {
     public static final String clazz = "mods.betterwithaddons.LureTree";
 
     @ZenMethod
-    public static void add(@NotNull IItemStack input, int food) {
-        ItemStack stack = CraftTweakerMC.getItemStack(input);
-        TreeFood r = new TreeFood(stack,food);
-        CraftTweaker.LATE_ACTIONS.add(new Add(r));
+    public static void add(@NotNull IItemStack input, int amount) {
+        CraftTweaker.LATE_ACTIONS.add(new Add(CraftTweakerMC.getItemStack(input), amount));
     }
 
     @ZenMethod
     public static void remove(@NotNull IItemStack input)
     {
-        ItemStack stack = CraftTweakerMC.getItemStack(input);
-        CraftTweaker.LATE_ACTIONS.add(new Remove(stack));
+        CraftTweaker.LATE_ACTIONS.add(new Remove(CraftTweakerMC.getItemStack(input)));
     }
 
     public static class Add implements IAction
     {
-        TreeFood recipe;
+        ItemStack stack;
+        int amount;
 
+        public Add(ItemStack stack, int amount) {
+            this.stack = stack;
+            this.amount = amount;
+        }
+        
+        // Backwards compat snce it's public
+        @Deprecated
         public Add(TreeFood recipe) {
-            this.recipe = recipe;
+            this.stack = recipe.stack;
+            this.amount = recipe.amount;
         }
 
         @Override
         public void apply() {
-            TileEntityLureTree.addTreeFood(recipe);
+            TileEntityLureTree.addTreeFood(stack, amount);
         }
 
         @Override
         public String describe() {
-            return "Adding Lure Tree food: "+recipe.stack.toString();
+            return "Adding Lure Tree food: "+stack.toString();
         }
     }
 
     public static class Remove implements IAction
     {
-        TreeFood recipe;
+        ItemStack stack;
 
         protected Remove(ItemStack stack) {
-            recipe = TileEntityLureTree.getTreeFood(stack);
+            this.stack = stack;
         }
 
         @Override
         public void apply() {
+            TreeFood recipe = TileEntityLureTree.getTreeFood(stack);
             if (recipe != null) TileEntityLureTree.getTreeFoods().remove(recipe);
         }
 
         @Override
         public String describe() {
-            return (recipe != null) ? "Removing Lure Tree food:"+recipe.stack.toString() : "";
+            return "Removing Lure Tree food: "+stack.toString();
         }
     }
 }
